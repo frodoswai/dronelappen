@@ -42,8 +42,12 @@ export default function Quiz() {
 
         if (fetchError) throw fetchError
 
+        // Shuffle question order, then shuffle each question's options
         const shuffled = shuffleArray(data || [])
-        const selected = shuffled.slice(0, 30)
+        const selected = shuffled.slice(0, 30).map(q => ({
+          ...q,
+          options: shuffleArray(q.options)
+        }))
         setQuestions(selected)
         setAnswers(new Array(selected.length).fill(null))
         if (timeLimit) setTimeLeft(timeLimit)
@@ -136,6 +140,9 @@ export default function Quiz() {
     (ans, idx) => ans && questions[idx] && ans === questions[idx].correct_option_id
   ).length
 
+  // Dynamic labels based on shuffled position (A, B, C, D...)
+  const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F']
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
       <div className="max-w-lg mx-auto py-6">
@@ -170,10 +177,10 @@ export default function Quiz() {
             {currentQuestion.question_text}
           </h2>
 
-          {/* Options */}
+          {/* Options — rendered in shuffled order with positional labels */}
           <div className="space-y-3 mb-6">
-            {currentQuestion.options.map((option) => {
-              const optLabel = option.id.toUpperCase()
+            {currentQuestion.options.map((option, idx) => {
+              const optLabel = optionLabels[idx] || option.id.toUpperCase()
               const isSelected = selectedAnswer === option.id
               const isCorrectOpt = option.id === currentQuestion.correct_option_id
 
