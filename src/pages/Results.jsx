@@ -80,7 +80,10 @@ export default function Results() {
       <div className="max-w-lg mx-auto py-8">
         {/* Score Section */}
         <div className="bg-white rounded-lg shadow-md p-8 text-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Resultater</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-1">Resultater</h1>
+          <p className="text-gray-500 text-base mb-4">
+            {examType === 'A2' ? 'A2' : 'A1/A3'} {isPracticeMode ? 'Praksis' : 'Øvingseksamen'}
+          </p>
           <p className="text-5xl font-bold text-blue-900 mb-2">{correctCount}/{totalQuestions}</p>
           <p className="text-gray-600 text-lg mb-4">Riktige svar</p>
           <p className="text-2xl font-semibold mb-6">{percentage}%</p>
