@@ -4,3 +4,26 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   background-color: #f7fafc;
 }
+
+/* Quiz answer buttons — kill native tap highlight + sticky hover on touch.
+   Applied to the .quiz-option class on every answer button in Quiz/Rapid. */
+.quiz-option {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (hover: none) {
+  /* On touch-only devices, :hover can stick after a tap because there
+     is no mouseleave event. Neutralize hover/active styling so nothing
+     leaks onto the next question when Rapid mode auto-advances. */
+  .quiz-option:hover,
+  .quiz-option:active {
+    background-color: inherit !important;
+    border-color: inherit !important;
+  }
+  /* Preserve keyboard focus ring for a11y even on hybrid touch devices. */
+  .quiz-option:focus-visible {
+    outline: 2px solid #1a365d;
+    outline-offset: 2px;
+  }
+}

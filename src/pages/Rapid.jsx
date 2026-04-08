@@ -6,6 +6,7 @@ import QuizLayout from '../components/QuizLayout'
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
 const WRONG_PAUSE_MS = 2500
+const RAPID_SESSION_SIZE = 30
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -44,11 +45,15 @@ export default function Rapid() {
 
         if (fetchError) throw fetchError
 
-        const shuffled = shuffleArray(data || []).map((q) => ({
-          ...q,
-          options: shuffleArray(q.options),
-        }))
-        setQuestions(shuffled)
+        // Shuffle the pool, cap the session at RAPID_SESSION_SIZE,
+        // then shuffle each question's options independently.
+        const sessionQuestions = shuffleArray(data || [])
+          .slice(0, RAPID_SESSION_SIZE)
+          .map((q) => ({
+            ...q,
+            options: shuffleArray(q.options),
+          }))
+        setQuestions(sessionQuestions)
         setLoading(false)
       } catch (err) {
         console.error('Error fetching questions:', err)
@@ -230,7 +235,7 @@ export default function Rapid() {
               option.id === currentQuestion.correct_option_id
 
             let btnClass =
-              'w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+              'quiz-option w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
 
             if (!isAnswered) {
               btnClass +=
@@ -243,9 +248,12 @@ export default function Rapid() {
               btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
             }
 
+            // Composite key forces React to unmount/remount the button
+            // when the question changes — clears any browser-tracked
+            // :hover / tap-highlight state from the previous question.
             return (
               <button
-                key={option.id}
+                key={`${currentIndex}-${option.id}`}
                 onClick={() => handleSelectAnswer(option.id)}
                 disabled={isAnswered}
                 className={btnClass}

@@ -202,7 +202,7 @@ export default function Quiz() {
             const isSelected = selectedAnswer === option.id
             const isCorrectOpt = option.id === currentQuestion.correct_option_id
 
-            let btnClass = 'w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+            let btnClass = 'quiz-option w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
 
             if (!isAnswered) {
               btnClass += 'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
@@ -214,9 +214,11 @@ export default function Quiz() {
               btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
             }
 
+            // Composite key forces React to unmount/remount per question,
+            // clearing any browser-tracked :hover / tap-highlight state.
             return (
               <button
-                key={option.id}
+                key={`${currentIndex}-${option.id}`}
                 onClick={() => handleSelectAnswer(option.id)}
                 disabled={isAnswered}
                 className={btnClass}
