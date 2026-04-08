@@ -74,6 +74,12 @@ export default function Home() {
                 >
                   Øv fritt
                 </button>
+                <button
+                  onClick={() => navigate(`/rapid/${exam.id}`)}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                >
+                  Rapid ⚡
+                </button>
               </div>
             </div>
           ))}

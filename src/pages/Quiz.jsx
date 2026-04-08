@@ -117,6 +117,17 @@ export default function Quiz() {
     const newAnswers = [...answers]
     newAnswers[currentIndex] = optionId
     setAnswers(newAnswers)
+    // Fire-and-forget analytics: anonymous per-question stats, no user data.
+    // Failures must never block the quiz.
+    try {
+      supabase
+        .rpc('log_question_answer', {
+          p_question_id: currentQuestion.id,
+          p_was_correct: optionId === currentQuestion.correct_option_id,
+        })
+        .then(() => {})
+        .catch(() => {})
+    } catch (_) { /* swallow */ }
   }
 
   const handleNext = () => {
