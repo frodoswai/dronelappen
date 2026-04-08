@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import QuizLayout from '../components/QuizLayout'
 
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
@@ -90,6 +91,13 @@ export default function Rapid() {
   const handleSelectAnswer = (optionId) => {
     if (selectedAnswer !== null || !currentQuestion) return
     const wasCorrect = optionId === currentQuestion.correct_option_id
+
+    // Blur the tapped button so its :focus/:hover style does not leak
+    // onto the next question's button at the same screen position
+    // when we auto-advance — users read leftover focus as a hint.
+    if (typeof document !== 'undefined' && document.activeElement?.blur) {
+      document.activeElement.blur()
+    }
 
     setSelectedAnswer(optionId)
     setFeedback(wasCorrect ? 'correct' : 'wrong')
@@ -187,88 +195,81 @@ export default function Rapid() {
       ? 'bg-green-50'
       : feedback === 'wrong'
       ? 'bg-red-50'
-      : 'bg-gradient-to-b from-gray-50 to-white'
+      : null
+
+  const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
+
+  const header = (
+    <div className="flex justify-between items-center text-sm text-gray-600">
+      <span className="truncate">
+        Rapid — {poolLabel} · {correctCount}/{answeredCount} riktige ·{' '}
+        {currentIndex + 1}/{questions.length}
+      </span>
+      <button
+        onClick={handleStop}
+        className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-2 py-1 rounded transition-colors ml-2 shrink-0"
+      >
+        Stopp
+      </button>
+    </div>
+  )
 
   return (
-    <div className={`min-h-screen p-4 transition-colors duration-150 ${bgFlash}`}>
-      <div className="max-w-lg mx-auto py-6">
-        {/* Header — running score + Stop */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-sm font-semibold text-gray-700">
-            Rapid — {examType === 'A1_A3' ? 'A1/A3' : 'A2'}
-          </span>
-          <button
-            onClick={handleStop}
-            className="text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-3 py-1 rounded-lg transition-colors"
-          >
-            Stopp
-          </button>
+    <QuizLayout header={header} flashBg={bgFlash}>
+      {/* Question card — tightened padding */}
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-base font-semibold text-gray-800 mb-4 leading-snug">
+          {currentQuestion.question_text}
+        </h2>
+
+        <div className="space-y-2">
+          {currentQuestion.options.map((option, idx) => {
+            const optLabel = optionLabels[idx] || option.id.toUpperCase()
+            const isSelected = selectedAnswer === option.id
+            const isCorrectOpt =
+              option.id === currentQuestion.correct_option_id
+
+            let btnClass =
+              'w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+
+            if (!isAnswered) {
+              btnClass +=
+                'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
+            } else if (isCorrectOpt) {
+              btnClass += 'border-green-500 bg-green-100 text-gray-900'
+            } else if (isSelected && !isCorrectOpt) {
+              btnClass += 'border-red-500 bg-red-100 text-gray-900'
+            } else {
+              btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
+            }
+
+            return (
+              <button
+                key={option.id}
+                onClick={() => handleSelectAnswer(option.id)}
+                disabled={isAnswered}
+                className={btnClass}
+              >
+                <span className="font-bold mr-3">{optLabel}.</span>
+                {option.text}
+              </button>
+            )
+          })}
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 text-center">
-          <p className="text-blue-900 font-semibold">
-            Riktige: {correctCount} / {answeredCount}
-          </p>
-          <p className="text-blue-700 text-xs mt-1">
-            Spørsmål {currentIndex + 1} av {questions.length}
-          </p>
-        </div>
-
-        {/* Question */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-4">
-          <h2 className="text-lg font-semibold text-gray-800 mb-6">
-            {currentQuestion.question_text}
-          </h2>
-
-          <div className="space-y-3">
-            {currentQuestion.options.map((option, idx) => {
-              const optLabel = optionLabels[idx] || option.id.toUpperCase()
-              const isSelected = selectedAnswer === option.id
-              const isCorrectOpt =
-                option.id === currentQuestion.correct_option_id
-
-              let btnClass =
-                'w-full p-4 text-left rounded-lg border-2 font-medium transition-all '
-
-              if (!isAnswered) {
-                btnClass +=
-                  'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
-              } else if (isCorrectOpt) {
-                btnClass += 'border-green-500 bg-green-100 text-gray-900'
-              } else if (isSelected && !isCorrectOpt) {
-                btnClass += 'border-red-500 bg-red-100 text-gray-900'
-              } else {
-                btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
-              }
-
-              return (
-                <button
-                  key={option.id}
-                  onClick={() => handleSelectAnswer(option.id)}
-                  disabled={isAnswered}
-                  className={btnClass}
-                >
-                  <span className="font-bold mr-3">{optLabel}.</span>
-                  {option.text}
-                </button>
-              )
-            })}
+        {/* Wrong-answer feedback line */}
+        {feedback === 'wrong' && (
+          <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-900 text-sm">
+              <span className="font-semibold">Feil.</span> Riktig svar:{' '}
+              {getOptionText(
+                currentQuestion,
+                currentQuestion.correct_option_id
+              )}
+            </p>
           </div>
-
-          {/* Wrong-answer feedback line */}
-          {feedback === 'wrong' && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-900 text-sm">
-                <span className="font-semibold">Feil.</span> Riktig svar:{' '}
-                {getOptionText(
-                  currentQuestion,
-                  currentQuestion.correct_option_id
-                )}
-              </p>
-            </div>
-          )}
-        </div>
+        )}
       </div>
-    </div>
+    </QuizLayout>
   )
 }

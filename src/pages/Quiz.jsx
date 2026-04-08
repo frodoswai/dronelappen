@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import QuizLayout from '../components/QuizLayout'
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -112,6 +113,11 @@ export default function Quiz() {
 
   const handleSelectAnswer = (optionId) => {
     if (isAnswered) return
+    // Blur the tapped button so its :focus/:hover style does not leak
+    // onto the next question's button at the same screen position.
+    if (typeof document !== 'undefined' && document.activeElement?.blur) {
+      document.activeElement.blur()
+    }
     setSelectedAnswer(optionId)
     setShowExplanation(true)
     const newAnswers = [...answers]
@@ -154,95 +160,101 @@ export default function Quiz() {
   // Dynamic labels based on shuffled position (A, B, C, D...)
   const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F']
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
-      <div className="max-w-lg mx-auto py-6">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-sm font-semibold text-gray-700">
-              Spørsmål {currentIndex + 1} av {questions.length}
-            </span>
-            {timeLimit && (
-              <span className={`text-sm font-semibold ${timeLeft <= 300 ? 'text-red-600' : 'text-gray-700'}`}>
-                {formatTime(timeLeft)}
-              </span>
-            )}
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
-            <div className="bg-blue-900 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }} />
-          </div>
-        </div>
+  // Compact one-line header: mode · progress · (timer | practice score)
+  const modeLabel = isPracticeMode ? 'Øv' : 'Eksamen'
+  const progressLabel = `Spørsmål ${currentIndex + 1}/${questions.length}`
+  const answeredSoFar = currentIndex + (isAnswered ? 1 : 0)
 
-        {/* Practice mode score */}
-        {isPracticeMode && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6 text-center">
-            <p className="text-blue-900 font-semibold">Riktige: {correctCount}/{currentIndex + (isAnswered ? 1 : 0)}</p>
-          </div>
-        )}
-
-        {/* Question */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-6">
-            {currentQuestion.question_text}
-          </h2>
-
-          {/* Options — rendered in shuffled order with positional labels */}
-          <div className="space-y-3 mb-6">
-            {currentQuestion.options.map((option, idx) => {
-              const optLabel = optionLabels[idx] || option.id.toUpperCase()
-              const isSelected = selectedAnswer === option.id
-              const isCorrectOpt = option.id === currentQuestion.correct_option_id
-
-              let btnClass = 'w-full p-4 text-left rounded-lg border-2 font-medium transition-all '
-
-              if (!isAnswered) {
-                btnClass += 'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
-              } else if (isCorrectOpt) {
-                btnClass += 'border-green-500 bg-green-50 text-gray-800'
-              } else if (isSelected && !isCorrectOpt) {
-                btnClass += 'border-red-500 bg-red-50 text-gray-800'
-              } else {
-                btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
-              }
-
-              return (
-                <button key={option.id} onClick={() => handleSelectAnswer(option.id)}
-                  disabled={isAnswered} className={btnClass}>
-                  <span className="font-bold mr-3">{optLabel}.</span>
-                  {option.text}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Explanation */}
-          {showExplanation && (
-            <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm font-semibold text-amber-900 mb-2">
-                {isCorrect ? '✓ Riktig svar' : '✗ Feil svar'}
-              </p>
-              <p className="text-gray-700 text-sm mb-2">
-                <span className="font-semibold">Forklaring:</span>{' '}
-                {currentQuestion.explanation}
-              </p>
-              <p className="text-gray-600 text-xs">
-                <span className="font-semibold">Riktig svar:</span>{' '}
-                {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Next button */}
-        {isAnswered && (
-          <button onClick={handleNext}
-            className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
-            {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
-          </button>
+  const header = (
+    <>
+      <div className="flex justify-between items-center text-sm text-gray-600">
+        <span className="truncate">
+          {modeLabel} · {progressLabel}
+          {isPracticeMode && ` · ${correctCount}/${answeredSoFar} riktige`}
+        </span>
+        {timeLimit && (
+          <span className={`font-semibold tabular-nums ${timeLeft <= 300 ? 'text-red-600' : 'text-gray-700'}`}>
+            {formatTime(timeLeft)}
+          </span>
         )}
       </div>
-    </div>
+      <div className="w-full bg-gray-200 rounded-full h-1 mt-2">
+        <div
+          className="bg-blue-900 h-1 rounded-full transition-all duration-300"
+          style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+        />
+      </div>
+    </>
+  )
+
+  return (
+    <QuizLayout header={header}>
+      {/* Question card — tightened padding */}
+      <div className="bg-white rounded-lg shadow-md p-4 mb-3">
+        <h2 className="text-base font-semibold text-gray-800 mb-4 leading-snug">
+          {currentQuestion.question_text}
+        </h2>
+
+        {/* Options — rendered in shuffled order with positional labels */}
+        <div className="space-y-2 mb-2">
+          {currentQuestion.options.map((option, idx) => {
+            const optLabel = optionLabels[idx] || option.id.toUpperCase()
+            const isSelected = selectedAnswer === option.id
+            const isCorrectOpt = option.id === currentQuestion.correct_option_id
+
+            let btnClass = 'w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+
+            if (!isAnswered) {
+              btnClass += 'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
+            } else if (isCorrectOpt) {
+              btnClass += 'border-green-500 bg-green-50 text-gray-800'
+            } else if (isSelected && !isCorrectOpt) {
+              btnClass += 'border-red-500 bg-red-50 text-gray-800'
+            } else {
+              btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
+            }
+
+            return (
+              <button
+                key={option.id}
+                onClick={() => handleSelectAnswer(option.id)}
+                disabled={isAnswered}
+                className={btnClass}
+              >
+                <span className="font-bold mr-3">{optLabel}.</span>
+                {option.text}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Explanation */}
+        {showExplanation && (
+          <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <p className="text-sm font-semibold text-amber-900 mb-1">
+              {isCorrect ? '✓ Riktig svar' : '✗ Feil svar'}
+            </p>
+            <p className="text-gray-700 text-sm mb-1">
+              <span className="font-semibold">Forklaring:</span>{' '}
+              {currentQuestion.explanation}
+            </p>
+            <p className="text-gray-600 text-xs">
+              <span className="font-semibold">Riktig svar:</span>{' '}
+              {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Next button */}
+      {isAnswered && (
+        <button
+          onClick={handleNext}
+          className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+        >
+          {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
+        </button>
+      )}
+    </QuizLayout>
   )
 }
