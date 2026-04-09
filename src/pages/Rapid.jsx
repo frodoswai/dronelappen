@@ -32,6 +32,14 @@ export default function Rapid() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // Count-up timer — Rapid is about speed, not time pressure, so we show
+  // ⏱ MM:SS counting up from 0 and highlight total time on the finish
+  // screen. Same wall-clock anchor as exam mode, using Date.now() deltas so
+  // tab-blur can't cheat the stopwatch.
+  const [startTime, setStartTime] = useState(null)
+  const [elapsedMs, setElapsedMs] = useState(0)
+  const [finalElapsedMs, setFinalElapsedMs] = useState(null)
+
   // Track pending timers so we can clean them up on unmount / stop
   const timerRef = useRef(null)
 
@@ -71,6 +79,34 @@ export default function Rapid() {
     }
   }, [])
 
+  // Start the stopwatch once questions are loaded — not during fetch, so
+  // a slow network doesn't pad the user's apparent time.
+  useEffect(() => {
+    if (loading || startTime !== null) return
+    setStartTime(Date.now())
+  }, [loading, startTime])
+
+  // Wall-clock tick for the MM:SS display. 250ms keeps the seconds digit
+  // crisp without wasting battery. Stops the moment `finished` flips true
+  // so the displayed total freezes at its final value.
+  useEffect(() => {
+    if (startTime === null || finished) return
+    const tick = () => setElapsedMs(Date.now() - startTime)
+    tick()
+    const id = setInterval(tick, 250)
+    return () => clearInterval(id)
+  }, [startTime, finished])
+
+  const finishWithFinalTime = () => {
+    // Capture the stopwatch at the exact moment the session ends so the
+    // finish screen shows a stable number instead of whatever the interval
+    // last rendered.
+    if (startTime !== null) {
+      setFinalElapsedMs(Date.now() - startTime)
+    }
+    setFinished(true)
+  }
+
   const advance = () => {
     timerRef.current = null
     setSelectedAnswer(null)
@@ -78,7 +114,7 @@ export default function Rapid() {
     setCurrentIndex((idx) => {
       const next = idx + 1
       if (next >= questions.length) {
-        setFinished(true)
+        finishWithFinalTime()
         return idx
       }
       return next
@@ -129,7 +165,16 @@ export default function Rapid() {
       clearTimeout(timerRef.current)
       timerRef.current = null
     }
-    setFinished(true)
+    finishWithFinalTime()
+  }
+
+  // MM:SS formatter shared by header stopwatch and finish screen.
+  const formatMs = (ms) => {
+    if (ms === null || ms === undefined) return '0:00'
+    const totalSec = Math.floor(ms / 1000)
+    const mins = Math.floor(totalSec / 60)
+    const secs = totalSec % 60
+    return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
   if (loading) {
@@ -159,6 +204,7 @@ export default function Rapid() {
   if (finished || !currentQuestion) {
     const pct =
       answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0
+    const displayMs = finalElapsedMs ?? elapsedMs
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
         <div className="max-w-lg mx-auto py-8">
@@ -166,6 +212,15 @@ export default function Rapid() {
             <h1 className="text-2xl font-bold text-blue-900 mb-4">
               Rapid ferdig
             </h1>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
+              <p className="text-sm text-amber-900 mb-1">Du brukte</p>
+              <p className="text-4xl font-bold text-amber-700 tabular-nums">
+                {formatMs(displayMs)}
+              </p>
+              <p className="text-sm text-amber-900 mt-1">
+                på {answeredCount} spørsmål
+              </p>
+            </div>
             <p className="text-gray-700 text-lg mb-2">
               Riktige: <span className="font-semibold">{correctCount}</span> /{' '}
               {answeredCount}
@@ -205,17 +260,25 @@ export default function Rapid() {
   const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
 
   const header = (
-    <div className="flex justify-between items-center text-sm text-gray-600">
+    <div className="flex justify-between items-center text-sm text-gray-600 gap-2">
       <span className="truncate">
         Rapid — {poolLabel} · {correctCount}/{answeredCount} riktige ·{' '}
         {currentIndex + 1}/{questions.length}
       </span>
-      <button
-        onClick={handleStop}
-        className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-2 py-1 rounded transition-colors ml-2 shrink-0"
-      >
-        Stopp
-      </button>
+      <span className="flex items-center gap-2 shrink-0">
+        <span
+          className="font-semibold tabular-nums text-amber-700"
+          aria-label="Tid brukt"
+        >
+          ⏱ {formatMs(elapsedMs)}
+        </span>
+        <button
+          onClick={handleStop}
+          className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-2 py-1 rounded transition-colors"
+        >
+          Stopp
+        </button>
+      </span>
     </div>
   )
 

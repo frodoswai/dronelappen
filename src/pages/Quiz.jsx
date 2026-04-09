@@ -3,6 +3,10 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import QuizLayout from '../components/QuizLayout'
 
+// Exam mode wall-clock budget. Using a constant keeps the display/fix and
+// handleTimeUp math in sync.
+const EXAM_DURATION_MS = 60 * 60 * 1000 // 60 min
+
 // Fisher-Yates shuffle
 function shuffleArray(array) {
   const arr = [...array]
@@ -19,18 +23,22 @@ export default function Quiz() {
   const location = useLocation()
 
   const isPracticeMode = location.pathname.includes('practice')
+  const needsTimer = examType === 'A2' && !isPracticeMode
 
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [showExplanation, setShowExplanation] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(null)
+  // Wall-clock anchored timer state. `startTime` is set once after the
+  // questions load so network latency doesn't eat into the exam budget.
+  // `remainingMs` is derived from Date.now() on every tick, so tab-blur
+  // (which throttles setInterval) can't pause the countdown.
+  const [startTime, setStartTime] = useState(null)
+  const [remainingMs, setRemainingMs] = useState(needsTimer ? EXAM_DURATION_MS : null)
   const [quizComplete, setQuizComplete] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
-  const timeLimit = examType === 'A2' && !isPracticeMode ? 3600 : null
 
   // Fetch questions on mount
   useEffect(() => {
@@ -51,7 +59,6 @@ export default function Quiz() {
         }))
         setQuestions(selected)
         setAnswers(new Array(selected.length).fill(null))
-        if (timeLimit) setTimeLeft(timeLimit)
         setLoading(false)
       } catch (err) {
         console.error('Error fetching questions:', err)
@@ -60,19 +67,28 @@ export default function Quiz() {
       }
     }
     fetchQuestions()
-  }, [examType, timeLimit])
+  }, [examType])
 
-  // Timer effect
+  // Anchor the wall-clock timer once questions are loaded.
   useEffect(() => {
-    if (!timeLeft || timeLeft <= 0 || quizComplete || !timeLimit) return
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) { setQuizComplete(true); return 0 }
-        return prev - 1
-      })
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [timeLeft, quizComplete, timeLimit])
+    if (!needsTimer || loading || startTime !== null) return
+    setStartTime(Date.now())
+  }, [needsTimer, loading, startTime])
+
+  // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
+  // so the countdown is correct after tab-blur / backgrounding / throttling.
+  // 250ms interval keeps the MM:SS display snappy without burning battery.
+  useEffect(() => {
+    if (!needsTimer || startTime === null || quizComplete) return
+    const tick = () => {
+      const left = Math.max(0, EXAM_DURATION_MS - (Date.now() - startTime))
+      setRemainingMs(left)
+      if (left <= 0) setQuizComplete(true)
+    }
+    tick()
+    const id = setInterval(tick, 250)
+    return () => clearInterval(id)
+  }, [needsTimer, startTime, quizComplete])
 
   // Helper: find option text by id
   const getOptionText = (question, optionId) => {
@@ -146,10 +162,11 @@ export default function Quiz() {
     }
   }
 
-  const formatTime = (seconds) => {
-    if (!seconds) return ''
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
+  const formatMs = (ms) => {
+    if (ms === null || ms === undefined) return ''
+    const totalSec = Math.floor(ms / 1000)
+    const mins = Math.floor(totalSec / 60)
+    const secs = totalSec % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
@@ -172,9 +189,9 @@ export default function Quiz() {
           {modeLabel} · {progressLabel}
           {isPracticeMode && ` · ${correctCount}/${answeredSoFar} riktige`}
         </span>
-        {timeLimit && (
-          <span className={`font-semibold tabular-nums ${timeLeft <= 300 ? 'text-red-600' : 'text-gray-700'}`}>
-            {formatTime(timeLeft)}
+        {needsTimer && (
+          <span className={`font-semibold tabular-nums ${remainingMs !== null && remainingMs <= 5 * 60 * 1000 ? 'text-red-600' : 'text-gray-700'}`}>
+            {formatMs(remainingMs)}
           </span>
         )}
       </div>

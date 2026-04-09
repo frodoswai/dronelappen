@@ -1,92 +1,71 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import DroneLogo from '../components/DroneLogo'
+import {
+  getLastSession,
+  describeSession,
+  sessionToPath,
+} from '../lib/sessionHistory'
 
 export default function Home() {
   const navigate = useNavigate()
+  const [resume, setResume] = useState(null)
+
+  // Read smart-resume state on mount. Stale entries (> 14 days) return null
+  // so the button stays hidden when the app hasn't been used in a while.
+  useEffect(() => {
+    setResume(getLastSession())
+  }, [])
 
   const exams = [
-    {
-      id: 'A1_A3',
-      name: 'A1/A3 Øvingseksamen',
-      questions: 30,
-      timeLimit: null,
-      passThreshold: 75,
-    },
-    {
-      id: 'A2',
-      name: 'A2 Øvingseksamen',
-      questions: 30,
-      timeLimit: 60,
-      passThreshold: 75,
-    },
+    { id: 'A1_A3', name: 'A1/A3' },
+    { id: 'A2', name: 'A2' },
   ]
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
-      <div className="max-w-lg mx-auto py-8">
+      <div className="max-w-lg mx-auto pt-10 pb-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-blue-900 mb-2 flex items-center justify-center gap-3">
-            <DroneLogo className="w-9 h-9" />
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-blue-900 mb-3 flex items-center justify-center gap-3">
+            <DroneLogo className="w-10 h-10" />
             <span>DroneLappen</span>
           </h1>
-          <p className="text-gray-600 text-lg">Øv til droneeksamen</p>
+          <p className="text-gray-600 text-lg">Bli en bedre dronepilot</p>
         </div>
 
-        {/* Exam Cards */}
-        <div className="space-y-6">
+        {/* Smart resume (hidden unless a fresh last session exists) */}
+        {resume && (
+          <button
+            onClick={() => navigate(sessionToPath(resume))}
+            className="quiz-option w-full mb-6 bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-900 font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-between"
+          >
+            <span className="flex items-center gap-2">
+              <span aria-hidden="true">↻</span>
+              <span>Fortsett: {describeSession(resume)}</span>
+            </span>
+            <span aria-hidden="true">→</span>
+          </button>
+        )}
+
+        {/* Exam cards — step 1 of the two-step flow. Tapping opens the mode
+            picker at /exam/:examType, not a quiz directly. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {exams.map((exam) => (
-            <div
+            <button
               key={exam.id}
-              className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-900"
+              onClick={() => navigate(`/exam/${exam.id}`)}
+              className="quiz-option group bg-white hover:bg-blue-50 rounded-xl shadow-md hover:shadow-lg border-2 border-blue-100 hover:border-blue-400 p-8 flex flex-col items-center justify-center min-h-[140px] transition-all"
             >
-              <h2 className="text-xl font-bold text-gray-800 mb-4">
+              <span className="text-3xl font-bold text-blue-900 mb-1">
                 {exam.name}
-              </h2>
-
-              {/* Info */}
-              <div className="text-sm text-gray-600 space-y-2 mb-6">
-                <div className="flex justify-between">
-                  <span>Antall spørsmål:</span>
-                  <span className="font-semibold">{exam.questions}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Tid:</span>
-                  <span className="font-semibold">
-                    {exam.timeLimit ? `${exam.timeLimit} min` : 'Ingen tidsbegrensning'}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Bestågrense:</span>
-                  <span className="font-semibold">{exam.passThreshold}%</span>
-                </div>
-              </div>
-
-              {/* Buttons */}
-              <div className="space-y-3">
-                <button
-                  onClick={() => navigate(`/quiz/${exam.id}`)}
-                  className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
-                >
-                  Start eksamen
-                </button>
-                <button
-                  onClick={() => navigate(`/practice/${exam.id}`)}
-                  className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors"
-                >
-                  Øv fritt
-                </button>
-                <button
-                  onClick={() => navigate(`/rapid/${exam.id}`)}
-                  className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
-                >
-                  Rapid ⚡
-                </button>
-              </div>
-            </div>
+              </span>
+              <span className="text-sm text-gray-500 group-hover:text-blue-700 transition-colors">
+                Velg modus →
+              </span>
+            </button>
           ))}
         </div>
-
       </div>
     </div>
   )

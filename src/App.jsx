@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import ExamSelect from './pages/ExamSelect'
 import Quiz from './pages/Quiz'
 import Rapid from './pages/Rapid'
 import Results from './pages/Results'
@@ -12,6 +13,7 @@ function App() {
       <div className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/exam/:examType" element={<ExamSelect />} />
           <Route path="/quiz/:examType" element={<Quiz />} />
           <Route path="/practice/:examType" element={<Quiz />} />
           <Route path="/rapid/:examType" element={<Rapid />} />
