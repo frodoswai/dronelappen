@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import DroneLogo from '../components/DroneLogo'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -25,8 +26,9 @@ export default function Home() {
       <div className="max-w-lg mx-auto py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-blue-900 mb-2">
-            DroneLappen ✈️
+          <h1 className="text-4xl font-bold text-blue-900 mb-2 flex items-center justify-center gap-3">
+            <DroneLogo className="w-9 h-9" />
+            <span>DroneLappen</span>
           </h1>
           <p className="text-gray-600 text-lg">Øv til droneeksamen</p>
         </div>
