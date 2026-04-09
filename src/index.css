@@ -1,8 +1,40 @@
 @import "tailwindcss";
 
+/* ────────────────────────────────────────────────────────────────
+   Tailwind v4 theme tokens — Droneavisa palette + font families.
+   Consumed by the Home/ExamSelect visual redesign. Keep in sync
+   with droneavisa.no brand spec so the two sites feel like one
+   family. Any color defined here is auto-exposed as a Tailwind
+   utility (bg-da-navy, text-da-gold, border-da-cream, etc).
+   ──────────────────────────────────────────────────────────────── */
+@theme {
+  /* Droneavisa brand palette */
+  --color-da-navy: #083554;
+  --color-da-navy-dark: #0a1628;
+  --color-da-navy-mid: #2a3a50;
+  --color-da-gold: #E89F1E;
+  --color-da-gold-text: #7A4F05;
+  --color-da-cream: #F4E8CA;
+  --color-da-cream-light: #FFE9B3;
+
+  /* App surfaces + text scale */
+  --color-da-bg: #fafbfc;
+  --color-da-text-body: #3d4f63;
+  --color-da-text-muted: #5a6a7e;
+  --color-da-text-faded: #8a98a8;
+  --color-da-text-dim: #6b7a8c;
+  --color-da-dark-slogan: #9CAEC0;
+
+  /* Font families */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --font-mono: "JetBrains Mono", Consolas, monospace;
+}
+
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background-color: #f7fafc;
+  font-family: var(--font-sans);
+  background-color: var(--color-da-bg);
+  color: var(--color-da-text-body);
 }
 
 /* Quiz answer buttons — kill native tap highlight + sticky hover on touch.
@@ -23,7 +55,7 @@ body {
   }
   /* Preserve keyboard focus ring for a11y even on hybrid touch devices. */
   .quiz-option:focus-visible {
-    outline: 2px solid #1a365d;
+    outline: 2px solid #083554;
     outline-offset: 2px;
   }
 }

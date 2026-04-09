@@ -1,73 +1,144 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import DroneLogo from '../components/DroneLogo'
+import { Link } from 'react-router-dom'
+import HeroPropeller from '../components/HeroPropeller'
+import CrosshairMarks from '../components/CrosshairMarks'
+import ModePillRow from '../components/ModePillRow'
 import {
   getLastSession,
-  describeSession,
   sessionToPath,
+  sessionDisplayStats,
+  describeSession,
 } from '../lib/sessionHistory'
 
+// Home — Round 2 visual redesign.
+//
+// Three stacked sections:
+//   1. Dark navy hero with wordmark + gold propeller SVG bleed
+//   2. Stepped fade gradient (28px)
+//   3. Light content zone: resume strip, A2 card (dominant),
+//      A1/A3 card (quiet), stats footer
+//
+// The hierarchy flip — A2 strong / A1/A3 whisper — is the most
+// important decision in this round. Don't soften either direction.
 export default function Home() {
-  const navigate = useNavigate()
-  const [resume, setResume] = useState(null)
+  const [lastSession, setLastSession] = useState(null)
 
-  // Read smart-resume state on mount. Stale entries (> 14 days) return null
-  // so the button stays hidden when the app hasn't been used in a while.
+  // Smart resume — read on mount so we only render the strip if the
+  // user has a fresh session in localStorage (stale > 14 days returns
+  // null from getLastSession).
   useEffect(() => {
-    setResume(getLastSession())
+    setLastSession(getLastSession())
   }, [])
 
-  // A2 first — DroneLappen's primary target audience is A2 candidates;
-  // A1/A3 is the stepping stone. Order matters across cards, lists, and
-  // copy throughout the app.
-  const exams = [
-    { id: 'A2', name: 'A2' },
-    { id: 'A1_A3', name: 'A1/A3' },
-  ]
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
-      <div className="max-w-lg mx-auto pt-10 pb-8">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-blue-900 mb-3 flex items-center justify-center gap-3">
-            <DroneLogo className="w-10 h-10" />
-            <span>DroneLappen</span>
-          </h1>
-          <p className="text-gray-600 text-lg">Bli en bedre dronepilot</p>
+    <div className="min-h-screen bg-da-bg flex flex-col">
+      {/* ═══ Dark hero zone ═══ */}
+      <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-6">
+        <HeroPropeller />
+
+        {/* pt-8 leaves room for phone status bar bleed */}
+        <div className="relative z-10 pt-8">
+          <div className="flex items-baseline gap-0.5 mb-1.5">
+            <h1 className="text-3xl font-medium text-da-bg tracking-tight leading-none">
+              DroneLappen
+            </h1>
+            <span className="font-mono text-sm text-da-gold tracking-wide font-medium">
+              .app
+            </span>
+          </div>
+          <p className="font-serif italic text-sm text-da-dark-slogan">
+            Bli en bedre dronepilot
+          </p>
+        </div>
+      </div>
+
+      {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
+      <div
+        className="h-7"
+        style={{
+          background:
+            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
+        }}
+      />
+
+      {/* ═══ Light content zone ═══ */}
+      <div className="flex-1 px-6 pt-1 pb-6 bg-da-bg">
+        {/* Divider with mono label */}
+        <div className="flex items-center gap-2.5 mb-3.5">
+          <div className="flex-1 h-px bg-da-navy/20" />
+          <span className="font-mono text-[10px] text-da-navy/60 tracking-[0.15em]">
+            velg eksamen
+          </span>
+          <div className="flex-1 h-px bg-da-navy/20" />
         </div>
 
-        {/* Smart resume (hidden unless a fresh last session exists) */}
-        {resume && (
-          <button
-            onClick={() => navigate(sessionToPath(resume))}
-            className="quiz-option w-full mb-6 bg-white border-2 border-blue-200 hover:border-blue-400 hover:bg-blue-50 text-blue-900 font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-between"
+        {/* Smart resume — only if recent session exists */}
+        {lastSession && (
+          <Link
+            to={sessionToPath(lastSession)}
+            className="quiz-option block bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-none px-3 py-2.5 mb-4 hover:bg-da-cream/20 transition-colors"
           >
-            <span className="flex items-center gap-2">
-              <span aria-hidden="true">↻</span>
-              <span>Fortsett: {describeSession(resume)}</span>
-            </span>
-            <span aria-hidden="true">→</span>
-          </button>
+            <div className="font-mono text-[9px] text-da-gold tracking-[0.15em] mb-0.5">
+              fortsett
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[13px] font-medium text-da-navy">
+                {describeSession(lastSession)}
+              </span>
+              <span className="font-mono text-[11px] text-da-text-muted">
+                {sessionDisplayStats(lastSession)}
+              </span>
+            </div>
+          </Link>
         )}
 
-        {/* Exam cards — step 1 of the two-step flow. Tapping opens the mode
-            picker at /exam/:examType, not a quiz directly. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {exams.map((exam) => (
-            <button
-              key={exam.id}
-              onClick={() => navigate(`/exam/${exam.id}`)}
-              className="quiz-option group bg-white hover:bg-blue-50 rounded-xl shadow-md hover:shadow-lg border-2 border-blue-100 hover:border-blue-400 p-8 flex flex-col items-center justify-center min-h-[140px] transition-all"
-            >
-              <span className="text-3xl font-bold text-blue-900 mb-1">
-                {exam.name}
-              </span>
-              <span className="text-sm text-gray-500 group-hover:text-blue-700 transition-colors">
-                Velg modus →
-              </span>
-            </button>
-          ))}
+        {/* ═══ A2 card — dominant, primary ═══ */}
+        <Link
+          to="/exam/A2"
+          className="quiz-option relative block bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 hover:shadow-sm transition-shadow"
+        >
+          <CrosshairMarks variant="solid" />
+          <div className="font-mono text-[10px] text-da-gold tracking-[0.18em] font-medium mb-1.5">
+            trafikkstasjon
+          </div>
+          <div className="text-[34px] font-medium text-da-navy leading-none mb-2.5 tracking-tight">
+            A2
+          </div>
+          <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3.5">
+            Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.
+          </p>
+          <ModePillRow variant="primary" />
+        </Link>
+
+        {/* ═══ A1/A3 card — quiet, secondary ═══ */}
+        <Link
+          to="/exam/A1_A3"
+          className="quiz-option relative block bg-transparent border-[0.5px] border-dashed border-da-navy/15 rounded-lg px-4 pt-3.5 pb-3 mb-4 hover:border-da-navy/30 transition-colors"
+        >
+          <div className="font-mono text-[9px] text-da-text-faded tracking-[0.15em] mb-1">
+            online, gratis
+          </div>
+          <div className="flex items-baseline justify-between mb-1.5">
+            <div className="text-xl font-medium text-da-text-dim leading-none tracking-tight">
+              A1 / A3
+            </div>
+            <span className="font-mono text-[10px] text-da-text-faded">
+              grunnleggende
+            </span>
+          </div>
+          <p className="text-[11.5px] text-da-text-faded leading-[1.5] mb-2.5">
+            Øv gratis før du tar A2.
+          </p>
+          <ModePillRow variant="muted" />
+        </Link>
+
+        {/* Footer stats — hardcoded for Round 2; Round 3 will wire
+            live counts from Supabase. See brief §4. */}
+        <div className="flex items-center justify-between pt-3 border-t-[0.5px] border-da-navy/15">
+          <span className="font-mono text-[10px] text-da-text-muted tracking-wide">
+            148 spørsmål · 13 kategorier
+          </span>
+          <span className="font-mono text-[10px] text-da-text-muted">v1.0</span>
         </div>
       </div>
     </div>

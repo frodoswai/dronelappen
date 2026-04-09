@@ -77,6 +77,31 @@ export function describeSession(session) {
 }
 
 /**
+ * Short, mono-friendly relative time label for the right-hand side of
+ * the smart resume button. Round 2 doesn't yet persist per-session
+ * scores or durations, so until those land the "stats" we can honestly
+ * show is how long ago the user was last in the app.
+ *
+ * Round 3 will swap this for the real `"5:43 · 27/30"` format described
+ * in the Round 2 brief, once Quiz/Rapid/Practice start writing score
+ * and duration back into the session log on finish.
+ */
+export function sessionDisplayStats(session) {
+  if (!session || typeof session.startedAt !== 'number') return ''
+  const diffMs = Date.now() - session.startedAt
+  const minutes = Math.floor(diffMs / 60000)
+  if (minutes < 1) return 'nå nettopp'
+  if (minutes < 60) return `${minutes} min siden`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours} t siden`
+  const days = Math.floor(hours / 24)
+  if (days === 1) return 'i går'
+  if (days < 7) return `${days} dager siden`
+  const weeks = Math.floor(days / 7)
+  return `${weeks} uke${weeks > 1 ? 'r' : ''} siden`
+}
+
+/**
  * Build the in-app route for a session entry so a smart-resume tap can
  * navigate straight to the right screen.
  */
