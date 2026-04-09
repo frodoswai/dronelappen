@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import QuizLayout from '../components/QuizLayout'
+import CrosshairMarks from '../components/CrosshairMarks'
 
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
@@ -18,6 +19,10 @@ function shuffleArray(array) {
   return arr
 }
 
+// Round 3: Tempo mode. Shares QuizLayout and the question-card styling
+// with Quiz, but keeps its own inline finish screen because Rapid isn't
+// a pass/fail exam — it's a stopwatch achievement with score-aware copy
+// and a `handleStop` early-exit path that Results.jsx doesn't understand.
 export default function Rapid() {
   const { examType } = useParams()
   const navigate = useNavigate()
@@ -191,20 +196,22 @@ export default function Rapid() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <p className="text-gray-600 text-lg">Laster spørsmål...</p>
+      <div className="min-h-screen bg-da-navy-dark flex items-center justify-center p-4">
+        <p className="font-mono text-[12px] tracking-[0.1em] text-da-dark-slogan">
+          laster spørsmål…
+        </p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen bg-da-bg flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="text-red-600 text-lg">{error}</p>
+          <p className="text-red-700 text-base mb-4">{error}</p>
           <button
             onClick={() => navigate('/')}
-            className="mt-4 bg-blue-900 text-white px-6 py-2 rounded-lg"
+            className="quiz-option bg-da-navy text-da-bg font-medium py-3 px-6 rounded-lg"
           >
             Tilbake til hjem
           </button>
@@ -213,6 +220,11 @@ export default function Rapid() {
     )
   }
 
+  // ═══ Finish screen ═══
+  // Rebuilt Round 3 with the same dark hero + stats card pattern as
+  // Results.jsx. Rapid has its own finish screen (not /results) because
+  // the score-aware copy and handleStop early-exit don't fit the Results
+  // state shape.
   if (finished || !currentQuestion) {
     const pct =
       answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0
@@ -221,88 +233,115 @@ export default function Rapid() {
     // achievement. Copy gets warmer as the score climbs.
     const isPerfect = answeredCount > 0 && correctCount === answeredCount
     let headline
-    let useCheck = false
+    let moodLabel
     if (isPerfect) {
-      headline = 'Perfekt løp! ⚡'
-      useCheck = true
+      headline = 'Perfekt løp'
+      moodLabel = 'uten feil'
     } else if (pct >= 90) {
-      headline = 'Sterkt tempo!'
+      headline = 'Sterkt tempo'
+      moodLabel = 'nesten uten feil'
     } else if (pct >= 75) {
-      headline = 'Bra jobba!'
+      headline = 'Bra jobba'
+      moodLabel = 'solid innsats'
     } else {
       headline = 'Fortsett å øve'
+      moodLabel = 'hver runde teller'
     }
 
+    const fadeClass = `transition-all duration-500 ${
+      rapidMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+    }`
+
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
-        <div className="max-w-lg mx-auto py-8">
-          <div
-            className={`bg-amber-50 border border-amber-200 rounded-xl shadow-md p-8 text-center transition-all duration-500 ${
-              rapidMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-            }`}
-          >
-            <div className="flex justify-center mb-4">
-              {useCheck ? (
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.4}
-                  className="w-16 h-16 text-green-600"
-                  aria-hidden="true"
-                >
-                  <circle cx="24" cy="24" r="20" />
-                  <path d="M15 24 L22 31 L34 18" />
-                </svg>
-              ) : (
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.4}
-                  className="w-16 h-16 text-amber-600"
-                  aria-hidden="true"
-                >
-                  <path d="M26 4 L12 28 L22 28 L20 44 L36 20 L26 20 Z" />
-                </svg>
-              )}
+      <div className="min-h-screen bg-da-bg flex flex-col">
+        {/* ═══ Dark hero ═══ */}
+        <div className="bg-da-navy-dark px-6 pt-3 pb-5">
+          <div className="pt-8">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.12em]">
+                tempo · {poolLabel}
+              </span>
             </div>
             <h1
               role="status"
-              className="text-3xl font-bold text-amber-800 mb-4 tracking-wide"
+              className="text-[32px] font-medium text-da-bg leading-none tracking-tight mb-1"
             >
               {headline}
             </h1>
-            <p className="text-6xl font-extrabold text-amber-700 font-mono tabular-nums leading-none mb-2">
-              {formatMs(displayMs)}
+            <p className="font-serif italic text-sm text-da-dark-slogan">
+              {moodLabel}
             </p>
-            <p className="text-sm text-amber-900 mb-5">
-              på {answeredCount} spørsmål
-            </p>
-            <p className="text-lg text-gray-800 mb-1">
-              <span className="font-mono tabular-nums font-semibold">
-                {correctCount} / {answeredCount}
-              </span>{' '}
-              riktige ·{' '}
-              <span className="font-mono tabular-nums">{pct}%</span>
-            </p>
-            <p className="text-sm text-gray-500 mb-6">
-              {poolLabel} · Rapid
-            </p>
-            <div className="space-y-3">
+          </div>
+        </div>
+
+        {/* ═══ Fade transition ═══ */}
+        <div
+          className="h-7 shrink-0"
+          style={{
+            background:
+              'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
+          }}
+        />
+
+        {/* ═══ Light content zone ═══ */}
+        <div className="px-6 pt-2 pb-6 bg-da-bg">
+          <div className="max-w-lg mx-auto">
+            {/* Stats card — hero time front and center, crosshair marks
+                to echo the ExamSelect Tempo card accent. */}
+            <div
+              className={`relative bg-white border-[0.5px] border-da-gold rounded-lg px-6 pt-6 pb-5 mb-4 ${fadeClass}`}
+            >
+              <CrosshairMarks variant="gold" />
+
+              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] text-center mb-2">
+                tid
+              </div>
+              <div className="text-[48px] font-medium font-mono tabular-nums text-da-navy leading-none text-center mb-3 tracking-tight">
+                {formatMs(displayMs)}
+              </div>
+              <div className="text-center mb-4">
+                <span className="font-mono text-[12px] text-da-text-muted tracking-wide">
+                  på {answeredCount}{' '}
+                  {answeredCount === 1 ? 'spørsmål' : 'spørsmål'}
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div className="h-px bg-da-navy/15 mb-4" />
+
+              {/* Secondary stats — riktige + prosent */}
+              <div className="flex items-baseline justify-between">
+                <div>
+                  <div className="font-mono text-[10px] text-da-text-muted tracking-[0.1em] uppercase mb-0.5">
+                    riktige
+                  </div>
+                  <div className="font-mono text-[20px] font-semibold text-da-navy tabular-nums">
+                    {correctCount}/{answeredCount}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-mono text-[10px] text-da-text-muted tracking-[0.1em] uppercase mb-0.5">
+                    score
+                  </div>
+                  <div className="font-mono text-[20px] font-semibold text-da-gold tabular-nums">
+                    {pct}%
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons — navy primary, white secondary */}
+            <div className="space-y-2.5">
               <button
                 onClick={() => navigate(`/exam/${examType}`)}
-                className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                Start på nytt
+                <span>Nytt løp</span>
+                <span className="font-mono text-[12px] text-da-gold">→</span>
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors"
+                className="quiz-option w-full bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors"
               >
                 Tilbake til hjem
               </button>
@@ -316,46 +355,34 @@ export default function Rapid() {
   const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F']
   const isAnswered = selectedAnswer !== null
 
-  // Background flash on correct/wrong
+  // Background flash on correct/wrong — kept subtle against the da-bg
+  // light zone. Wrong uses amber (never harsh red) to stay on-palette.
   const bgFlash =
     feedback === 'correct'
-      ? 'bg-green-50'
+      ? '!bg-green-50'
       : feedback === 'wrong'
-      ? 'bg-red-50'
+      ? '!bg-amber-50'
       : null
 
-  const header = (
-    <div className="flex justify-between items-center text-sm text-gray-600 gap-2">
-      <span className="truncate">
-        Rapid — {poolLabel} · {correctCount}/{answeredCount} riktige ·{' '}
-        {currentIndex + 1}/{questions.length}
-      </span>
-      <span className="flex items-center gap-2 shrink-0">
-        <span
-          className="font-semibold tabular-nums text-amber-700"
-          aria-label="Tid brukt"
-        >
-          ⏱ {formatMs(elapsedMs)}
-        </span>
-        <button
-          onClick={handleStop}
-          className="text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-2 py-1 rounded transition-colors"
-        >
-          Stopp
-        </button>
-      </span>
-    </div>
-  )
+  const headerStats = `${correctCount}/${answeredCount} riktige`
 
   return (
-    <QuizLayout header={header} flashBg={bgFlash}>
-      {/* Question card — tightened padding */}
-      <div className="bg-white rounded-lg shadow-md p-4">
-        <h2 className="text-base font-semibold text-gray-800 mb-4 leading-snug">
+    <QuizLayout
+      mode="tempo"
+      examType={examType}
+      progress={{ current: currentIndex + 1, total: questions.length }}
+      stats={headerStats}
+      timer={`⏱ ${formatMs(elapsedMs)}`}
+      onStop={handleStop}
+      flashBg={bgFlash}
+    >
+      {/* ═══ Question card ═══ */}
+      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5">
+        <h2 className="text-[15px] font-medium text-da-navy mb-4 leading-[1.45]">
           {currentQuestion.question_text}
         </h2>
 
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {currentQuestion.options.map((option, idx) => {
             const optLabel = optionLabels[idx] || option.id.toUpperCase()
             const isSelected = selectedAnswer === option.id
@@ -363,17 +390,18 @@ export default function Rapid() {
               option.id === currentQuestion.correct_option_id
 
             let btnClass =
-              'quiz-option w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+              'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
 
             if (!isAnswered) {
               btnClass +=
-                'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
+                'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
             } else if (isCorrectOpt) {
-              btnClass += 'border-green-500 bg-green-100 text-gray-900'
+              btnClass += 'bg-green-50 border-green-500 text-da-navy'
             } else if (isSelected && !isCorrectOpt) {
-              btnClass += 'border-red-500 bg-red-100 text-gray-900'
+              btnClass += 'bg-amber-50 border-amber-500 text-da-navy'
             } else {
-              btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
+              btnClass +=
+                'bg-white border-da-navy/15 text-da-text-dim opacity-50'
             }
 
             // Composite key forces React to unmount/remount the button
@@ -386,22 +414,25 @@ export default function Rapid() {
                 disabled={isAnswered}
                 className={btnClass}
               >
-                <span className="font-bold mr-3">{optLabel}.</span>
-                {option.text}
+                <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
+                  {optLabel}
+                </span>
+                <span className="text-[14px] leading-[1.45]">{option.text}</span>
               </button>
             )
           })}
         </div>
 
-        {/* Wrong-answer feedback line */}
+        {/* Wrong-answer feedback line — shown during the 2.5s pause so
+            the user has a chance to register what the right answer was. */}
         {feedback === 'wrong' && (
-          <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-900 text-sm">
-              <span className="font-semibold">Feil.</span> Riktig svar:{' '}
-              {getOptionText(
-                currentQuestion,
-                currentQuestion.correct_option_id
-              )}
+          <div className="mt-4 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-2.5">
+            <p className="font-mono text-[11px] font-semibold tracking-[0.1em] text-amber-700 mb-1">
+              ✗ feil
+            </p>
+            <p className="text-[12.5px] text-da-text-body leading-[1.5]">
+              <span className="font-medium text-da-navy">Riktig svar:</span>{' '}
+              {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
             </p>
           </div>
         )}

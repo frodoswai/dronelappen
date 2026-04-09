@@ -6,6 +6,7 @@ import QuizLayout from '../components/QuizLayout'
 // Exam mode wall-clock budget. Using a constant keeps the display/fix and
 // handleTimeUp math in sync.
 const EXAM_DURATION_MS = 60 * 60 * 1000 // 60 min
+const LOW_TIME_MS = 5 * 60 * 1000
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -17,6 +18,11 @@ function shuffleArray(array) {
   return arr
 }
 
+// Round 3: this page handles both Eksamen (/quiz/:examType) and Læring
+// (/practice/:examType). The two modes share question fetching, option
+// shuffling, wall-clock timer (Eksamen only), and analytics logging —
+// they diverge only in header label, pass/fail context, and whether the
+// explanation card appears after each answer.
 export default function Quiz() {
   const { examType } = useParams()
   const navigate = useNavigate()
@@ -96,20 +102,27 @@ export default function Quiz() {
     return opt ? opt.text : optionId
   }
 
+  // Loading — match the Round 2 dark-hero language instead of a bare
+  // white flash.
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <p className="text-gray-600 text-lg">Laster spørsmål...</p>
+      <div className="min-h-screen bg-da-navy-dark flex items-center justify-center p-4">
+        <p className="font-mono text-[12px] tracking-[0.1em] text-da-dark-slogan">
+          laster spørsmål…
+        </p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen bg-da-bg flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="text-red-600 text-lg">{error}</p>
-          <button onClick={() => navigate('/')} className="mt-4 bg-blue-900 text-white px-6 py-2 rounded-lg">
+          <p className="text-red-700 text-base mb-4">{error}</p>
+          <button
+            onClick={() => navigate('/')}
+            className="quiz-option bg-da-navy text-da-bg font-medium py-3 px-6 rounded-lg"
+          >
             Tilbake til hjem
           </button>
         </div>
@@ -193,58 +206,59 @@ export default function Quiz() {
   // Dynamic labels based on shuffled position (A, B, C, D...)
   const optionLabels = ['A', 'B', 'C', 'D', 'E', 'F']
 
-  // Compact one-line header: mode · progress · (timer | practice score)
-  const modeLabel = isPracticeMode ? 'Øv' : 'Eksamen'
-  const progressLabel = `Spørsmål ${currentIndex + 1}/${questions.length}`
+  // QuizLayout props
   const answeredSoFar = currentIndex + (isAnswered ? 1 : 0)
-
-  const header = (
-    <>
-      <div className="flex justify-between items-center text-sm text-gray-600">
-        <span className="truncate">
-          {modeLabel} · {progressLabel}
-          {isPracticeMode && ` · ${correctCount}/${answeredSoFar} riktige`}
-        </span>
-        {needsTimer && (
-          <span className={`font-semibold tabular-nums ${remainingMs !== null && remainingMs <= 5 * 60 * 1000 ? 'text-red-600' : 'text-gray-700'}`}>
-            {formatMs(remainingMs)}
-          </span>
-        )}
-      </div>
-      <div className="w-full bg-gray-200 rounded-full h-1 mt-2">
-        <div
-          className="bg-blue-900 h-1 rounded-full transition-all duration-300"
-          style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-        />
-      </div>
-    </>
-  )
+  const layoutMode = isPracticeMode ? 'laering' : 'eksamen'
+  const layoutStats = isPracticeMode && answeredSoFar > 0
+    ? `${correctCount}/${answeredSoFar} riktige`
+    : null
+  const layoutTimer = needsTimer && remainingMs !== null ? formatMs(remainingMs) : null
+  const timerUrgent = needsTimer && remainingMs !== null && remainingMs <= LOW_TIME_MS
 
   return (
-    <QuizLayout header={header}>
-      {/* Question card — tightened padding */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-3">
-        <h2 className="text-base font-semibold text-gray-800 mb-4 leading-snug">
+    <QuizLayout
+      mode={layoutMode}
+      examType={examType}
+      progress={{ current: currentIndex + 1, total: questions.length }}
+      stats={layoutStats}
+      timer={layoutTimer}
+      timerUrgent={timerUrgent}
+    >
+      {/* ═══ Question card ═══
+          Round 3: white surface, 0.5px navy hairline border, no shadow.
+          Matches the quiet-but-precise HUD aesthetic from Home/ExamSelect. */}
+      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5 mb-4">
+        <h2 className="text-[15px] font-medium text-da-navy mb-4 leading-[1.45]">
           {currentQuestion.question_text}
         </h2>
 
         {/* Options — rendered in shuffled order with positional labels */}
-        <div className="space-y-2 mb-2">
+        <div className="space-y-2.5">
           {currentQuestion.options.map((option, idx) => {
             const optLabel = optionLabels[idx] || option.id.toUpperCase()
             const isSelected = selectedAnswer === option.id
             const isCorrectOpt = option.id === currentQuestion.correct_option_id
 
-            let btnClass = 'quiz-option w-full p-3 text-left rounded-lg border-2 font-medium transition-all '
+            // Round 3 state palette:
+            //   idle     → white / navy hairline
+            //   correct  → green tint, green border
+            //   wrong    → amber tint, amber border (never harsh red)
+            //   dim      → 50% opacity on non-chosen options after answer
+            let btnClass =
+              'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
 
             if (!isAnswered) {
-              btnClass += 'border-blue-300 bg-white hover:bg-blue-50 text-gray-800 cursor-pointer'
+              btnClass +=
+                'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
             } else if (isCorrectOpt) {
-              btnClass += 'border-green-500 bg-green-50 text-gray-800'
+              btnClass +=
+                'bg-green-50 border-green-500 text-da-navy'
             } else if (isSelected && !isCorrectOpt) {
-              btnClass += 'border-red-500 bg-red-50 text-gray-800'
+              btnClass +=
+                'bg-amber-50 border-amber-500 text-da-navy'
             } else {
-              btnClass += 'border-gray-300 bg-gray-50 text-gray-800'
+              btnClass +=
+                'bg-white border-da-navy/15 text-da-text-dim opacity-50'
             }
 
             // Composite key forces React to unmount/remount per question,
@@ -256,38 +270,50 @@ export default function Quiz() {
                 disabled={isAnswered}
                 className={btnClass}
               >
-                <span className="font-bold mr-3">{optLabel}.</span>
-                {option.text}
+                <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
+                  {optLabel}
+                </span>
+                <span className="text-[14px] leading-[1.45]">{option.text}</span>
               </button>
             )
           })}
         </div>
 
-        {/* Explanation */}
+        {/* Explanation — shown after each answer in Læring, after each in
+            Eksamen too (unchanged behavior). Cream tint + gold accent bar
+            keeps it distinct from the correct/wrong answer buttons above. */}
         {showExplanation && (
-          <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p className="text-sm font-semibold text-amber-900 mb-1">
-              {isCorrect ? '✓ Riktig svar' : '✗ Feil svar'}
+          <div className="mt-4 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-3">
+            <p
+              className={`font-mono text-[11px] font-semibold tracking-[0.1em] mb-1.5 ${
+                isCorrect ? 'text-green-700' : 'text-amber-700'
+              }`}
+            >
+              {isCorrect ? '✓ riktig' : '✗ feil'}
             </p>
-            <p className="text-gray-700 text-sm mb-1">
-              <span className="font-semibold">Forklaring:</span>{' '}
+            {!isCorrect && (
+              <p className="text-[12.5px] text-da-text-body mb-1.5 leading-[1.5]">
+                <span className="font-medium text-da-navy">Riktig svar:</span>{' '}
+                {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
+              </p>
+            )}
+            <p className="text-[12.5px] text-da-text-body leading-[1.5]">
               {currentQuestion.explanation}
-            </p>
-            <p className="text-gray-600 text-xs">
-              <span className="font-semibold">Riktig svar:</span>{' '}
-              {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
             </p>
           </div>
         )}
       </div>
 
-      {/* Next button */}
+      {/* Next / finish button — shows only after answer committed */}
       {isAnswered && (
         <button
           onClick={handleNext}
-          className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+          className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
         >
-          {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
+          <span>
+            {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
+          </span>
+          <span className="font-mono text-[12px] text-da-gold">→</span>
         </button>
       )}
     </QuizLayout>
