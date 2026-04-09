@@ -17,9 +17,12 @@ export default function Home() {
     setResume(getLastSession())
   }, [])
 
+  // A2 first — DroneLappen's primary target audience is A2 candidates;
+  // A1/A3 is the stepping stone. Order matters across cards, lists, and
+  // copy throughout the app.
   const exams = [
-    { id: 'A1_A3', name: 'A1/A3' },
     { id: 'A2', name: 'A2' },
+    { id: 'A1_A3', name: 'A1/A3' },
   ]
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import QuizLayout from '../components/QuizLayout'
@@ -42,6 +42,18 @@ export default function Rapid() {
 
   // Track pending timers so we can clean them up on unmount / stop
   const timerRef = useRef(null)
+
+  // One-shot fade-in for the finish screen. No confetti, no bouncing.
+  const [rapidMounted, setRapidMounted] = useState(false)
+  useEffect(() => {
+    if (!finished) return
+    const id = requestAnimationFrame(() => setRapidMounted(true))
+    return () => cancelAnimationFrame(id)
+  }, [finished])
+
+  // Short label used by the header and the finish screen. Computed up
+  // front so it's in scope before the early-return finish block.
+  const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -205,30 +217,85 @@ export default function Rapid() {
     const pct =
       answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0
     const displayMs = finalElapsedMs ?? elapsedMs
+    // Score-aware headline — Rapid isn't pass/fail, it's a personal
+    // achievement. Copy gets warmer as the score climbs.
+    const isPerfect = answeredCount > 0 && correctCount === answeredCount
+    let headline
+    let useCheck = false
+    if (isPerfect) {
+      headline = 'Perfekt løp! ⚡'
+      useCheck = true
+    } else if (pct >= 90) {
+      headline = 'Sterkt tempo!'
+    } else if (pct >= 75) {
+      headline = 'Bra jobba!'
+    } else {
+      headline = 'Fortsett å øve'
+    }
+
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4">
         <div className="max-w-lg mx-auto py-8">
-          <div className="bg-white rounded-lg shadow-md p-6 text-center">
-            <h1 className="text-2xl font-bold text-blue-900 mb-4">
-              Rapid ferdig
-            </h1>
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">
-              <p className="text-sm text-amber-900 mb-1">Du brukte</p>
-              <p className="text-4xl font-bold text-amber-700 tabular-nums">
-                {formatMs(displayMs)}
-              </p>
-              <p className="text-sm text-amber-900 mt-1">
-                på {answeredCount} spørsmål
-              </p>
+          <div
+            className={`bg-amber-50 border border-amber-200 rounded-xl shadow-md p-8 text-center transition-all duration-500 ${
+              rapidMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+            }`}
+          >
+            <div className="flex justify-center mb-4">
+              {useCheck ? (
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.4}
+                  className="w-16 h-16 text-green-600"
+                  aria-hidden="true"
+                >
+                  <circle cx="24" cy="24" r="20" />
+                  <path d="M15 24 L22 31 L34 18" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.4}
+                  className="w-16 h-16 text-amber-600"
+                  aria-hidden="true"
+                >
+                  <path d="M26 4 L12 28 L22 28 L20 44 L36 20 L26 20 Z" />
+                </svg>
+              )}
             </div>
-            <p className="text-gray-700 text-lg mb-2">
-              Riktige: <span className="font-semibold">{correctCount}</span> /{' '}
-              {answeredCount}
+            <h1
+              role="status"
+              className="text-3xl font-bold text-amber-800 mb-4 tracking-wide"
+            >
+              {headline}
+            </h1>
+            <p className="text-6xl font-extrabold text-amber-700 font-mono tabular-nums leading-none mb-2">
+              {formatMs(displayMs)}
             </p>
-            <p className="text-gray-600 mb-6">{pct}% riktige</p>
+            <p className="text-sm text-amber-900 mb-5">
+              på {answeredCount} spørsmål
+            </p>
+            <p className="text-lg text-gray-800 mb-1">
+              <span className="font-mono tabular-nums font-semibold">
+                {correctCount} / {answeredCount}
+              </span>{' '}
+              riktige ·{' '}
+              <span className="font-mono tabular-nums">{pct}%</span>
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              {poolLabel} · Rapid
+            </p>
             <div className="space-y-3">
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => navigate(`/exam/${examType}`)}
                 className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
               >
                 Start på nytt
@@ -256,8 +323,6 @@ export default function Rapid() {
       : feedback === 'wrong'
       ? 'bg-red-50'
       : null
-
-  const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
 
   const header = (
     <div className="flex justify-between items-center text-sm text-gray-600 gap-2">

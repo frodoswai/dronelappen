@@ -118,7 +118,23 @@ export default function Quiz() {
   }
 
   if (quizComplete) {
-    navigate('/results', { state: { questions, answers, isPracticeMode, examType } })
+    // A2 Eksamen is the only mode with a wall-clock timer, so it's the
+    // only mode that reports time used. Compute from startTime to capture
+    // the actual elapsed value even if the user finished early.
+    const timeUsedMs =
+      needsTimer && startTime !== null
+        ? Math.min(EXAM_DURATION_MS, Date.now() - startTime)
+        : null
+    navigate('/results', {
+      state: {
+        questions,
+        answers,
+        isPracticeMode,
+        examType,
+        timeUsedMs,
+        examDurationMs: needsTimer ? EXAM_DURATION_MS : null,
+      },
+    })
     return null
   }
 
