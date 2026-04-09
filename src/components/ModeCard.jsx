@@ -1,12 +1,16 @@
 import { Link } from 'react-router-dom'
 import CrosshairMarks from './CrosshairMarks'
 
-// Single mode card used on ExamSelect (Eksamen / Øv fritt / Rapid).
+// Single mode card used on ExamSelect (Eksamen / Læring / Tempo).
 // Three variants share the same shell but swap border, label color,
-// title color, and crosshair tint:
-//   primary — solid navy border, gold "label", navy title (Eksamen)
-//   neutral — soft navy border, muted label, navy title (Øv fritt)
-//   gold    — gold border + title, with the lightning bolt SVG (Rapid)
+// title color, crosshair tint, and the "start →" arrow color:
+//   primary — solid navy border, gold label, navy title (Eksamen)
+//   neutral — soft navy border, muted label, navy title (Læring)
+//   gold    — gold border + title, with the lightning bolt SVG (Tempo)
+//
+// Round 2.5: added explicit "start →" affordance in the bottom-right
+// of every card, and bumped the mono label from 10px to 12px for
+// arm's-length phone readability.
 export default function ModeCard({
   to,
   label,
@@ -22,18 +26,21 @@ export default function ModeCard({
       labelColor: 'text-da-gold',
       titleColor: 'text-da-navy',
       crosshairVariant: 'solid',
+      startColor: 'text-da-navy',
     },
     neutral: {
       border: 'border-da-navy/40',
       labelColor: 'text-da-text-muted',
       titleColor: 'text-da-navy',
       crosshairVariant: 'muted',
+      startColor: 'text-da-text-muted',
     },
     gold: {
       border: 'border-da-gold',
       labelColor: 'text-da-gold',
       titleColor: 'text-da-gold-text',
       crosshairVariant: 'gold',
+      startColor: 'text-da-gold',
     },
   }[variant]
 
@@ -45,7 +52,7 @@ export default function ModeCard({
     >
       <CrosshairMarks variant={config.crosshairVariant} />
       <div
-        className={`font-mono text-[10px] ${config.labelColor} tracking-[0.18em] font-medium mb-1.5`}
+        className={`font-mono text-[12px] ${config.labelColor} tracking-[0.12em] font-medium mb-1.5`}
       >
         {label}
       </div>
@@ -68,6 +75,16 @@ export default function ModeCard({
       <p className="text-[12.5px] text-da-text-body leading-[1.55]">
         {description}
       </p>
+
+      {/* Round 2.5: explicit clickability affordance. Crosshair marks
+          alone weren't reading as "tap me" on device testing. */}
+      <div className="flex justify-end mt-3">
+        <span
+          className={`font-mono text-[11px] ${config.startColor} tracking-[0.1em]`}
+        >
+          start →
+        </span>
+      </div>
     </Link>
   )
 }

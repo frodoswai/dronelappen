@@ -62,16 +62,19 @@ export function getLastSession({ maxAgeMs = STALE_MS } = {}) {
 }
 
 /**
- * Human-readable label for a session — e.g. "A2 Rapid", "A1/A3 Eksamen".
+ * Human-readable label for a session — e.g. "A2 Tempo", "A1/A3 Eksamen".
+ * Round 2.5 renamed the modes: "rapid" → "Tempo", "practice" → "Læring".
+ * URL slugs stayed on /rapid and /practice to keep existing bookmarks
+ * working — only the display labels changed.
  */
 export function describeSession(session) {
   if (!session) return ''
   const examLabel = session.examType === 'A1_A3' ? 'A1/A3' : 'A2'
   const modeLabel =
     session.mode === 'rapid'
-      ? 'Rapid'
+      ? 'Tempo'
       : session.mode === 'practice'
-      ? 'Øv fritt'
+      ? 'Læring'
       : 'Eksamen'
   return `${examLabel} ${modeLabel}`
 }

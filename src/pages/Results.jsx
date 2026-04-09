@@ -206,7 +206,7 @@ export default function Results() {
           </span>
         </p>
         <p className="text-sm text-gray-500 mb-6">
-          {examLabel} · Øv fritt
+          {examLabel} · Læring
         </p>
 
         <div className="space-y-3">

@@ -10,12 +10,18 @@ import { recordSessionStart } from '../lib/sessionHistory'
 // Session recording happens on mode commit (the tap that actually
 // launches the quiz), so the smart resume on Home always points at
 // the last committed session.
+//
+// Round 2.5: mode renames (Øv fritt → Læring, Rapid → Tempo), tag
+// tweaks (praksis → teori, trafikkstasjon → trafikkstasjonen), mono
+// labels bumped for phone readability, and every mode card now has
+// an explicit "start →" affordance. URL slugs stay on /practice and
+// /rapid so existing bookmarks keep working.
 export default function ExamSelect() {
   const { examType } = useParams()
   const navigate = useNavigate()
 
   const isA2 = examType === 'A2'
-  const categoryLabel = isA2 ? 'trafikkstasjon' : 'online, gratis'
+  const categoryLabel = isA2 ? 'trafikkstasjonen' : 'online, gratis'
   const displayName = isA2 ? 'A2' : 'A1 / A3'
 
   const examDescription = isA2
@@ -40,7 +46,7 @@ export default function ExamSelect() {
             >
               ←
             </button>
-            <span className="font-mono text-[10px] text-da-gold tracking-[0.15em]">
+            <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.1em]">
               {categoryLabel}
             </span>
           </div>
@@ -59,11 +65,13 @@ export default function ExamSelect() {
         }}
       />
 
-      {/* ═══ Three mode cards ═══ */}
-      <div className="flex-1 px-6 pt-2 pb-6 bg-da-bg">
+      {/* ═══ Three mode cards ═══
+          Round 2.5: flex-1 removed so the content sizes naturally and
+          the global Footer sits right under the cards on tall screens. */}
+      <div className="px-6 pt-2 pb-6 bg-da-bg">
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[10px] text-da-navy/60 tracking-[0.15em]">
+          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
             velg modus
           </span>
           <div className="flex-1 h-px bg-da-navy/20" />
@@ -80,17 +88,21 @@ export default function ExamSelect() {
 
         <ModeCard
           to={`/practice/${examType}`}
-          label="praksis"
-          title="Øv fritt"
+          label="teori"
+          title="Læring"
           description="Lær i ditt eget tempo. Forklaring etter hvert svar."
           variant="neutral"
           onClick={start('practice')}
         />
 
+        {/* Round 2.5 rename: Rapid → Tempo. The old label "tempo"
+            would now be redundant with the title "Tempo", so the
+            category tag moves to "hurtig" — the speed framing the
+            Rapid card always had. */}
         <ModeCard
           to={`/rapid/${examType}`}
-          label="tempo"
-          title="Rapid"
+          label="hurtig"
+          title="Tempo"
           description="Test farten din. Riktig = videre, feil = lær og videre."
           variant="gold"
           showBolt

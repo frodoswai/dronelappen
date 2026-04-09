@@ -10,7 +10,7 @@ import {
   describeSession,
 } from '../lib/sessionHistory'
 
-// Home — Round 2 visual redesign.
+// Home — Round 2 visual redesign, Round 2.5 refinements applied.
 //
 // Three stacked sections:
 //   1. Dark navy hero with wordmark + gold propeller SVG bleed
@@ -18,8 +18,15 @@ import {
 //   3. Light content zone: resume strip, A2 card (dominant),
 //      A1/A3 card (quiet), stats footer
 //
-// The hierarchy flip — A2 strong / A1/A3 whisper — is the most
-// important decision in this round. Don't soften either direction.
+// Round 2.5 changes here:
+//   - Mono labels bumped up a pt or two for phone readability
+//   - Category tag: trafikkstasjon → trafikkstasjonen (definite form)
+//   - Fortsett card gets a cream tint + more padding so smart resume
+//     clearly reads as the top CTA when it exists
+//   - Both exam cards now end in an explicit "velg modus →" indicator
+//     because the corner crosshairs alone didn't read as "tap me"
+//   - flex-1 removed from the light zone — content sizes naturally
+//     instead of stretching to viewport
 export default function Home() {
   const [lastSession, setLastSession] = useState(null)
 
@@ -62,23 +69,25 @@ export default function Home() {
       />
 
       {/* ═══ Light content zone ═══ */}
-      <div className="flex-1 px-6 pt-1 pb-6 bg-da-bg">
+      <div className="px-6 pt-1 pb-6 bg-da-bg">
         {/* Divider with mono label */}
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[10px] text-da-navy/60 tracking-[0.15em]">
+          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
             velg eksamen
           </span>
           <div className="flex-1 h-px bg-da-navy/20" />
         </div>
 
-        {/* Smart resume — only if recent session exists */}
+        {/* Smart resume — only if recent session exists. Round 2.5
+            adds the cream tint + extra padding so this card is
+            visibly the primary CTA when shown. */}
         {lastSession && (
           <Link
             to={sessionToPath(lastSession)}
-            className="quiz-option block bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-none px-3 py-2.5 mb-4 hover:bg-da-cream/20 transition-colors"
+            className="quiz-option block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-none px-4 py-3 mb-4 hover:bg-da-cream/60 transition-colors"
           >
-            <div className="font-mono text-[9px] text-da-gold tracking-[0.15em] mb-0.5">
+            <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
               fortsett
             </div>
             <div className="flex items-center justify-between gap-2">
@@ -98,8 +107,8 @@ export default function Home() {
           className="quiz-option relative block bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 hover:shadow-sm transition-shadow"
         >
           <CrosshairMarks variant="solid" />
-          <div className="font-mono text-[10px] text-da-gold tracking-[0.18em] font-medium mb-1.5">
-            trafikkstasjon
+          <div className="font-mono text-[12px] text-da-gold tracking-[0.12em] font-medium mb-1.5">
+            trafikkstasjonen
           </div>
           <div className="text-[34px] font-medium text-da-navy leading-none mb-2.5 tracking-tight">
             A2
@@ -108,6 +117,11 @@ export default function Home() {
             Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.
           </p>
           <ModePillRow variant="primary" />
+          <div className="flex justify-end mt-3">
+            <span className="font-mono text-[11px] text-da-gold tracking-[0.1em]">
+              velg modus →
+            </span>
+          </div>
         </Link>
 
         {/* ═══ A1/A3 card — quiet, secondary ═══ */}
@@ -115,14 +129,14 @@ export default function Home() {
           to="/exam/A1_A3"
           className="quiz-option relative block bg-transparent border-[0.5px] border-dashed border-da-navy/15 rounded-lg px-4 pt-3.5 pb-3 mb-4 hover:border-da-navy/30 transition-colors"
         >
-          <div className="font-mono text-[9px] text-da-text-faded tracking-[0.15em] mb-1">
+          <div className="font-mono text-[12px] font-medium text-da-text-faded tracking-[0.12em] mb-1">
             online, gratis
           </div>
           <div className="flex items-baseline justify-between mb-1.5">
             <div className="text-xl font-medium text-da-text-dim leading-none tracking-tight">
               A1 / A3
             </div>
-            <span className="font-mono text-[10px] text-da-text-faded">
+            <span className="font-mono text-[11px] text-da-text-faded">
               grunnleggende
             </span>
           </div>
@@ -130,15 +144,20 @@ export default function Home() {
             Øv gratis før du tar A2.
           </p>
           <ModePillRow variant="muted" />
+          <div className="flex justify-end mt-3">
+            <span className="font-mono text-[11px] text-da-text-faded tracking-[0.1em]">
+              velg modus →
+            </span>
+          </div>
         </Link>
 
         {/* Footer stats — hardcoded for Round 2; Round 3 will wire
-            live counts from Supabase. See brief §4. */}
+            live counts from Supabase. See Round 2 brief §4. */}
         <div className="flex items-center justify-between pt-3 border-t-[0.5px] border-da-navy/15">
-          <span className="font-mono text-[10px] text-da-text-muted tracking-wide">
+          <span className="font-mono text-[11px] text-da-text-muted tracking-wide">
             148 spørsmål · 13 kategorier
           </span>
-          <span className="font-mono text-[10px] text-da-text-muted">v1.0</span>
+          <span className="font-mono text-[11px] text-da-text-muted">v1.0</span>
         </div>
       </div>
     </div>
