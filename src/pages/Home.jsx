@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 import HeroPropeller from '../components/HeroPropeller'
 import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
@@ -29,12 +30,42 @@ import {
 //     instead of stretching to viewport
 export default function Home() {
   const [lastSession, setLastSession] = useState(null)
+  // Round 3.5: live counts from Supabase. null → loading (shows dots
+  // so there's no layout shift). Fire-and-forget — never block render
+  // and never surface errors to the UI; a failed fetch stays as dots.
+  const [stats, setStats] = useState({ questions: null, categories: null })
 
   // Smart resume — read on mount so we only render the strip if the
   // user has a fresh session in localStorage (stale > 14 days returns
   // null from getLastSession).
   useEffect(() => {
     setLastSession(getLastSession())
+  }, [])
+
+  // Fetch live question + category counts. Uses `count: 'exact', head: true`
+  // which returns only the count header — no rows shipped over the wire —
+  // so this stays cheap even as the question bank grows.
+  useEffect(() => {
+    let cancelled = false
+    async function fetchStats() {
+      try {
+        const [questionsResult, categoriesResult] = await Promise.all([
+          supabase.from('questions').select('id', { count: 'exact', head: true }),
+          supabase.from('categories').select('id', { count: 'exact', head: true }),
+        ])
+        if (cancelled) return
+        setStats({
+          questions: questionsResult.count,
+          categories: categoriesResult.count,
+        })
+      } catch (_) {
+        /* swallow — loading dots remain */
+      }
+    }
+    fetchStats()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   return (
@@ -51,6 +82,11 @@ export default function Home() {
             </h1>
             <span className="font-mono text-sm text-da-gold tracking-wide font-medium">
               .app
+            </span>
+            {/* Round 3.5: honest beta marker — no auth, question bank
+                still growing, features in active development */}
+            <span className="font-mono text-[10px] text-da-gold/70 tracking-[0.15em] font-medium ml-1.5 border border-da-gold/40 px-1.5 py-[1px] rounded-[2px] self-center">
+              beta
             </span>
           </div>
           <p className="font-serif italic text-sm text-da-dark-slogan">
@@ -151,11 +187,14 @@ export default function Home() {
           </div>
         </Link>
 
-        {/* Footer stats — hardcoded for Round 2; Round 3 will wire
-            live counts from Supabase. See Round 2 brief §4. */}
+        {/* Footer stats — Round 3.5 wired live from Supabase. Dots on
+            load so the layout doesn't shift when counts resolve. Errors
+            are swallowed silently (dots stay). */}
         <div className="flex items-center justify-between pt-3 border-t-[0.5px] border-da-navy/15">
-          <span className="font-mono text-[11px] text-da-text-muted tracking-wide">
-            148 spørsmål · 13 kategorier
+          <span className="font-mono text-[11px] text-da-text-muted tracking-wide tabular-nums">
+            {stats.questions !== null
+              ? `${stats.questions} spørsmål · ${stats.categories} kategorier`
+              : '··· spørsmål · ··· kategorier'}
           </span>
           <span className="font-mono text-[11px] text-da-text-muted">v1.0</span>
         </div>
