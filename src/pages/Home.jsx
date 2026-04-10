@@ -77,7 +77,19 @@ export default function Home() {
         {/* pt-8 leaves room for phone status bar bleed. z-10 so the
             text layers above the propeller SVG on narrow viewports. */}
         <div className="relative z-10 pt-8">
-          <div className="flex items-baseline gap-0.5 mb-2">
+          {/* Beta pill — sits above the wordmark, pushed right so it
+              hovers roughly above the end of "ppen.app". Like a small
+              status tag on a magazine cover. */}
+          <div className="flex justify-start mb-1">
+            <span
+              className="font-mono text-[10px] text-da-gold tracking-[0.12em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]"
+              style={{ marginLeft: '11rem' }}
+            >
+              Gratis i beta
+            </span>
+          </div>
+          {/* Wordmark */}
+          <div className="flex items-baseline gap-0.5 mb-1.5">
             <h1 className="text-3xl font-medium text-da-bg tracking-tight leading-none">
               DroneLappen
             </h1>
@@ -85,14 +97,7 @@ export default function Home() {
               .app
             </span>
           </div>
-          {/* Combined "Gratis i beta" pill — single unit, own line,
-              clear of propeller on narrow phones. Replaces the separate
-              beta tag + "foreløpig gratis" line from Round 3.6. */}
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-mono text-[10px] text-da-gold tracking-[0.12em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-              Gratis i beta
-            </span>
-          </div>
+          {/* Slogan */}
           <p className="font-serif italic text-sm text-da-dark-slogan">
             Bli en bedre dronepilot
           </p>
