@@ -5,7 +5,7 @@
 export default function HeroPropeller({ className = '' }) {
   return (
     <svg
-      className={`absolute pointer-events-none ${className}`}
+      className={`absolute pointer-events-none z-0 ${className}`}
       style={{ top: '-45px', right: '-75px', opacity: 0.4 }}
       width="210"
       height="210"

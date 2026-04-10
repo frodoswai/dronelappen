@@ -74,23 +74,29 @@ export default function Home() {
       <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-6">
         <HeroPropeller />
 
-        {/* pt-8 leaves room for phone status bar bleed */}
+        {/* pt-8 leaves room for phone status bar bleed. z-10 so the
+            text layers above the propeller SVG on narrow viewports. */}
         <div className="relative z-10 pt-8">
-          <div className="flex items-baseline gap-0.5 mb-1.5">
+          <div className="flex items-baseline gap-0.5 mb-1">
             <h1 className="text-3xl font-medium text-da-bg tracking-tight leading-none">
               DroneLappen
             </h1>
             <span className="font-mono text-sm text-da-gold tracking-wide font-medium">
               .app
             </span>
-            {/* Round 3.5: honest beta marker — no auth, question bank
-                still growing, features in active development */}
-            <span className="font-mono text-[10px] text-da-gold/70 tracking-[0.15em] font-medium ml-1.5 border border-da-gold/40 px-1.5 py-[1px] rounded-[2px] self-center">
+          </div>
+          {/* Beta tag — own line so it stays clear of the propeller on
+              narrow phones. Left-aligned, small bordered pill. */}
+          <div className="mb-1.5">
+            <span className="font-mono text-[10px] text-da-gold/80 tracking-[0.15em] font-medium border border-da-gold/50 px-1.5 py-[1px] rounded-[2px]">
               beta
             </span>
           </div>
           <p className="font-serif italic text-sm text-da-dark-slogan">
             Bli en bedre dronepilot
+          </p>
+          <p className="font-mono text-[10px] text-da-gold/60 tracking-[0.1em] mt-2">
+            foreløpig gratis frem til 1. juli 2026
           </p>
         </div>
       </div>
