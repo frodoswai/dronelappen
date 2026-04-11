@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, fetchQuestions } from '../lib/supabase'
 import QuizLayout from '../components/QuizLayout'
 
 // Exam mode wall-clock budget. Using a constant keeps the display/fix and
@@ -48,14 +48,9 @@ export default function Quiz() {
 
   // Fetch questions on mount
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const loadQuestions = async () => {
       try {
-        const { data, error: fetchError } = await supabase
-          .from('questions')
-          .select('*')
-          .eq('exam_type', examType)
-
-        if (fetchError) throw fetchError
+        const { questions: data } = await fetchQuestions({ examType })
 
         // Shuffle question order, then shuffle each question's options
         const shuffled = shuffleArray(data || [])
@@ -72,7 +67,7 @@ export default function Quiz() {
         setLoading(false)
       }
     }
-    fetchQuestions()
+    loadQuestions()
   }, [examType])
 
   // Anchor the wall-clock timer once questions are loaded.

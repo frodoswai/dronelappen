@@ -49,14 +49,12 @@ export default function Home() {
     let cancelled = false
     async function fetchStats() {
       try {
-        const [questionsResult, categoriesResult] = await Promise.all([
-          supabase.from('questions').select('id', { count: 'exact', head: true }),
-          supabase.from('categories').select('id', { count: 'exact', head: true }),
-        ])
+        const { data, error } = await supabase.rpc('get_question_count')
+        if (error) throw error
         if (cancelled) return
         setStats({
-          questions: questionsResult.count,
-          categories: categoriesResult.count,
+          questions: data?.[0]?.total_questions ?? null,
+          categories: data?.[0]?.total_categories ?? null,
         })
       } catch (_) {
         /* swallow — loading dots remain */

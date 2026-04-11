@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, fetchQuestions } from '../lib/supabase'
 import QuizLayout from '../components/QuizLayout'
 import CrosshairMarks from '../components/CrosshairMarks'
 
@@ -61,14 +61,9 @@ export default function Rapid() {
   const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const loadQuestions = async () => {
       try {
-        const { data, error: fetchError } = await supabase
-          .from('questions')
-          .select('*')
-          .eq('exam_type', examType)
-
-        if (fetchError) throw fetchError
+        const { questions: data } = await fetchQuestions({ examType })
 
         // Shuffle the pool, cap the session at RAPID_SESSION_SIZE,
         // then shuffle each question's options independently.
@@ -86,7 +81,7 @@ export default function Rapid() {
         setLoading(false)
       }
     }
-    fetchQuestions()
+    loadQuestions()
   }, [examType])
 
   // Clear timer on unmount
