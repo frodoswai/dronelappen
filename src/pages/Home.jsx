@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import HeroPropeller from '../components/HeroPropeller'
 import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
+import AuthHeader from '../components/AuthHeader'
 import {
   getLastSession,
   sessionToPath,
@@ -75,6 +76,7 @@ export default function Home() {
         {/* pt-8 leaves room for phone status bar bleed. z-10 so the
             text layers above the propeller SVG on narrow viewports. */}
         <div className="relative z-10 pt-8">
+          <AuthHeader variant="dark" />
           {/* Beta pill — sits above the wordmark, pushed right so it
               hovers roughly above the end of "ppen.app". Like a small
               status tag on a magazine cover. */}

@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
+import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 
 // Exam mode wall-clock budget. Using a constant keeps the display/fix and
@@ -27,6 +28,8 @@ export default function Quiz() {
   const { examType } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
+
+  const { user } = useAuth()
 
   const isPracticeMode = location.pathname.includes('practice')
   const needsTimer = examType === 'A2' && !isPracticeMode
@@ -126,6 +129,24 @@ export default function Quiz() {
   }
 
   if (quizComplete) {
+    // Save quiz session for logged-in users (fire-and-forget).
+    if (user && questions.length > 0) {
+      const correctTotal = answers.filter(
+        (ans, idx) => ans && questions[idx] && ans === questions[idx].correct_option_id
+      ).length
+      supabase
+        .from('quiz_sessions')
+        .insert({
+          user_id: user.id,
+          exam_type: examType,
+          completed_at: new Date().toISOString(),
+          score: correctTotal,
+          total_questions: questions.length,
+        })
+        .then(() => {})
+        .catch(() => {})
+    }
+
     // A2 Eksamen is the only mode with a wall-clock timer, so it's the
     // only mode that reports time used. Compute from startTime to capture
     // the actual elapsed value even if the user finished early.
@@ -174,6 +195,21 @@ export default function Quiz() {
         .then(() => {})
         .catch(() => {})
     } catch (_) { /* swallow */ }
+
+    // Save per-question progress for logged-in users (fire-and-forget).
+    if (user) {
+      try {
+        supabase
+          .from('user_progress')
+          .insert({
+            user_id: user.id,
+            question_id: currentQuestion.id,
+            correct: optionId === currentQuestion.correct_option_id,
+          })
+          .then(() => {})
+          .catch(() => {})
+      } catch (_) { /* swallow */ }
+    }
   }
 
   const handleNext = () => {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
+import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import CrosshairMarks from '../components/CrosshairMarks'
 
@@ -26,6 +27,7 @@ function shuffleArray(array) {
 export default function Rapid() {
   const { examType } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
 
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -117,6 +119,21 @@ export default function Rapid() {
       setFinalElapsedMs(Date.now() - startTime)
     }
     setFinished(true)
+
+    // Save quiz session for logged-in users (fire-and-forget).
+    if (user && questions.length > 0) {
+      supabase
+        .from('quiz_sessions')
+        .insert({
+          user_id: user.id,
+          exam_type: examType,
+          completed_at: new Date().toISOString(),
+          score: correctCount,
+          total_questions: answeredCount,
+        })
+        .then(() => {})
+        .catch(() => {})
+    }
   }
 
   const advance = () => {
@@ -167,6 +184,21 @@ export default function Rapid() {
         .then(() => {})
         .catch(() => {})
     } catch (_) { /* swallow */ }
+
+    // Save per-question progress for logged-in users (fire-and-forget).
+    if (user) {
+      try {
+        supabase
+          .from('user_progress')
+          .insert({
+            user_id: user.id,
+            question_id: currentQuestion.id,
+            correct: wasCorrect,
+          })
+          .then(() => {})
+          .catch(() => {})
+      } catch (_) { /* swallow */ }
+    }
 
     const delay = wasCorrect ? CORRECT_FLASH_MS : WRONG_PAUSE_MS
     timerRef.current = setTimeout(advance, delay)
