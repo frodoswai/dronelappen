@@ -91,14 +91,15 @@ export default function Home() {
         {/* All hero text pinned left (max-w so it never overlaps the
             propeller on the right). z-10 above the SVG. */}
         <div className="relative z-10 pt-8 max-w-[65%]">
-          {/* Status row: product badge (beta) + user badge (PRO) */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="font-mono text-[10px] text-da-gold tracking-[0.12em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-              Gratis i beta
-            </span>
-            {tier === 'paid' && (
-              <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[1px] rounded-[3px]">
-                PRO
+          {/* Status row: freemium pitch or PRO confirmation */}
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            {tier === 'paid' ? (
+              <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[2px] rounded-[3px]">
+                PRO — alle spørsmål
+              </span>
+            ) : (
+              <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
+                25 spørsmål gratis · ALLE spørsmål med PRO
               </span>
             )}
           </div>

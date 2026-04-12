@@ -7,6 +7,9 @@ import Rapid from './pages/Rapid'
 import Results from './pages/Results'
 import Login from './pages/Login'
 import AuthCallback from './pages/AuthCallback'
+import Vilkar from './pages/Vilkar'
+import Personvern from './pages/Personvern'
+import Kontakt from './pages/Kontakt'
 import Footer from './components/Footer'
 import './App.css'
 
@@ -24,6 +27,9 @@ function App() {
             <Route path="/results" element={<Results />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/vilkar" element={<Vilkar />} />
+            <Route path="/personvern" element={<Personvern />} />
+            <Route path="/kontakt" element={<Kontakt />} />
           </Routes>
         </div>
         <Footer />
