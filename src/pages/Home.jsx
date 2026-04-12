@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { useAuth } from '../contexts/AuthContext'
 import HeroPropeller from '../components/HeroPropeller'
 import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
@@ -30,6 +30,7 @@ import {
 //   - flex-1 removed from the light zone — content sizes naturally
 //     instead of stretching to viewport
 export default function Home() {
+  const { tier } = useAuth()
   const [lastSession, setLastSession] = useState(null)
   // Round 3.5: live counts from Supabase. null → loading (shows dots
   // so there's no layout shift). Fire-and-forget — never block render
@@ -43,15 +44,29 @@ export default function Home() {
     setLastSession(getLastSession())
   }, [])
 
-  // Fetch live question + category counts. Uses `count: 'exact', head: true`
-  // which returns only the count header — no rows shipped over the wire —
-  // so this stays cheap even as the question bank grows.
+  // Fetch live question + category counts via direct REST call.
+  // Uses the anon key explicitly instead of the supabase client to
+  // avoid a race condition: when a logged-out user has stale tokens
+  // in localStorage, the supabase client may send an expired JWT
+  // before session refresh completes, causing the RPC to 401.
+  // A plain fetch with the anon key sidesteps this entirely.
   useEffect(() => {
     let cancelled = false
     async function fetchStats() {
       try {
-        const { data, error } = await supabase.rpc('get_question_count')
-        if (error) throw error
+        const res = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/rpc/get_question_count`,
+          {
+            method: 'POST',
+            headers: {
+              apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+              'Content-Type': 'application/json',
+            },
+            body: '{}',
+          }
+        )
+        if (!res.ok) throw new Error(res.status)
+        const data = await res.json()
         if (cancelled) return
         setStats({
           questions: data?.[0]?.total_questions ?? null,
@@ -73,21 +88,24 @@ export default function Home() {
       <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-6">
         <HeroPropeller />
 
-        {/* pt-8 leaves room for phone status bar bleed. z-10 so the
-            text layers above the propeller SVG on narrow viewports. */}
-        <div className="relative z-10 pt-8">
-          <AuthHeader variant="dark" />
-          {/* Beta pill — sits above the wordmark, pushed right so it
-              hovers roughly above the end of "ppen.app". Like a small
-              status tag on a magazine cover. */}
-          <div className="flex justify-start mb-1">
-            <span
-              className="font-mono text-[10px] text-da-gold tracking-[0.12em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]"
-              style={{ marginLeft: '11rem' }}
-            >
+        {/* All hero text pinned left (max-w so it never overlaps the
+            propeller on the right). z-10 above the SVG. */}
+        <div className="relative z-10 pt-8 max-w-[65%]">
+          {/* Status row: product badge (beta) + user badge (PRO) */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="font-mono text-[10px] text-da-gold tracking-[0.12em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
               Gratis i beta
             </span>
+            {tier === 'paid' && (
+              <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[1px] rounded-[3px]">
+                PRO
+              </span>
+            )}
           </div>
+
+          {/* Auth row — email + logout, left-aligned */}
+          <AuthHeader variant="dark" />
+
           {/* Wordmark */}
           <div className="flex items-baseline gap-0.5 mb-1.5">
             <h1 className="text-3xl font-medium text-da-bg tracking-tight leading-none">
