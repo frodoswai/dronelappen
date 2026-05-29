@@ -77,6 +77,11 @@ export default function Rapid() {
           }))
         setQuestions(sessionQuestions)
         setLoading(false)
+        // Anchor the stopwatch the moment questions are ready — not during
+        // the fetch, so a slow network doesn't pad the user's apparent time.
+        // Set here (in the async load) rather than in a separate effect to
+        // avoid a synchronous setState-in-effect.
+        setStartTime(Date.now())
       } catch (err) {
         console.error('Error fetching questions:', err)
         setError('Feil ved lasting av spørsmål')
@@ -92,13 +97,6 @@ export default function Rapid() {
       if (timerRef.current) clearTimeout(timerRef.current)
     }
   }, [])
-
-  // Start the stopwatch once questions are loaded — not during fetch, so
-  // a slow network doesn't pad the user's apparent time.
-  useEffect(() => {
-    if (loading || startTime !== null) return
-    setStartTime(Date.now())
-  }, [loading, startTime])
 
   // Wall-clock tick for the MM:SS display. 250ms keeps the seconds digit
   // crisp without wasting battery. Stops the moment `finished` flips true

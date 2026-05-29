@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
@@ -11,27 +11,28 @@ const DISMISS_DAYS = 7
  */
 export default function SignupPrompt() {
   const { user, loading } = useAuth()
-  const [dismissed, setDismissed] = useState(true) // hidden by default until checked
 
-  useEffect(() => {
-    if (loading) return
-    if (user) { setDismissed(true); return }
-
-    const stored = localStorage.getItem(DISMISS_KEY)
-    if (stored) {
-      const ts = parseInt(stored, 10)
-      const daysSince = (Date.now() - ts) / (1000 * 60 * 60 * 24)
-      if (daysSince < DISMISS_DAYS) { setDismissed(true); return }
+  // Whether the user dismissed the prompt within the last DISMISS_DAYS.
+  // Read from localStorage once via lazy initializer (no effect needed), then
+  // tracked in state so a dismiss tap hides it immediately.
+  const [manuallyDismissed, setManuallyDismissed] = useState(() => {
+    try {
+      const stored = localStorage.getItem(DISMISS_KEY)
+      if (!stored) return false
+      const daysSince = (Date.now() - parseInt(stored, 10)) / (1000 * 60 * 60 * 24)
+      return daysSince < DISMISS_DAYS
+    } catch {
+      return false
     }
-    setDismissed(false)
-  }, [user, loading])
+  })
 
   const handleDismiss = () => {
     localStorage.setItem(DISMISS_KEY, String(Date.now()))
-    setDismissed(true)
+    setManuallyDismissed(true)
   }
 
-  if (dismissed) return null
+  // Hide while auth resolves, for logged-in users, and after a recent dismissal.
+  if (loading || user || manuallyDismissed) return null
 
   return (
     <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4 relative">

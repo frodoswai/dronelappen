@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -64,6 +64,11 @@ export default function Quiz() {
         setQuestions(selected)
         setAnswers(new Array(selected.length).fill(null))
         setLoading(false)
+        // Anchor the wall-clock timer the moment questions are ready (A2
+        // Eksamen only) — not during the fetch, so network latency doesn't
+        // eat into the exam budget. Set here rather than in a separate effect
+        // to avoid a synchronous setState-in-effect.
+        if (needsTimer) setStartTime(Date.now())
       } catch (err) {
         console.error('Error fetching questions:', err)
         setError('Feil ved lasting av spørsmål')
@@ -71,13 +76,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType])
-
-  // Anchor the wall-clock timer once questions are loaded.
-  useEffect(() => {
-    if (!needsTimer || loading || startTime !== null) return
-    setStartTime(Date.now())
-  }, [needsTimer, loading, startTime])
+  }, [examType, needsTimer])
 
   // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
   // so the countdown is correct after tab-blur / backgrounding / throttling.
@@ -93,6 +92,49 @@ export default function Quiz() {
     const id = setInterval(tick, 250)
     return () => clearInterval(id)
   }, [needsTimer, startTime, quizComplete])
+
+  // On completion: persist the session (logged-in only) and route to results.
+  // Done in an effect — not during render — so Date.now() isn't called in the
+  // render path and the insert/navigate fire exactly once (no StrictMode
+  // double-run).
+  useEffect(() => {
+    if (!quizComplete || questions.length === 0) return
+
+    if (user) {
+      const correctTotal = answers.filter(
+        (ans, idx) => ans && questions[idx] && ans === questions[idx].correct_option_id
+      ).length
+      supabase
+        .from('quiz_sessions')
+        .insert({
+          user_id: user.id,
+          exam_type: examType,
+          completed_at: new Date().toISOString(),
+          score: correctTotal,
+          total_questions: questions.length,
+        })
+        .then(() => {})
+        .catch(() => {})
+    }
+
+    // A2 Eksamen is the only mode with a wall-clock timer, so it's the only
+    // mode that reports time used. Compute from startTime to capture the
+    // actual elapsed value even if the user finished early.
+    const timeUsedMs =
+      needsTimer && startTime !== null
+        ? Math.min(EXAM_DURATION_MS, Date.now() - startTime)
+        : null
+    navigate('/results', {
+      state: {
+        questions,
+        answers,
+        isPracticeMode,
+        examType,
+        timeUsedMs,
+        examDurationMs: needsTimer ? EXAM_DURATION_MS : null,
+      },
+    })
+  }, [quizComplete, questions, answers, user, examType, isPracticeMode, needsTimer, startTime, navigate])
 
   // Helper: find option text by id
   const getOptionText = (question, optionId) => {
@@ -128,44 +170,9 @@ export default function Quiz() {
     )
   }
 
-  if (quizComplete) {
-    // Save quiz session for logged-in users (fire-and-forget).
-    if (user && questions.length > 0) {
-      const correctTotal = answers.filter(
-        (ans, idx) => ans && questions[idx] && ans === questions[idx].correct_option_id
-      ).length
-      supabase
-        .from('quiz_sessions')
-        .insert({
-          user_id: user.id,
-          exam_type: examType,
-          completed_at: new Date().toISOString(),
-          score: correctTotal,
-          total_questions: questions.length,
-        })
-        .then(() => {})
-        .catch(() => {})
-    }
-
-    // A2 Eksamen is the only mode with a wall-clock timer, so it's the
-    // only mode that reports time used. Compute from startTime to capture
-    // the actual elapsed value even if the user finished early.
-    const timeUsedMs =
-      needsTimer && startTime !== null
-        ? Math.min(EXAM_DURATION_MS, Date.now() - startTime)
-        : null
-    navigate('/results', {
-      state: {
-        questions,
-        answers,
-        isPracticeMode,
-        examType,
-        timeUsedMs,
-        examDurationMs: needsTimer ? EXAM_DURATION_MS : null,
-      },
-    })
-    return null
-  }
+  // Completion is handled by the effect above (persist + navigate); render
+  // nothing while that runs.
+  if (quizComplete) return null
 
   const currentQuestion = questions[currentIndex]
   if (!currentQuestion) return null

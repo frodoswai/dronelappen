@@ -35,13 +35,6 @@ function parseQuestionsFromMd(filePath) {
   return JSON.parse(jsonMatch[1])
 }
 
-// Parse category SQL from markdown files
-function parseCategorySql(filePath) {
-  const content = readFileSync(filePath, 'utf-8')
-  const sqlMatch = content.match(/```sql\n([\s\S]*?)\n```/)
-  return sqlMatch ? sqlMatch[1] : null
-}
-
 async function seed() {
   console.log('🚀 Seeding DroneLappen database...')
 
@@ -79,7 +72,7 @@ async function seed() {
       source: q.source
     }))
 
-    const { data, error } = await supabase.from('questions').insert(rows)
+    const { error } = await supabase.from('questions').insert(rows)
     if (error) {
       console.error(`Error inserting from ${file}:`, error.message)
     } else {

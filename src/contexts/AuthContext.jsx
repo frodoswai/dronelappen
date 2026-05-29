@@ -8,14 +8,16 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [tier, setTier] = useState('free')
 
-  // Fetch tier from entitlements when user changes
+  // Fetch tier from entitlements when user changes. All setTier calls live
+  // inside the async fn (never synchronously in the effect body) so React's
+  // set-state-in-effect rule is satisfied — behavior is unchanged.
   useEffect(() => {
-    if (!user) {
-      setTier('free')
-      return
-    }
     let cancelled = false
     async function fetchTier() {
+      if (!user) {
+        if (!cancelled) setTier('free')
+        return
+      }
       const { data } = await supabase
         .from('entitlements')
         .select('tier, expires_at')
@@ -57,4 +59,5 @@ export function AuthProvider({ children }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook colocated with its provider by design
 export const useAuth = () => useContext(AuthContext)

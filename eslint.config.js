@@ -23,7 +23,15 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      'no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]', caughtErrorsIgnorePattern: '^_' },
+      ],
     },
+  },
+  // Node scripts (seed, migrations tooling) run under Node, not the browser.
+  {
+    files: ['supabase/**/*.js'],
+    languageOptions: { globals: globals.node },
   },
 ])
