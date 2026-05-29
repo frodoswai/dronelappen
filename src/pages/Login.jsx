@@ -77,7 +77,7 @@ export default function Login() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* Dark hero — compact */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8">
+        <div className="pt-8 max-w-sm mx-auto">
           <h1 className="text-[28px] font-medium text-da-bg leading-none tracking-tight mb-1">
             {mode === 'password_signup' ? 'Opprett konto' : 'Logg inn'}
           </h1>

@@ -9,7 +9,7 @@ export default function Personvern() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* Dark hero — compact */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8">
+        <div className="pt-8 max-w-2xl mx-auto">
           <h1 className="text-[28px] font-medium text-da-bg leading-none tracking-tight mb-1">
             Personvern
           </h1>

@@ -87,6 +87,7 @@ export default function Home() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* ═══ Dark hero zone ═══ */}
       <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-6">
+        <div className="relative max-w-lg mx-auto">
         <HeroPropeller />
 
         {/* All hero text pinned left (max-w so it never overlaps the
@@ -122,6 +123,7 @@ export default function Home() {
             Bli en bedre dronepilot
           </p>
         </div>
+        </div>
       </div>
 
       {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
@@ -135,6 +137,7 @@ export default function Home() {
 
       {/* ═══ Light content zone ═══ */}
       <div className="px-6 pt-1 pb-6 bg-da-bg">
+        <div className="max-w-lg mx-auto">
         {/* Divider with mono label */}
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />
@@ -236,6 +239,7 @@ export default function Home() {
               : '··· spørsmål · ··· kategorier'}
           </span>
           <span className="font-mono text-[11px] text-da-text-muted">v1.0</span>
+        </div>
         </div>
       </div>
     </div>

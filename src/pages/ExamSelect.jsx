@@ -37,7 +37,7 @@ export default function ExamSelect() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* ═══ Compact dark hero ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8">
+        <div className="pt-8 max-w-lg mx-auto">
           <div className="flex items-center gap-3 mb-1">
             <button
               onClick={() => navigate('/')}
@@ -69,6 +69,7 @@ export default function ExamSelect() {
           Round 2.5: flex-1 removed so the content sizes naturally and
           the global Footer sits right under the cards on tall screens. */}
       <div className="px-6 pt-2 pb-6 bg-da-bg">
+        <div className="max-w-lg mx-auto">
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />
           <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
@@ -108,6 +109,7 @@ export default function ExamSelect() {
           showBolt
           onClick={start('rapid')}
         />
+        </div>
       </div>
     </div>
   )
