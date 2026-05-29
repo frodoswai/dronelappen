@@ -25,3 +25,14 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .vercel
+
+# Secret backups
+.env.bak*
+
+# Local working files (newsletter drafts, exports, notes — not part of the app)
+droneavisa-newsletter-snippet*.html
+email*.html
+email*.zip
+dronelappen-batch*.md
+dronelappen-urgent-fixes.md
+questionbank-export.md
