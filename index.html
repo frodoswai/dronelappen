@@ -29,6 +29,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Apply saved text-size preference before paint to avoid a flash -->
+    <script>
+      (function () {
+        try {
+          var s = { normal: 1, stor: 1.15, storst: 1.3 }[localStorage.getItem('dl-text-scale')]
+          if (s && s !== 1) document.documentElement.style.zoom = String(s)
+        } catch (e) {}
+      })()
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
