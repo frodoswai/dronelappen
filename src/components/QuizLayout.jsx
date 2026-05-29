@@ -55,7 +55,7 @@ export default function QuizLayout({
     <div className={`min-h-screen flex flex-col bg-da-bg transition-colors duration-150 ${flashBg || ''}`}>
       {/* ═══ Compact dark header ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-3">
-        <div className="pt-8 max-w-lg mx-auto">
+        <div className="pt-8 max-w-xl mx-auto">
           {/* Top row — mono label cluster + timer */}
           <div className="flex items-center justify-between gap-3 mb-2">
             <div className="flex items-center gap-2 min-w-0">
@@ -132,7 +132,7 @@ export default function QuizLayout({
 
       {/* ═══ Light content zone ═══ */}
       <div className="px-5 pt-2 pb-6 bg-da-bg">
-        <div className="max-w-lg mx-auto">{children}</div>
+        <div className="max-w-xl mx-auto">{children}</div>
       </div>
     </div>
   )

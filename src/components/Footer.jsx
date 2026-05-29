@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer className="w-full max-w-lg mx-auto py-4 px-6 text-center text-sm text-gray-400 space-y-1.5">
+    <footer className="w-full max-w-xl mx-auto py-4 px-6 text-center text-sm text-gray-400 space-y-1.5">
       <div className="flex items-center justify-center gap-3 font-mono text-[11px] tracking-[0.05em]">
         <Link to="/vilkar" className="text-gray-400 hover:text-da-navy transition-colors">
           Vilkår

@@ -281,7 +281,7 @@ export default function Rapid() {
       <div className="min-h-screen bg-da-bg flex flex-col">
         {/* ═══ Dark hero ═══ */}
         <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-          <div className="pt-8 max-w-lg mx-auto">
+          <div className="pt-8 max-w-xl mx-auto">
             <div className="flex items-center gap-2 mb-1">
               <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.12em]">
                 tempo · {poolLabel}
@@ -310,7 +310,7 @@ export default function Rapid() {
 
         {/* ═══ Light content zone ═══ */}
         <div className="px-6 pt-2 pb-6 bg-da-bg">
-          <div className="max-w-lg mx-auto">
+          <div className="max-w-xl mx-auto">
             {/* Stats card — hero time front and center, crosshair marks
                 to echo the ExamSelect Tempo card accent. */}
             <div
