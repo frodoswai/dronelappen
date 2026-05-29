@@ -5,6 +5,7 @@ import HeroPropeller from '../components/HeroPropeller'
 import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
+import NewsletterSignup from '../components/NewsletterSignup'
 import {
   getLastSession,
   sessionToPath,
@@ -214,6 +215,16 @@ export default function Home() {
             </span>
           </div>
         </Link>
+
+        {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
+        <div className="flex items-center gap-2.5 mb-3.5">
+          <div className="flex-1 h-px bg-da-navy/20" />
+          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
+            hold deg oppdatert
+          </span>
+          <div className="flex-1 h-px bg-da-navy/20" />
+        </div>
+        <NewsletterSignup />
 
         {/* Footer stats — Round 3.5 wired live from Supabase. Dots on
             load so the layout doesn't shift when counts resolve. Errors
