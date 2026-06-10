@@ -111,7 +111,7 @@ export default function Home() {
 
           {/* Wordmark */}
           <div className="flex items-baseline gap-0.5 mb-1.5">
-            <h1 className="text-3xl font-medium text-da-bg tracking-tight leading-none">
+            <h1 className="text-3xl font-semibold text-da-bg tracking-tight leading-none">
               DroneLappen
             </h1>
             <span className="font-mono text-sm text-da-gold tracking-wide font-medium">
@@ -153,7 +153,7 @@ export default function Home() {
         {lastSession && (
           <Link
             to={sessionToPath(lastSession)}
-            className="quiz-option block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
+            className="quiz-option rise-in block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
           >
             <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
               fortsett
@@ -178,7 +178,7 @@ export default function Home() {
             became a filled navy chip: one solid element per card makes
             "this is pressable" unmistakable on touch, where hover never
             fires. */}
-        <div className="quiz-option group relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all hover:shadow-md hover:-translate-y-[1px] active:scale-[0.99]">
+        <div className="quiz-option group rise-in rise-d1 relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.06),0_4px_14px_rgba(8,53,84,0.08)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_10px_28px_rgba(8,53,84,0.14)] hover:-translate-y-[1px] active:scale-[0.99]">
           <CrosshairMarks variant="solid" />
           <Link
             to="/exam/A2"
@@ -203,8 +203,11 @@ export default function Home() {
             <ModePillRow variant="primary" examType="A2" />
           </div>
           <div className="flex justify-end mt-3">
-            <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3 py-1.5 rounded-[5px] group-hover:bg-da-navy-mid transition-colors">
-              velg modus <span className="text-da-gold">→</span>
+            <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3.5 py-2 rounded-[5px] shadow-sm group-hover:bg-da-navy-mid transition-colors">
+              velg modus{' '}
+              <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
             </span>
           </div>
         </div>
@@ -213,45 +216,54 @@ export default function Home() {
             Round 4: dashed border replaced with a solid faint one —
             dashed reads as "disabled/empty", not "quiet". Same
             stretched-link structure as the A2 card. */}
-        <div className="quiz-option group relative bg-white border-[0.5px] border-da-navy/25 rounded-lg px-4 pt-3.5 pb-3 mb-4 transition-all hover:border-da-navy/50 hover:shadow-sm active:scale-[0.99]">
+        <div className="quiz-option group rise-in rise-d2 relative bg-white border-[0.5px] border-da-navy/30 rounded-lg px-4 pt-3.5 pb-3 mb-4 transition-all shadow-[0_1px_3px_rgba(8,53,84,0.05)] hover:border-da-navy/50 hover:shadow-[0_2px_4px_rgba(8,53,84,0.06),0_6px_18px_rgba(8,53,84,0.10)] hover:-translate-y-[1px] active:scale-[0.99]">
           <Link
             to="/exam/A1_A3"
             aria-label="A1/A3 — velg modus"
             className="absolute inset-0 z-10 rounded-lg"
           />
-          <div className="font-mono text-[12px] font-medium text-da-text-faded tracking-[0.12em] mb-1">
+          {/* Kontrast ($10K punkt 8): faded (#8a98a8 ≈ 2.9:1) strøk på
+              WCAG AA og fikk kortet til å se deaktivert ut. Bumpet til
+              muted/dim + navy tittel — fortsatt stille, men lesbart og
+              tydelig aktivt. */}
+          <div className="font-mono text-[12px] font-medium text-da-text-muted tracking-[0.12em] mb-1">
             online, gratis
           </div>
           <div className="flex items-baseline justify-between mb-1.5">
-            <div className="text-xl font-medium text-da-text-dim leading-none tracking-tight">
+            <div className="text-xl font-medium text-da-navy leading-none tracking-tight">
               A1 / A3
             </div>
-            <span className="font-mono text-[11px] text-da-text-faded">
+            <span className="font-mono text-[11px] text-da-text-dim">
               grunnleggende
             </span>
           </div>
-          <p className="text-[11.5px] text-da-text-faded leading-[1.5] mb-2.5">
+          <p className="text-[11.5px] text-da-text-dim leading-[1.5] mb-2.5">
             Øv gratis før du tar A2.
           </p>
           <div className="relative z-20">
             <ModePillRow variant="muted" examType="A1_A3" />
           </div>
           <div className="flex justify-end mt-3">
-            <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/30 text-da-text-dim px-3 py-1.5 rounded-[5px] group-hover:border-da-navy/60 group-hover:text-da-navy transition-colors">
-              velg modus <span className="text-da-gold">→</span>
+            <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/40 text-da-navy px-3.5 py-2 rounded-[5px] group-hover:border-da-navy/70 transition-colors">
+              velg modus{' '}
+              <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
             </span>
           </div>
         </div>
 
         {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
-        <div className="flex items-center gap-2.5 mb-3.5">
-          <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-            hold deg oppdatert
-          </span>
-          <div className="flex-1 h-px bg-da-navy/20" />
+        <div className="rise-in rise-d3">
+          <div className="flex items-center gap-2.5 mb-3.5">
+            <div className="flex-1 h-px bg-da-navy/20" />
+            <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
+              hold deg oppdatert
+            </span>
+            <div className="flex-1 h-px bg-da-navy/20" />
+          </div>
+          <NewsletterSignup />
         </div>
-        <NewsletterSignup />
 
         {/* Footer stats — Round 3.5 wired live from Supabase. Dots on
             load so the layout doesn't shift when counts resolve. Errors

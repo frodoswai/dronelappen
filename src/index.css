@@ -25,8 +25,10 @@
   --color-da-text-dim: #6b7a8c;
   --color-da-dark-slogan: #9CAEC0;
 
-  /* Font families */
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  /* Font families — Barlow er Droneavisas display-font; å bruke den
+     her gjør at appen og avisen føles som én familie ($10K punkt 2:
+     ikke Inter/Roboto). */
+  --font-sans: "Barlow", system-ui, -apple-system, sans-serif;
   --font-serif: "Lora", Georgia, serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;
 }
@@ -42,6 +44,23 @@ body {
 .quiz-option {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+/* ── Motion that whispers ($10K punkt 6) ─────────────────────────
+   Staggered rise-in on the Home content, samme mønster som
+   droneavisa.no sine forsidekort. Hele blokken ligger bak
+   prefers-reduced-motion: no-preference, så opacity:0 settes aldri
+   for brukere med redusert bevegelse — de ser siden umiddelbart. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .rise-in   { opacity: 0; animation: rise-in 0.5s ease-out forwards; }
+  .rise-d1   { animation-delay: 60ms; }
+  .rise-d2   { animation-delay: 140ms; }
+  .rise-d3   { animation-delay: 220ms; }
+  .rise-d4   { animation-delay: 300ms; }
 }
 
 /* Keyboard focus ring on every interactive surface — not just touch
