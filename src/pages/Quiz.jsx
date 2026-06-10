@@ -21,9 +21,14 @@ function shuffleArray(array) {
 
 // Round 3: this page handles both Eksamen (/quiz/:examType) and Læring
 // (/practice/:examType). The two modes share question fetching, option
-// shuffling, wall-clock timer (Eksamen only), and analytics logging —
-// they diverge only in header label, pass/fail context, and whether the
-// explanation card appears after each answer.
+// shuffling, and the wall-clock timer (Eksamen only), but diverge in
+// feedback behavior:
+//   Læring  → answer locks immediately, ✓/✗ + explanation shown per
+//             question, analytics logged on each answer.
+//   Eksamen → like the real trafikkstasjon exam: no feedback at all
+//             until the end. Answers are changeable, Forrige/Neste
+//             navigation between questions, and all logging is deferred
+//             to completion so changed answers only count once.
 export default function Quiz() {
   const { examType } = useParams()
   const navigate = useNavigate()
@@ -99,6 +104,47 @@ export default function Quiz() {
   // double-run).
   useEffect(() => {
     if (!quizComplete || questions.length === 0) return
+
+    // Eksamen defers per-question logging to completion (Læring logs on
+    // each answer in handleSelectAnswer) so changed answers count once.
+    // All fire-and-forget — failures must never block the results page.
+    if (!isPracticeMode) {
+      questions.forEach((q, idx) => {
+        const ans = answers[idx]
+        if (!ans) return // unanswered (timer ran out) — don't pollute stats
+        try {
+          supabase
+            .rpc('log_question_answer', {
+              p_question_id: q.id,
+              p_was_correct: ans === q.correct_option_id,
+            })
+            .then(() => {})
+            .catch(() => {})
+        } catch (_) { /* swallow */ }
+      })
+      if (user) {
+        const rows = questions
+          .map((q, idx) =>
+            answers[idx]
+              ? {
+                  user_id: user.id,
+                  question_id: q.id,
+                  correct: answers[idx] === q.correct_option_id,
+                }
+              : null
+          )
+          .filter(Boolean)
+        if (rows.length > 0) {
+          try {
+            supabase
+              .from('user_progress')
+              .insert(rows)
+              .then(() => {})
+              .catch(() => {})
+          } catch (_) { /* swallow */ }
+        }
+      }
+    }
 
     if (user) {
       const correctTotal = answers.filter(
@@ -180,12 +226,24 @@ export default function Quiz() {
   const isCorrect = selectedAnswer === currentQuestion.correct_option_id
 
   const handleSelectAnswer = (optionId) => {
-    if (isAnswered) return
     // Blur the tapped button so its :focus/:hover style does not leak
     // onto the next question's button at the same screen position.
     if (typeof document !== 'undefined' && document.activeElement?.blur) {
       document.activeElement.blur()
     }
+
+    // Eksamen: selection is changeable and reveals nothing — the real
+    // exam gives no feedback until the end. Logging happens on completion.
+    if (!isPracticeMode) {
+      setSelectedAnswer(optionId)
+      const newAnswers = [...answers]
+      newAnswers[currentIndex] = optionId
+      setAnswers(newAnswers)
+      return
+    }
+
+    // Læring: first answer locks, feedback + logging fire immediately.
+    if (isAnswered) return
     setSelectedAnswer(optionId)
     setShowExplanation(true)
     const newAnswers = [...answers]
@@ -221,12 +279,25 @@ export default function Quiz() {
 
   const handleNext = () => {
     if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1)
-      setSelectedAnswer(null)
+      const next = currentIndex + 1
+      setCurrentIndex(next)
+      // Eksamen allows revisiting: restore a previously given answer so
+      // the selection survives Forrige/Neste round-trips. Læring is
+      // strictly linear, so `answers[next]` is always null there.
+      setSelectedAnswer(answers[next] ?? null)
       setShowExplanation(false)
     } else {
       setQuizComplete(true)
     }
+  }
+
+  // Eksamen only — step back to review/change an earlier answer.
+  const handlePrev = () => {
+    if (currentIndex === 0) return
+    const prev = currentIndex - 1
+    setCurrentIndex(prev)
+    setSelectedAnswer(answers[prev] ?? null)
+    setShowExplanation(false)
   }
 
   const formatMs = (ms) => {
@@ -277,15 +348,21 @@ export default function Quiz() {
             const isSelected = selectedAnswer === option.id
             const isCorrectOpt = option.id === currentQuestion.correct_option_id
 
-            // Round 3 state palette:
+            // Round 3 state palette (Læring):
             //   idle     → white / navy hairline
             //   correct  → green tint, green border
             //   wrong    → amber tint, amber border (never harsh red)
             //   dim      → 50% opacity on non-chosen options after answer
+            // Eksamen never reveals correctness — selected gets a navy
+            // fill, everything else stays idle and tappable.
             let btnClass =
               'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
 
-            if (!isAnswered) {
+            if (!isPracticeMode) {
+              btnClass += isSelected
+                ? 'bg-da-navy border-da-navy text-da-bg cursor-pointer'
+                : 'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
+            } else if (!isAnswered) {
               btnClass +=
                 'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
             } else if (isCorrectOpt) {
@@ -305,7 +382,7 @@ export default function Quiz() {
               <button
                 key={`${currentIndex}-${option.id}`}
                 onClick={() => handleSelectAnswer(option.id)}
-                disabled={isAnswered}
+                disabled={isPracticeMode && isAnswered}
                 className={btnClass}
               >
                 <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
@@ -317,9 +394,10 @@ export default function Quiz() {
           })}
         </div>
 
-        {/* Explanation — shown after each answer in Læring, after each in
-            Eksamen too (unchanged behavior). Cream tint + gold accent bar
-            keeps it distinct from the correct/wrong answer buttons above. */}
+        {/* Explanation — Læring only. Eksamen gives no feedback until the
+            results page (showExplanation is never set in exam mode).
+            Cream tint + gold accent bar keeps it distinct from the
+            correct/wrong answer buttons above. */}
         {showExplanation && (
           <div className="mt-4 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-3">
             <p
@@ -342,17 +420,29 @@ export default function Quiz() {
         )}
       </div>
 
-      {/* Next / finish button — shows only after answer committed */}
+      {/* Nav row — shows once the current question has an answer.
+          Eksamen adds Forrige so earlier answers can be reviewed/changed. */}
       {isAnswered && (
-        <button
-          onClick={handleNext}
-          className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
-        >
-          <span>
-            {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
-          </span>
-          <span className="font-mono text-[12px] text-da-gold">→</span>
-        </button>
+        <div className="flex gap-2.5">
+          {!isPracticeMode && currentIndex > 0 && (
+            <button
+              onClick={handlePrev}
+              className="quiz-option bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              <span className="font-mono text-[12px] text-da-gold">←</span>
+              <span>Forrige</span>
+            </button>
+          )}
+          <button
+            onClick={handleNext}
+            className="quiz-option flex-1 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+          >
+            <span>
+              {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
+            </span>
+            <span className="font-mono text-[12px] text-da-gold">→</span>
+          </button>
+        </div>
       )}
     </QuizLayout>
   )

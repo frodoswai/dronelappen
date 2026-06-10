@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import ModeCard from '../components/ModeCard'
+import { useAuth } from '../contexts/AuthContext'
 import { recordSessionStart } from '../lib/sessionHistory'
 
 // Step 2 of the two-step home flow. User picked an exam on Home, now
@@ -20,13 +21,22 @@ export default function ExamSelect() {
   const { examType } = useParams()
   const navigate = useNavigate()
 
+  const { tier } = useAuth()
+
   const isA2 = examType === 'A2'
   const categoryLabel = isA2 ? 'trafikkstasjonen' : 'online, gratis'
   const displayName = isA2 ? 'A2' : 'A1 / A3'
 
+  // Tier-aware: free tier gets a 25-question pool (pass: 19 = 75%),
+  // PRO gets the full 30-question simulation. Describe what the user
+  // will actually get, not the real exam's numbers.
   const examDescription = isA2
-    ? 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.'
-    : 'Realistisk simulering. 30 spørsmål, 75% for å bestå.'
+    ? tier === 'paid'
+      ? 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.'
+      : 'Simulering med 25 gratis spørsmål, 60 min, 19 riktige for å bestå.'
+    : tier === 'paid'
+      ? 'Realistisk simulering. 30 spørsmål, 75% for å bestå.'
+      : 'Simulering med 25 gratis spørsmål, 75% for å bestå.'
 
   // Gate each mode tap on recordSessionStart so smart resume stays
   // honest. Using onClick rather than wrapping the Link target because

@@ -181,8 +181,13 @@ export default function Home() {
           <div className="text-[34px] font-medium text-da-navy leading-none mb-2.5 tracking-tight">
             A2
           </div>
+          {/* Tier-aware: the real exam is 30/60min/23, but the free tier
+              practices with a 25-question pool — say so instead of
+              promising 30 and delivering 25. */}
           <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3.5">
-            Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.
+            {tier === 'paid'
+              ? 'Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.'
+              : 'Den betalte eksamen: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
           </p>
           <ModePillRow variant="primary" />
           <div className="flex justify-end mt-3">
