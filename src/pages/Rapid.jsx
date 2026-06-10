@@ -119,7 +119,9 @@ export default function Rapid() {
     setFinished(true)
 
     // Save quiz session for logged-in users (fire-and-forget).
-    if (user && questions.length > 0) {
+    // answeredCount > 0 guard: stopping before answering anything used
+    // to log a meaningless 0/0 session row.
+    if (user && questions.length > 0 && answeredCount > 0) {
       supabase
         .from('quiz_sessions')
         .insert({

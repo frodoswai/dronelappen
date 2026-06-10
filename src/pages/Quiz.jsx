@@ -37,6 +37,10 @@ export default function Quiz() {
   const { user } = useAuth()
 
   const isPracticeMode = location.pathname.includes('practice')
+  // Timer kun for A2: den ekte A2-eksamen på trafikkstasjonen har 60 min,
+  // mens A1/A3-netteksamen på flydrone.no er selvgående uten dokumentert
+  // tidsgrense (verifisert mot Luftfartstilsynet/UAS Norway 2026-06-10).
+  // Untimed A1/A3 er altså bevisst — ikke en manglende feature.
   const needsTimer = examType === 'A2' && !isPracticeMode
 
   const [questions, setQuestions] = useState([])
