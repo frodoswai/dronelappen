@@ -238,7 +238,7 @@ export default function Home() {
               ? `${stats.questions} spørsmål · ${stats.categories} kategorier`
               : '··· spørsmål · ··· kategorier'}
           </span>
-          <span className="font-mono text-[11px] text-da-text-muted">v1.0</span>
+          <span className="font-mono text-[11px] text-da-text-muted">v1.1</span>
         </div>
         </div>
       </div>
