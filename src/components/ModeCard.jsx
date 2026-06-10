@@ -20,27 +20,34 @@ export default function ModeCard({
   showBolt = false,
   onClick,
 }) {
+  // Round 4 affordance pass: the "start →" text became a filled chip —
+  // a real button shape. Chip fill follows the card's hierarchy:
+  // navy (Eksamen, primary action), outlined (Læring, secondary),
+  // gold (Tempo, the energetic one).
   const config = {
     primary: {
       border: 'border-da-navy',
       labelColor: 'text-da-gold',
       titleColor: 'text-da-navy',
       crosshairVariant: 'solid',
-      startColor: 'text-da-navy',
+      chip: 'bg-da-navy text-da-bg group-hover:bg-da-navy-mid',
+      arrow: 'text-da-gold',
     },
     neutral: {
       border: 'border-da-navy/40',
       labelColor: 'text-da-text-muted',
       titleColor: 'text-da-navy',
       crosshairVariant: 'muted',
-      startColor: 'text-da-text-muted',
+      chip: 'bg-white border-[0.5px] border-da-navy/30 text-da-navy group-hover:border-da-navy/60',
+      arrow: 'text-da-gold',
     },
     gold: {
       border: 'border-da-gold',
       labelColor: 'text-da-gold',
       titleColor: 'text-da-gold-text',
       crosshairVariant: 'gold',
-      startColor: 'text-da-gold',
+      chip: 'bg-da-gold text-da-navy-dark group-hover:brightness-105',
+      arrow: 'text-da-navy-dark',
     },
   }[variant]
 
@@ -48,7 +55,7 @@ export default function ModeCard({
     <Link
       to={to}
       onClick={onClick}
-      className={`quiz-option relative block bg-white border-[0.5px] ${config.border} rounded-lg px-[18px] pt-5 pb-4 mb-3 hover:shadow-sm transition-shadow`}
+      className={`quiz-option group relative block bg-white border-[0.5px] ${config.border} rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all hover:shadow-md hover:-translate-y-[1px] active:scale-[0.99]`}
     >
       <CrosshairMarks variant={config.crosshairVariant} />
       <div
@@ -76,13 +83,13 @@ export default function ModeCard({
         {description}
       </p>
 
-      {/* Round 2.5: explicit clickability affordance. Crosshair marks
-          alone weren't reading as "tap me" on device testing. */}
+      {/* Round 4: filled chip instead of bare text — the only reliable
+          "tap me" signal on touch, where hover styles never fire. */}
       <div className="flex justify-end mt-3">
         <span
-          className={`font-mono text-[11px] ${config.startColor} tracking-[0.1em]`}
+          className={`font-mono text-[11px] tracking-[0.1em] px-3 py-1.5 rounded-[5px] transition-all ${config.chip}`}
         >
-          start →
+          start <span className={config.arrow}>→</span>
         </span>
       </div>
     </Link>

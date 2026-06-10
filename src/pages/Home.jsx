@@ -153,7 +153,7 @@ export default function Home() {
         {lastSession && (
           <Link
             to={sessionToPath(lastSession)}
-            className="quiz-option block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-none px-4 py-3 mb-4 hover:bg-da-cream/60 transition-colors"
+            className="quiz-option block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
           >
             <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
               fortsett
@@ -169,12 +169,22 @@ export default function Home() {
           </Link>
         )}
 
-        {/* ═══ A2 card — dominant, primary ═══ */}
-        <Link
-          to="/exam/A2"
-          className="quiz-option relative block bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 hover:shadow-sm transition-shadow"
-        >
+        {/* ═══ A2 card — dominant, primary ═══
+            Round 4 affordance pass: stretched-link pattern. The card is
+            a div; an absolutely-positioned overlay Link (z-10) makes the
+            whole surface clickable, while the mode pills sit above it
+            (z-20) as real deep-links into each mode. Sibling links —
+            never nested — so the HTML stays valid. The "velg modus" text
+            became a filled navy chip: one solid element per card makes
+            "this is pressable" unmistakable on touch, where hover never
+            fires. */}
+        <div className="quiz-option group relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all hover:shadow-md hover:-translate-y-[1px] active:scale-[0.99]">
           <CrosshairMarks variant="solid" />
+          <Link
+            to="/exam/A2"
+            aria-label="A2 — velg modus"
+            className="absolute inset-0 z-10 rounded-lg"
+          />
           <div className="font-mono text-[12px] text-da-gold tracking-[0.12em] font-medium mb-1.5">
             trafikkstasjonen
           </div>
@@ -189,19 +199,26 @@ export default function Home() {
               ? 'Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.'
               : 'Den betalte eksamen: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
           </p>
-          <ModePillRow variant="primary" />
+          <div className="relative z-20">
+            <ModePillRow variant="primary" examType="A2" />
+          </div>
           <div className="flex justify-end mt-3">
-            <span className="font-mono text-[11px] text-da-gold tracking-[0.1em]">
-              velg modus →
+            <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3 py-1.5 rounded-[5px] group-hover:bg-da-navy-mid transition-colors">
+              velg modus <span className="text-da-gold">→</span>
             </span>
           </div>
-        </Link>
+        </div>
 
-        {/* ═══ A1/A3 card — quiet, secondary ═══ */}
-        <Link
-          to="/exam/A1_A3"
-          className="quiz-option relative block bg-transparent border-[0.5px] border-dashed border-da-navy/15 rounded-lg px-4 pt-3.5 pb-3 mb-4 hover:border-da-navy/30 transition-colors"
-        >
+        {/* ═══ A1/A3 card — quiet, secondary ═══
+            Round 4: dashed border replaced with a solid faint one —
+            dashed reads as "disabled/empty", not "quiet". Same
+            stretched-link structure as the A2 card. */}
+        <div className="quiz-option group relative bg-white border-[0.5px] border-da-navy/25 rounded-lg px-4 pt-3.5 pb-3 mb-4 transition-all hover:border-da-navy/50 hover:shadow-sm active:scale-[0.99]">
+          <Link
+            to="/exam/A1_A3"
+            aria-label="A1/A3 — velg modus"
+            className="absolute inset-0 z-10 rounded-lg"
+          />
           <div className="font-mono text-[12px] font-medium text-da-text-faded tracking-[0.12em] mb-1">
             online, gratis
           </div>
@@ -216,13 +233,15 @@ export default function Home() {
           <p className="text-[11.5px] text-da-text-faded leading-[1.5] mb-2.5">
             Øv gratis før du tar A2.
           </p>
-          <ModePillRow variant="muted" />
+          <div className="relative z-20">
+            <ModePillRow variant="muted" examType="A1_A3" />
+          </div>
           <div className="flex justify-end mt-3">
-            <span className="font-mono text-[11px] text-da-text-faded tracking-[0.1em]">
-              velg modus →
+            <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/30 text-da-text-dim px-3 py-1.5 rounded-[5px] group-hover:border-da-navy/60 group-hover:text-da-navy transition-colors">
+              velg modus <span className="text-da-gold">→</span>
             </span>
           </div>
-        </Link>
+        </div>
 
         {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
         <div className="flex items-center gap-2.5 mb-3.5">

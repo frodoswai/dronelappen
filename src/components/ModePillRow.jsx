@@ -1,12 +1,19 @@
-// Three-mode pill row that lives at the bottom of each exam card on
-// Home. Primary variant = cream + gold (for the A2 card); muted
-// variant = translucent navy (for the quieter A1/A3 card).
+import { Link } from 'react-router-dom'
+import { recordSessionStart } from '../lib/sessionHistory'
+
+// Three-mode pill row at the bottom of each exam card on Home.
+// Primary variant = cream + gold (A2 card); muted = translucent navy
+// (the quieter A1/A3 card).
 //
-// Round 2.5: pills bumped from 10px/px-2.5/py-1 to 11px/px-3/py-1.5
-// for arm's-length phone readability, and mode labels renamed —
-// "øv fritt" → "læring", "rapid" → "tempo" (bolt SVG stays on tempo).
-// Declared at module scope (not inside the component) so it isn't recreated
-// as a new component type on every render.
+// Round 4 (affordance pass): the pills always *looked* like buttons —
+// now they are. Each pill is a real deep-link straight into its mode
+// (/quiz, /practice, /rapid), recording the session start exactly like
+// ExamSelect does. They sit above the card's stretched-link overlay
+// (z-handling lives in Home.jsx), so tapping a pill skips the mode
+// picker entirely while tapping anywhere else on the card still opens it.
+//
+// Declared at module scope (not inside the component) so it isn't
+// recreated as a new component type on every render.
 function BoltSvg({ fill }) {
   return (
     <svg width="7" height="9" viewBox="0 0 7 9" fill={fill} aria-hidden="true">
@@ -15,10 +22,10 @@ function BoltSvg({ fill }) {
   )
 }
 
-export default function ModePillRow({ variant = 'primary' }) {
+export default function ModePillRow({ variant = 'primary', examType }) {
   const isPrimary = variant === 'primary'
   const baseClass =
-    'font-mono text-[11px] px-3 py-1.5 rounded-[3px] tracking-[0.025em]'
+    'quiz-option font-mono text-[11px] px-3 py-1.5 rounded-[3px] tracking-[0.025em] transition-all hover:-translate-y-px hover:shadow-sm active:scale-95'
   const examPill = isPrimary
     ? 'text-da-navy bg-da-cream'
     : 'text-da-text-dim bg-da-navy/5'
@@ -26,14 +33,27 @@ export default function ModePillRow({ variant = 'primary' }) {
     ? 'text-da-gold-text bg-da-cream-light'
     : 'text-da-text-dim bg-da-navy/5'
 
+  const pills = [
+    { mode: 'exam', label: 'eksamen', base: '/quiz', cls: examPill },
+    { mode: 'practice', label: 'læring', base: '/practice', cls: examPill },
+    { mode: 'rapid', label: 'tempo', base: '/rapid', cls: tempoPill, bolt: true },
+  ]
+
   return (
     <div className="flex gap-1.5 items-center flex-wrap">
-      <span className={`${baseClass} ${examPill}`}>eksamen</span>
-      <span className={`${baseClass} ${examPill}`}>læring</span>
-      <span className={`${baseClass} ${tempoPill} flex items-center gap-1`}>
-        <BoltSvg fill={isPrimary ? '#7A4F05' : '#6b7a8c'} />
-        tempo
-      </span>
+      {pills.map((p) => (
+        <Link
+          key={p.mode}
+          to={`${p.base}/${examType}`}
+          onClick={() => recordSessionStart(examType, p.mode)}
+          className={`${baseClass} ${p.cls} ${
+            p.bolt ? 'flex items-center gap-1' : ''
+          }`}
+        >
+          {p.bolt && <BoltSvg fill={isPrimary ? '#7A4F05' : '#6b7a8c'} />}
+          {p.label}
+        </Link>
+      ))}
     </div>
   )
 }

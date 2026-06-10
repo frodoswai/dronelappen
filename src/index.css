@@ -44,6 +44,17 @@ body {
   touch-action: manipulation;
 }
 
+/* Keyboard focus ring on every interactive surface — not just touch
+   devices. Subtle gold echo of the brand, visible on both white cards
+   and the dark hero. */
+.quiz-option:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #E89F1E;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
 @media (hover: none) {
   /* On touch-only devices, :hover can stick after a tap because there
      is no mouseleave event. Neutralize hover/active styling so nothing
