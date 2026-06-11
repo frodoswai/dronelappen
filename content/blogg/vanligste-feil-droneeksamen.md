@@ -2,6 +2,8 @@
 title: De 7 vanligste feilene på droneeksamen – og hvordan du unngår dem
 description: Stryker folk på droneeksamen? Ja, og som regel på det samme. Her er de vanligste feilene på A1/A3- og A2-eksamen, og hvordan du unngår dem.
 date: 2026-06-11
+image: assets/vanligste-feil-droneeksamen.png
+imageAlt: De 7 vanligste feilene på droneeksamen – DroneLappen-bloggen
 ---
 
 A2-eksamen hos Statens vegvesen er 30 spørsmål på 60 minutter, og du må ha minst 75 prosent riktig – altså 23 av 30. Det høres overkommelig ut, men marginene er små: fire-fem unødvendige feil er nok til å stryke. Her er feilene flest gjør, basert på eksamenspensum og egen erfaring fra trafikkstasjonen.

@@ -10,9 +10,11 @@
 //   date:        YYYY-MM-DD (påkrevd)
 //   updated:     YYYY-MM-DD (valgfri)
 //   slug:        (valgfri, ellers filnavn uten .md)
+//   image:       assets/<fil>.png (valgfri — hero + og:image, 1200x630)
+//   imageAlt:    alt-tekst (påkrevd hvis image er satt)
 
 import { marked } from 'marked'
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs'
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, cpSync, existsSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -62,6 +64,7 @@ const CSS = `
   h3{font-size:1.15rem;color:var(--navy)}
   .meta{font-size:.9rem;color:var(--muted);margin-bottom:1.75rem}
   .meta .byline{font-style:italic;font-family:"Lora",Georgia,serif}
+  .hero{width:100%;height:auto;border-radius:.75rem;margin:0 0 1.5rem;display:block}
   blockquote{border-left:4px solid var(--gold);background:#fff;margin:1.5rem 0;
     padding:.75rem 1.25rem;border-radius:0 .5rem .5rem 0}
   table{border-collapse:collapse;width:100%;font-size:.95rem}
@@ -84,7 +87,7 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Lora:ital@1&display=swap" rel="stylesheet">`
 
-function page({ title, description, canonical, ogType, jsonld, bodyHtml }) {
+function page({ title, description, canonical, ogType, jsonld, bodyHtml, ogImage }) {
   return `<!doctype html>
 <html lang="nb">
 <head>
@@ -101,7 +104,11 @@ function page({ title, description, canonical, ogType, jsonld, bodyHtml }) {
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
 <meta property="og:locale" content="nb_NO">
-<meta name="twitter:card" content="summary">
+${ogImage ? `<meta property="og:image" content="${ogImage}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="${ogImage}">` : ''}
+<meta name="twitter:card" content="${ogImage ? 'summary_large_image' : 'summary'}">
 ${FONTS}
 <style>${CSS}</style>
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ''}
@@ -132,6 +139,10 @@ const CTA_BOX = `<div class="cta-box">
 rmSync(OUT, { recursive: true, force: true })
 mkdirSync(OUT, { recursive: true })
 
+// Kopier bilder (content/blogg/assets → public/blogg/assets)
+const ASSETS = join(CONTENT, 'assets')
+if (existsSync(ASSETS)) cpSync(ASSETS, join(OUT, 'assets'), { recursive: true })
+
 const posts = readdirSync(CONTENT)
   .filter((f) => f.endsWith('.md'))
   .map((f) => {
@@ -154,19 +165,23 @@ for (const p of posts) {
     author: { '@type': 'Person', name: 'Frode Friestad', url: 'https://droneavisa.no/om-droneavisa/' },
     publisher: { '@type': 'Organization', name: 'DroneLappen', url: SITE },
   }
+  const ogImage = p.image ? `${SITE}/blogg/${p.image}` : undefined
+  if (ogImage) jsonld.image = ogImage
+  if (p.image && !p.imageAlt) throw new Error(`Mangler "imageAlt" for ${p.slug}`)
   const bodyHtml = `<nav class="crumb"><a href="/blogg/">Blogg</a> / ${esc(p.title)}</nav>
 <article>
 <h1>${esc(p.title)}</h1>
 <p class="meta">Publisert <time datetime="${p.date}">${nbDate(p.date)}</time>${
     p.updated ? `, oppdatert <time datetime="${p.updated}">${nbDate(p.updated)}</time>` : ''
   } · <span class="byline">av Frode Friestad</span></p>
+${p.image ? `<img class="hero" src="/blogg/${p.image}" alt="${esc(p.imageAlt)}" width="1200" height="630">` : ''}
 ${p.html}
 ${CTA_BOX}
 </article>`
   mkdirSync(join(OUT, p.slug), { recursive: true })
   writeFileSync(
     join(OUT, p.slug, 'index.html'),
-    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld, bodyHtml })
+    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld, bodyHtml, ogImage })
   )
 }
 
