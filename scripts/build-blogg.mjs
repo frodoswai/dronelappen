@@ -174,7 +174,7 @@ for (const p of posts) {
 <p class="meta">Publisert <time datetime="${p.date}">${nbDate(p.date)}</time>${
     p.updated ? `, oppdatert <time datetime="${p.updated}">${nbDate(p.updated)}</time>` : ''
   } · <span class="byline">av Frode Friestad</span></p>
-${p.image ? `<img class="hero" src="/blogg/${p.image}" alt="${esc(p.imageAlt)}" width="1200" height="630">` : ''}
+${p.image ? `<a href="/" aria-label="Gå til quiz-appen"><img class="hero" src="/blogg/${p.image}" alt="${esc(p.imageAlt)}" width="1200" height="630"></a>` : ''}
 ${p.html}
 ${CTA_BOX}
 </article>`
