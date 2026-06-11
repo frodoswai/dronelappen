@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dronelappen.app/blogg/sitemap.xml

@@ -36,3 +36,6 @@ email*.zip
 dronelappen-batch*.md
 dronelappen-urgent-fixes.md
 questionbank-export.md
+-e 
+# Generert av scripts/build-blogg.mjs
+/public/blogg/
