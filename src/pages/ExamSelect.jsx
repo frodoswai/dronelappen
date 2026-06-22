@@ -81,6 +81,11 @@ export default function ExamSelect() {
           the global Footer sits right under the cards on tall screens. */}
       <div className="px-6 pt-2 pb-6 bg-da-bg">
         <div className="max-w-xl mx-auto">
+
+        {/* Upsell to full access for free users (hidden for paid).
+            Placed above the mode cards so it's visible without scrolling. */}
+        <UpgradePrompt />
+
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />
           <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
@@ -120,11 +125,6 @@ export default function ExamSelect() {
           showBolt
           onClick={start('rapid')}
         />
-
-        {/* Upsell to full access for free users (hidden for paid). */}
-        <div className="mt-5">
-          <UpgradePrompt />
-        </div>
         </div>
       </div>
     </div>
