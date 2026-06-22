@@ -35,6 +35,14 @@ export default function PaymentReturn() {
       }
       if (betalt !== 'ok') return
 
+      // Fire the Meta Pixel Purchase event once. The success URL is only
+      // reached after a completed Stripe payment, so this is the conversion.
+      try {
+        window.fbq?.('track', 'Purchase', { value: 249, currency: 'NOK' })
+      } catch {
+        // pixel not loaded — ignore
+      }
+
       if (!cancelled) setStatus('pending')
       // Poll a few times: the webhook writes the entitlement out-of-band.
       for (let i = 0; i < 6; i++) {
