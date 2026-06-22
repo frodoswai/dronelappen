@@ -11,12 +11,14 @@ import Vilkar from './pages/Vilkar'
 import Personvern from './pages/Personvern'
 import Kontakt from './pages/Kontakt'
 import Footer from './components/Footer'
+import PaymentReturn from './components/PaymentReturn'
 import './App.css'
 
 function App() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-da-bg flex flex-col">
+        <PaymentReturn />
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />

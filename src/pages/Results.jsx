@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import CrosshairMarks from '../components/CrosshairMarks'
 import SignupPrompt from '../components/SignupPrompt'
+import UpgradePrompt from '../components/UpgradePrompt'
 
 // Pass threshold mirrors the real A2 exam: 23/30 = 76.6% ≥ 75%.
 const PASS_PERCENT = 75
@@ -293,6 +294,9 @@ export default function Results() {
 
           {/* Signup prompt — shown only for anonymous users */}
           <SignupPrompt />
+
+          {/* Upsell to full access — only for logged-in free users */}
+          <UpgradePrompt requireUser />
 
           {/* Encouraging line for failed Eksamen — kept below the card so
               it doesn't compete with the score. */}

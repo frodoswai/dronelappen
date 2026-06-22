@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import ModeCard from '../components/ModeCard'
+import UpgradePrompt from '../components/UpgradePrompt'
 import { useAuth } from '../contexts/AuthContext'
 import { recordSessionStart } from '../lib/sessionHistory'
 
@@ -119,6 +120,11 @@ export default function ExamSelect() {
           showBolt
           onClick={start('rapid')}
         />
+
+        {/* Upsell to full access for free users (hidden for paid). */}
+        <div className="mt-5">
+          <UpgradePrompt />
+        </div>
         </div>
       </div>
     </div>

@@ -1,19 +1,39 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-const AuthContext = createContext({ user: null, loading: true, tier: 'free' })
+const AuthContext = createContext({ user: null, loading: true, tier: 'free', refreshTier: async () => {} })
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [tier, setTier] = useState('free')
 
-  // Fetch tier from entitlements when user changes. All setTier calls live
-  // inside the async fn (never synchronously in the effect body) so React's
-  // set-state-in-effect rule is satisfied — behavior is unchanged.
+  // Read the current entitlement and set tier accordingly. Exposed as
+  // refreshTier so screens can re-check after returning from Stripe Checkout
+  // (the webhook writes the entitlement out-of-band).
+  const refreshTier = useCallback(async () => {
+    const { data: { user: current } } = await supabase.auth.getUser()
+    if (!current) {
+      setTier('free')
+      return 'free'
+    }
+    const { data } = await supabase
+      .from('entitlements')
+      .select('tier, expires_at')
+      .eq('user_id', current.id)
+      .single()
+    const isPaid =
+      data?.tier === 'paid' &&
+      (!data.expires_at || new Date(data.expires_at) > new Date())
+    const next = isPaid ? 'paid' : 'free'
+    setTier(next)
+    return next
+  }, [])
+
+  // Re-check tier whenever the user changes.
   useEffect(() => {
     let cancelled = false
-    async function fetchTier() {
+    async function run() {
       if (!user) {
         if (!cancelled) setTier('free')
         return
@@ -33,7 +53,7 @@ export function AuthProvider({ children }) {
         setTier('free')
       }
     }
-    fetchTier()
+    run()
     return () => { cancelled = true }
   }, [user])
 
@@ -53,7 +73,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, loading, tier }}>
+    <AuthContext.Provider value={{ user, loading, tier, refreshTier }}>
       {children}
     </AuthContext.Provider>
   )

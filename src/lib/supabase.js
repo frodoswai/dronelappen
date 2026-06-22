@@ -33,3 +33,35 @@ export async function fetchQuestions({ examType } = {}) {
 
   return res.json() // { tier, count, questions }
 }
+
+/**
+ * Start a Stripe Checkout for full access (249 NOK / 12 months).
+ * Requires the user to be logged in. Redirects the browser to Stripe on success.
+ */
+export async function createCheckout() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) {
+    throw new Error('Du må være innlogget for å kjøpe full tilgang.')
+  }
+
+  const res = await fetch(
+    `${supabaseUrl}/functions/v1/create-checkout`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseAnonKey,
+        Authorization: `Bearer ${session.access_token}`,
+      },
+    }
+  )
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.error || `Checkout-feil: ${res.status}`)
+  }
+
+  const { url } = await res.json()
+  if (!url) throw new Error('Mangler checkout-URL fra serveren.')
+  window.location.href = url
+}
