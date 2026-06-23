@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { createCheckout } from '../lib/supabase'
 import HeroPropeller from '../components/HeroPropeller'
 import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
@@ -31,8 +32,21 @@ import {
 //   - flex-1 removed from the light zone — content sizes naturally
 //     instead of stretching to viewport
 export default function Home() {
-  const { tier } = useAuth()
+  const { tier, user } = useAuth()
   const [lastSession, setLastSession] = useState(null)
+  const [buyBusy, setBuyBusy] = useState(false)
+  const [buyErr, setBuyErr] = useState('')
+
+  const handleBuy = async () => {
+    setBuyBusy(true)
+    setBuyErr('')
+    try {
+      await createCheckout() // redirects to Stripe on success
+    } catch (err) {
+      setBuyErr(err.message || 'Noe gikk galt. Prøv igjen.')
+      setBuyBusy(false)
+    }
+  }
   // Round 3.5: live counts from Supabase. null → loading (shows dots
   // so there's no layout shift). Fire-and-forget — never block render
   // and never surface errors to the UI; a failed fetch stays as dots.
@@ -97,11 +111,11 @@ export default function Home() {
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             {tier === 'paid' ? (
               <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[2px] rounded-[3px]">
-                PRO — alle spørsmål
+                Full tilgang · alle spørsmål
               </span>
             ) : (
               <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-                25 spørsmål gratis · ALLE spørsmål med PRO
+                25 spørsmål gratis · alle med full tilgang
               </span>
             )}
           </div>
@@ -196,8 +210,8 @@ export default function Home() {
               promising 30 and delivering 25. */}
           <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3.5">
             {tier === 'paid'
-              ? 'Den betalte eksamen. 30 spørsmål, 60 min, 23 riktige for å bestå.'
-              : 'Den betalte eksamen: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
+              ? 'Den offisielle prøven. 30 spørsmål, 60 min, 23 riktige for å bestå.'
+              : 'Den offisielle prøven: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
           </p>
           <div className="relative z-20">
             <ModePillRow variant="primary" examType="A2" />
@@ -252,6 +266,51 @@ export default function Home() {
             </span>
           </div>
         </div>
+
+        {/* ═══ Full tilgang — purchase card, hidden for paid users ═══ */}
+        {tier !== 'paid' && (
+          <div className="rise-in bg-white border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-[18px] py-4 mb-4">
+            <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
+              full tilgang
+            </div>
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <div className="text-[17px] font-medium text-da-navy leading-tight">
+                Lås opp hele banken
+              </div>
+              <div className="text-right whitespace-nowrap">
+                <span className="text-[21px] font-semibold text-da-navy">249 kr</span>
+                <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
+                  / 12 måneder
+                </span>
+              </div>
+            </div>
+            <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-3.5">
+              Alle {stats.questions ?? '200+'} spørsmål, alle kategorier og alle tre
+              treningsmoduser. Gratis gir deg 25 spørsmål.
+            </p>
+            {user ? (
+              <button
+                onClick={handleBuy}
+                disabled={buyBusy}
+                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2 disabled:opacity-60"
+              >
+                <span>{buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}</span>
+                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">→</span>}
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2"
+              >
+                <span>Logg inn for å kjøpe</span>
+                <span className="font-mono text-[12px] text-da-gold">→</span>
+              </Link>
+            )}
+            {buyErr && (
+              <p role="alert" className="mt-2 text-[12px] text-amber-700">{buyErr}</p>
+            )}
+          </div>
+        )}
 
         {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
         <div className="rise-in rise-d3">

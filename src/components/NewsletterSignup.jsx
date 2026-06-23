@@ -61,7 +61,7 @@ export default function NewsletterSignup() {
       </div>
       <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
         Få de siste dronenyhetene fra{' '}
-        <span className="font-medium text-da-navy">Droneavisa.no</span> — regelendringer,
+        <span className="font-medium text-da-navy">Droneavisa.no</span>: regelendringer,
         nye droner, tips og guider rett i innboksen.
       </p>
 
