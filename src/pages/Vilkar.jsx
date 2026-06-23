@@ -52,7 +52,10 @@ export default function Vilkar() {
               Ved å opprette en konto eller bruke tjenesten godtar du disse vilkårene.
               Tjenesten er ment som et supplement til offisiell pensumlitteratur og
               erstatter ikke godkjent opplæring. Vi garanterer ikke at innholdet
-              dekker alle emner som kan forekomme på eksamen.
+              dekker alle emner som kan forekomme på eksamen. Markedsføringsuttrykk
+              som «Bestå droneeksamen på første forsøk» beskriver et mål og er ment
+              som motivasjon, ikke en garanti. Om du består eksamen avhenger av din
+              egen forberedelse og innsats.
             </p>
           </section>
 
