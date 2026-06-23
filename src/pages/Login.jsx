@@ -103,6 +103,32 @@ export default function Login() {
       {/* Form */}
       <div className="px-6 pt-2 pb-6 bg-da-bg">
         <div className="max-w-sm mx-auto">
+          {/* Method toggle — both options selectable up front */}
+          <div className="flex gap-1 p-1 mb-4 bg-da-cream/40 border-[0.5px] border-da-navy/15 rounded-lg">
+            <button
+              type="button"
+              onClick={() => { setMode('magic_link'); setMessage(null) }}
+              className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
+                mode === 'magic_link'
+                  ? 'bg-white text-da-navy shadow-sm'
+                  : 'text-da-text-muted hover:text-da-navy'
+              }`}
+            >
+              Innloggingslenke
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('password_login'); setMessage(null) }}
+              className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
+                mode !== 'magic_link'
+                  ? 'bg-white text-da-navy shadow-sm'
+                  : 'text-da-text-muted hover:text-da-navy'
+              }`}
+            >
+              Passord
+            </button>
+          </div>
+
           <form onSubmit={onSubmit} className="space-y-3">
             <div>
               <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
@@ -175,57 +201,26 @@ export default function Login() {
             </p>
           )}
 
-          {/* Mode switcher links */}
-          <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 space-y-2 text-center">
-            {mode === 'magic_link' && (
-              <>
-                <button
-                  onClick={() => { setMode('password_login'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
-                >
-                  Logg inn med passord i stedet
-                </button>
+          {/* Within password mode: swap between login and signup */}
+          {mode !== 'magic_link' && (
+            <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 text-center">
+              {mode === 'password_login' ? (
                 <button
                   onClick={() => { setMode('password_signup'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
-                >
-                  Opprett konto med passord
-                </button>
-              </>
-            )}
-            {mode === 'password_login' && (
-              <>
-                <button
-                  onClick={() => { setMode('magic_link'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
-                >
-                  Send magisk lenke i stedet
-                </button>
-                <button
-                  onClick={() => { setMode('password_signup'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
                 >
                   Har du ikke konto? Opprett konto
                 </button>
-              </>
-            )}
-            {mode === 'password_signup' && (
-              <>
-                <button
-                  onClick={() => { setMode('magic_link'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
-                >
-                  Send magisk lenke i stedet
-                </button>
+              ) : (
                 <button
                   onClick={() => { setMode('password_login'); setMessage(null) }}
-                  className="block w-full font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
                 >
                   Har du allerede konto? Logg inn
                 </button>
-              </>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           <button
             onClick={() => navigate('/')}
