@@ -30,7 +30,7 @@ export default function Login() {
     if (error) {
       setMessage({ type: 'error', text: error.message })
     } else {
-      setMessage({ type: 'success', text: 'Sjekk e-posten din for den magiske lenken!' })
+      setMessage({ type: 'success', text: 'Sjekk e-posten din for innloggingslenken!' })
     }
   }
 
@@ -79,7 +79,11 @@ export default function Login() {
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
         <div className="pt-8 max-w-sm mx-auto">
           <h1 className="text-[28px] font-medium text-da-bg leading-none tracking-tight mb-1">
-            {mode === 'password_signup' ? 'Opprett konto' : 'Logg inn'}
+            {mode === 'magic_link'
+              ? 'Logg inn eller opprett konto'
+              : mode === 'password_signup'
+              ? 'Opprett konto'
+              : 'Logg inn'}
           </h1>
           <p className="font-serif italic text-sm text-da-dark-slogan">
             Lagre fremgangen din og f&aring; tilgang til alle sp&oslash;rsm&aring;l
@@ -155,7 +159,7 @@ export default function Login() {
                 {loading
                   ? 'Venter...'
                   : mode === 'magic_link'
-                  ? 'Send magisk lenke'
+                  ? 'Send innloggingslenke'
                   : mode === 'password_login'
                   ? 'Logg inn'
                   : 'Opprett konto'}
@@ -163,6 +167,13 @@ export default function Login() {
               {!loading && <span className="font-mono text-[12px] text-da-gold">&rarr;</span>}
             </button>
           </form>
+
+          {mode === 'magic_link' && (
+            <p className="mt-3 text-[12px] text-da-text-muted leading-[1.45] text-center">
+              Vi sender deg en lenke på e-post. Første gang oppretter den kontoen
+              din, ingen passord å huske.
+            </p>
+          )}
 
           {/* Mode switcher links */}
           <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 space-y-2 text-center">

@@ -115,7 +115,7 @@ export default function Home() {
               </span>
             ) : (
               <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-                25 spørsmål gratis · alle med full tilgang
+                Full tilgang 249 kr · test 25 spørsmål gratis
               </span>
             )}
           </div>
@@ -218,7 +218,7 @@ export default function Home() {
           </div>
           <div className="flex justify-end mt-3">
             <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3.5 py-2 rounded-[5px] shadow-sm group-hover:bg-da-navy-mid transition-colors">
-              velg modus{' '}
+              Start A2 her{' '}
               <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
                 →
               </span>
@@ -259,7 +259,7 @@ export default function Home() {
           </div>
           <div className="flex justify-end mt-3">
             <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/40 text-da-navy px-3.5 py-2 rounded-[5px] group-hover:border-da-navy/70 transition-colors">
-              velg modus{' '}
+              Start A1/A3 her{' '}
               <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
                 →
               </span>
