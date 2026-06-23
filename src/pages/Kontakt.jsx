@@ -63,7 +63,7 @@ export default function Kontakt() {
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">Om oss</h2>
             <p>
-              DroneLappen drives av [FORETAKSNAVN], org.nr. [ORG-NUMMER].
+              DroneLappen drives av Frode Friestad.
             </p>
             <p className="mt-2">
               Tjenesten er utviklet i samarbeid med{' '}
