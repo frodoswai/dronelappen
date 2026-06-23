@@ -34,15 +34,15 @@ export default function Vilkar() {
         <div className="max-w-2xl mx-auto space-y-6 text-[14px] leading-[1.7] text-da-text-body">
 
           <p className="font-mono text-[11px] text-da-text-muted tracking-[0.1em]">
-            Sist oppdatert: april 2026
+            Sist oppdatert: juni 2026
           </p>
 
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">1. Om tjenesten</h2>
             <p>
               DroneLappen er en nettbasert øvingsplattform for dronepiloter som
-              forbereder seg til teorieksamen hos Luftfartstilsynet. Tjenesten
-              tilbys av [FORETAKSNAVN], org.nr. [ORG-NUMMER] («vi», «oss»).
+              forbereder seg til teorieksamen. Tjenesten tilbys av Frode Friestad
+              («vi», «oss»). Du kan kontakte oss på kontakt@dronelappen.app.
             </p>
           </section>
 
@@ -57,11 +57,12 @@ export default function Vilkar() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium text-da-navy mb-2">3. Gratisversjon og PRO-tilgang</h2>
+            <h2 className="text-lg font-medium text-da-navy mb-2">3. Gratisversjon og full tilgang</h2>
             <p>
-              Gratisversjonen gir tilgang til et begrenset utvalg øvingsspørsmål.
-              PRO-tilgang gir tilgang til hele spørsmålsbanken og låses opp ved betaling.
-              Priser oppgis inkludert merverdiavgift der det er aktuelt.
+              Gratisversjonen gir tilgang til et begrenset utvalg øvingsspørsmål
+              (for tiden 25 spørsmål). Full tilgang gir tilgang til hele
+              spørsmålsbanken og koster 249 kr som et engangsbeløp, og gir 12
+              måneders tilgang. Priser oppgis inkludert merverdiavgift der det er aktuelt.
             </p>
           </section>
 
@@ -119,7 +120,7 @@ export default function Vilkar() {
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">9. Kontakt</h2>
             <p>
-              [FORETAKSNAVN], org.nr. [ORG-NUMMER]<br />
+              Frode Friestad<br />
               E-post:{' '}
               <a href="mailto:kontakt@dronelappen.app" className="text-da-navy underline underline-offset-2">
                 kontakt@dronelappen.app

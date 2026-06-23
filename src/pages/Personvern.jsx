@@ -33,14 +33,14 @@ export default function Personvern() {
         <div className="max-w-2xl mx-auto space-y-6 text-[14px] leading-[1.7] text-da-text-body">
 
           <p className="font-mono text-[11px] text-da-text-muted tracking-[0.1em]">
-            Sist oppdatert: april 2026
+            Sist oppdatert: juni 2026
           </p>
 
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">1. Behandlingsansvarlig</h2>
             <p>
-              [FORETAKSNAVN], org.nr. [ORG-NUMMER], er behandlingsansvarlig for
-              personopplysninger som samles inn via DroneLappen. Kontakt oss på{' '}
+              Frode Friestad er behandlingsansvarlig for personopplysninger som
+              samles inn via DroneLappen. Kontakt oss på{' '}
               <a href="mailto:kontakt@dronelappen.app" className="text-da-navy underline underline-offset-2">
                 kontakt@dronelappen.app
               </a>{' '}
@@ -67,6 +67,7 @@ export default function Personvern() {
               <li>Behandle betalinger (avtale, GDPR art. 6(1)(b))</li>
               <li>Sende viktige tjenestevarsler (berettiget interesse, GDPR art. 6(1)(f))</li>
               <li>Forbedre tjenesten gjennom anonymisert statistikk (berettiget interesse, GDPR art. 6(1)(f))</li>
+              <li>Måle og forbedre markedsføring via Meta-pixel, kun ved ditt samtykke (GDPR art. 6(1)(a))</li>
             </ul>
             <p className="mt-2">
               Vi sender aldri markedsføring uten ditt samtykke (GDPR art. 6(1)(a)).
@@ -81,6 +82,8 @@ export default function Personvern() {
               <li><strong>Vercel</strong> (hosting) — edge-servere globalt, konfigurert for EU</li>
               <li><strong>Stripe</strong> (betaling) — PCI DSS-sertifisert</li>
               <li><strong>Cloudflare</strong> (DNS og e-postruting)</li>
+              <li><strong>Meta Platforms Ireland</strong> (Meta-pixel for markedsføring og statistikk) — kun hvis du samtykker</li>
+              <li><strong>MailerLite</strong> (utsending av nyhetsbrev) — kun hvis du melder deg på</li>
             </ul>
             <p className="mt-2">
               Vi har databehandleravtaler med alle leverandører. Data lagres
@@ -120,9 +123,12 @@ export default function Personvern() {
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">7. Informasjonskapsler</h2>
             <p>
-              DroneLappen bruker kun nødvendige informasjonskapsler for innlogging
-              og sesjonshåndtering. Vi bruker ikke tredjeparts sporingsverktøy
-              eller annonsecookies.
+              DroneLappen bruker nødvendige informasjonskapsler for innlogging og
+              sesjonshåndtering. Disse er alltid aktive. I tillegg bruker vi Meta-pixel
+              (Facebook) til markedsføring og statistikk. Meta-pixelen aktiveres kun
+              hvis du samtykker via samtykkebanneren, og setter da informasjonskapsler
+              fra Meta. Du kan trekke tilbake samtykket ved å avslå i banneren eller
+              slette informasjonskapslene for dronelappen.app i nettleseren din.
             </p>
           </section>
 

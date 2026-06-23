@@ -5,8 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DroneLappen - Bli en bedre dronepilot</title>
-    <meta name="description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en tryggere dronepilot." />
-    <meta name="application-name" content="DroneLappen beta" />
+    <meta name="description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en bedre dronepilot." />
+    <meta name="application-name" content="DroneLappen" />
     <meta name="theme-color" content="#0a1628" />
 
     <!-- Google Fonts — Barlow (UI/display, synket med droneavisa.no),
@@ -21,31 +21,54 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="DroneLappen" />
     <meta property="og:title" content="DroneLappen - Bli en bedre dronepilot" />
-    <meta property="og:description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en tryggere dronepilot." />
+    <meta property="og:description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en bedre dronepilot." />
     <meta property="og:url" content="https://dronelappen.app/" />
     <meta property="og:locale" content="nb_NO" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="DroneLappen - Bli en bedre dronepilot" />
-    <meta name="twitter:description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en tryggere dronepilot." />
+    <meta name="twitter:description" content="Gratis quiz-app for A2 og A1/A3 dronelappen. Bli en bedre dronepilot." />
 
-    <!-- MacMiniHub Meta Pixel Code -->
+    <!-- Cookie consent + Meta Pixel (consent-gated, opt-in) -->
     <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1025209573360224');
-      fbq('track', 'PageView');
+      (function () {
+        var KEY = 'dl-cookie-consent';
+        var PIXEL_ID = '1025209573360224';
+        function loadPixel() {
+          if (window.__dlPixel) return;
+          window.__dlPixel = true;
+          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', PIXEL_ID);
+          fbq('track', 'PageView');
+        }
+        window.dlLoadPixel = loadPixel;
+        var choice = null;
+        try { choice = localStorage.getItem(KEY); } catch (e) {}
+        if (choice === 'accepted') { loadPixel(); return; }
+        if (choice === 'declined') { return; }
+        function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+        function showBanner() {
+          var bar = document.createElement('div');
+          bar.setAttribute('role', 'dialog');
+          bar.setAttribute('aria-label', 'Samtykke til informasjonskapsler');
+          bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#083554;color:#e7edf2;padding:14px 18px;font-family:Barlow,Inter,-apple-system,Segoe UI,Roboto,sans-serif;font-size:13.5px;line-height:1.5;box-shadow:0 -2px 14px rgba(0,0,0,0.25);';
+          bar.innerHTML = '<div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;">'
+            + '<span style="flex:1;min-width:240px;">Vi bruker nødvendige informasjonskapsler for innlogging. Vi vil også bruke Meta-pixel til markedsføring og statistikk. <a href="/personvern" style="color:#E89F1E;text-decoration:underline;">Les mer</a>.</span>'
+            + '<span style="display:flex;gap:8px;flex-shrink:0;">'
+            + '<button id="dl-decline" type="button" style="background:transparent;color:#c3d0db;border:1px solid rgba(255,255,255,0.35);border-radius:7px;padding:8px 14px;font:inherit;cursor:pointer;">Bare nødvendige</button>'
+            + '<button id="dl-accept" type="button" style="background:#E89F1E;color:#083554;border:none;border-radius:7px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer;">Godta alle</button>'
+            + '</span></div>';
+          document.body.appendChild(bar);
+          document.getElementById('dl-accept').onclick = function () { save('accepted'); loadPixel(); bar.remove(); };
+          document.getElementById('dl-decline').onclick = function () { save('declined'); bar.remove(); };
+        }
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', showBanner);
+        } else { showBanner(); }
+      })();
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1025209573360224&ev=PageView&noscript=1"/></noscript>
-    <!-- End MacMiniHub Meta Pixel Code -->
+    <!-- End cookie consent -->
   </head>
   <body>
     <div id="root"></div>
