@@ -36,8 +36,8 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
         full tilgang
       </div>
       <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
-        Gratisversjonen gir deg 25 sp&oslash;rsm&aring;l. L&aring;s opp <strong>hele
-        sp&oslash;rsm&aring;lsbanken</strong> i 12 m&aring;neder for <strong>249 kr</strong>.
+        Gratisversjonen gir deg 25 sp&oslash;rsm&aring;l. Betal <strong>249 kr én gang</strong> og
+        l&aring;s opp <strong>hele sp&oslash;rsm&aring;lsbanken</strong> i 12 m&aring;neder. Ingen abonnement.
       </p>
 
       {user ? (

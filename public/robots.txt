@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://dronelappen.app/sitemap.xml
 Sitemap: https://dronelappen.app/blogg/sitemap.xml

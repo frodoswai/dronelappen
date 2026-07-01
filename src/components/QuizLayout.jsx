@@ -21,7 +21,10 @@
 //   3. 28px stepped gradient fade (identical to Home/ExamSelect)
 //   4. Light content zone hosting the question card
 
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
+import { createCheckout } from '../lib/supabase'
 
 export default function QuizLayout({
   mode,
@@ -34,6 +37,28 @@ export default function QuizLayout({
   flashBg,
   children,
 }) {
+  const { user, tier, loading } = useAuth()
+  const navigate = useNavigate()
+  const [upgradeBusy, setUpgradeBusy] = useState(false)
+  // Gate on loading so paid users never flash the "Gratis"/upgrade UI
+  // before their entitlement resolves (mirrors UpgradePrompt).
+  const isFree = !loading && tier !== 'paid'
+
+  const handleUpgrade = async () => {
+    if (upgradeBusy) return
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    setUpgradeBusy(true)
+    try {
+      await createCheckout() // redirects to Stripe on success
+    } catch {
+      setUpgradeBusy(false)
+      navigate('/')
+    }
+  }
+
   const modeLabel =
     mode === 'eksamen'
       ? 'eksamen'
@@ -56,6 +81,26 @@ export default function QuizLayout({
       {/* ═══ Compact dark header ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-3">
         <div className="pt-8 max-w-xl mx-auto">
+          {/* Brand + upgrade line — context for direct/ad landings */}
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-2.5">
+            <Link
+              to="/"
+              className="font-mono text-[11px] font-medium text-da-dark-slogan tracking-[0.08em] hover:text-da-bg transition-colors shrink-0"
+              aria-label="DroneLappen forside"
+            >
+              DroneLappen<span className="text-da-gold">.app</span>
+            </Link>
+            {isFree && (
+              <button
+                onClick={handleUpgrade}
+                disabled={upgradeBusy}
+                className="quiz-option font-mono text-[11px] text-da-gold tracking-[0.04em] hover:opacity-80 transition-opacity shrink-0 disabled:opacity-60"
+              >
+                {upgradeBusy ? 'Sender til betaling …' : 'Full tilgang 249 kr →'}
+              </button>
+            )}
+          </div>
+
           {/* Top row — mono label cluster + timer */}
           <div className="flex items-center justify-between gap-3 mb-2">
             <div className="flex items-center gap-2 min-w-0">
@@ -99,7 +144,7 @@ export default function QuizLayout({
           {progress && (
             <div className="flex items-center justify-between gap-3 mb-2">
               <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums">
-                spørsmål {progress.current}/{progress.total}
+                {isFree ? 'Gratis · ' : 'spørsmål '}{progress.current}/{progress.total}
               </span>
               {stats && (
                 <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums truncate">

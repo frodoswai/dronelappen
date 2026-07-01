@@ -115,7 +115,7 @@ export default function Home() {
               </span>
             ) : (
               <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-                Full tilgang 249 kr · test 25 spørsmål gratis
+                Full tilgang 249 kr én gang · test 25 spørsmål gratis
               </span>
             )}
           </div>
@@ -280,13 +280,13 @@ export default function Home() {
               <div className="text-right whitespace-nowrap">
                 <span className="text-[21px] font-semibold text-da-navy">249 kr</span>
                 <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
-                  / 12 måneder
+                  én gang · 12 mnd
                 </span>
               </div>
             </div>
             <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-3.5">
               Alle {stats.questions ?? '200+'} spørsmål, alle kategorier og alle tre
-              treningsmoduser. Gratis gir deg 25 spørsmål.
+              treningsmoduser. Engangsbeløp, ingen abonnement. Gratis gir deg 25 spørsmål.
             </p>
             {user ? (
               <button

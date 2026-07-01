@@ -18,6 +18,20 @@ export default function Footer() {
           Kontakt
         </Link>
       </div>
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-[0.05em]">
+        <span className="text-gray-400">Offisielt:</span>
+        <a href="https://flydrone.no" target="_blank" rel="noopener" className="text-gray-400 hover:text-da-navy transition-colors">
+          flydrone.no
+        </a>
+        <span className="text-gray-300">·</span>
+        <a href="https://luftfartstilsynet.no/droner/" target="_blank" rel="noopener" className="text-gray-400 hover:text-da-navy transition-colors">
+          Luftfartstilsynet
+        </a>
+        <span className="text-gray-300">·</span>
+        <a href="https://www.vegvesen.no/forerkort/ta-forerkort/teoriprove/droneeksamen/" target="_blank" rel="noopener" className="text-gray-400 hover:text-da-navy transition-colors">
+          Statens vegvesen
+        </a>
+      </div>
       <div>
         DroneLappen — powered by{' '}
         <a
