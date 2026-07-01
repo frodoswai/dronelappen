@@ -58,8 +58,19 @@ export function AuthProvider({ children }) {
   }, [user])
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
+    let active = true
+
+    // Every visitor gets a session: reuse an existing one, otherwise sign in
+    // anonymously so the buy flow works without a login wall. The anonymous
+    // account is upgraded to a permanent one (email linked) after purchase.
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (session) {
+        if (active) { setUser(session.user); setLoading(false) }
+        return
+      }
+      const { data, error } = await supabase.auth.signInAnonymously()
+      if (!active) return
+      setUser(error ? null : (data?.user ?? null))
       setLoading(false)
     })
 
@@ -69,7 +80,7 @@ export function AuthProvider({ children }) {
       setUser(session?.user ?? null)
     })
 
-    return () => subscription.unsubscribe()
+    return () => { active = false; subscription.unsubscribe() }
   }, [])
 
   return (
