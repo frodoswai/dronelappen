@@ -79,7 +79,9 @@ Deno.serve(async (req) => {
       success_url: 'https://dronelappen.app/?betalt=ok&s={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://dronelappen.app/?betalt=avbrutt',
       client_reference_id: user.id,
-      customer_email: user.email ?? undefined,
+      // Anonymous users have email "" (not null), so use || not ?? — otherwise
+      // Stripe rejects the empty string. Stripe then collects the email itself.
+      customer_email: user.email || undefined,
       metadata: meta,
       payment_intent_data: { metadata: meta },
       locale: 'nb',
