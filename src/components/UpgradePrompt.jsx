@@ -22,9 +22,12 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
   const handleBuy = async () => {
     setBusy(true)
     setError('')
+    // Funnel-instrumentering (se Home.jsx): tell buy-forsøk i Meta + synliggjør feil.
+    window.fbq?.('track', 'InitiateCheckout', { value: 249, currency: 'NOK' })
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
+      window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })
       setError(err.message || 'Noe gikk galt. Prøv igjen.')
       setBusy(false)
     }

@@ -40,9 +40,17 @@ export default function Home() {
   const handleBuy = async () => {
     setBuyBusy(true)
     setBuyErr('')
+    // Funnel-instrumentering: registrer buy-klikk som InitiateCheckout så
+    // forsøk er tellbare i Meta. En stille create-checkout-feil viser seg da
+    // som InitiateCheckout uten matchende Purchase. Fyrer kun etter cookie-
+    // samtykke (window.fbq ellers undefined); ?. gjør den til no-op uten pixel.
+    window.fbq?.('track', 'InitiateCheckout', { value: 249, currency: 'NOK' })
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
+      // Gjør checkout-feil synlige i Meta -> brutt betalingssti fanges på
+      // timer, ikke dager (jf. anon-email-bug 2026-07-01).
+      window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })
       setBuyErr(err.message || 'Noe gikk galt. Prøv igjen.')
       setBuyBusy(false)
     }
