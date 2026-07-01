@@ -54,14 +54,34 @@ Deno.serve(async (req) => {
       })
     }
 
+    // Acquisition attribution (UTM/referrer) sent from the client. Attach it to
+    // both the session and the PaymentIntent so each sale's source is queryable
+    // in Stripe (which channel: feed / reels / retargeting / organic).
+    const meta: Record<string, string> = { user_id: user.id }
+    try {
+      const body = await req.json().catch(() => null)
+      const attr = body && typeof body === 'object' ? (body as Record<string, unknown>).attribution : null
+      if (attr && typeof attr === 'object') {
+        for (const [k, v] of Object.entries(attr as Record<string, unknown>)) {
+          if (v == null || v === '') continue
+          meta[String(k).slice(0, 40)] = String(v).slice(0, 450)
+        }
+      }
+    } catch {
+      /* no/invalid body - proceed with user_id only */
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [{ price: PRICE_ID, quantity: 1 }],
-      success_url: 'https://dronelappen.app/?betalt=ok',
+      // {CHECKOUT_SESSION_ID} is expanded by Stripe on redirect; PaymentReturn
+      // reads it as `s` and uses it as the Pixel/CAPI dedup event_id.
+      success_url: 'https://dronelappen.app/?betalt=ok&s={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://dronelappen.app/?betalt=avbrutt',
       client_reference_id: user.id,
       customer_email: user.email ?? undefined,
-      metadata: { user_id: user.id },
+      metadata: meta,
+      payment_intent_data: { metadata: meta },
       locale: 'nb',
       allow_promotion_codes: true,
     })

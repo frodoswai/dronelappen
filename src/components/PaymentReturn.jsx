@@ -16,8 +16,14 @@ export default function PaymentReturn() {
     const betalt = params.get('betalt')
     if (!betalt) return
 
-    // Strip the param so a refresh doesn't re-trigger.
+    // Stripe Checkout Session id (from the success_url template). Shared with
+    // the server-side CAPI event as the dedup event_id so Meta counts one
+    // Purchase, not two (browser Pixel + server).
+    const sessionId = params.get('s')
+
+    // Strip our params so a refresh doesn't re-trigger.
     params.delete('betalt')
+    params.delete('s')
     const qs = params.toString()
     window.history.replaceState(
       {},
@@ -37,8 +43,15 @@ export default function PaymentReturn() {
 
       // Fire the Meta Pixel Purchase event once. The success URL is only
       // reached after a completed Stripe payment, so this is the conversion.
+      // eventID = Stripe session id, matching the server-side CAPI event so
+      // Meta deduplicates the browser + server Purchase into one.
       try {
-        window.fbq?.('track', 'Purchase', { value: 249, currency: 'NOK' })
+        window.fbq?.(
+          'track',
+          'Purchase',
+          { value: 249, currency: 'NOK' },
+          sessionId ? { eventID: sessionId } : undefined,
+        )
       } catch {
         // pixel not loaded — ignore
       }

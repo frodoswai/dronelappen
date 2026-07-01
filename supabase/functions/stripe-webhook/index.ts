@@ -10,6 +10,15 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
 
 const WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET')!
 const ACCESS_MONTHS = 12
+const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
+
+// SHA-256 hex. Meta CAPI requires PII hashed (email lowercased + trimmed first).
+async function sha256Hex(input: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input))
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+}
 
 Deno.serve(async (req) => {
   const sig = req.headers.get('stripe-signature')
@@ -50,6 +59,86 @@ Deno.serve(async (req) => {
             { onConflict: 'user_id' },
           )
         if (error) throw error
+
+        // Upgrade the (anonymous) buyer to a permanent account by linking the
+        // email Stripe collected, so they can log in later on any device.
+        // Best-effort: never block the entitlement grant above.
+        try {
+          const email = session.customer_details?.email
+          if (email) {
+            const { error: linkErr } = await admin.auth.admin.updateUserById(userId, {
+              email,
+              email_confirm: true,
+            })
+            if (linkErr) {
+              // Email already belongs to a returning customer: move the
+              // entitlement onto their existing account instead.
+              const { data: list } = await admin.auth.admin.listUsers()
+              const existing = list?.users?.find(
+                (u) => u.email?.toLowerCase() === email.toLowerCase() && u.id !== userId,
+              )
+              if (existing) {
+                await admin.from('entitlements').upsert(
+                  { user_id: existing.id, tier: 'paid', expires_at: expires.toISOString() },
+                  { onConflict: 'user_id' },
+                )
+              }
+            }
+          }
+        } catch (_) {
+          // Linking is a convenience; the entitlement is already granted.
+        }
+
+        // Server-side Purchase → Meta Conversions API (CAPI), mirroring the
+        // browser Pixel. Shares event_id (Stripe session id) with the browser
+        // event so Meta deduplicates the two into one conversion. Strictly
+        // best-effort: wrapped in try/catch AFTER the entitlement grant, so it
+        // can never block or fail the access that was just granted.
+        try {
+          const capiToken = Deno.env.get('META_CAPI_TOKEN')
+          if (capiToken) {
+            const userData: Record<string, string[]> = {
+              external_id: [await sha256Hex(userId.trim())],
+            }
+            const email = session.customer_details?.email
+            if (email) {
+              userData.em = [await sha256Hex(email.trim().toLowerCase())]
+            }
+
+            const payload: Record<string, unknown> = {
+              data: [{
+                event_name: 'Purchase',
+                event_time: Math.floor(Date.now() / 1000),
+                action_source: 'website',
+                event_source_url: 'https://dronelappen.app/',
+                event_id: session.id,
+                user_data: userData,
+                custom_data: { currency: 'NOK', value: 249 },
+              }],
+            }
+            // Optional: route to Events Manager → Test Events during verification.
+            // Set META_CAPI_TEST_EVENT_CODE to enable; unset it for production.
+            const testCode = Deno.env.get('META_CAPI_TEST_EVENT_CODE')
+            if (testCode) payload.test_event_code = testCode
+
+            const resp = await fetch(
+              `https://graph.facebook.com/v21.0/${META_PIXEL_ID}/events?access_token=${encodeURIComponent(capiToken)}`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+              },
+            )
+            if (!resp.ok) {
+              console.error('CAPI Purchase failed:', resp.status, await resp.text())
+            }
+          } else {
+            console.error('CAPI: META_CAPI_TOKEN not set — skipping Purchase event')
+          }
+        } catch (err) {
+          // CAPI is analytics only; never affect the entitlement grant.
+          console.error('CAPI Purchase error:', (err as Error).message)
+        }
       }
     }
   } catch (err) {
