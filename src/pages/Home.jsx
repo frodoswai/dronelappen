@@ -160,6 +160,41 @@ export default function Home() {
       {/* ═══ Light content zone ═══ */}
       <div className="px-6 pt-1 pb-6 bg-da-bg">
         <div className="max-w-xl mx-auto">
+        {/* ═══ Dual CTA — first thing ad traffic sees ═══
+            Two explicit choices above the fold: a free taste (Læring A2 with
+            the 25 free questions) and the direct buy. Ad campaigns land on
+            Home, so the "prøv gratis vs kjøp 249" decision shouldn't require
+            scrolling. Hidden once the user is paid. */}
+        {tier !== 'paid' && (
+          <div className="rise-in flex gap-2.5 mb-4">
+            <Link
+              to="/practice/A2"
+              className="quiz-option flex-1 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-2 active:scale-[0.99]"
+            >
+              <span>Prøv 25 gratis</span>
+              <span className="font-mono text-[12px] text-da-gold">→</span>
+            </Link>
+            {user ? (
+              <button
+                onClick={handleBuy}
+                disabled={buyBusy}
+                className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40 disabled:opacity-60"
+              >
+                <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
+                <span className="font-mono text-[12px] text-da-gold">249 kr</span>
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40"
+              >
+                <span>Full tilgang</span>
+                <span className="font-mono text-[12px] text-da-gold">249 kr</span>
+              </Link>
+            )}
+          </div>
+        )}
+
         {/* Divider with mono label */}
         <div className="flex items-center gap-2.5 mb-3.5">
           <div className="flex-1 h-px bg-da-navy/20" />

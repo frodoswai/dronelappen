@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
+import Paywall from '../components/Paywall'
 
 // Exam mode wall-clock budget. Using a constant keeps the display/fix and
 // handleTimeUp math in sync.
@@ -57,12 +58,18 @@ export default function Quiz() {
   const [quizComplete, setQuizComplete] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  // Tier as reported by the get-questions Edge Function. When 'free', the
+  // server capped the set at the 25-question free pool (FREE_LIMIT), so the
+  // end of this quiz is the paywall moment rather than a plain results page.
+  const [fetchedTier, setFetchedTier] = useState(null)
+  const [showPaywall, setShowPaywall] = useState(false)
 
   // Fetch questions on mount
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const { questions: data } = await fetchQuestions({ examType })
+        const { questions: data, tier } = await fetchQuestions({ examType })
+        setFetchedTier(tier ?? null)
 
         // Shuffle question order, then shuffle each question's options
         const shuffled = shuffleArray(data || [])
@@ -224,6 +231,19 @@ export default function Quiz() {
   // nothing while that runs.
   if (quizComplete) return null
 
+  // Free users hit the paywall after the 25-question free pool. Buy is the
+  // primary action; onContinue still lets them see their results, so the wall
+  // never traps their own session data.
+  if (showPaywall) {
+    return (
+      <Paywall
+        answered={questions.length}
+        onContinue={() => { setShowPaywall(false); setQuizComplete(true) }}
+      />
+    )
+  }
+
+  const freeCapped = fetchedTier === 'free'
   const currentQuestion = questions[currentIndex]
   if (!currentQuestion) return null
   const isAnswered = selectedAnswer !== null
@@ -290,6 +310,11 @@ export default function Quiz() {
       // strictly linear, so `answers[next]` is always null there.
       setSelectedAnswer(answers[next] ?? null)
       setShowExplanation(false)
+    } else if (freeCapped) {
+      // End of the free 25-question pool → paywall instead of results.
+      // The InitiateCheckout intent event fires from the paywall's buy button.
+      window.fbq?.('trackCustom', 'FreePoolCompleted')
+      setShowPaywall(true)
     } else {
       setQuizComplete(true)
     }

@@ -10,6 +10,15 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
 })
 
 const PRICE_ID = 'price_1Tl83aK4vmLGBhyM4NdiXYbf' // DroneLappen full tilgang (12 mnd), 249 NOK
+const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
+
+// SHA-256 hex. Meta CAPI requires PII hashed (email lowercased + trimmed first).
+async function sha256Hex(input: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input))
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+}
 
 const ALLOWED_ORIGINS = new Set([
   'https://dronelappen.app',
@@ -87,6 +96,58 @@ Deno.serve(async (req) => {
       locale: 'nb',
       allow_promotion_codes: true,
     })
+
+    // Server-side InitiateCheckout -> Meta Conversions API. The browser also
+    // fires an InitiateCheckout, but the page redirects to Stripe before that
+    // beacon reliably sends (0 captured in 30d), so this server event is the
+    // real, reliable IC signal for ad optimization. event_id = Stripe session
+    // id so it dedupes with the browser event (and is distinct per event_name
+    // from the Purchase event). Strictly best-effort with a short timeout: it
+    // must never block or delay returning the checkout URL.
+    try {
+      const capiToken = Deno.env.get('META_CAPI_TOKEN')
+      if (capiToken) {
+        const userData: Record<string, string[]> = {
+          external_id: [await sha256Hex(user.id.trim())],
+        }
+        if (user.email) userData.em = [await sha256Hex(user.email.trim().toLowerCase())]
+
+        const payload: Record<string, unknown> = {
+          data: [{
+            event_name: 'InitiateCheckout',
+            event_time: Math.floor(Date.now() / 1000),
+            action_source: 'website',
+            event_source_url: 'https://dronelappen.app/',
+            event_id: session.id,
+            user_data: userData,
+            custom_data: { currency: 'NOK', value: 249 },
+          }],
+        }
+        // Same toggle as stripe-webhook: set to route to Test Events; unset for prod.
+        const testCode = Deno.env.get('META_CAPI_TEST_EVENT_CODE')
+        if (testCode) payload.test_event_code = testCode
+
+        const ctrl = new AbortController()
+        const timer = setTimeout(() => ctrl.abort(), 1500)
+        try {
+          const resp = await fetch(
+            `https://graph.facebook.com/v21.0/${META_PIXEL_ID}/events?access_token=${encodeURIComponent(capiToken)}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              signal: ctrl.signal,
+            },
+          )
+          if (!resp.ok) console.error('CAPI InitiateCheckout failed:', resp.status, await resp.text())
+        } finally {
+          clearTimeout(timer)
+        }
+      }
+    } catch (err) {
+      // CAPI is analytics only; never affect the checkout URL just created.
+      console.error('CAPI InitiateCheckout error:', (err as Error).message)
+    }
 
     return new Response(JSON.stringify({ url: session.url }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },

@@ -176,9 +176,31 @@ export default function QuizLayout({
       />
 
       {/* ═══ Light content zone ═══ */}
-      <div className="px-5 pt-2 pb-6 bg-da-bg">
+      <div className={`px-5 pt-2 ${isFree ? 'pb-24' : 'pb-6'} bg-da-bg`}>
         <div className="max-w-xl mx-auto">{children}</div>
       </div>
+
+      {/* ═══ Sticky free-quota bar ═══
+          Visible under every question for free users: a persistent, low-
+          friction buy button (Frode: "under hvert spørsmål en kjøp-knapp").
+          Shows how much of the 25-question free pool is used. Hidden for paid
+          users and while the tier is still loading (isFree gates both). */}
+      {isFree && progress && (
+        <div className="fixed bottom-0 inset-x-0 z-40 bg-da-navy-dark/95 backdrop-blur border-t border-da-gold/30">
+          <div className="max-w-xl mx-auto px-5 py-2.5 flex items-center justify-between gap-3">
+            <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums">
+              Gratis · {progress.current}/{progress.total} spørsmål
+            </span>
+            <button
+              onClick={handleUpgrade}
+              disabled={upgradeBusy}
+              className="quiz-option font-mono text-[11px] font-medium tracking-[0.04em] bg-da-gold text-da-navy-dark px-3 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity shrink-0 disabled:opacity-60"
+            >
+              {upgradeBusy ? 'Sender …' : 'Lås opp alt · 249 kr →'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
