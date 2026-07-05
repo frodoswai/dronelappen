@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
+import Paywall from '../components/Paywall'
 import CrosshairMarks from '../components/CrosshairMarks'
 
 // Easy to tweak at the top of the file:
@@ -38,6 +39,10 @@ export default function Rapid() {
   const [finished, setFinished] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  // Tier from get-questions: 'free' means the set is the 25-question pool,
+  // so the natural end of a Tempo run is the paywall moment.
+  const [fetchedTier, setFetchedTier] = useState(null)
+  const [showPaywall, setShowPaywall] = useState(false)
 
   // Count-up timer — Rapid is about speed, not time pressure, so we show
   // ⏱ MM:SS counting up from 0 and highlight total time on the finish
@@ -65,7 +70,8 @@ export default function Rapid() {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const { questions: data } = await fetchQuestions({ examType })
+        const { questions: data, tier } = await fetchQuestions({ examType })
+        setFetchedTier(tier ?? null)
 
         // Shuffle the pool, cap the session at RAPID_SESSION_SIZE,
         // then shuffle each question's options independently.
@@ -136,6 +142,8 @@ export default function Rapid() {
     }
   }
 
+  const freeCapped = fetchedTier === 'free'
+
   const advance = () => {
     timerRef.current = null
     setSelectedAnswer(null)
@@ -144,6 +152,12 @@ export default function Rapid() {
       const next = idx + 1
       if (next >= questions.length) {
         finishWithFinalTime()
+        // End of the free 25-question pool → paywall interstitial before the
+        // tempo finish screen. Only on natural completion, not handleStop.
+        if (freeCapped) {
+          window.fbq?.('trackCustom', 'FreePoolCompleted')
+          setShowPaywall(true)
+        }
         return idx
       }
       return next
@@ -244,6 +258,18 @@ export default function Rapid() {
           </button>
         </div>
       </div>
+    )
+  }
+
+  // Free users hit the paywall after finishing the 25-question free pool.
+  // Interstitial before the tempo finish screen; onContinue reveals the
+  // score/time achievement so the wall never hides the user's own result.
+  if (showPaywall) {
+    return (
+      <Paywall
+        answered={questions.length}
+        onContinue={() => setShowPaywall(false)}
+      />
     )
   }
 
