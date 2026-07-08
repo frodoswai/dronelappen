@@ -27,7 +27,7 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 <h3>Tre ulike beløp</h3>
 <ul>
 <li><strong>DroneLappen (øving):</strong> 249 kr én gang</li>
-<li><strong>A1/A3-eksamen:</strong> gratis, nettbasert hos Luftfartstilsynet (flydrone.no)</li>
+<li><strong>A1/A3-eksamen:</strong> gratis, nettbasert hos Luftfartstilsynet (flydrone.no) — 40 spørsmål, minst 30 rette (75 %)</li>
 <li><strong>A2-eksamen:</strong> 970 kr, avlegges på trafikkstasjon</li>
 </ul>
 </div>

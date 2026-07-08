@@ -19,6 +19,23 @@ export default function Footer() {
         </Link>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-[0.05em]">
+        <a href="/dronesertifikat-a2/" className="text-gray-400 hover:text-da-navy transition-colors">
+          A2-sertifikat
+        </a>
+        <span className="text-gray-300">·</span>
+        <a href="/droneeksamen-oving/" className="text-gray-400 hover:text-da-navy transition-colors">
+          Øv til eksamen
+        </a>
+        <span className="text-gray-300">·</span>
+        <a href="/pris/" className="text-gray-400 hover:text-da-navy transition-colors">
+          Pris
+        </a>
+        <span className="text-gray-300">·</span>
+        <a href="/blogg/" className="text-gray-400 hover:text-da-navy transition-colors">
+          Blogg
+        </a>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-[11px] tracking-[0.05em]">
         <span className="text-gray-400">Offisielt:</span>
         <a href="https://flydrone.no" target="_blank" rel="noopener" className="text-gray-400 hover:text-da-navy transition-colors">
           flydrone.no

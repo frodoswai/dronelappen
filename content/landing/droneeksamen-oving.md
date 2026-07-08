@@ -13,6 +13,7 @@ slug: droneeksamen-oving
 <h3>Eksamen kort fortalt</h3>
 <ul>
 <li><strong>A1/A3:</strong> gratis, nettbasert prøve hos Luftfartstilsynet (flydrone.no)</li>
+<li><strong>A1/A3-format:</strong> 40 spørsmål, minst 75 % riktig (30 av 40) for å bestå, besvarelsen må sendes inn innen 12 timer</li>
 <li><strong>A2:</strong> 970 kr, avlegges på trafikkstasjon (krever bestått A1/A3 først)</li>
 <li><strong>A2-format:</strong> 30 spørsmål, ca. 60 minutter, minst 75 % riktig (23 av 30) for å bestå</li>
 </ul>

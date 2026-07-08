@@ -15,7 +15,7 @@ slug: dronesertifikat-a2
 <li><strong>Hvor:</strong> trafikkstasjon (Statens vegvesen)</li>
 <li><strong>Pris:</strong> 970 kr i eksamensgebyr (ikke det samme som DroneLappen)</li>
 <li><strong>Format:</strong> 30 spørsmål, ca. 60 minutter, minst 75 % riktig (23 av 30) for å bestå</li>
-<li><strong>Krav først:</strong> bestått A1/A3 (gratis nettbasert prøve hos Luftfartstilsynet på flydrone.no) og egenerklæring om praktisk trening</li>
+<li><strong>Krav først:</strong> bestått A1/A3 (gratis nettbasert prøve hos Luftfartstilsynet på flydrone.no: 40 spørsmål, minst 30 rette) og egenerklæring om praktisk trening</li>
 <li><strong>Gyldighet:</strong> kompetansebevis i hele EØS (sjekk Luftfartstilsynet for gyldighetstid og fornying)</li>
 </ul>
 </div>
