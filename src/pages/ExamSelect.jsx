@@ -36,8 +36,8 @@ export default function ExamSelect() {
       ? 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.'
       : 'Simulering med 25 gratis spørsmål, 60 min, 19 riktige for å bestå.'
     : tier === 'paid'
-      ? 'Realistisk simulering. 30 spørsmål, 75% for å bestå.'
-      : 'Simulering med 25 gratis spørsmål, 75% for å bestå.'
+      ? 'Simulering: 30 spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål (30 riktige for å bestå).'
+      : 'Simulering med 25 gratis spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål.'
 
   // Gate each mode tap on recordSessionStart so smart resume stays
   // honest. Using onClick rather than wrapping the Link target because
