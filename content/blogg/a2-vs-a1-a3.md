@@ -39,6 +39,8 @@ A2 er for deg som vil fly droner over 250 gram nærmere mennesker enn A3 tillate
 
 Med A2 kan du fly ned til 30 meter horisontalt fra utenforstående, og ned til 5 meter i lavhastighetsmodus. Du må fortsatt holde deg under 120 meters høyde, som i alle åpen kategori-operasjoner.
 
+Skal du ta A2? Se hvordan du [forbereder deg og består A2-eksamen](/dronesertifikat-a2/).
+
 ## Hva koster det totalt?
 
 - **Bare A1/A3:** 230 kr (operatørgebyret – selve eksamen er gratis)

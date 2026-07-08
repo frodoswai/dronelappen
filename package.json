@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/build-blogg.mjs && vite build",
+    "build": "node scripts/build-blogg.mjs && node scripts/build-landing.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "blogg": "node scripts/build-blogg.mjs"
+    "blogg": "node scripts/build-blogg.mjs",
+    "landing": "node scripts/build-landing.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.101.1",

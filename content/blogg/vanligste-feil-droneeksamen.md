@@ -48,7 +48,7 @@ A2-eksamen tas fysisk på trafikkstasjon, og populære stasjoner fylles raskt op
 
 Å svare riktig hjemme i sofaen er én ting. Å svare riktig med klokka tikkende på en trafikkstasjon er noe annet. 60 minutter på 30 spørsmål er romslig, men stress gjør at folk feilleser spørsmål de egentlig kan.
 
-**Slik unngår du det:** Ta minst to-tre øvingsrunder under realistiske eksamensforhold: 30 spørsmål, 60 minutter, 75 prosent bestå-grense. Da vet du hvordan tidspresset føles før det gjelder.
+**Slik unngår du det:** Ta minst to-tre øvingsrunder under realistiske eksamensforhold: 30 spørsmål, 60 minutter, 75 prosent bestå-grense. Da vet du hvordan tidspresset føles før det gjelder. [Øv til droneeksamen med prøveeksamen i DroneLappen](/droneeksamen-oving/).
 
 ## Kort oppsummert
 

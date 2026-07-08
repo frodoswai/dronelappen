@@ -39,3 +39,8 @@ questionbank-export.md
 -e 
 # Generert av scripts/build-blogg.mjs
 /public/blogg/
+
+# Generert av scripts/build-landing.mjs (kilden ligger i content/landing/)
+/public/dronesertifikat-a2/
+/public/droneeksamen-oving/
+/public/pris/
