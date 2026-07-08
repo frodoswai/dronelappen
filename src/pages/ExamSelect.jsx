@@ -29,14 +29,15 @@ export default function ExamSelect() {
   const displayName = isA2 ? 'A2' : 'A1 / A3'
 
   // Tier-aware: free tier gets a 25-question pool (pass: 19 = 75%),
-  // PRO gets the full 30-question simulation. Describe what the user
-  // will actually get, not the real exam's numbers.
+  // PRO gets the full simulation i offisielt format (A2: 30/23,
+  // A1/A3: 40/30 — se EXAM_QUESTION_COUNT i Quiz.jsx). Describe what
+  // the user will actually get, not more.
   const examDescription = isA2
     ? tier === 'paid'
       ? 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.'
       : 'Simulering med 25 gratis spørsmål, 60 min, 19 riktige for å bestå.'
     : tier === 'paid'
-      ? 'Simulering: 30 spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål (30 riktige for å bestå).'
+      ? 'Realistisk simulering. 40 spørsmål, 30 riktige for å bestå — som den offisielle prøven.'
       : 'Simulering med 25 gratis spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål.'
 
   // Gate each mode tap on recordSessionStart so smart resume stays

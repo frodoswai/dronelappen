@@ -10,6 +10,13 @@ import Paywall from '../components/Paywall'
 const EXAM_DURATION_MS = 60 * 60 * 1000 // 60 min
 const LOW_TIME_MS = 5 * 60 * 1000
 
+// Eksamensmodus speiler de offisielle prøvene i antall spørsmål:
+// A1/A3 = 40 (flydrone.no, verifisert 2026-07-08), A2 = 30.
+// Bestå-terskelen (75 %) regnes dynamisk i Results: 30/40 og 23/30.
+// Læring (practice) holder seg på 30 uansett type.
+const EXAM_QUESTION_COUNT = { A1_A3: 40, A2: 30 }
+const PRACTICE_QUESTION_COUNT = 30
+
 // Fisher-Yates shuffle
 function shuffleArray(array) {
   const arr = [...array]
@@ -71,9 +78,13 @@ export default function Quiz() {
         const { questions: data, tier } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
 
-        // Shuffle question order, then shuffle each question's options
+        // Shuffle question order, then shuffle each question's options.
+        // Free tier: serveren capper poolen på 25, så slice er no-op der.
+        const targetCount = isPracticeMode
+          ? PRACTICE_QUESTION_COUNT
+          : EXAM_QUESTION_COUNT[examType] ?? 30
         const shuffled = shuffleArray(data || [])
-        const selected = shuffled.slice(0, 30).map(q => ({
+        const selected = shuffled.slice(0, targetCount).map(q => ({
           ...q,
           options: shuffleArray(q.options)
         }))
@@ -92,7 +103,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer])
+  }, [examType, needsTimer, isPracticeMode])
 
   // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
   // so the countdown is correct after tab-blur / backgrounding / throttling.
