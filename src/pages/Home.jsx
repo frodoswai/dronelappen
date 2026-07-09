@@ -13,6 +13,11 @@ import {
   sessionDisplayStats,
   describeSession,
 } from '../lib/sessionHistory'
+import {
+  setPurchaseIntent,
+  hasPurchaseIntent,
+  clearPurchaseIntent,
+} from '../lib/purchaseIntent'
 
 // Home — Round 2 visual redesign, Round 2.5 refinements applied.
 //
@@ -36,6 +41,20 @@ export default function Home() {
   const [lastSession, setLastSession] = useState(null)
   const [buyBusy, setBuyBusy] = useState(false)
   const [buyErr, setBuyErr] = useState('')
+  // «Fullfør kjøpet»-banner: true når brukeren klikket kjøp før innlogging
+  // (intensjon i localStorage, 30 min TTL) og nå er innlogget uten betalt
+  // tilgang. Se lib/purchaseIntent.js for resonnementet.
+  const [resumeBuy, setResumeBuy] = useState(false)
+
+  useEffect(() => {
+    if (tier === 'paid') {
+      // Kjøpet er fullført (eller brukeren var betalt hele tiden) — rydd.
+      clearPurchaseIntent()
+      setResumeBuy(false)
+      return
+    }
+    if (user && hasPurchaseIntent()) setResumeBuy(true)
+  }, [user, tier])
 
   const handleBuy = async () => {
     setBuyBusy(true)
@@ -165,6 +184,39 @@ export default function Home() {
             the 25 free questions) and the direct buy. Ad campaigns land on
             Home, so the "prøv gratis vs kjøp 249" decision shouldn't require
             scrolling. Hidden once the user is paid. */}
+        {/* ═══ Fullfør kjøpet — vises når kjøpsintensjonen overlevde
+            login-runden (samme enhet, < 30 min). Én knapp rett til Stripe;
+            ✕ rydder intensjonen så banneret ikke maser. */}
+        {resumeBuy && tier !== 'paid' && user && (
+          <div className="rise-in bg-da-cream/50 border-[0.5px] border-da-gold/60 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 flex items-center justify-between gap-3">
+            <div>
+              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
+                du er innlogget
+              </div>
+              <span className="text-[13px] font-medium text-da-navy">
+                Fullfør kjøpet der du slapp
+              </span>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => { clearPurchaseIntent(); handleBuy() }}
+                disabled={buyBusy}
+                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center gap-1.5 disabled:opacity-60"
+              >
+                <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
+                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">249 kr →</span>}
+              </button>
+              <button
+                onClick={() => { clearPurchaseIntent(); setResumeBuy(false) }}
+                aria-label="Lukk"
+                className="font-mono text-[13px] text-da-text-muted hover:text-da-navy px-1 transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
+
         {tier !== 'paid' && (
           <div className="rise-in flex gap-2.5 mb-4">
             <Link
@@ -186,6 +238,7 @@ export default function Home() {
             ) : (
               <Link
                 to="/login"
+                onClick={setPurchaseIntent}
                 className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40"
               >
                 <span>Full tilgang</span>
@@ -351,6 +404,7 @@ export default function Home() {
             ) : (
               <Link
                 to="/login"
+                onClick={setPurchaseIntent}
                 className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2"
               >
                 <span>Logg inn for å kjøpe</span>
