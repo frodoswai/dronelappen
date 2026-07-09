@@ -255,6 +255,8 @@ export default function Home() {
             {tier === 'paid'
               ? 'Den offisielle prøven. 30 spørsmål, 60 min, 23 riktige for å bestå.'
               : 'Den offisielle prøven: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
+            {' '}
+            <span className="text-da-text-muted">Krever bestått A1/A3 først.</span>
           </p>
           <div className="relative z-20">
             <ModePillRow variant="primary" examType="A2" />
@@ -295,7 +297,7 @@ export default function Home() {
             </span>
           </div>
           <p className="text-[11.5px] text-da-text-dim leading-[1.5] mb-2.5">
-            Øv gratis før du tar A2.
+            Den offisielle nettprøven: 40 spørsmål, 30 riktige for å bestå. Alle må ta denne først.
           </p>
           <div className="relative z-20">
             <ModePillRow variant="muted" examType="A1_A3" />

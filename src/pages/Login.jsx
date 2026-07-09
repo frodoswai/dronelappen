@@ -201,6 +201,13 @@ export default function Login() {
             </p>
           )}
 
+          {/* «Hans-tilfellet» (supportsak 9/7): kjøpere som kommer tilbake
+              vet ikke alltid at tilgangen følger e-posten. Si det her. */}
+          <p className="mt-3 text-[12px] text-da-text-body leading-[1.45] text-center bg-da-cream/40 border-[0.5px] border-da-gold/40 rounded-lg px-4 py-2.5">
+            <span className="font-medium text-da-navy">Kjøpt full tilgang?</span>{' '}
+            Logg inn med samme e-postadresse som ved kjøpet, så er alt på plass.
+          </p>
+
           {/* Within password mode: swap between login and signup */}
           {mode !== 'magic_link' && (
             <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 text-center">
