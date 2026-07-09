@@ -329,9 +329,15 @@ export default function Home() {
                 </span>
               </div>
             </div>
-            <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-3.5">
+            <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-2">
               Alle {stats.questions ?? '200+'} spørsmål, alle kategorier og alle tre
               treningsmoduser. Engangsbeløp, ingen abonnement. Gratis gir deg 25 spørsmål.
+            </p>
+            {/* Sosialt bevis — statisk tall, oppdateres manuelt. Live-telling
+                krever egen RPC mot auth.users; gjør det hvis tallet begynner
+                å vokse fort. ~305 brukere per 2026-07-09. */}
+            <p className="font-mono text-[11px] text-da-text-muted tracking-[0.05em] mb-3.5">
+              Over 300 dronepiloter øver her allerede.
             </p>
             {user ? (
               <button
