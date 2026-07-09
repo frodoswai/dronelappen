@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext'
  * Cleans the query param from the URL once handled.
  */
 export default function PaymentReturn() {
-  const { refreshTier } = useAuth()
+  const { refreshTier, user } = useAuth()
   const [status, setStatus] = useState(null) // 'ok' | 'pending' | 'avbrutt' | null
 
   useEffect(() => {
@@ -95,9 +95,21 @@ export default function PaymentReturn() {
     )
   }
 
+  // Post-kjøp: fortell eksplisitt hvordan man kommer inn igjen senere.
+  // Reell supporthenvendelse 2026-07-09: kunde kjøpte, lukket fanen og
+  // fant ikke veien tilbake. Tilgangen følger e-posten — si det her,
+  // mens kunden fortsatt ser på skjermen.
   return (
     <Banner tone="gold" onDismiss={dismiss}>
-      Takk! Full tilgang er aktivert &mdash; hele sp&oslash;rsm&aring;lsbanken er n&aring; &aring;pen.
+      <span className="block font-medium">
+        Takk! Full tilgang er aktivert &mdash; hele sp&oslash;rsm&aring;lsbanken er n&aring; &aring;pen.
+      </span>
+      <span className="block mt-1 text-[12px] opacity-85">
+        Neste gang du kommer tilbake: g&aring; til dronelappen.app og trykk
+        &laquo;Logg inn&raquo; med {user?.email || 'samme e-postadresse som ved kj&oslash;pet'}
+        {' '}&mdash; du f&aring;r en innloggingslenke p&aring; e-post. Tilgangen
+        f&oslash;lger e-postadressen din.
+      </span>
     </Banner>
   )
 }
