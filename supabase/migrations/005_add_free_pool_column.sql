@@ -6,10 +6,12 @@
 -- men ukuratert. Nå flagges et håndplukket sett i DB i stedet, og
 -- funksjonen (v8) henter .eq('free_pool', true).limit(25).
 --
--- Utvalgskriterier (kjørt 2026-07-08): round-robin på tvers av
--- kategorier innen hver eksamenstype, best forklaring (lengst) først i
--- hver kategori. Resultat: A1/A3 = 3 per kategori (9 kategorier, 25
--- totalt), A2 = 4 per kategori (7 kategorier, 25 totalt).
+-- Utvalgskriterier v1 (2026-07-08): round-robin per kategori, lengst
+-- forklaring først. RE-KURATERT v2 (2026-07-10): vanskelighet DESC før
+-- forklaringslengde — traktdata viste snitt 21,6/25 og 86 % bestått på
+-- gratisprøven (for lett → ingen kjøpsgrunn). Ny mix: A2 = 19×diff3 +
+-- 6×diff2; A1/A3 = 7×diff3 + 15×diff2 + 3×diff1. Fortsatt full
+-- kategorispredning via round-robin.
 
 ALTER TABLE questions ADD COLUMN IF NOT EXISTS free_pool boolean NOT NULL DEFAULT false;
 COMMENT ON COLUMN questions.free_pool IS 'Kuratert gratis-pool: de 25 spørsmålene per eksamenstype som anonyme/gratis-brukere får via get-questions. Kuratert 2026-07-08.';

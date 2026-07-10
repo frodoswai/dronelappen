@@ -26,21 +26,25 @@ export default function AuthHeader({ variant = 'dark' }) {
   // localStorage, og brukeren var «logget inn igjen» ved neste sidelast.
   // scope:'local' rydder lokalt uavhengig av server-revokering; sweep +
   // full reload er belte og bukse hvis klienten likevel kaster underveis.
-  const handleLogout = async () => {
+  // VIKTIG: aldri `await` signOut her. Funnet 2026-07-10: signOut kan henge
+  // evig på supabase-js' interne navigator-lås (f.eks. når en token-refresh
+  // står fast mot en 503-ende auth-server) — da kjører aldri koden etter
+  // await, og brukeren forblir innlogget. Vi fyrer signOut best-effort,
+  // rydder localStorage selv, og laster siden på nytt umiddelbart.
+  const handleLogout = () => {
     try {
-      await supabase.auth.signOut({ scope: 'local' })
+      supabase.auth.signOut({ scope: 'local' }).catch(() => {})
     } catch (_) {
-      /* server nede — vi rydder selv under */
-    } finally {
-      try {
-        Object.keys(localStorage)
-          .filter((k) => k.startsWith('sb-') && k.includes('-auth-token'))
-          .forEach((k) => localStorage.removeItem(k))
-      } catch (_) {
-        /* ignore */
-      }
-      window.location.assign('/')
+      /* ignore */
     }
+    try {
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith('sb-') && k.includes('-auth-token'))
+        .forEach((k) => localStorage.removeItem(k))
+    } catch (_) {
+      /* ignore */
+    }
+    window.location.assign('/')
   }
 
   if (!user) {
