@@ -57,6 +57,13 @@ export default function Paywall({ answered = 25, onContinue }) {
             Lås opp <strong className="text-da-bg">hele spørsmålsbanken</strong> og alle
             treningsmoduser i 12 måneder. Engangsbeløp på 249 kr, ingen abonnement.
           </p>
+          {/* Pris-anker: eksamensgebyret er den reelle sammenligningen.
+              Ærlig og sterkt — stryk på trafikkstasjonen koster nytt gebyr. */}
+          <p className="text-[13px] text-da-dark-slogan leading-[1.55] max-w-md mt-2.5">
+            Til sammenligning: A2-eksamen koster{' '}
+            <strong className="text-da-bg">970 kr per forsøk</strong> på trafikkstasjonen.
+            God forberedelse er billig.
+          </p>
         </div>
       </div>
 
@@ -85,12 +92,16 @@ export default function Paywall({ answered = 25, onContinue }) {
             </div>
             <ul className="text-[13px] text-da-text-body leading-[1.7] mb-4 list-none space-y-0.5">
               <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Alle spørsmål, alle
+                <span className="font-mono text-da-gold mr-1.5">+</span>Alle 241 spørsmål, alle
                 kategorier
               </li>
               <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Fulle eksamenssett (30
-                spørsmål, tid)
+                <span className="font-mono text-da-gold mr-1.5">+</span>Prøveeksamen i offisielt
+                format, med tid og bestå-grense
+              </li>
+              <li>
+                <span className="font-mono text-da-gold mr-1.5">+</span>Forklaring på hvert svar —
+                lær reglene, ikke bare fasit
               </li>
               <li>
                 <span className="font-mono text-da-gold mr-1.5">+</span>Læring, Eksamen og Tempo
@@ -119,7 +130,7 @@ export default function Paywall({ answered = 25, onContinue }) {
             )}
 
             <p className="font-mono text-[11px] text-da-text-muted mt-3 tracking-[0.04em] text-center">
-              Engangsbeløp · sikker betaling via Stripe
+              Engangsbeløp · sikker betaling via Stripe · over 300 piloter øver her
             </p>
           </div>
 
