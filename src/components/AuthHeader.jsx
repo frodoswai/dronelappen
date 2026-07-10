@@ -21,8 +21,26 @@ export default function AuthHeader({ variant = 'dark' }) {
     : 'text-da-text-muted hover:text-da-navy'
   const emailClass = isDark ? 'text-da-dark-slogan' : 'text-da-text-muted'
 
+  // Utlogging må ALDRI avhenge av at Supabase-serveren svarer. Funnet
+  // 2026-07-09: /auth/v1/logout ga 503 → supabase-js lot sesjonen ligge i
+  // localStorage, og brukeren var «logget inn igjen» ved neste sidelast.
+  // scope:'local' rydder lokalt uavhengig av server-revokering; sweep +
+  // full reload er belte og bukse hvis klienten likevel kaster underveis.
   const handleLogout = async () => {
-    await supabase.auth.signOut()
+    try {
+      await supabase.auth.signOut({ scope: 'local' })
+    } catch (_) {
+      /* server nede — vi rydder selv under */
+    } finally {
+      try {
+        Object.keys(localStorage)
+          .filter((k) => k.startsWith('sb-') && k.includes('-auth-token'))
+          .forEach((k) => localStorage.removeItem(k))
+      } catch (_) {
+        /* ignore */
+      }
+      window.location.assign('/')
+    }
   }
 
   if (!user) {
