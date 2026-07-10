@@ -13,9 +13,12 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null) // { type: 'success'|'error', text }
 
-  // If already logged in, redirect home
+  // If already logged in, redirect home. NB: anonyme sesjoner (alle
+  // besøkende har en, se AuthContext) teller IKKE som innlogget — uten
+  // dette unntaket var /login uoppnåelig for alle med anonym sesjon
+  // (funnet 2026-07-10, forklarer supportsaken 9/7).
   useEffect(() => {
-    if (user) navigate('/', { replace: true })
+    if (user && !user.is_anonymous) navigate('/', { replace: true })
   }, [user, navigate])
 
   const handleMagicLink = async (e) => {
