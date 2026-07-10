@@ -47,7 +47,11 @@ export default function AuthHeader({ variant = 'dark' }) {
     window.location.assign('/')
   }
 
-  if (!user) {
+  // Anonyme sesjoner (alle besøkende får en, se AuthContext) skal se
+  // «Logg inn» — ikke «Logg ut» + tom e-post. Funnet 2026-07-10: en
+  // tilbakevendende kjøper på ny enhet fikk anonym sesjon og fant aldri
+  // innloggingen, fordi headeren så «innlogget» ut.
+  if (!user || user.is_anonymous) {
     return (
       <div className="flex justify-start mb-1">
         <Link
