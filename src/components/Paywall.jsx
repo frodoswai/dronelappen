@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
+import LeadCapture from './LeadCapture'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -133,6 +134,12 @@ export default function Paywall({ answered = 25, onContinue }) {
               Engangsbeløp · sikker betaling via Stripe · over 300 piloter øver her
             </p>
           </div>
+
+          {/* Not-ready-to-buy path: capture the email so an anonymous user who
+              won't convert now still becomes a reachable lead. Self-hides for
+              logged-in users (they already have an email on file). Always shown
+              here (non-dismissible) so it stays a real alternative to the wall. */}
+          <LeadCapture source="quiz_paywall" dismissible={false} />
 
           {onContinue && (
             <button

@@ -9,10 +9,27 @@
 // subscriber is 'unconfirmed' and MailerLite sends the confirmation email.
 //
 // Mirrors the idempotent lookup-then-create pattern of the existing Droneavisa
-// WordPress plugin, and targets the same "Droneavisa subscribers" group.
+// WordPress plugin. The optional `source` in the request body picks the target
+// group: quiz-taker email captures (Results / Paywall screens) go to the
+// "DroneLappen leads" group so they can get an exam-focused nurture, while the
+// home-page newsletter form (no/unknown source) stays on "Droneavisa subscribers".
 
 const ML_API = 'https://connect.mailerlite.com/api'
-const GROUP_ID = '184178221435061694' // "Droneavisa subscribers"
+const GROUP_DRONEAVISA = '184178221435061694' // "Droneavisa subscribers" (home newsletter)
+const GROUP_LEADS = '192882163047204155' // "DroneLappen leads" (quiz email capture)
+
+// Map an optional client-supplied source to a MailerLite group. Unknown or
+// absent source falls back to the Droneavisa list so the home form is unchanged.
+function groupForSource(source: string): string {
+  switch (source) {
+    case 'quiz':
+    case 'quiz_results':
+    case 'quiz_paywall':
+      return GROUP_LEADS
+    default:
+      return GROUP_DRONEAVISA
+  }
+}
 
 const ALLOWED_ORIGINS = new Set([
   'https://dronelappen.vercel.app',
@@ -56,6 +73,8 @@ Deno.serve(async (req) => {
 
   const body = await req.json().catch(() => ({}))
   const email = String(body?.email ?? '').trim().toLowerCase()
+  const source = String(body?.source ?? '').trim().toLowerCase()
+  const groupId = groupForSource(source)
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return json({ status: 'error', message: 'Ugyldig e-postadresse' }, 400, cors)
@@ -78,7 +97,7 @@ Deno.serve(async (req) => {
       const data = await lookup.json().catch(() => null)
       const subId = data?.data?.id
       if (subId) {
-        await fetch(`${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${GROUP_ID}`, {
+        await fetch(`${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${groupId}`, {
           method: 'POST',
           headers: mlHeaders,
         }).catch(() => {})
@@ -98,7 +117,7 @@ Deno.serve(async (req) => {
     const create = await fetch(`${ML_API}/subscribers`, {
       method: 'POST',
       headers: mlHeaders,
-      body: JSON.stringify({ email, groups: [GROUP_ID] }),
+      body: JSON.stringify({ email, groups: [groupId] }),
     })
 
     if (create.ok) {
