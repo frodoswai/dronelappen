@@ -4,9 +4,10 @@
 // never exposed to the browser, and the browser's CSP only needs to allow the
 // Supabase domain (which it already does).
 //
-// Subscribers are created WITHOUT a forced status, so MailerLite's account
-// double opt-in setting governs the flow: with double opt-in on, the new
-// subscriber is 'unconfirmed' and MailerLite sends the confirmation email.
+// Droneavisa newsletter subscribers are created WITHOUT a forced status, so
+// MailerLite's account double opt-in setting governs: the new subscriber is
+// 'unconfirmed' and MailerLite sends the confirmation email. Quiz leads are
+// created with status 'active' instead — see the note by groupForSource.
 //
 // Mirrors the idempotent lookup-then-create pattern of the existing Droneavisa
 // WordPress plugin. The optional `source` in the request body picks the target
@@ -30,6 +31,16 @@ function groupForSource(source: string): string {
       return GROUP_DRONEAVISA
   }
 }
+
+// Quiz leads are created with status 'active', deliberately overriding the
+// account's "Double opt-in for API and integrations" setting. Why: MailerLite's
+// confirmation email is English, says "our newsletter", and is NOT editable on
+// the free plan — a Norwegian pilot who just asked for an "øvingsplan" would
+// get an English newsletter-confirmation and bin it, so the nurture would never
+// start. They gave explicit consent on our form (with a personvern link), so we
+// start the Norwegian sequence immediately instead. Same deliberate override the
+// stripe-webhook uses for buyers. The Droneavisa newsletter is untouched: no
+// status field there, so the account's double opt-in still governs it.
 
 const ALLOWED_ORIGINS = new Set([
   'https://dronelappen.vercel.app',
@@ -75,6 +86,7 @@ Deno.serve(async (req) => {
   const email = String(body?.email ?? '').trim().toLowerCase()
   const source = String(body?.source ?? '').trim().toLowerCase()
   const groupId = groupForSource(source)
+  const isQuizLead = groupId === GROUP_LEADS
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return json({ status: 'error', message: 'Ugyldig e-postadresse' }, 400, cors)
@@ -97,6 +109,17 @@ Deno.serve(async (req) => {
       const data = await lookup.json().catch(() => null)
       const subId = data?.data?.id
       if (subId) {
+        // Quiz leads: activate BEFORE the group join. An 'unconfirmed' subscriber
+        // (e.g. someone who once started a Droneavisa signup and never confirmed)
+        // would otherwise join the group while inactive and never trigger the
+        // nurture. Order matters here.
+        if (isQuizLead) {
+          await fetch(`${ML_API}/subscribers/${encodeURIComponent(subId)}`, {
+            method: 'PUT',
+            headers: mlHeaders,
+            body: JSON.stringify({ status: 'active' }),
+          }).catch(() => {})
+        }
         await fetch(`${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${groupId}`, {
           method: 'POST',
           headers: mlHeaders,
@@ -111,13 +134,17 @@ Deno.serve(async (req) => {
       return json({ status: 'error', message: 'Noe gikk galt. Prøv igjen senere.' }, 502, cors)
     }
 
-    // 2) Create + assign to group in one call. No `status` field, so the
-    //    account's double opt-in setting decides whether a confirmation email
-    //    is sent.
+    // 2) Create + assign to group in one call. Droneavisa: no `status` field, so
+    //    the account's double opt-in decides (confirmation email sent). Quiz
+    //    leads: status 'active' so the Norwegian nurture starts right away
+    //    (see the note by groupForSource).
+    const createBody: Record<string, unknown> = { email, groups: [groupId] }
+    if (isQuizLead) createBody.status = 'active'
+
     const create = await fetch(`${ML_API}/subscribers`, {
       method: 'POST',
       headers: mlHeaders,
-      body: JSON.stringify({ email, groups: [groupId] }),
+      body: JSON.stringify(createBody),
     })
 
     if (create.ok) {

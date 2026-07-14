@@ -109,8 +109,7 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
 
       {status === 'success' ? (
         <p role="status" className="text-[13px] font-medium text-green-700 leading-[1.5]">
-          Takk! Sjekk innboksen din og bekreft — så sender vi øvingsplanen og
-          tipsene rett til deg.
+          Takk! Øvingsplanen er på vei — sjekk innboksen din om et par minutter.
         </p>
       ) : status === 'duplicate' ? (
         <p role="status" className="text-[13px] font-medium text-da-navy leading-[1.5]">
