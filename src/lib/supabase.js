@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { getAttribution } from './attribution.js'
+import { getAttribution, getMetaIds } from './attribution.js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -54,7 +54,9 @@ export async function createCheckout() {
         'apikey': supabaseAnonKey,
         Authorization: `Bearer ${session.access_token}`,
       },
-      body: JSON.stringify({ attribution: getAttribution() }),
+      // fbc/fbp (samtykke-gatet) følger med til Stripe-metadata slik at
+      // stripe-webhookens CAPI Purchase kan knyttes til annonseklikket.
+      body: JSON.stringify({ attribution: { ...getAttribution(), ...getMetaIds() } }),
     }
   )
 
