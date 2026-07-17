@@ -97,13 +97,18 @@ Deno.serve(async (req) => {
         try {
           const capiToken = Deno.env.get('META_CAPI_TOKEN')
           if (capiToken) {
-            const userData: Record<string, string[]> = {
+            const userData: Record<string, unknown> = {
               external_id: [await sha256Hex(userId.trim())],
             }
             const email = session.customer_details?.email
             if (email) {
               userData.em = [await sha256Hex(email.trim().toLowerCase())]
             }
+            // fbp/fbc ble lagt i session.metadata av create-checkout (klienten
+            // leser dem samtykke-gatet). Sendes USHASHET som enkeltstrenger per
+            // CAPI-spec — dette er det som knytter Purchase til annonseklikket.
+            if (session.metadata?.fbp) userData.fbp = session.metadata.fbp
+            if (session.metadata?.fbc) userData.fbc = session.metadata.fbc
 
             const payload: Record<string, unknown> = {
               data: [{

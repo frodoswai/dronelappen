@@ -107,10 +107,22 @@ Deno.serve(async (req) => {
     try {
       const capiToken = Deno.env.get('META_CAPI_TOKEN')
       if (capiToken) {
-        const userData: Record<string, string[]> = {
+        const userData: Record<string, unknown> = {
           external_id: [await sha256Hex(user.id.trim())],
         }
         if (user.email) userData.em = [await sha256Hex(user.email.trim().toLowerCase())]
+        // fbp/fbc fra klienten (samtykke-gatet, se attribution.js) — sendes
+        // USHASHET som enkeltstrenger per CAPI-spec. Uten disse kan Meta ikke
+        // knytte hendelsen til annonseklikket, og ad-set-optimaliseringen
+        // sulter på signal.
+        if (meta.fbp) userData.fbp = meta.fbp
+        if (meta.fbc) userData.fbc = meta.fbc
+        // Dette kallet kommer rett fra kjøperens browser, så IP + User-Agent
+        // er ekte klientverdier — bedrer Metas match-kvalitet.
+        const clientIp = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
+        if (clientIp) userData.client_ip_address = clientIp
+        const clientUa = req.headers.get('user-agent')
+        if (clientUa) userData.client_user_agent = clientUa
 
         const payload: Record<string, unknown> = {
           data: [{
