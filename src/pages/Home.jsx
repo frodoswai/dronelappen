@@ -7,6 +7,7 @@ import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
+import ReadinessCard from '../components/ReadinessCard'
 import {
   getLastSession,
   sessionToPath,
@@ -256,6 +257,10 @@ export default function Home() {
           </span>
           <div className="flex-1 h-px bg-da-navy/20" />
         </div>
+
+        {/* «Er du klar?» — beredskapsscore for brukere med øvingsdata.
+            Renderer ingenting for ferske besøkende (stille komponent). */}
+        <ReadinessCard />
 
         {/* Smart resume — only if recent session exists. Round 2.5
             adds the cream tint + extra padding so this card is
