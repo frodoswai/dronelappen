@@ -148,13 +148,30 @@ export default function ReadinessCard({ resume = null, onData }) {
             ) : null}
           </p>
           <div className="flex flex-wrap items-center gap-2">
+            {/* Målrettet læring (18/7): under bestått-grensen går CTA-en
+                rett til læring filtrert på svakeste kategori — kortet er
+                handlingsrettet, ikke bare informativt. Over grensen:
+                vedlikehold via siste økt (resume) som før. */}
             <Link
-              to={resume?.path || `/practice/${examType}`}
+              to={
+                pct < PASS && weakest
+                  ? `/practice/${examType}?kategori=${encodeURIComponent(weakest.name)}`
+                  : resume?.path || `/practice/${examType}`
+              }
               className="quiz-option inline-flex items-center gap-2 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px]"
             >
               <span>{pct >= PASS ? 'Hold formen ved like' : 'Øv der du er svakest'}</span>
               <span className="font-mono text-[12px] text-da-gold">→</span>
             </Link>
+            {d.answered - d.correct > 0 && (
+              <Link
+                to={`/practice/${examType}?feil=1`}
+                className="quiz-option inline-flex items-center gap-1 font-mono text-[11px] text-da-navy border-[0.5px] border-da-navy/30 hover:border-da-navy/60 px-2.5 py-2 rounded-md transition-colors"
+              >
+                øv på feilene dine ({d.answered - d.correct})
+                <span className="text-da-gold">→</span>
+              </Link>
+            )}
             {resume?.stats && (
               <span className="font-mono text-[11px] text-da-text-muted tabular-nums">
                 sist: {resume.stats}

@@ -45,6 +45,16 @@ export default function Quiz() {
   const { user } = useAuth()
 
   const isPracticeMode = location.pathname.includes('practice')
+
+  // Målrettet læring (18/7): ?feil=1 → kun spørsmål der brukerens siste
+  // svar var feil (feilbanken), ?kategori=<navn> → kun én kategori.
+  // Kun Læring — Eksamen skal alltid være offisielt format. Filtrene
+  // SNITTES mot settet fra get-questions, så gratis-brukere kan aldri
+  // nå spørsmål utenfor free_pool denne veien.
+  const searchParams = new URLSearchParams(location.search)
+  const mistakesOnly = isPracticeMode && searchParams.get('feil') === '1'
+  const categoryFilter = isPracticeMode ? searchParams.get('kategori') : null
+  const hasFilter = mistakesOnly || !!categoryFilter
   // Timer kun for A2: den ekte A2-eksamen på trafikkstasjonen har 60 min,
   // mens A1/A3-netteksamen på flydrone.no er selvgående uten dokumentert
   // tidsgrense (verifisert mot Luftfartstilsynet/UAS Norway 2026-06-10).
@@ -92,12 +102,37 @@ export default function Quiz() {
         const { questions: data, tier } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
 
+        // Målrettet læring: snitt poolen mot feilbank- og/eller kategori-
+        // IDer fra RPC-ene i migrasjon 007. RPC-feil behandles som vanlig
+        // lastefeil; tomt snitt gir den dedikerte tom-tilstanden under.
+        let pool = data || []
+        if (mistakesOnly || categoryFilter) {
+          let allowed = null
+          if (mistakesOnly) {
+            const { data: ids, error: idErr } = await supabase.rpc('get_mistake_question_ids')
+            if (idErr) throw idErr
+            allowed = new Set(ids || [])
+          }
+          if (categoryFilter) {
+            const { data: ids, error: idErr } = await supabase.rpc('get_category_question_ids', {
+              p_exam_type: examType,
+              p_category: categoryFilter,
+            })
+            if (idErr) throw idErr
+            const catSet = new Set(ids || [])
+            allowed = allowed
+              ? new Set([...allowed].filter((id) => catSet.has(id)))
+              : catSet
+          }
+          pool = pool.filter((q) => allowed.has(q.id))
+        }
+
         // Shuffle question order, then shuffle each question's options.
         // Free tier: serveren capper poolen på 25, så slice er no-op der.
         const targetCount = isPracticeMode
           ? PRACTICE_QUESTION_COUNT
           : EXAM_QUESTION_COUNT[examType] ?? 30
-        const shuffled = shuffleArray(data || [])
+        const shuffled = shuffleArray(pool)
         const selected = shuffled.slice(0, targetCount).map(q => ({
           ...q,
           options: shuffleArray(q.options)
@@ -117,7 +152,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer, isPracticeMode])
+  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter])
 
   // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
   // so the countdown is correct after tab-blur / backgrounding / throttling.
@@ -252,6 +287,39 @@ export default function Quiz() {
     )
   }
 
+  // Tom-tilstand for målrettet læring: feilbanken er tom (alt riktig sist,
+  // eller utlogget/fersk bruker) eller kategorien finnes ikke i brukerens
+  // pool (gratis-pool mangler kategorien). Vennlig melding, aldri feil.
+  if (hasFilter && questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-da-bg flex items-center justify-center p-6">
+        <div className="text-center max-w-sm">
+          <p className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
+            {mistakesOnly ? 'feilbanken' : 'kategori'}
+          </p>
+          <p className="text-[15px] font-medium text-da-navy mb-2">
+            {mistakesOnly
+              ? user
+                ? 'Ingen feil å øve på — bra jobba!'
+                : 'Logg inn og øv litt først, så samler vi feilene dine her.'
+              : 'Fant ingen spørsmål i denne kategorien i din pool.'}
+          </p>
+          <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-4">
+            {mistakesOnly && user
+              ? 'Siste svar på alle spørsmål du har øvd på var riktig. Fortsett med vanlig læring for å dekke resten av banken.'
+              : 'Prøv vanlig læring i stedet.'}
+          </p>
+          <button
+            onClick={() => navigate(`/practice/${examType}`)}
+            className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-6 rounded-lg transition-colors"
+          >
+            Start vanlig læring →
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   // Completion is handled by the effect above (persist + navigate); render
   // nothing while that runs.
   if (quizComplete) return null
@@ -376,8 +444,13 @@ export default function Quiz() {
   // QuizLayout props
   const answeredSoFar = currentIndex + (isAnswered ? 1 : 0)
   const layoutMode = isPracticeMode ? 'laering' : 'eksamen'
-  const layoutStats = isPracticeMode && answeredSoFar > 0
-    ? `${correctCount}/${answeredSoFar} riktige`
+  // Filtrert læring viser hva man øver på i header-statsen (truncate i
+  // QuizLayout tar seg av lange kategorinavn på smale skjermer).
+  const filterLabel = mistakesOnly ? 'feilbank' : categoryFilter
+  const layoutStats = isPracticeMode
+    ? [filterLabel, answeredSoFar > 0 ? `${correctCount}/${answeredSoFar} riktige` : null]
+        .filter(Boolean)
+        .join(' · ') || null
     : null
   const layoutTimer = needsTimer && remainingMs !== null ? formatMs(remainingMs) : null
   const timerUrgent = needsTimer && remainingMs !== null && remainingMs <= LOW_TIME_MS

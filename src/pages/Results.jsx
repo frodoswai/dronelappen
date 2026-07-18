@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import CrosshairMarks from '../components/CrosshairMarks'
 import LeadCapture from '../components/LeadCapture'
 import UpgradePrompt from '../components/UpgradePrompt'
+import { useAuth } from '../contexts/AuthContext'
 
 // Pass threshold mirrors the real A2 exam: 23/30 = 76.6% ≥ 75%.
 const PASS_PERCENT = 75
@@ -24,6 +25,7 @@ function formatMs(ms) {
 export default function Results() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [showAllAnswers, setShowAllAnswers] = useState(false)
   // Simple mount fade-in for the stats card. No confetti, no bounce.
   const [mounted, setMounted] = useState(false)
@@ -192,7 +194,7 @@ export default function Results() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* ═══ Dark hero ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8 max-w-xl mx-auto">
+        <div className="pt-2 max-w-xl mx-auto">
           <div className="flex items-center gap-2 mb-1">
             <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.12em]">
               {heroConfig.modeLabel}
@@ -215,7 +217,7 @@ export default function Results() {
 
       {/* ═══ Fade transition ═══ */}
       <div
-        className="h-7 shrink-0"
+        className="h-5 shrink-0"
         style={{
           background:
             'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
@@ -317,6 +319,18 @@ export default function Results() {
               <span>{isPracticeMode ? 'Øv mer' : 'Start på nytt'}</span>
               <span className="font-mono text-[12px] text-da-gold">→</span>
             </button>
+            {/* Feilbanken (18/7): kryss-økt-øving på alt brukeren har svart
+                feil på (siste svar teller). Kun innloggede — anonyme har
+                ingen user_progress å hente fra. */}
+            {user && examType && (
+              <button
+                onClick={() => navigate(`/practice/${examType}?feil=1`)}
+                className="quiz-option w-full bg-white border-[0.5px] border-da-gold/70 hover:bg-da-cream/40 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <span>Øv på feilene dine</span>
+                <span className="font-mono text-[12px] text-da-gold">→</span>
+              </button>
+            )}
             <button
               onClick={() => navigate('/')}
               className="quiz-option w-full bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors"
