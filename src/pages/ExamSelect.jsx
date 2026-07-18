@@ -49,7 +49,8 @@ export default function ExamSelect() {
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* ═══ Compact dark hero ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8 max-w-xl mx-auto">
+        {/* pt-2, ikke pt-8 — samme mobil-innstramming som QuizLayout (18/7). */}
+        <div className="pt-2 max-w-xl mx-auto">
           <div className="flex items-center gap-3 mb-1">
             <button
               onClick={() => navigate('/')}
@@ -70,7 +71,7 @@ export default function ExamSelect() {
 
       {/* ═══ Fade transition (28px) ═══ */}
       <div
-        className="h-7"
+        className="h-5"
         style={{
           background:
             'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',

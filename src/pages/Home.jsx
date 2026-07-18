@@ -128,13 +128,15 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-da-bg flex flex-col">
       {/* ═══ Dark hero zone ═══ */}
-      <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-6">
+      <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-5">
         <div className="relative max-w-xl mx-auto">
         <HeroPropeller />
 
         {/* All hero text pinned left (max-w so it never overlaps the
             propeller on the right). z-10 above the SVG. */}
-        <div className="relative z-10 pt-8 max-w-[65%]">
+        {/* pt-4 (var pt-8): forsiden trenger litt mer pust enn quiz-flyten,
+            men 32px var mye dødplass på mobil (Frode 18/7). */}
+        <div className="relative z-10 pt-4 max-w-[65%]">
           {/* Status row: freemium pitch or PRO confirmation */}
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             {tier === 'paid' ? (
@@ -170,7 +172,7 @@ export default function Home() {
 
       {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
       <div
-        className="h-7"
+        className="h-5"
         style={{
           background:
             'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
@@ -293,7 +295,7 @@ export default function Home() {
             became a filled navy chip: one solid element per card makes
             "this is pressable" unmistakable on touch, where hover never
             fires. */}
-        <div className="quiz-option group rise-in rise-d1 relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.06),0_4px_14px_rgba(8,53,84,0.08)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_10px_28px_rgba(8,53,84,0.14)] hover:-translate-y-[1px] active:scale-[0.99]">
+        <div className="quiz-option group rise-in rise-d1 relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-4 pb-3.5 mb-3 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.06),0_4px_14px_rgba(8,53,84,0.08)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_10px_28px_rgba(8,53,84,0.14)] hover:-translate-y-[1px] active:scale-[0.99]">
           <CrosshairMarks variant="solid" />
           <Link
             to="/exam/A2"
@@ -309,7 +311,7 @@ export default function Home() {
           {/* Tier-aware: the real exam is 30/60min/23, but the free tier
               practices with a 25-question pool — say so instead of
               promising 30 and delivering 25. */}
-          <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3.5">
+          <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3">
             {tier === 'paid'
               ? 'Den offisielle prøven. 30 spørsmål, 60 min, 23 riktige for å bestå.'
               : 'Den offisielle prøven: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
@@ -319,7 +321,7 @@ export default function Home() {
           <div className="relative z-20">
             <ModePillRow variant="primary" examType="A2" />
           </div>
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-end mt-2.5">
             <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3.5 py-2 rounded-[5px] shadow-sm group-hover:bg-da-navy-mid transition-colors">
               Start A2 her{' '}
               <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
@@ -360,7 +362,7 @@ export default function Home() {
           <div className="relative z-20">
             <ModePillRow variant="muted" examType="A1_A3" />
           </div>
-          <div className="flex justify-end mt-3">
+          <div className="flex justify-end mt-2.5">
             <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/40 text-da-navy px-3.5 py-2 rounded-[5px] group-hover:border-da-navy/70 transition-colors">
               Start A1/A3 her{' '}
               <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
