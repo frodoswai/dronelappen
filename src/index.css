@@ -83,6 +83,15 @@ button:focus-visible {
     background-color: inherit !important;
     border-color: inherit !important;
   }
+  /* Eksamen: valgt svar må beholde navy-fyllet. Regelen over resetter
+     bakgrunnen på sticky :hover etter tap, og siden valgt svar bruker
+     lys tekst (text-da-bg) ble det hvitt-på-hvitt — svaret «forsvant»
+     (Frode 18/7, Galaxy S25 Ultra). */
+  .quiz-option-selected:hover,
+  .quiz-option-selected:active {
+    background-color: var(--color-da-navy) !important;
+    border-color: var(--color-da-navy) !important;
+  }
   /* Preserve keyboard focus ring for a11y even on hybrid touch devices. */
   .quiz-option:focus-visible {
     outline: 2px solid #083554;

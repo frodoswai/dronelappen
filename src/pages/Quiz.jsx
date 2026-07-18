@@ -417,8 +417,12 @@ export default function Quiz() {
               'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
 
             if (!isPracticeMode) {
+              // quiz-option-selected: unntar valgt svar fra touch-regelen i
+              // index.css som resetter bakgrunn ved sticky :hover — uten den
+              // ble navy-fyllet overstyrt og lys tekst sto på hvit bunn
+              // (Frode 18/7: «svaret forsvinner, bare C står igjen»).
               btnClass += isSelected
-                ? 'bg-da-navy border-da-navy text-da-bg cursor-pointer'
+                ? 'quiz-option-selected bg-da-navy border-da-navy text-da-bg cursor-pointer'
                 : 'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
             } else if (!isAnswered) {
               btnClass +=
