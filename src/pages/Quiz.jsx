@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -56,6 +56,20 @@ export default function Quiz() {
   const [answers, setAnswers] = useState([])
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [showExplanation, setShowExplanation] = useState(false)
+  // Nav row ref for the mobile auto-scroll below (Læring only).
+  const navRowRef = useRef(null)
+
+  // Mobil-fix (Frode 18/7): i Læring dytter forklaringsboksen Neste-knappen
+  // under folden på lange forklaringer. Når forklaringen vises, scroller vi
+  // mykt slik at forklaring + Neste kommer i syne. scroll-mb på nav-raden
+  // holder den klar av den faste kjøp-baren for gratisbrukere.
+  useEffect(() => {
+    if (!showExplanation) return
+    const id = requestAnimationFrame(() => {
+      navRowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    })
+    return () => cancelAnimationFrame(id)
+  }, [showExplanation])
   // Wall-clock anchored timer state. `startTime` is set once after the
   // questions load so network latency doesn't eat into the exam budget.
   // `remainingMs` is derived from Date.now() on every tick, so tab-blur
@@ -321,6 +335,9 @@ export default function Quiz() {
       // strictly linear, so `answers[next]` is always null there.
       setSelectedAnswer(answers[next] ?? null)
       setShowExplanation(false)
+      // Tilbakestill scroll så neste spørsmål starter øverst — ellers står
+      // brukeren igjen nede der Neste var etter auto-scrollen over.
+      window.scrollTo({ top: 0, behavior: 'auto' })
     } else if (freeCapped) {
       // End of the free 25-question pool → paywall instead of results.
       // The InitiateCheckout intent event fires from the paywall's buy button.
@@ -338,6 +355,7 @@ export default function Quiz() {
     setCurrentIndex(prev)
     setSelectedAnswer(answers[prev] ?? null)
     setShowExplanation(false)
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
   const formatMs = (ms) => {
@@ -376,8 +394,8 @@ export default function Quiz() {
       {/* ═══ Question card ═══
           Round 3: white surface, 0.5px navy hairline border, no shadow.
           Matches the quiet-but-precise HUD aesthetic from Home/ExamSelect. */}
-      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5 mb-4">
-        <h2 className="text-[15px] font-medium text-da-navy mb-4 leading-[1.45]">
+      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-4 mb-3">
+        <h2 className="text-[15px] font-medium text-da-navy mb-3 leading-[1.45]">
           {currentQuestion.question_text}
         </h2>
 
@@ -439,7 +457,7 @@ export default function Quiz() {
             Cream tint + gold accent bar keeps it distinct from the
             correct/wrong answer buttons above. */}
         {showExplanation && (
-          <div className="mt-4 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-3">
+          <div className="mt-3 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-3">
             <p
               className={`font-mono text-[11px] font-semibold tracking-[0.1em] mb-1.5 ${
                 isCorrect ? 'text-green-700' : 'text-amber-700'
@@ -463,7 +481,7 @@ export default function Quiz() {
       {/* Nav row — shows once the current question has an answer.
           Eksamen adds Forrige so earlier answers can be reviewed/changed. */}
       {isAnswered && (
-        <div className="flex gap-2.5">
+        <div ref={navRowRef} className="flex gap-2.5 scroll-mb-16">
           {!isPracticeMode && currentIndex > 0 && (
             <button
               onClick={handlePrev}

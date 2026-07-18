@@ -80,9 +80,11 @@ export default function QuizLayout({
     <div className={`min-h-screen flex flex-col bg-da-bg transition-colors duration-150 ${flashBg || ''}`}>
       {/* ═══ Compact dark header ═══ */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-3">
-        <div className="pt-8 max-w-xl mx-auto">
+        {/* pt-2 (ikke sidekonvensjonens pt-8): i quiz-flyten er stor
+            topp-luft bare dødplass på mobil (Frode 18/7). */}
+        <div className="pt-2 max-w-xl mx-auto">
           {/* Brand + upgrade line — context for direct/ad landings */}
-          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 mb-2">
             <Link
               to="/"
               className="font-mono text-[11px] font-medium text-da-dark-slogan tracking-[0.08em] hover:text-da-bg transition-colors shrink-0"
@@ -168,7 +170,7 @@ export default function QuizLayout({
 
       {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
       <div
-        className="h-7 shrink-0"
+        className="h-5 shrink-0"
         style={{
           background:
             'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
