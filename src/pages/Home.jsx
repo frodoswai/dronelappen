@@ -40,6 +40,9 @@ import {
 export default function Home() {
   const { tier, user } = useAuth()
   const [lastSession, setLastSession] = useState(null)
+  // Sammenslåing (18/7): når ReadinessCard har data tar den over
+  // fortsett-rollen, og det separate fortsett-kortet skjules.
+  const [readinessActive, setReadinessActive] = useState(false)
   const [buyBusy, setBuyBusy] = useState(false)
   const [buyErr, setBuyErr] = useState('')
   // «Fullfør kjøpet»-banner: true når brukeren klikket kjøp før innlogging
@@ -221,7 +224,7 @@ export default function Home() {
         )}
 
         {tier !== 'paid' && (
-          <div className="rise-in flex gap-2.5 mb-4">
+          <div className="rise-in flex gap-2.5 mb-3">
             <Link
               to="/practice/A2"
               className="quiz-option flex-1 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-2 active:scale-[0.99]"
@@ -252,7 +255,7 @@ export default function Home() {
         )}
 
         {/* Divider with mono label */}
-        <div className="flex items-center gap-2.5 mb-3.5">
+        <div className="flex items-center gap-2.5 mb-3">
           <div className="flex-1 h-px bg-da-navy/20" />
           <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
             velg eksamen
@@ -261,16 +264,27 @@ export default function Home() {
         </div>
 
         {/* «Er du klar?» — beredskapsscore for brukere med øvingsdata.
-            Renderer ingenting for ferske besøkende (stille komponent). */}
-        <ReadinessCard />
+            Renderer ingenting for ferske besøkende (stille komponent).
+            Sammenslåing 18/7: kortet eier nå fortsett-lenken (resume),
+            så vi slipper to overlappende kort før A2-valget. */}
+        <ReadinessCard
+          resume={
+            lastSession
+              ? {
+                  path: sessionToPath(lastSession),
+                  stats: sessionDisplayStats(lastSession),
+                }
+              : null
+          }
+          onData={() => setReadinessActive(true)}
+        />
 
-        {/* Smart resume — only if recent session exists. Round 2.5
-            adds the cream tint + extra padding so this card is
-            visibly the primary CTA when shown. */}
-        {lastSession && (
+        {/* Smart resume — fallback når ReadinessCard ikke har data
+            (utlogget/fersk bruker med lokal økt). Skjules ellers. */}
+        {lastSession && !readinessActive && (
           <Link
             to={sessionToPath(lastSession)}
-            className="quiz-option rise-in block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
+            className="quiz-option rise-in block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-3 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
           >
             <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
               fortsett
@@ -335,7 +349,7 @@ export default function Home() {
             Round 4: dashed border replaced with a solid faint one —
             dashed reads as "disabled/empty", not "quiet". Same
             stretched-link structure as the A2 card. */}
-        <div className="quiz-option group rise-in rise-d2 relative bg-white border-[0.5px] border-da-navy/30 rounded-lg px-4 pt-3.5 pb-3 mb-4 transition-all shadow-[0_1px_3px_rgba(8,53,84,0.05)] hover:border-da-navy/50 hover:shadow-[0_2px_4px_rgba(8,53,84,0.06),0_6px_18px_rgba(8,53,84,0.10)] hover:-translate-y-[1px] active:scale-[0.99]">
+        <div className="quiz-option group rise-in rise-d2 relative bg-white border-[0.5px] border-da-navy/30 rounded-lg px-4 pt-3.5 pb-3 mb-3 transition-all shadow-[0_1px_3px_rgba(8,53,84,0.05)] hover:border-da-navy/50 hover:shadow-[0_2px_4px_rgba(8,53,84,0.06),0_6px_18px_rgba(8,53,84,0.10)] hover:-translate-y-[1px] active:scale-[0.99]">
           <Link
             to="/exam/A1_A3"
             aria-label="A1/A3 — velg modus"
@@ -374,7 +388,7 @@ export default function Home() {
 
         {/* ═══ Full tilgang — purchase card, hidden for paid users ═══ */}
         {tier !== 'paid' && (
-          <div className="rise-in bg-white border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-[18px] py-4 mb-4">
+          <div className="rise-in bg-white border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-[18px] py-3.5 mb-3">
             <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
               full tilgang
             </div>
@@ -426,7 +440,7 @@ export default function Home() {
 
         {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
         <div className="rise-in rise-d3">
-          <div className="flex items-center gap-2.5 mb-3.5">
+          <div className="flex items-center gap-2.5 mb-3">
             <div className="flex-1 h-px bg-da-navy/20" />
             <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
               hold deg oppdatert

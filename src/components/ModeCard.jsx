@@ -55,7 +55,7 @@ export default function ModeCard({
     <Link
       to={to}
       onClick={onClick}
-      className={`quiz-option group relative block bg-white border-[0.5px] ${config.border} rounded-lg px-[18px] pt-5 pb-4 mb-3 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.05),0_3px_10px_rgba(8,53,84,0.06)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_8px_22px_rgba(8,53,84,0.12)] hover:-translate-y-[1px] active:scale-[0.99]`}
+      className={`quiz-option group relative block bg-white border-[0.5px] ${config.border} rounded-lg px-[18px] pt-4 pb-3.5 mb-2.5 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.05),0_3px_10px_rgba(8,53,84,0.06)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_8px_22px_rgba(8,53,84,0.12)] hover:-translate-y-[1px] active:scale-[0.99]`}
     >
       <CrosshairMarks variant={config.crosshairVariant} />
       <div
@@ -85,7 +85,7 @@ export default function ModeCard({
 
       {/* Round 4: filled chip instead of bare text — the only reliable
           "tap me" signal on touch, where hover styles never fire. */}
-      <div className="flex justify-end mt-3">
+      <div className="flex justify-end mt-2.5">
         <span
           className={`font-mono text-[11px] tracking-[0.1em] px-3.5 py-2 rounded-[5px] transition-all ${config.chip}`}
         >

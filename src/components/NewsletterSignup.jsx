@@ -55,11 +55,11 @@ export default function NewsletterSignup() {
   const sending = status === 'sending'
 
   return (
-    <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4">
+    <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-4 py-3.5 mb-3">
       <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
         nyhetsbrev
       </div>
-      <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
+      <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
         Få de siste dronenyhetene fra{' '}
         <span className="font-medium text-da-navy">Droneavisa.no</span>: regelendringer,
         nye droner, tips og guider rett i innboksen.

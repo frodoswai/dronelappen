@@ -23,7 +23,13 @@ const PASS = 75
 const MIN_ANSWERED = 15
 const EXAM_LABELS = { A2: 'A2', A1_A3: 'A1/A3' }
 
-export default function ReadinessCard() {
+// Sammenslåing (Frode 18/7): «Er du klar?» og fortsett-kortet på Home
+// overlappet for returbrukere — to kort før hovedvalget. Nå eier dette
+// kortet fortsett-rollen: `resume` ({ path, stats }) peker CTA-en på
+// siste økt, og `onData` lar Home skjule sitt separate fortsett-kort
+// når scoren faktisk rendrer. Uten øvingsdata rendrer vi fortsatt null
+// og Home viser sitt eget fortsett-kort som før.
+export default function ReadinessCard({ resume = null, onData }) {
   const { tier } = useAuth()
   const [byExam, setByExam] = useState(null) // null = laster/ingen data
 
@@ -52,10 +58,16 @@ export default function ReadinessCard() {
         const withData = Object.fromEntries(
           Object.entries(agg).filter(([, v]) => v.answered > 0)
         )
-        if (Object.keys(withData).length > 0) setByExam(withData)
+        if (Object.keys(withData).length > 0) {
+          setByExam(withData)
+          onData?.()
+        }
       })
       .catch(() => {})
     return () => { cancelled = true }
+    // Bevisst mount-only: onData er en inline-callback fra Home og ville
+    // trigget refetch på hver render om den sto i dep-lista.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!byExam) return null
@@ -78,7 +90,7 @@ export default function ReadinessCard() {
     pct >= PASS ? 'bg-green-600' : pct >= 60 ? 'bg-da-gold' : 'bg-amber-500'
 
   return (
-    <div className="rise-in bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 pt-3.5 pb-4 mb-4">
+    <div className="rise-in bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 pt-3 pb-3.5 mb-3">
       <div className="flex items-baseline justify-between mb-1">
         <span className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em]">
           er du klar?
@@ -99,7 +111,7 @@ export default function ReadinessCard() {
             />
           </div>
           <Link
-            to={`/practice/${examType}`}
+            to={resume?.path || `/practice/${examType}`}
             className="quiz-option inline-flex items-center gap-2 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px]"
           >
             <span>Fortsett øvingen</span>
@@ -135,14 +147,19 @@ export default function ReadinessCard() {
               </>
             ) : null}
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Link
-              to={`/practice/${examType}`}
+              to={resume?.path || `/practice/${examType}`}
               className="quiz-option inline-flex items-center gap-2 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px]"
             >
               <span>{pct >= PASS ? 'Hold formen ved like' : 'Øv der du er svakest'}</span>
               <span className="font-mono text-[12px] text-da-gold">→</span>
             </Link>
+            {resume?.stats && (
+              <span className="font-mono text-[11px] text-da-text-muted tabular-nums">
+                sist: {resume.stats}
+              </span>
+            )}
             {tier !== 'paid' && (
               <span className="inline-flex items-center text-[12px] text-da-text-muted">
                 Gratis-poolen er begrenset —{' '}
