@@ -109,6 +109,11 @@ Deno.serve(async (req) => {
             // CAPI-spec — dette er det som knytter Purchase til annonseklikket.
             if (session.metadata?.fbp) userData.fbp = session.metadata.fbp
             if (session.metadata?.fbc) userData.fbc = session.metadata.fbc
+            // [2026-07-17 EMQ] Ekte klient-IP/UA fanget av create-checkout ved
+            // checkout-tidspunkt (webhooken selv kommer fra Stripes servere,
+            // så req-headers her er ubrukelige som match-nøkler).
+            if (session.metadata?.capi_ip) userData.client_ip_address = session.metadata.capi_ip
+            if (session.metadata?.capi_ua) userData.client_user_agent = session.metadata.capi_ua
 
             const payload: Record<string, unknown> = {
               data: [{

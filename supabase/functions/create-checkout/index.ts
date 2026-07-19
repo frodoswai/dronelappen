@@ -80,6 +80,17 @@ Deno.serve(async (req) => {
       /* no/invalid body - proceed with user_id only */
     }
 
+    // [2026-07-17 EMQ] Ekte klient-IP og User-Agent fanges HER (kallet kommer
+    // fra kjøperens browser) og lagres i session-metadata, slik at
+    // stripe-webhookens CAPI Purchase (som kommer fra Stripes servere) kan
+    // sende dem som match-nøkler. Løfter Purchase-EMQ (var 4.6: ip/ua 0 %).
+    // Kun i session-metadata, ikke payment_intent (attribusjon holdes ren der).
+    const clientIp = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
+    const clientUa = (req.headers.get('user-agent') || '').slice(0, 450)
+    const sessionMeta: Record<string, string> = { ...meta }
+    if (clientIp) sessionMeta.capi_ip = clientIp
+    if (clientUa) sessionMeta.capi_ua = clientUa
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [{ price: PRICE_ID, quantity: 1 }],
@@ -91,7 +102,7 @@ Deno.serve(async (req) => {
       // Anonymous users have email "" (not null), so use || not ?? — otherwise
       // Stripe rejects the empty string. Stripe then collects the email itself.
       customer_email: user.email || undefined,
-      metadata: meta,
+      metadata: sessionMeta,
       payment_intent_data: { metadata: meta },
       locale: 'nb',
       allow_promotion_codes: true,
@@ -119,9 +130,7 @@ Deno.serve(async (req) => {
         if (meta.fbc) userData.fbc = meta.fbc
         // Dette kallet kommer rett fra kjøperens browser, så IP + User-Agent
         // er ekte klientverdier — bedrer Metas match-kvalitet.
-        const clientIp = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
         if (clientIp) userData.client_ip_address = clientIp
-        const clientUa = req.headers.get('user-agent')
         if (clientUa) userData.client_user_agent = clientUa
 
         const payload: Record<string, unknown> = {
