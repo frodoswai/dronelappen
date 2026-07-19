@@ -1,11 +1,48 @@
-// First-touch attribution capture.
-// Stores UTM params + referrer on the first KNOWN-channel visit so the source
-// survives the funnel (try free -> return -> buy) and can be attached to the
-// Stripe checkout. Lets us see which channel (feed/reels/retargeting/organic)
-// actually produces paying customers.
+// Attribution capture: FIRST touch + LAST touch.
+//
+// First touch answers "hvor oppdaget de oss?" and survives the whole funnel
+// (try free -> return -> buy). Last touch answers "hva utløste kjøpet?".
+// Vi trenger begge: 19.07.2026 kom et salg 70 minutter etter at Ukerapporten
+// gikk ut, men Stripe-metadataen viste bare first-touch fra 10 dager før, så
+// det var umulig å avgjøre om nyhetsbrevet faktisk utløste kjøpet.
+//
+// Begge settene sendes til Stripe ved checkout: first touch under sine egne
+// nøkler (utm_source, ...) og last touch prefikset `lt_` (lt_utm_source, ...).
+// create-checkout videresender alle nøkler generisk, så dette krever ingen
+// endring i edge-funksjonen.
 
 const KEY = 'dl-attribution'
+const LAST_KEY = 'dl-attribution-last'
 const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+
+// Er henvisningen ekstern? Intern klikking skal ikke overskrive last touch.
+function isExternalReferrer(ref) {
+  if (!ref) return false
+  try {
+    return new URL(ref).hostname !== window.location.hostname
+  } catch {
+    return false
+  }
+}
+
+// Skriv last-touch-record. Kalles ved hvert besøk som har en identifiserbar
+// kilde: enten UTM-parametre eller en ekstern henvisning (f.eks. MailerLites
+// klikk-domene, Google, Facebook).
+function recordLastTouch(cur, hasUtm) {
+  const ref = document.referrer || ''
+  if (!hasUtm && !isExternalReferrer(ref)) return
+  try {
+    const data = {
+      ...cur,
+      referrer: ref.slice(0, 300),
+      landing_path: (window.location.pathname || '/').slice(0, 200),
+      seen_at: new Date().toISOString(),
+    }
+    localStorage.setItem(LAST_KEY, JSON.stringify(data))
+  } catch {
+    /* localStorage unavailable - skip silently */
+  }
+}
 
 // Call once on app load (before the user reaches checkout).
 export function captureAttribution() {
@@ -21,6 +58,10 @@ export function captureAttribution() {
     // gjelder SISTE klikk for CAPI-attribusjon, så denne oppdateres ved
     // hvert besøk med fbclid — også når first-touch-recorden er låst.
     const fbclid = params.get('fbclid')
+
+    // Last touch registreres ALLTID (før first-touch-låsen under), slik at vi
+    // ser hva som faktisk brakte brukeren tilbake denne gangen.
+    recordLastTouch(cur, hasUtm)
 
     let existing = null
     try {
@@ -88,10 +129,29 @@ export function getMetaIds() {
 }
 
 // Read the stored attribution for attaching to checkout. Returns {} if none.
+// First touch beholder sine opprinnelige nøkkelnavn (utm_source, first_seen,
+// ...) så historiske Stripe-rader forblir sammenlignbare. Last touch legges
+// ved siden av, prefikset `lt_`, slik at en rad kan leses som:
+//   utm_source=droneavisa   -> oppdaget oss via guiden
+//   lt_utm_source=newsletter -> men det var nyhetsbrevet som utløste kjøpet
 export function getAttribution() {
+  let first = {}
+  let last = {}
   try {
-    return JSON.parse(localStorage.getItem(KEY) || '{}') || {}
+    first = JSON.parse(localStorage.getItem(KEY) || '{}') || {}
   } catch {
-    return {}
+    first = {}
   }
+  try {
+    last = JSON.parse(localStorage.getItem(LAST_KEY) || '{}') || {}
+  } catch {
+    last = {}
+  }
+
+  const out = { ...first }
+  for (const [k, v] of Object.entries(last)) {
+    if (v == null || v === '') continue
+    out[`lt_${k}`] = v
+  }
+  return out
 }
