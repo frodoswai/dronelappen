@@ -56,6 +56,21 @@ export default function PaymentReturn() {
         // pixel not loaded — ignore
       }
 
+      // Google Ads-konvertering. gtag lastes kun etter cookie-samtykke (se
+      // index.html), så dette er en no-op uten samtykke — samme policy som
+      // Meta-pixelen. transaction_id = Stripe session id, så Google
+      // dedupliserer hvis brukeren refresher suksess-siden.
+      try {
+        window.gtag?.('event', 'conversion', {
+          send_to: 'AW-18330796641/6u5JCN72_tQcEOGE56RE',
+          value: 249,
+          currency: 'NOK',
+          ...(sessionId ? { transaction_id: sessionId } : {}),
+        })
+      } catch {
+        // gtag not loaded — ignore
+      }
+
       if (!cancelled) setStatus('pending')
       // Poll a few times: the webhook writes the entitlement out-of-band.
       for (let i = 0; i < 6; i++) {
