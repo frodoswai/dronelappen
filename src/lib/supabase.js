@@ -36,7 +36,7 @@ export async function fetchQuestions({ examType } = {}) {
 }
 
 /**
- * Start a Stripe Checkout for full access (249 NOK / 12 months).
+ * Start a Stripe Checkout for full access (pris: se src/lib/pricing.js).
  * Requires the user to be logged in. Redirects the browser to Stripe on success.
  */
 export async function createCheckout() {

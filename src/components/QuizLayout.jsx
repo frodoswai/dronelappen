@@ -25,6 +25,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
+import { PRICE } from '../lib/pricing'
 
 export default function QuizLayout({
   mode,
@@ -98,7 +99,7 @@ export default function QuizLayout({
                 disabled={upgradeBusy}
                 className="quiz-option font-mono text-[11px] text-da-gold tracking-[0.04em] hover:opacity-80 transition-opacity shrink-0 disabled:opacity-60"
               >
-                {upgradeBusy ? 'Sender til betaling …' : 'Full tilgang 249 kr →'}
+                {upgradeBusy ? 'Sender til betaling …' : `Full tilgang ${PRICE} kr →`}
               </button>
             )}
           </div>
@@ -198,7 +199,7 @@ export default function QuizLayout({
               disabled={upgradeBusy}
               className="quiz-option font-mono text-[11px] font-medium tracking-[0.04em] bg-da-gold text-da-navy-dark px-3 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity shrink-0 disabled:opacity-60"
             >
-              {upgradeBusy ? 'Sender …' : 'Lås opp alt · 249 kr →'}
+              {upgradeBusy ? 'Sender …' : `Lås opp alt · ${PRICE} kr →`}
             </button>
           </div>
         </div>

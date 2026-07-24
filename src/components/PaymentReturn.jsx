@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
+import { PRICE } from '../lib/pricing'
 
 /**
  * Handles the redirect back from Stripe Checkout.
@@ -49,7 +50,7 @@ export default function PaymentReturn() {
         window.fbq?.(
           'track',
           'Purchase',
-          { value: 249, currency: 'NOK' },
+          { value: PRICE, currency: 'NOK' },
           sessionId ? { eventID: sessionId } : undefined,
         )
       } catch {
@@ -63,7 +64,7 @@ export default function PaymentReturn() {
       try {
         window.gtag?.('event', 'conversion', {
           send_to: 'AW-18330796641/6u5JCN72_tQcEOGE56RE',
-          value: 249,
+          value: PRICE,
           currency: 'NOK',
           ...(sessionId ? { transaction_id: sessionId } : {}),
         })

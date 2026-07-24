@@ -2,14 +2,31 @@ import Stripe from 'npm:stripe@17'
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 // Creates a Stripe Checkout Session for the authenticated user.
-// One-time payment (249 NOK) that, once paid, grants 12 months of
-// "paid" entitlement via the stripe-webhook function.
+// One-time payment that, once paid, grants 12 months of "paid"
+// entitlement via the stripe-webhook function.
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
   apiVersion: '2024-12-18.acacia',
 })
 
-const PRICE_ID = 'price_1Tl83aK4vmLGBhyM4NdiXYbf' // DroneLappen full tilgang (12 mnd), 249 NOK
+// PRISSKIFTE 249 -> 349 kr, varslet 24.07.2026, trer i kraft 15.08.2026.
+//
+// Byttet er datostyrt og ikke manuelt av en grunn: når vi først har
+// annonsert datoen er vi juridisk forpliktet til å gjennomføre den
+// (mfl. § 7 — en varslet prisøkning som ikke skjer er villedende).
+// Et manuelt bytte er avhengig av at noen husker å deploye på riktig dag.
+//
+// DENNE FILEN ER KILDEN TIL SANNHET for hva kunden faktisk belastes.
+// src/lib/pricing.js speiler samme dato og samme to priser for UI-et —
+// endres den ene, MÅ den andre endres i samme commit, ellers viser vi én
+// pris og belaster en annen.
+const PRICE_INCREASE_AT = Date.parse('2026-08-15T00:00:00+02:00')
+const PRICE_BEFORE = { id: 'price_1Tl83aK4vmLGBhyM4NdiXYbf', amount: 249 } // 249 NOK
+const PRICE_AFTER = { id: 'price_1TwqHTK4vmLGBhyMR5jkABrl', amount: 349 } // 349 NOK, fra 15.08.2026
+
+function currentPrice() {
+  return Date.now() >= PRICE_INCREASE_AT ? PRICE_AFTER : PRICE_BEFORE
+}
 const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
 
 // SHA-256 hex. Meta CAPI requires PII hashed (email lowercased + trimmed first).
@@ -91,9 +108,11 @@ Deno.serve(async (req) => {
     if (clientIp) sessionMeta.capi_ip = clientIp
     if (clientUa) sessionMeta.capi_ua = clientUa
 
+    const price = currentPrice()
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: [{ price: PRICE_ID, quantity: 1 }],
+      line_items: [{ price: price.id, quantity: 1 }],
       // {CHECKOUT_SESSION_ID} is expanded by Stripe on redirect; PaymentReturn
       // reads it as `s` and uses it as the Pixel/CAPI dedup event_id.
       success_url: 'https://dronelappen.app/?betalt=ok&s={CHECKOUT_SESSION_ID}',
@@ -141,7 +160,7 @@ Deno.serve(async (req) => {
             event_source_url: 'https://dronelappen.app/',
             event_id: session.id,
             user_data: userData,
-            custom_data: { currency: 'NOK', value: 249 },
+            custom_data: { currency: 'NOK', value: price.amount },
           }],
         }
         // Same toggle as stripe-webhook: set to route to Test Events; unset for prod.

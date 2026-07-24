@@ -22,6 +22,38 @@ const CONTENT = join(ROOT, 'content', 'landing')
 const PUBLIC = join(ROOT, 'public')
 const SITE = 'https://dronelappen.app'
 
+// ---- Pris ----------------------------------------------------------------
+// Speiler src/lib/pricing.js og supabase/functions/create-checkout/index.ts.
+// Endres én, MÅ alle tre endres i samme commit.
+//
+// Landingssidene er statiske og bygges bare ved deploy. For at de ikke skal
+// stå og reklamere med gammel pris hvis ingen deployer 15. august, skrives
+// prisen ut i <span class="dl-pris"> og et lite inline-skript retter den ved
+// visning etter skiftetidspunktet. Da er siden korrekt uansett.
+const PRICE_INCREASE_AT = '2026-08-15T00:00:00+02:00'
+const PRICE_BEFORE = 249
+const PRICE_AFTER = 349
+const PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? PRICE_AFTER : PRICE_BEFORE
+const PRIS_VARSEL_HTML =
+  PRIS === PRICE_BEFORE
+    ? `<p class="dl-prisvarsel"><strong>Prisen øker til ${PRICE_AFTER} kr 15. august 2026.</strong> Kjøper du før det, beholder du dagens pris i hele tilgangsperioden.</p>`
+    : ''
+
+/** Erstatter {{PRIS}}, {{PRIS_HTML}} og {{PRIS_VARSEL}} i markdown/frontmatter. */
+function pris(str) {
+  return String(str)
+    // marked pakker en placeholder på egen linje inn i <p>. Varselet er selv
+    // et blokkelement, så vi spiser den wrapperen for å unngå nøstede <p>.
+    .replaceAll('<p>{{PRIS_VARSEL}}</p>', PRIS_VARSEL_HTML)
+    .replaceAll('{{PRIS_VARSEL}}', PRIS_VARSEL_HTML)
+    .replaceAll('{{PRIS_HTML}}', `<span class="dl-pris">${PRIS}</span>`)
+    .replaceAll('{{PRIS}}', String(PRIS))
+}
+
+// Selvkorrigerende prisskifte for allerede utrullede statiske sider.
+const PRIS_SCRIPT = `<script>(function(){var T=Date.parse('${PRICE_INCREASE_AT}');if(Date.now()<T)return;var n=document.querySelectorAll('.dl-pris');for(var i=0;i<n.length;i++)n[i].textContent='${PRICE_AFTER}';var v=document.querySelectorAll('.dl-prisvarsel');for(var j=0;j<v.length;j++)v[j].parentNode.removeChild(v[j]);})();</script>`
+// --------------------------------------------------------------------------
+
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -159,6 +191,7 @@ ${bodyHtml}
   <p>© ${new Date().getFullYear()} DroneLappen · <a href="/blogg/">Blogg</a> ·
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
 </footer>
+${PRIS_SCRIPT}
 </body>
 </html>`
 }
@@ -176,7 +209,7 @@ for (const f of files) {
       {
         '@type': 'WebPage',
         name: meta.title,
-        description: meta.description,
+        description: pris(meta.description),
         url,
         inLanguage: 'nb',
         isPartOf: { '@type': 'WebSite', name: 'DroneLappen', url: SITE },
@@ -186,17 +219,18 @@ for (const f of files) {
             '@type': 'FAQPage',
             mainEntity: faqs.map((q) => ({
               '@type': 'Question',
-              name: q.q,
-              acceptedAnswer: { '@type': 'Answer', text: q.a },
+              name: pris(q.q),
+              acceptedAnswer: { '@type': 'Answer', text: pris(q.a) },
             })),
           }]
         : []),
     ],
   }
-  const bodyHtml = marked.parse(body)
+  const bodyHtml = pris(marked.parse(body))
   mkdirSync(join(PUBLIC, meta.slug), { recursive: true })
   writeFileSync(join(PUBLIC, meta.slug, 'index.html'), page({
-    title: meta.title, description: meta.description, canonical: url, h1: meta.h1, bodyHtml, jsonld,
+    title: pris(meta.title), description: pris(meta.description), canonical: url,
+    h1: pris(meta.h1), bodyHtml, jsonld,
   }))
   built.push({ slug: meta.slug, faqs: faqs.length })
 }

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import LeadCapture from './LeadCapture'
+import PriceIncreaseNotice from './PriceIncreaseNotice'
+import { PRICE } from '../lib/pricing'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -26,7 +28,7 @@ export default function Paywall({ answered = 25, onContinue }) {
   const handleBuy = async () => {
     if (busy) return
     setErr('')
-    window.fbq?.('track', 'InitiateCheckout', { value: 249, currency: 'NOK' })
+    window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     if (!user) {
       navigate('/login')
       return
@@ -56,7 +58,7 @@ export default function Paywall({ answered = 25, onContinue }) {
           </h1>
           <p className="text-[14px] text-da-dark-slogan leading-[1.55] max-w-md">
             Lås opp <strong className="text-da-bg">hele spørsmålsbanken</strong> og alle
-            treningsmoduser i 12 måneder. Engangsbeløp på 249 kr, ingen abonnement.
+            treningsmoduser i 12 måneder. Engangsbeløp på {PRICE} kr, ingen abonnement.
           </p>
           {/* Pris-anker: eksamensgebyret er den reelle sammenligningen.
               Ærlig og sterkt — stryk på trafikkstasjonen koster nytt gebyr. */}
@@ -65,6 +67,7 @@ export default function Paywall({ answered = 25, onContinue }) {
             <strong className="text-da-bg">970 kr per forsøk</strong> på trafikkstasjonen.
             God forberedelse er billig.
           </p>
+          <PriceIncreaseNotice className="mt-3" compact />
         </div>
       </div>
 
@@ -85,7 +88,7 @@ export default function Paywall({ answered = 25, onContinue }) {
                 Lås opp hele banken
               </div>
               <div className="text-right whitespace-nowrap">
-                <span className="text-[22px] font-semibold text-da-navy">249 kr</span>
+                <span className="text-[22px] font-semibold text-da-navy">{PRICE} kr</span>
                 <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
                   én gang · 12 mnd
                 </span>
@@ -121,7 +124,7 @@ export default function Paywall({ answered = 25, onContinue }) {
                   ? 'Kjøp full tilgang'
                   : 'Logg inn for å kjøpe'}
               </span>
-              {!busy && <span className="font-mono text-[12px] text-da-gold">249 kr →</span>}
+              {!busy && <span className="font-mono text-[12px] text-da-gold">{PRICE} kr →</span>}
             </button>
 
             {err && (

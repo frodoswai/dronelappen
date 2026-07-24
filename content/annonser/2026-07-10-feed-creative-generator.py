@@ -6,7 +6,23 @@ W = H = 1080
 SS = 3  # supersample for crisp lines
 w, h = W*SS, H*SS
 
-F = "/sessions/peaceful-gracious-bardeen/mnt/.claude/skills/canvas-design/canvas-fonts/"
+import sys, os
+
+# ---- Parametere ------------------------------------------------------------
+# Prislinjen er BEVISST parameterisert og prisnøytral som standard.
+# Lærdom 24.07.2026: den opprinnelige kreativen hadde «249 kr én gang» brent
+# inn i bildet. Da prisen ble varslet økt til 349 kr fra 15.08.2026, betydde
+# det at den annonsen som tok 73 % av Meta-forbruket ville reklamert med feil
+# pris fra den datoen — og feil pris i en annonse er villedende markedsføring
+# (mfl. § 7). Regelen videre: ALDRI brenn et kronebeløp inn i et annonsebilde.
+# Prisen hører hjemme i annonseteksten, som kan endres via API på sekunder.
+PRISLINJE = sys.argv[1] if len(sys.argv) > 1 else "DroneLappen: 12 mnd øving, under halve prisen"
+UT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "feed-1080-instrumentpanel.png")
+
+# Fonter fra canvas-design-skillen. Sett DL_FONTS hvis skillen ligger et annet sted.
+F = os.environ.get("DL_FONTS", os.path.expanduser("~/.claude/skills/canvas-design/canvas-fonts/"))
+if not os.path.isdir(F):
+    raise SystemExit(f"Fant ikke fontmappa: {F}\nSett DL_FONTS til canvas-design/canvas-fonts/")
 def font(name, size): return ImageFont.truetype(F+name, int(size*SS))
 
 NAVY_D=(10,22,40); NAVY=(8,53,84); GOLD=(232,159,30); CREAM=(244,232,202)
@@ -101,7 +117,15 @@ f_kmed = font("InstrumentSans-Regular.ttf", 46)
 pad = int(44*SS)
 track(d,(kx0+pad,ky0+int(30*SS)), "REGN PÅ DET:", f_klab, (122,79,5), 5)
 d.text((kx0+pad,ky0+int(66*SS)), "A2-eksamen: 970 kr per forsøk", font=f_kmed, fill=(61,79,99))
-d.text((kx0+pad,ky0+int(124*SS)), "DroneLappen: 249 kr én gang", font=f_kbig, fill=NAVY)
+# Autokrymp: prisnøytrale formuleringer er lengre enn «249 kr én gang»
+_maxw = (kx1 - kx0) - 2*pad
+_sz = 46
+while _sz > 26:
+    f_kbig = font("InstrumentSans-Bold.ttf", _sz)
+    if d.textlength(PRISLINJE, font=f_kbig) <= _maxw:
+        break
+    _sz -= 2
+d.text((kx0+pad,ky0+int(124*SS)), PRISLINJE, font=f_kbig, fill=NAVY)
 
 # ── CTA-pille + wordmark bunn
 by = int(936*SS)
@@ -120,5 +144,5 @@ d.text((w-M-wmw-appw-int(6*SS), by+int(20*SS)), wm, font=f_wm, fill=WHITE)
 d.text((w-M-appw, by+int(30*SS)), app, font=f_app, fill=GOLD)
 
 img = img.resize((W,H), Image.LANCZOS)
-img.save("/sessions/peaceful-gracious-bardeen/mnt/outputs/dronelappen-feed-1080.png")
-print("ok")
+img.save(UT)
+print("skrev", UT, "—", PRISLINJE)
