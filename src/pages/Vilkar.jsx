@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { PRICE, PRICE_AFTER, PRICE_INCREASE_LABEL_FULL, showIncreaseNotice } from '../lib/pricing'
 
 /**
  * /vilkar — Kjøpsvilkår og bruksvilkår.
@@ -64,9 +65,17 @@ export default function Vilkar() {
             <p>
               Gratisversjonen gir tilgang til et begrenset utvalg øvingsspørsmål
               (for tiden 25 spørsmål). Full tilgang gir tilgang til hele
-              spørsmålsbanken og koster 249 kr som et engangsbeløp, og gir 12
+              spørsmålsbanken og koster {PRICE} kr som et engangsbeløp, og gir 12
               måneders tilgang. Priser oppgis inkludert merverdiavgift der det er aktuelt.
             </p>
+            {showIncreaseNotice() && (
+              <p className="mt-2">
+                Prisen for full tilgang øker fra {PRICE} kr til {PRICE_AFTER} kr fra og med{' '}
+                {PRICE_INCREASE_LABEL_FULL}. Kjøp som gjennomføres før dette tidspunktet
+                belastes {PRICE} kr, og prisendringen får ingen betydning for tilgang som
+                allerede er kjøpt — tilgangsperioden på 12 måneder løper som normalt.
+              </p>
+            )}
           </section>
 
           <section>

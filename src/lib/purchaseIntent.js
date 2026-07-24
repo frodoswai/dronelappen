@@ -1,6 +1,6 @@
 // Kjøpsintensjon på tvers av login-runden («mild variant», 2026-07-09).
 //
-// Problem: en utlogget bruker som klikker «Full tilgang 249 kr» sendes til
+// Problem: en utlogget bruker som klikker «Full tilgang»-knappen sendes til
 // /login → magic link på e-post → tilbake på forsiden — og måtte selv finne
 // kjøpsknappen igjen. Dødpunkt i salgsflyten.
 //

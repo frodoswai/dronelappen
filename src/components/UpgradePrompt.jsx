@@ -2,9 +2,11 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
+import PriceIncreaseNotice from './PriceIncreaseNotice'
+import { PRICE } from '../lib/pricing'
 
 /**
- * Upsell to full access (249 NOK / 12 months).
+ * Upsell to full access (se src/lib/pricing.js / 12 months).
  * - Paid users: hidden.
  * - Logged-in free users: "Kjøp full tilgang" → Stripe Checkout.
  * - Anonymous users: nudged to create an account first (payment ties to a user).
@@ -23,7 +25,7 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
     setBusy(true)
     setError('')
     // Funnel-instrumentering (se Home.jsx): tell buy-forsøk i Meta + synliggjør feil.
-    window.fbq?.('track', 'InitiateCheckout', { value: 249, currency: 'NOK' })
+    window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
@@ -39,9 +41,10 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
         full tilgang
       </div>
       <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
-        Gratisversjonen gir deg 25 sp&oslash;rsm&aring;l. Betal <strong>249 kr én gang</strong> og
+        Gratisversjonen gir deg 25 sp&oslash;rsm&aring;l. Betal <strong>{PRICE} kr én gang</strong> og
         l&aring;s opp <strong>hele sp&oslash;rsm&aring;lsbanken</strong> i 12 m&aring;neder. Ingen abonnement.
       </p>
+      <PriceIncreaseNotice className="mb-3 -mt-1" compact />
 
       {user ? (
         <button
@@ -50,7 +53,7 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
           className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2 disabled:opacity-60"
         >
           <span>{busy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}</span>
-          {!busy && <span className="font-mono text-[11px] text-da-gold">249 kr &rarr;</span>}
+          {!busy && <span className="font-mono text-[11px] text-da-gold">{PRICE} kr &rarr;</span>}
         </button>
       ) : (
         <Link

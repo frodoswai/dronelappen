@@ -8,6 +8,8 @@ import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
+import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
+import { PRICE } from '../lib/pricing'
 import {
   getLastSession,
   sessionToPath,
@@ -67,7 +69,7 @@ export default function Home() {
     // forsøk er tellbare i Meta. En stille create-checkout-feil viser seg da
     // som InitiateCheckout uten matchende Purchase. Fyrer kun etter cookie-
     // samtykke (window.fbq ellers undefined); ?. gjør den til no-op uten pixel.
-    window.fbq?.('track', 'InitiateCheckout', { value: 249, currency: 'NOK' })
+    window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
@@ -148,7 +150,7 @@ export default function Home() {
               </span>
             ) : (
               <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-                Full tilgang 249 kr én gang · test 25 spørsmål gratis
+                Full tilgang {PRICE} kr · 12 mnd · test 25 spørsmål gratis
               </span>
             )}
           </div>
@@ -210,7 +212,7 @@ export default function Home() {
                 className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center gap-1.5 disabled:opacity-60"
               >
                 <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
-                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">249 kr →</span>}
+                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">{PRICE} kr →</span>}
               </button>
               <button
                 onClick={() => { clearPurchaseIntent(); setResumeBuy(false) }}
@@ -239,7 +241,7 @@ export default function Home() {
                 className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40 disabled:opacity-60"
               >
                 <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
-                <span className="font-mono text-[12px] text-da-gold">249 kr</span>
+                <span className="font-mono text-[12px] text-da-gold">{PRICE} kr</span>
               </button>
             ) : (
               <Link
@@ -248,7 +250,7 @@ export default function Home() {
                 className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40"
               >
                 <span>Full tilgang</span>
-                <span className="font-mono text-[12px] text-da-gold">249 kr</span>
+                <span className="font-mono text-[12px] text-da-gold">{PRICE} kr</span>
               </Link>
             )}
           </div>
@@ -397,7 +399,7 @@ export default function Home() {
                 Lås opp hele banken
               </div>
               <div className="text-right whitespace-nowrap">
-                <span className="text-[21px] font-semibold text-da-navy">249 kr</span>
+                <span className="text-[21px] font-semibold text-da-navy">{PRICE} kr</span>
                 <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
                   én gang · 12 mnd
                 </span>
@@ -410,6 +412,7 @@ export default function Home() {
             {/* Sosialt bevis — statisk tall, oppdateres manuelt. Live-telling
                 krever egen RPC mot auth.users; gjør det hvis tallet begynner
                 å vokse fort. ~305 brukere per 2026-07-09. */}
+            <PriceIncreaseNotice className="mb-2.5" />
             <p className="font-mono text-[11px] text-da-text-muted tracking-[0.05em] mb-3.5">
               Over 300 dronepiloter øver her allerede.
             </p>

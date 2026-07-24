@@ -123,7 +123,13 @@ Deno.serve(async (req) => {
                 event_source_url: 'https://dronelappen.app/',
                 event_id: session.id,
                 user_data: userData,
-                custom_data: { currency: 'NOK', value: 249 },
+                custom_data: {
+                  currency: (session.currency ?? 'nok').toUpperCase(),
+                  // Les faktisk belastet beløp fra sesjonen framfor å hardkode
+                  // prisen — da kan Purchase-verdien aldri komme i utakt med
+                  // et prisskifte (249 -> 349 den 15.08.2026).
+                  value: (session.amount_total ?? 24900) / 100,
+                },
               }],
             }
             // Optional: route to Events Manager → Test Events during verification.
