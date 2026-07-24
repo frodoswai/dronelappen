@@ -89,6 +89,81 @@ Deno.serve(async (req) => {
           // Linking is a convenience; the entitlement is already granted.
         }
 
+        // MailerLite: legg kjøperen i gruppa «DroneLappen kunder». Det er den
+        // gruppa som trigger automasjonen med innloggingsinstruksen.
+        //
+        // ⚠️ DENNE BLOKKA HAR FORSVUNNET FØR. Den lå i deployet v8 (verifisert
+        // live 2026-07-09) men manglet i repoet, så en redeploy fra repo rundt
+        // 2026-07-15 slettet den uten at noen merket det — og fem betalende
+        // kunder fikk aldri innloggingsinstruksen. Nå ligger den i repoet.
+        // IKKE fjern den, og sammenlign alltid mot deployet versjon
+        // (get_edge_function) før du deployer denne funksjonen.
+        //
+        // status 'active' er bevisst: MailerLites double opt-in-bekreftelse er
+        // engelsk og ikke redigerbar, og dette er transaksjonell e-post til en
+        // kunde som nettopp har betalt. De skal ikke måtte bekrefte noe for å
+        // få vite hvordan de logger inn.
+        try {
+          const mlToken = Deno.env.get('MAILERLITE_API_KEY')
+          const buyerEmail = session.customer_details?.email
+          if (mlToken && buyerEmail) {
+            const ML_API = 'https://connect.mailerlite.com/api'
+            const GROUP_KUNDER = '192513298163304352' // «DroneLappen kunder»
+            const mlHeaders = {
+              Authorization: `Bearer ${mlToken}`,
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            }
+            const addr = buyerEmail.trim().toLowerCase()
+
+            const lookup = await fetch(
+              `${ML_API}/subscribers/${encodeURIComponent(addr)}`,
+              { headers: mlHeaders },
+            )
+
+            if (lookup.status === 200) {
+              const data = await lookup.json().catch(() => null)
+              const subId = data?.data?.id
+              if (subId) {
+                // Aktiver FØR gruppe-innmelding: en 'unconfirmed' abonnent
+                // (f.eks. noen som en gang startet en Droneavisa-påmelding og
+                // aldri bekreftet) ville ellers bli med i gruppa uten å trigge
+                // automasjonen. Rekkefølgen betyr noe.
+                await fetch(`${ML_API}/subscribers/${encodeURIComponent(subId)}`, {
+                  method: 'PUT',
+                  headers: mlHeaders,
+                  body: JSON.stringify({ status: 'active' }),
+                }).catch(() => {})
+                await fetch(
+                  `${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${GROUP_KUNDER}`,
+                  { method: 'POST', headers: mlHeaders },
+                ).catch(() => {})
+              }
+            } else if (lookup.status === 404) {
+              const create = await fetch(`${ML_API}/subscribers`, {
+                method: 'POST',
+                headers: mlHeaders,
+                body: JSON.stringify({
+                  email: addr,
+                  status: 'active',
+                  groups: [GROUP_KUNDER],
+                }),
+              })
+              if (!create.ok) {
+                const detail = await create.text().catch(() => '')
+                console.error('MailerLite kunde-create feilet:', create.status, detail.slice(0, 200))
+              }
+            } else {
+              console.error('MailerLite kunde-lookup feilet:', lookup.status)
+            }
+          } else if (!mlToken) {
+            console.error('MAILERLITE_API_KEY mangler — kjøper får ikke velkomst-e-post')
+          }
+        } catch (err) {
+          // Velkomst-e-posten er en bekvemmelighet; tilgangen er allerede gitt.
+          console.error('MailerLite kunde-innmelding feilet:', (err as Error).message)
+        }
+
         // Server-side Purchase → Meta Conversions API (CAPI), mirroring the
         // browser Pixel. Shares event_id (Stripe session id) with the browser
         // event so Meta deduplicates the two into one conversion. Strictly
