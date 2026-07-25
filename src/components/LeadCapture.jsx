@@ -85,7 +85,14 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
   // Hide while auth resolves and for logged-in users. Only honour a recent
   // dismissal on dismissible instances (Results); the Paywall exit offer
   // (dismissible=false) always shows so it stays a real alternative to buying.
-  if (loading || user || (dismissible && manuallyDismissed)) return null
+  //
+  // NB: AuthContext gir HVER besøkende en anonym Supabase-sesjon
+  // (signInAnonymously), så `user` er alltid satt — også for folk som aldri
+  // har logget inn. Sjekken må derfor være `user && !user.is_anonymous`, ikke
+  // bare `user`. Med bare `user` returnerte komponenten null for absolutt
+  // alle, og fanget null e-poster fra 13.07 til 25.07.2026.
+  // Samme mønster som AuthHeader.jsx og Login.jsx bruker.
+  if (loading || (user && !user.is_anonymous) || (dismissible && manuallyDismissed)) return null
 
   const sending = status === 'sending'
 

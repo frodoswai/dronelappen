@@ -32,7 +32,8 @@ export default function SignupPrompt() {
   }
 
   // Hide while auth resolves, for logged-in users, and after a recent dismissal.
-  if (loading || user || manuallyDismissed) return null
+  // Samme is_anonymous-felle som LeadCapture hadde — se kommentaren der.
+  if (loading || (user && !user.is_anonymous) || manuallyDismissed) return null
 
   return (
     <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4 relative">
