@@ -1,12 +1,35 @@
-# DroneLappen feed-kreativ 1080x1080 — «Instrumentpanel»-filosofien
+# DroneLappen annonsekreativ — «Instrumentpanel»-filosofien
+# Feed 1080x1080 (standard) og Stories/Reels 1080x1920 (DL_FORMAT=stories).
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import math
 
-W = H = 1080
+import sys, os
+
+# ---- Format ----------------------------------------------------------------
+# 9:16 kom til 25.07.2026. Den gamle Stories-kreativen var et telefonmockup med
+# et skjermbilde av appen, og skjermbildet hadde «249 kr» brent inn to steder
+# pluss «238 spørsmål» — tall som var utdatert i det øyeblikket banken vokste
+# og prisen ble varslet økt. Et skjermbilde av en app som viser priser kan
+# ALDRI holdes ved like. Derfor tegnes 9:16 nå fra samme kilde som feed-en,
+# uten skjermbilde og uten kronebeløp.
+FORMAT = os.environ.get("DL_FORMAT", "feed")
+if FORMAT not in ("feed", "stories"):
+    raise SystemExit("DL_FORMAT må være 'feed' eller 'stories'")
+
+W = 1080
+H = 1080 if FORMAT == "feed" else 1920
 SS = 3  # supersample for crisp lines
 w, h = W*SS, H*SS
 
-import sys, os
+# Vertikale ankere per format. Samme elementer, samme rekkefølge — 9:16 har
+# bare mer luft mellom dem. Holdes som tall ett sted så de to formatene ikke
+# glir fra hverandre slik tekst og bilde gjorde sist.
+Y = {
+    "feed":    {"radar": 0.135, "label": 84,  "h1": 150, "sig": 404,
+                "stats": 505, "card0": 650,  "card1": 852,  "cta": 936},
+    "stories": {"radar": 0.085, "label": 150, "h1": 260, "sig": 600,
+                "stats": 760, "card0": 980, "card1": 1215, "cta": 1500},
+}[FORMAT]
 
 # ---- Parametere ------------------------------------------------------------
 # Prislinjen er BEVISST parameterisert og prisnøytral som standard.
@@ -44,7 +67,7 @@ for y in range(h):
     d.line([(0,y),(w,y)], fill=tuple(int(top[i]+(bot[i]-top[i])*t) for i in range(3)))
 
 # ── Radar/propell-motiv øverst til høyre (svakt gull)
-cx, cy, R = int(w*0.865), int(h*0.135), int(w*0.30)
+cx, cy, R = int(w*0.865), int(h*Y["radar"]), int(w*0.30)
 ov = Image.new("RGBA",(w,h),(0,0,0,0)); od = ImageDraw.Draw(ov)
 for r,alpha,width in [(R,46,2),(int(R*0.72),36,2),(int(R*0.45),30,2),(int(R*0.18),40,2)]:
     od.ellipse([cx-r,cy-r,cx+r,cy+r], outline=(232,159,30,alpha), width=width*SS)
@@ -72,7 +95,7 @@ def track(dr, xy, text, f, fill, tracking):
 
 # ── Topp: mono-etikett
 f_lab = font("GeistMono-Regular.ttf", 25)
-track(d,(M,int(84*SS)), "DRONEEKSAMEN · A1/A3 + A2", f_lab, GOLD, 6)
+track(d,(M,int(Y["label"]*SS)), "DRONEEKSAMEN · A1/A3 + A2", f_lab, GOLD, 6)
 
 # ── Overskrift
 # ── Overskrift (målt inn: krymp til den passer innenfor margene)
@@ -85,16 +108,16 @@ def fit(text, fname, start, maxw):
     return font(fname, 40), 40
 maxw = w - 2*M
 f_h1a, s1 = fit("Bestå droneeksamen", "InstrumentSans-Bold.ttf", 108, maxw)
-d.text((M,int(150*SS)), "Bestå droneeksamen", font=f_h1a, fill=WHITE)
-y2 = int(150*SS) + int(s1*1.12*SS)
+d.text((M,int(Y["h1"]*SS)), "Bestå droneeksamen", font=f_h1a, fill=WHITE)
+y2 = int(Y["h1"]*SS) + int(s1*1.12*SS)
 d.text((M,y2), "på første forsøk.", font=f_h1a, fill=GOLD)
 
 # serif italic signatur
 f_sig = font("InstrumentSerif-Italic.ttf", 40)
-d.text((M,int(404*SS)), "Bli en bedre dronepilot", font=f_sig, fill=SLATE)
+d.text((M,int(Y["sig"]*SS)), "Bli en bedre dronepilot", font=f_sig, fill=SLATE)
 
 # ── Statlinje (instrumentavlesninger)
-sy = int(505*SS)
+sy = int(Y["stats"]*SS)
 f_num = font("GeistMono-Bold.ttf", 52); f_sub = font("GeistMono-Regular.ttf", 21)
 stats = [("241","norske spørsmål"),("40/30","offisielt format"),("25","gratis å prøve")]
 sx = M
@@ -108,7 +131,7 @@ for i,(num,sub) in enumerate(stats):
         sx += int(58*SS)
 
 # ── Pris-anker-kort (hvitt kort, gull venstrekant, siktekors i hjørnene)
-ky0,ky1 = int(650*SS), int(852*SS)
+ky0,ky1 = int(Y["card0"]*SS), int(Y["card1"]*SS)
 kx0,kx1 = M, w-M
 d.rounded_rectangle([kx0,ky0,kx1,ky1], radius=int(14*SS), fill=WHITE)
 d.rectangle([kx0,ky0+int(14*SS),kx0+int(6*SS),ky1-int(14*SS)], fill=GOLD)
@@ -134,7 +157,7 @@ while _sz > 26:
 d.text((kx0+pad,ky0+int(124*SS)), PRISLINJE, font=f_kbig, fill=NAVY)
 
 # ── CTA-pille + wordmark bunn
-by = int(936*SS)
+by = int(Y["cta"]*SS)
 f_cta = font("InstrumentSans-Bold.ttf", 38)
 cta = CTA_TEKST
 ctw = d.textlength(cta, font=f_cta)
