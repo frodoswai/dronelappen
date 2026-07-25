@@ -17,6 +17,12 @@ import sys, os
 # (mfl. § 7). Regelen videre: ALDRI brenn et kronebeløp inn i et annonsebilde.
 # Prisen hører hjemme i annonseteksten, som kan endres via API på sekunder.
 PRISLINJE = sys.argv[1] if len(sys.argv) > 1 else "DroneLappen: 12 mnd øving, under halve prisen"
+# Kortets etikett og CTA-knappen er også parameterisert, slik at samme design
+# kan brukes til både salgsannonser («REGN PÅ DET» + «Prøv 25 spørsmål gratis»)
+# og lead-annonser («GRATIS ØVINGSPLAN» + «Få planen på e-post»). Uten dette
+# ville en lead-annonse sagt én ting i teksten og noe annet i bildet.
+KORTETIKETT = sys.argv[3] if len(sys.argv) > 3 else "REGN PÅ DET:"
+CTA_TEKST   = sys.argv[4] if len(sys.argv) > 4 else "Prøv 25 spørsmål gratis  →"
 UT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "feed-1080-instrumentpanel.png")
 
 # Fonter fra canvas-design-skillen. Sett DL_FONTS hvis skillen ligger et annet sted.
@@ -115,7 +121,7 @@ f_klab = font("GeistMono-Regular.ttf", 20)
 f_kbig = font("InstrumentSans-Bold.ttf", 46)
 f_kmed = font("InstrumentSans-Regular.ttf", 46)
 pad = int(44*SS)
-track(d,(kx0+pad,ky0+int(30*SS)), "REGN PÅ DET:", f_klab, (122,79,5), 5)
+track(d,(kx0+pad,ky0+int(30*SS)), KORTETIKETT, f_klab, (122,79,5), 5)
 d.text((kx0+pad,ky0+int(66*SS)), "A2-eksamen: 970 kr per forsøk", font=f_kmed, fill=(61,79,99))
 # Autokrymp: prisnøytrale formuleringer er lengre enn «249 kr én gang»
 _maxw = (kx1 - kx0) - 2*pad
@@ -130,7 +136,7 @@ d.text((kx0+pad,ky0+int(124*SS)), PRISLINJE, font=f_kbig, fill=NAVY)
 # ── CTA-pille + wordmark bunn
 by = int(936*SS)
 f_cta = font("InstrumentSans-Bold.ttf", 38)
-cta = "Prøv 25 spørsmål gratis  →"
+cta = CTA_TEKST
 ctw = d.textlength(cta, font=f_cta)
 pw, ph = ctw+int(76*SS), int(84*SS)
 d.rounded_rectangle([M,by,M+pw,by+ph], radius=int(12*SS), fill=GOLD)
