@@ -41,11 +41,66 @@
     <!-- Ahrefs Web Analytics -->
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="mW4Ukr8zY8A4VQmGIOJ1rQ" async></script>
 
-    <!-- Cookie consent + Meta Pixel (consent-gated, opt-in) -->
+    <!-- Cookie consent. Meta-pixel: opt-in (lastes ikke uten samtykke).
+         Google Ads: Consent Mode v2 (lastes alltid, men «denied» til samtykke). -->
     <script>
       (function () {
         var KEY = 'dl-cookie-consent';
         var PIXEL_ID = '1025209573360224';
+        var AW_ID = 'AW-18330796641';
+
+        // ---- Google Consent Mode v2 ----
+        //
+        // HVORFOR GTAG LASTES FØR SAMTYKKE, OG HVORFOR DET LIKEVEL ER LOVLIG
+        //
+        // Fram til 25.07.2026 lastet vi ikke gtag i det hele tatt uten samtykke.
+        // Konsekvensen var verre enn vi trodde: _gcl_aw-cookien ble aldri satt
+        // på FØRSTE besøk, så selv om noen sa ja senere og kjøpte, kunne kjøpet
+        // ikke knyttes til annonseklikket. Google Ads hadde registrert NULL
+        // konverteringer siden kampanjestart 22.07 — kontoen kjøpte klikk helt
+        // uten å vite hvilke søk som gir salg.
+        //
+        // Consent Mode v2 laster taggen med alle samtykketyper satt til
+        // 'denied'. I den tilstanden skriver Google INGEN informasjonskapsler
+        // og lagrer ingen identifikatorer — kravet i ekomloven § 2-7b om
+        // lagring i brukerens utstyr er dermed oppfylt. Google mottar en
+        // cookieløs, redigert hendelse (ads_data_redaction) og bruker den til
+        // å modellere konverteringer. Sier brukeren ja, oppgraderes samtykket
+        // med gtag('consent','update') og målingen blir eksakt.
+        //
+        // url_passthrough: når cookies er nektet, føres gclid videre i URL-en
+        // mellom sider i stedet for å lagres — igjen uten lagring på enheten.
+        //
+        // Meta har ingen tilsvarende modus. Pixelen forblir derfor ren opt-in.
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        gtag('consent', 'default', {
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied',
+          analytics_storage: 'denied',
+          wait_for_update: 500
+        });
+        gtag('set', 'url_passthrough', true);
+        gtag('set', 'ads_data_redaction', true);
+        gtag('js', new Date());
+        gtag('config', AW_ID);
+        var gs = document.createElement('script');
+        gs.async = true;
+        gs.src = 'https://www.googletagmanager.com/gtag/js?id=' + AW_ID;
+        document.head.appendChild(gs);
+
+        // Oppgrader samtykket. Idempotent — trygg å kalle flere ganger.
+        function grantGoogle() {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
+        }
+        window.dlGrantGoogle = grantGoogle;
+
         function loadPixel() {
           if (window.__dlPixel) return;
           window.__dlPixel = true;
@@ -54,25 +109,9 @@
           fbq('track', 'PageView');
         }
         window.dlLoadPixel = loadPixel;
-        // Google Ads gtag (AW-18330796641) - samme samtykke-port som pixelen.
-        // Konverteringshendelsen fyres fra PaymentReturn.jsx med transaction_id.
-        var AW_ID = 'AW-18330796641';
-        function loadGtag() {
-          if (window.__dlGtag) return;
-          window.__dlGtag = true;
-          var gs = document.createElement('script');
-          gs.async = true;
-          gs.src = 'https://www.googletagmanager.com/gtag/js?id=' + AW_ID;
-          document.head.appendChild(gs);
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function () { window.dataLayer.push(arguments); };
-          window.gtag('js', new Date());
-          window.gtag('config', AW_ID);
-        }
-        window.dlLoadGtag = loadGtag;
         var choice = null;
         try { choice = localStorage.getItem(KEY); } catch (e) {}
-        if (choice === 'accepted') { loadPixel(); loadGtag(); return; }
+        if (choice === 'accepted') { loadPixel(); grantGoogle(); return; }
         if (choice === 'declined') { return; }
         function save(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
         function showBanner() {
@@ -81,13 +120,13 @@
           bar.setAttribute('aria-label', 'Samtykke til informasjonskapsler');
           bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#083554;color:#e7edf2;padding:14px 18px;font-family:Barlow,Inter,-apple-system,Segoe UI,Roboto,sans-serif;font-size:13.5px;line-height:1.5;box-shadow:0 -2px 14px rgba(0,0,0,0.25);';
           bar.innerHTML = '<div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;">'
-            + '<span style="flex:1;min-width:240px;">Vi bruker nødvendige informasjonskapsler for innlogging. Vi vil også bruke Meta-pixel til markedsføring og statistikk. <a href="/personvern" style="color:#E89F1E;text-decoration:underline;">Les mer</a>.</span>'
+            + '<span style="flex:1;min-width:240px;">Vi bruker nødvendige informasjonskapsler for innlogging. Vi vil også bruke Meta-pixel og Google Ads til markedsføring og statistikk. <a href="/personvern" style="color:#E89F1E;text-decoration:underline;">Les mer</a>.</span>'
             + '<span style="display:flex;gap:8px;flex-shrink:0;">'
             + '<button id="dl-decline" type="button" style="background:transparent;color:#c3d0db;border:1px solid rgba(255,255,255,0.35);border-radius:7px;padding:8px 14px;font:inherit;cursor:pointer;">Bare nødvendige</button>'
             + '<button id="dl-accept" type="button" style="background:#E89F1E;color:#083554;border:none;border-radius:7px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer;">Godta alle</button>'
             + '</span></div>';
           document.body.appendChild(bar);
-          document.getElementById('dl-accept').onclick = function () { save('accepted'); loadPixel(); loadGtag(); bar.remove(); };
+          document.getElementById('dl-accept').onclick = function () { save('accepted'); loadPixel(); grantGoogle(); bar.remove(); };
           document.getElementById('dl-decline').onclick = function () { save('declined'); bar.remove(); };
         }
         if (document.readyState === 'loading') {

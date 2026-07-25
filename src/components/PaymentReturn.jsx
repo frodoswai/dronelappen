@@ -57,10 +57,14 @@ export default function PaymentReturn() {
         // pixel not loaded — ignore
       }
 
-      // Google Ads-konvertering. gtag lastes kun etter cookie-samtykke (se
-      // index.html), så dette er en no-op uten samtykke — samme policy som
-      // Meta-pixelen. transaction_id = Stripe session id, så Google
-      // dedupliserer hvis brukeren refresher suksess-siden.
+      // Google Ads-konvertering. gtag lastes ALLTID (Consent Mode v2, se
+      // index.html), men med samtykke satt til 'denied' til brukeren sier ja.
+      // Hendelsen sendes derfor uansett: har brukeren samtykket blir den
+      // eksakt målt, ellers går den cookieløs og redigert til Googles
+      // modellering. Det er hele poenget med consent mode — vi mister ikke
+      // signalet for de ~9 av 10 som aldri trykker «Godta alle».
+      // transaction_id = Stripe session id, så Google dedupliserer hvis
+      // brukeren refresher suksess-siden.
       try {
         window.gtag?.('event', 'conversion', {
           send_to: 'AW-18330796641/6u5JCN72_tQcEOGE56RE',

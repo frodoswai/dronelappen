@@ -67,7 +67,7 @@ export default function Personvern() {
               <li>Behandle betalinger (avtale, GDPR art. 6(1)(b))</li>
               <li>Sende viktige tjenestevarsler (berettiget interesse, GDPR art. 6(1)(f))</li>
               <li>Forbedre tjenesten gjennom anonymisert statistikk (berettiget interesse, GDPR art. 6(1)(f))</li>
-              <li>Måle og forbedre markedsføring via Meta-pixel, kun ved ditt samtykke (GDPR art. 6(1)(a))</li>
+              <li>Måle og forbedre markedsføring via Meta-pixel og Google Ads, kun ved ditt samtykke (GDPR art. 6(1)(a))</li>
             </ul>
             <p className="mt-2">
               Vi sender aldri markedsføring uten ditt samtykke (GDPR art. 6(1)(a)).
@@ -83,6 +83,7 @@ export default function Personvern() {
               <li><strong>Stripe</strong> (betaling) — PCI DSS-sertifisert</li>
               <li><strong>Cloudflare</strong> (DNS og e-postruting)</li>
               <li><strong>Meta Platforms Ireland</strong> (Meta-pixel for markedsføring og statistikk) — kun hvis du samtykker</li>
+              <li><strong>Google Ireland Limited</strong> (Google Ads, måling av annonser) — informasjonskapsler og identifikatorer kun hvis du samtykker</li>
               <li><strong>MailerLite</strong> (utsending av nyhetsbrev) — kun hvis du melder deg på</li>
             </ul>
             <p className="mt-2">
@@ -125,10 +126,24 @@ export default function Personvern() {
             <p>
               DroneLappen bruker nødvendige informasjonskapsler for innlogging og
               sesjonshåndtering. Disse er alltid aktive. I tillegg bruker vi Meta-pixel
-              (Facebook) til markedsføring og statistikk. Meta-pixelen aktiveres kun
-              hvis du samtykker via samtykkebanneren, og setter da informasjonskapsler
-              fra Meta. Du kan trekke tilbake samtykket ved å avslå i banneren eller
-              slette informasjonskapslene for dronelappen.app i nettleseren din.
+              (Facebook) og Google Ads til markedsføring og statistikk.
+            </p>
+            <p className="mt-2">
+              <strong>Meta-pixelen</strong> lastes ikke i det hele tatt før du
+              samtykker via samtykkebanneren, og setter først da informasjonskapsler
+              fra Meta.
+            </p>
+            <p className="mt-2">
+              <strong>Google Ads</strong> bruker Googles samtykkemodus. Taggen lastes
+              på siden, men før du samtykker er den satt til å ikke lagre noe:
+              den setter ingen informasjonskapsler og lagrer ingen identifikatorer på
+              enheten din. Google mottar da bare en anonymisert melding om at et besøk
+              skjedde, uten kjennetegn som kan knyttes til deg. Samtykker du, settes
+              informasjonskapsler fra Google og målingen blir nøyaktig.
+            </p>
+            <p className="mt-2">
+              Du kan trekke tilbake samtykket ved å avslå i banneren eller slette
+              informasjonskapslene for dronelappen.app i nettleseren din.
             </p>
           </section>
 
