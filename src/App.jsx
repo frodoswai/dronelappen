@@ -10,6 +10,7 @@ import AuthCallback from './pages/AuthCallback'
 import Vilkar from './pages/Vilkar'
 import Personvern from './pages/Personvern'
 import Kontakt from './pages/Kontakt'
+import OvingsplanA2 from './pages/OvingsplanA2'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
 import './App.css'
@@ -32,6 +33,8 @@ function App() {
             <Route path="/vilkar" element={<Vilkar />} />
             <Route path="/personvern" element={<Personvern />} />
             <Route path="/kontakt" element={<Kontakt />} />
+            {/* Landingsside for lead-annonsen på Meta — e-post først, så quiz. */}
+            <Route path="/a2-ovingsplan" element={<OvingsplanA2 />} />
           </Routes>
         </div>
         <Footer />

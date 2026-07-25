@@ -1,0 +1,252 @@
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+/**
+ * /a2-ovingsplan — dedikert landingsside for lead-annonsen på Meta.
+ *
+ * HVORFOR DENNE FINNES, OG HVORFOR ORDLYDEN ER SOM DEN ER
+ *
+ * Salgsannonsene våre lover «prøv 25 spørsmål gratis». Skal vi be om e-post
+ * FØR folk får se noe, kan annonsen ikke love det samme — da sier annonsen én
+ * ting og siden en annen. Det er en utelatelse av en betingelse der den skulle
+ * stått (mfl. §§ 6-8), og Meta straffer mismatch mellom annonse og side i
+ * auksjonen.
+ *
+ * Løsningen: det vi ber om e-posten for er ØVINGSPLANEN, som faktisk sendes på
+ * e-post. E-posten er en leveringsadresse, ikke en bomstasjon. De 25
+ * spørsmålene er en bonus etterpå — nevnt, men ikke det man «betaler» for.
+ * Annonseteksten må si nøyaktig det samme; endres den ene, må den andre følge.
+ *
+ * Denne siden har BEVISST ingen 15.08-prisfrist. To oppfordringer om samme
+ * klikk svekker begge. Fristen kommer i nurture-e-post 3, til noen som
+ * allerede har sagt ja én gang.
+ */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const ENDPOINT = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-signup`
+const ANON = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+// Egen source-verdi så disse leadene kan skilles fra dem som kommer fra
+// Resultat-skjermen og paywallen i MailerLite. Ruter til «DroneLappen leads».
+const SOURCE = 'quiz_landing'
+
+// Hvor de sendes videre. /practice/A2 er øvingsmodus (ikke eksamen med klokke).
+const NESTE = '/practice/A2'
+const REDIRECT_MS = 2500
+
+export default function OvingsplanA2() {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState('')
+
+  // Etter vellykket påmelding: send dem videre av seg selv. De har fått løftet
+  // sitt, og skal ikke måtte lete etter neste steg.
+  useEffect(() => {
+    if (status !== 'success') return
+    const t = setTimeout(() => navigate(NESTE), REDIRECT_MS)
+    return () => clearTimeout(t)
+  }, [status, navigate])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const value = email.trim().toLowerCase()
+    if (!EMAIL_RE.test(value)) {
+      setErrorMsg('Skriv inn en gyldig e-postadresse.')
+      setStatus('error')
+      return
+    }
+
+    setStatus('sending')
+    setErrorMsg('')
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          apikey: ANON,
+          Authorization: `Bearer ${ANON}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: value, source: SOURCE }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data.status === 'ok') {
+        if (!data.duplicate) window.fbq?.('track', 'Lead', { content_name: SOURCE })
+        setStatus('success')
+      } else {
+        setErrorMsg(data.message || 'Noe gikk galt. Prøv igjen senere.')
+        setStatus('error')
+      }
+    } catch {
+      setErrorMsg('Noe gikk galt. Prøv igjen senere.')
+      setStatus('error')
+    }
+  }
+
+  const sending = status === 'sending'
+
+  return (
+    <div className="min-h-screen bg-da-bg flex flex-col">
+      {/* Mørk hero. Overskriften gjentar annonsens løfte nesten ordrett — folk
+          skal se på et halvsekund at de kom riktig. */}
+      <div className="bg-da-navy-dark px-6 pt-3 pb-7">
+        <div className="pt-8 max-w-2xl mx-auto">
+          <div className="font-mono text-[11px] text-da-gold tracking-[0.14em] uppercase mb-3">
+            gratis · sendes på e-post
+          </div>
+          <h1 className="text-[30px] sm:text-[34px] font-medium text-da-bg leading-[1.12] tracking-tight mb-3">
+            Gratis øvingsplan til A2-prøven
+          </h1>
+          <p className="text-[15px] text-da-dark-slogan leading-[1.55] max-w-lg">
+            Hva du skal øve på, i hvilken rekkefølge, og hvordan du vet at du er
+            klar til å booke prøven. Skriv inn e-posten, så sender vi den med én
+            gang.
+          </p>
+        </div>
+      </div>
+
+      <div
+        className="h-7 shrink-0"
+        style={{
+          background:
+            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
+        }}
+      />
+
+      <div className="px-6 pt-3 pb-12 bg-da-bg">
+        <div className="max-w-2xl mx-auto">
+
+          {status === 'success' ? (
+            <div className="bg-da-cream/50 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-6 py-6">
+              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
+                planen er på vei
+              </div>
+              <h2 className="text-[19px] font-medium text-da-navy leading-snug mb-2">
+                Takk! Sjekk innboksen om et minutt.
+              </h2>
+              <p className="text-[14px] text-da-text-body leading-[1.6] mb-5">
+                Vi sender deg videre til 25 A2-spørsmål nå, så du kan komme i
+                gang med én gang.
+              </p>
+              <Link
+                to={NESTE}
+                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13.5px] inline-flex items-center gap-2"
+              >
+                <span>Start de 25 spørsmålene nå</span>
+                <span className="font-mono text-[12px] text-da-gold">→</span>
+              </Link>
+            </div>
+          ) : (
+            <>
+              {/* Skjemaet ligger øverst. Prisen for å komme videre — e-posten —
+                  står FØR feltet, ikke under, så ingen skriver noe før de vet
+                  hva de gir fra seg. */}
+              <div className="bg-da-cream/50 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-6 py-5 mb-7">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5">
+                  <input
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="din@epost.no"
+                    aria-label="E-postadresse"
+                    disabled={sending}
+                    autoFocus
+                    className="flex-1 bg-white border-[0.5px] border-da-navy/30 focus:border-da-navy/60 outline-none rounded-lg px-4 py-3 text-[15px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
+                  />
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-6 rounded-lg transition-colors text-[14px] flex items-center justify-center gap-2 disabled:opacity-60"
+                  >
+                    <span>{sending ? 'Sender…' : 'Send meg planen'}</span>
+                    {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
+                  </button>
+                </form>
+
+                {status === 'error' && (
+                  <p role="alert" className="mt-2.5 text-[12.5px] text-amber-700 leading-[1.4]">
+                    {errorMsg}
+                  </p>
+                )}
+
+                {/* Samtykkegrunnlaget. Aktivt og spesifikt — ingen forhåndskrysset
+                    boks — og det sier hva de får og at de kan melde seg av. */}
+                <p className="mt-3 text-[11.5px] text-da-text-muted leading-[1.5]">
+                  Du får øvingsplanen nå, og deretter noen få e-poster om temaene
+                  folk oftest bommer på. Meld deg av når som helst. Se{' '}
+                  <Link to="/personvern" className="underline hover:text-da-navy transition-colors">
+                    personvern
+                  </Link>
+                  .
+                </p>
+              </div>
+
+              {/* Bonusen, tydelig men underordnet: spørsmålene er ikke det man
+                  «betaler» for, de er det som skjer etterpå. */}
+              <p className="text-[15px] text-da-navy font-medium leading-[1.55] mb-7">
+                Rett etterpå kommer du til 25 A2-spørsmål du kan prøve gratis —
+                uten innlogging.
+              </p>
+
+              <div className="border-t border-da-navy/10 pt-6">
+                <h2 className="text-[17px] font-medium text-da-navy mb-3">
+                  Hva står i planen?
+                </h2>
+                <ul className="text-[14px] text-da-text-body leading-[1.75] space-y-1.5 list-none mb-7">
+                  <li>
+                    <span className="font-mono text-da-gold mr-2">+</span>
+                    Rekkefølgen: hvorfor A1/A3 må tas før A2, og hva som skiller dem
+                  </li>
+                  <li>
+                    <span className="font-mono text-da-gold mr-2">+</span>
+                    De tre temaene folk oftest bommer på — luftrom, avstandskrav og klassemerking
+                  </li>
+                  <li>
+                    <span className="font-mono text-da-gold mr-2">+</span>
+                    Når du er klar: tommelfingerregelen om 27 av 30 stabilt før du booker
+                  </li>
+                  <li>
+                    <span className="font-mono text-da-gold mr-2">+</span>
+                    Hva prøven faktisk koster, og hva som skjer hvis du stryker
+                  </li>
+                </ul>
+
+                <div className="bg-white border-[0.5px] border-da-navy/15 rounded-lg px-5 py-4">
+                  <div className="font-mono text-[10.5px] text-da-gold tracking-[0.12em] uppercase mb-2">
+                    verdt å vite
+                  </div>
+                  <p className="text-[14px] text-da-text-body leading-[1.6]">
+                    A2-eksamen koster{' '}
+                    <strong className="text-da-navy">970 kr per forsøk</strong> på
+                    trafikkstasjonen, og du må ha bestått A1/A3 først. Stryker du,
+                    betaler du på nytt — i tillegg til ny timebestilling og
+                    ventetid. God forberedelse er billig.
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
+
+          <p className="mt-8 text-[12.5px] text-da-text-muted leading-[1.6]">
+            DroneLappen er en øvingsapp med 241 norske spørsmål for A1/A3 og A2,
+            laget av{' '}
+            <a
+              href="https://droneavisa.no"
+              rel="noopener"
+              className="underline hover:text-da-navy transition-colors"
+            >
+              Droneavisa.no
+            </a>
+            . Vil du heller se deg om først?{' '}
+            <Link to="/" className="underline hover:text-da-navy transition-colors">
+              Gå til forsiden
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -26,6 +26,8 @@ function groupForSource(source: string): string {
     case 'quiz':
     case 'quiz_results':
     case 'quiz_paywall':
+    // Lead-annonsens landingsside (/a2-ovingsplan) — e-post før quiz.
+    case 'quiz_landing':
       return GROUP_LEADS
     default:
       return GROUP_DRONEAVISA
