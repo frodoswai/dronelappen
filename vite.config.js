@@ -12,11 +12,23 @@ import tailwindcss from '@tailwindcss/vite'
 const PRICE_INCREASE_AT = '2026-08-15T00:00:00+02:00'
 const DL_PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? '349' : '249'
 
+// Antall spørsmål i banken. Samme mekanikk som prisen, og av samme grunn:
+// tallet sto hardkodet ni steder i index.html og hadde blitt stående på 238
+// etter at banken vokste til 241 (110 A1/A3 + 131 A2, talt i Supabase
+// 25.07.2026). Landingssidene og appen sa 241, mens meta-beskrivelsene,
+// JSON-LD-en og noscript-teksten — altså akkurat det Google og AI-svar leser
+// — sa 238. Nå står tallet ett sted.
+//
+// VOKSER BANKEN: oppdater denne, og sjekk content/landing/*.md som har sine
+// egne forekomster. Fasit:
+//   select count(*) from questions;
+const DL_ANTALL = '241'
+
 function prisPlugin() {
   return {
     name: 'dl-pris',
     transformIndexHtml(html) {
-      return html.replaceAll('%DL_PRIS%', DL_PRIS)
+      return html.replaceAll('%DL_PRIS%', DL_PRIS).replaceAll('%DL_ANTALL%', DL_ANTALL)
     },
   }
 }
