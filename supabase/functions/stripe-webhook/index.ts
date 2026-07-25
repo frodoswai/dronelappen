@@ -109,6 +109,7 @@ Deno.serve(async (req) => {
           if (mlToken && buyerEmail) {
             const ML_API = 'https://connect.mailerlite.com/api'
             const GROUP_KUNDER = '192513298163304352' // «DroneLappen kunder»
+            const GROUP_LEADS = '192882163047204155' // «DroneLappen leads»
             const mlHeaders = {
               Authorization: `Bearer ${mlToken}`,
               'Content-Type': 'application/json',
@@ -137,6 +138,24 @@ Deno.serve(async (req) => {
                 await fetch(
                   `${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${GROUP_KUNDER}`,
                   { method: 'POST', headers: mlHeaders },
+                ).catch(() => {})
+
+                // ...og UT av lead-gruppa, som stopper salgs-nurturen.
+                //
+                // 25.07.2026: Tore la igjen e-posten i LeadCapture 21:28 og
+                // betalte 21:32 — fire minutter. Han sto da i BÅDE leads og
+                // kunder, og lead-løpets tredje e-post ber mottakeren kjøpe
+                // før prisen går opp 15.08. Altså: vi ville bedt en kunde om
+                // å kjøpe det han nettopp hadde kjøpt.
+                //
+                // Å selge noe til noen som allerede eier det er ikke bare
+                // pinlig, det er å be dem melde seg av. Kjøpere skal ikke ha
+                // mindre innhold enn leads — de skal ha det samme innholdet
+                // uten salget, i kjøper-automasjonen. Denne linja tar dem ut
+                // av feil løp; kjøper-løpet er der de hører hjemme.
+                await fetch(
+                  `${ML_API}/subscribers/${encodeURIComponent(subId)}/groups/${GROUP_LEADS}`,
+                  { method: 'DELETE', headers: mlHeaders },
                 ).catch(() => {})
               }
             } else if (lookup.status === 404) {
