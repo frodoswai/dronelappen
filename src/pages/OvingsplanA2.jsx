@@ -7,19 +7,19 @@ import { Link, useNavigate } from 'react-router-dom'
  * HVORFOR DENNE FINNES, OG HVORFOR ORDLYDEN ER SOM DEN ER
  *
  * Salgsannonsene våre lover «prøv 25 spørsmål gratis». Skal vi be om e-post
- * FØR folk får se noe, kan annonsen ikke love det samme — da sier annonsen én
+ * FØR folk får noe, kan annonsen ikke love det samme — da sier annonsen én
  * ting og siden en annen. Det er en utelatelse av en betingelse der den skulle
  * stått (mfl. §§ 6-8), og Meta straffer mismatch mellom annonse og side i
- * auksjonen.
+ * auksjonen. Lead-annonsen har derfor sin egen tekst som matcher denne siden.
  *
- * Løsningen: det vi ber om e-posten for er ØVINGSPLANEN, som faktisk sendes på
- * e-post. E-posten er en leveringsadresse, ikke en bomstasjon. De 25
- * spørsmålene er en bonus etterpå — nevnt, men ikke det man «betaler» for.
- * Annonseteksten må si nøyaktig det samme; endres den ene, må den andre følge.
+ * BELØNNINGEN ER TO TING, IKKE ÉN. Frode 25.07: «når de gir eposten gir vi
+ * dobbelt, 25 spørsmål og 1 øvingsplan». Det er hele byttehandelen, og den
+ * skal være synlig FØR feltet — ikke som en overraskelse etterpå. Én e-post
+ * inn, to ting ut.
  *
- * Denne siden har BEVISST ingen 15.08-prisfrist. To oppfordringer om samme
- * klikk svekker begge. Fristen kommer i nurture-e-post 3, til noen som
- * allerede har sagt ja én gang.
+ * Siden har BEVISST ingen 15.08-prisfrist. To oppfordringer om samme klikk
+ * svekker begge. Fristen kommer i nurture-e-post 3, til noen som allerede har
+ * sagt ja én gang.
  */
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -87,20 +87,19 @@ export default function OvingsplanA2() {
 
   return (
     <div className="min-h-screen bg-da-bg flex flex-col">
-      {/* Mørk hero. Overskriften gjentar annonsens løfte nesten ordrett — folk
-          skal se på et halvsekund at de kom riktig. */}
+      {/* Mørk hero. Overskriften navngir BEGGE tingene de får — annonsen lover
+          øvingsplan + 25 spørsmål, og siden må bekrefte det umiddelbart. */}
       <div className="bg-da-navy-dark px-6 pt-3 pb-7">
         <div className="pt-8 max-w-2xl mx-auto">
           <div className="font-mono text-[11px] text-da-gold tracking-[0.14em] uppercase mb-3">
-            gratis · sendes på e-post
+            gratis · to ting med én gang
           </div>
           <h1 className="text-[30px] sm:text-[34px] font-medium text-da-bg leading-[1.12] tracking-tight mb-3">
-            Gratis øvingsplan til A2-prøven
+            Gratis øvingsplan <span className="text-da-gold">+</span> 25 A2-spørsmål
           </h1>
           <p className="text-[15px] text-da-dark-slogan leading-[1.55] max-w-lg">
-            Hva du skal øve på, i hvilken rekkefølge, og hvordan du vet at du er
-            klar til å booke prøven. Skriv inn e-posten, så sender vi den med én
-            gang.
+            Skriv inn e-posten, så får du begge deler med én gang: planen i
+            innboksen, og 25 spørsmål du kan starte på direkte.
           </p>
         </div>
       </div>
@@ -119,14 +118,14 @@ export default function OvingsplanA2() {
           {status === 'success' ? (
             <div className="bg-da-cream/50 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-6 py-6">
               <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
-                planen er på vei
+                begge deler er på vei
               </div>
-              <h2 className="text-[19px] font-medium text-da-navy leading-snug mb-2">
-                Takk! Sjekk innboksen om et minutt.
+              <h2 className="text-[19px] font-medium text-da-navy leading-snug mb-3">
+                Takk! Øvingsplanen ligger i innboksen om et minutt.
               </h2>
               <p className="text-[14px] text-da-text-body leading-[1.6] mb-5">
-                Vi sender deg videre til 25 A2-spørsmål nå, så du kan komme i
-                gang med én gang.
+                Og her er del to — vi sender deg til de 25 A2-spørsmålene nå, så
+                du kan komme i gang med én gang.
               </p>
               <Link
                 to={NESTE}
@@ -138,10 +137,33 @@ export default function OvingsplanA2() {
             </div>
           ) : (
             <>
-              {/* Skjemaet ligger øverst. Prisen for å komme videre — e-posten —
-                  står FØR feltet, ikke under, så ingen skriver noe før de vet
-                  hva de gir fra seg. */}
+              {/* Byttehandelen, eksplisitt og FØR feltet: én e-post inn, to
+                  ting ut. Ingen skal skrive noe før de vet både hva de gir og
+                  hva de får. */}
               <div className="bg-da-cream/50 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-6 py-5 mb-7">
+                <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-3">
+                  du får begge deler
+                </div>
+
+                <div className="space-y-2.5 mb-5">
+                  <div className="flex gap-3 items-start">
+                    <span className="font-mono text-[12px] text-da-navy/50 mt-[3px] shrink-0">01</span>
+                    <p className="text-[14px] text-da-text-body leading-[1.5]">
+                      <strong className="text-da-navy">Øvingsplanen</strong> — hva du
+                      skal øve på, i hvilken rekkefølge, og når du er klar til å
+                      booke prøven. Kommer på e-post.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="font-mono text-[12px] text-da-navy/50 mt-[3px] shrink-0">02</span>
+                    <p className="text-[14px] text-da-text-body leading-[1.5]">
+                      <strong className="text-da-navy">25 A2-spørsmål</strong> — ekte
+                      eksamensspørsmål med forklaring på hvert svar. Starter med
+                      én gang, uten innlogging.
+                    </p>
+                  </div>
+                </div>
+
                 <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2.5">
                   <input
                     type="email"
@@ -160,7 +182,7 @@ export default function OvingsplanA2() {
                     disabled={sending}
                     className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-6 rounded-lg transition-colors text-[14px] flex items-center justify-center gap-2 disabled:opacity-60"
                   >
-                    <span>{sending ? 'Sender…' : 'Send meg planen'}</span>
+                    <span>{sending ? 'Sender…' : 'Send meg begge deler'}</span>
                     {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
                   </button>
                 </form>
@@ -183,68 +205,35 @@ export default function OvingsplanA2() {
                 </p>
               </div>
 
-              {/* Bonusen, tydelig men underordnet: spørsmålene er ikke det man
-                  «betaler» for, de er det som skjer etterpå. */}
-              <p className="text-[15px] text-da-navy font-medium leading-[1.55] mb-7">
-                Rett etterpå kommer du til 25 A2-spørsmål du kan prøve gratis —
-                uten innlogging.
-              </p>
-
               <div className="border-t border-da-navy/10 pt-6">
-                <h2 className="text-[17px] font-medium text-da-navy mb-3">
-                  Hva står i planen?
-                </h2>
-                <ul className="text-[14px] text-da-text-body leading-[1.75] space-y-1.5 list-none mb-7">
-                  <li>
-                    <span className="font-mono text-da-gold mr-2">+</span>
-                    Rekkefølgen: hvorfor A1/A3 må tas før A2, og hva som skiller dem
-                  </li>
-                  <li>
-                    <span className="font-mono text-da-gold mr-2">+</span>
-                    De tre temaene folk oftest bommer på — luftrom, avstandskrav og klassemerking
-                  </li>
-                  <li>
-                    <span className="font-mono text-da-gold mr-2">+</span>
-                    Når du er klar: tommelfingerregelen om 27 av 30 stabilt før du booker
-                  </li>
-                  <li>
-                    <span className="font-mono text-da-gold mr-2">+</span>
-                    Hva prøven faktisk koster, og hva som skjer hvis du stryker
-                  </li>
-                </ul>
-
-                <div className="bg-white border-[0.5px] border-da-navy/15 rounded-lg px-5 py-4">
+                <div className="bg-white border-[0.5px] border-da-navy/15 rounded-lg px-5 py-4 mb-5">
                   <div className="font-mono text-[10.5px] text-da-gold tracking-[0.12em] uppercase mb-2">
                     verdt å vite
                   </div>
                   <p className="text-[14px] text-da-text-body leading-[1.6]">
                     A2-eksamen koster{' '}
-                    <strong className="text-da-navy">970 kr per forsøk</strong> på
-                    trafikkstasjonen, og du må ha bestått A1/A3 først. Stryker du,
+                    <strong className="text-da-navy">970 kr per forsøk</strong> hos
+                    Statens vegvesen, og du må ha bestått A1/A3 først. Stryker du,
                     betaler du på nytt — i tillegg til ny timebestilling og
-                    ventetid. God forberedelse er billig.
+                    ventetid. Sørg for å bestå på første.
                   </p>
                 </div>
+
+                <p className="text-[13px] text-da-text-muted leading-[1.6]">
+                  Over 300 piloter øver på DroneLappen allerede. Appen har 241
+                  norske spørsmål for A1/A3 og A2, og er laget av{' '}
+                  <a
+                    href="https://droneavisa.no"
+                    rel="noopener"
+                    className="underline hover:text-da-navy transition-colors"
+                  >
+                    Droneavisa.no
+                  </a>
+                  .
+                </p>
               </div>
             </>
           )}
-
-          <p className="mt-8 text-[12.5px] text-da-text-muted leading-[1.6]">
-            DroneLappen er en øvingsapp med 241 norske spørsmål for A1/A3 og A2,
-            laget av{' '}
-            <a
-              href="https://droneavisa.no"
-              rel="noopener"
-              className="underline hover:text-da-navy transition-colors"
-            >
-              Droneavisa.no
-            </a>
-            . Vil du heller se deg om først?{' '}
-            <Link to="/" className="underline hover:text-da-navy transition-colors">
-              Gå til forsiden
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>
