@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { PRICE } from '../lib/pricing'
+import { CONV_KJOP, googleKonvertering } from '../lib/conversions'
 
 /**
  * Handles the redirect back from Stripe Checkout.
@@ -65,16 +66,11 @@ export default function PaymentReturn() {
       // signalet for de ~9 av 10 som aldri trykker «Godta alle».
       // transaction_id = Stripe session id, så Google dedupliserer hvis
       // brukeren refresher suksess-siden.
-      try {
-        window.gtag?.('event', 'conversion', {
-          send_to: 'AW-18330796641/6u5JCN72_tQcEOGE56RE',
-          value: PRICE,
-          currency: 'NOK',
-          ...(sessionId ? { transaction_id: sessionId } : {}),
-        })
-      } catch {
-        // gtag not loaded — ignore
-      }
+      googleKonvertering(CONV_KJOP, {
+        value: PRICE,
+        currency: 'NOK',
+        ...(sessionId ? { transaction_id: sessionId } : {}),
+      })
 
       if (!cancelled) setStatus('pending')
       // Poll a few times: the webhook writes the entitlement out-of-band.

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
 
 /**
  * /a2-ovingsplan — dedikert landingsside for lead-annonsen på Meta.
@@ -71,7 +72,12 @@ export default function OvingsplanA2() {
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {
-        if (!data.duplicate) window.fbq?.('track', 'Lead', { content_name: SOURCE })
+        // Samme lead-signal til begge annonseplattformene. Denne siden er
+        // trafikkmålet for lead-annonsen, så det er her det betyr mest.
+        if (!data.duplicate) {
+          window.fbq?.('track', 'Lead', { content_name: SOURCE })
+          googleKonvertering(CONV_EPOST)
+        }
         setStatus('success')
       } else {
         setErrorMsg(data.message || 'Noe gikk galt. Prøv igjen senere.')

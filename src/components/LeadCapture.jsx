@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
 
 // Lead-magnet email capture shown to anonymous users at the two highest-intent
 // moments: the Results screen (just finished a free round) and the Paywall exit
@@ -68,8 +69,14 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {
         // Meta funnel event so lead capture is countable alongside
-        // InitiateCheckout (jf. Home/Paywall instrumentation).
-        if (!data.duplicate) window.fbq?.('track', 'Lead', { content_name: source })
+        // InitiateCheckout (jf. Home/Paywall instrumentation). Google Ads får
+        // samme signal — kontoen hadde ellers bare kjøp å lære av, og det
+        // skjer 1-3 ganger i uka. Begge hoppes over ved duplikat: en som
+        // melder seg på to ganger er ikke to leads.
+        if (!data.duplicate) {
+          window.fbq?.('track', 'Lead', { content_name: source })
+          googleKonvertering(CONV_EPOST)
+        }
         setStatus(data.duplicate ? 'duplicate' : 'success')
         if (!data.duplicate) setEmail('')
       } else {
