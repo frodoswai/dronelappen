@@ -11,6 +11,7 @@ import Vilkar from './pages/Vilkar'
 import Personvern from './pages/Personvern'
 import Kontakt from './pages/Kontakt'
 import OvingsplanA2 from './pages/OvingsplanA2'
+import Kvittering from './pages/Kvittering'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
 import './App.css'
@@ -35,6 +36,10 @@ function App() {
             <Route path="/kontakt" element={<Kontakt />} />
             {/* Landingsside for lead-annonsen på Meta — e-post først, så quiz. */}
             <Route path="/a2-ovingsplan" element={<OvingsplanA2 />} />
+            {/* Målepunkter for kjøper-e-post 3. MailerLite merker abonnenten
+                på lenkeklikk; e-post 4 går bare til dem som ikke klikket. */}
+            <Route path="/bestilt" element={<Kvittering />} />
+            <Route path="/bestatt" element={<Kvittering />} />
           </Routes>
         </div>
         <Footer />
