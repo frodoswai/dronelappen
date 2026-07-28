@@ -25,17 +25,42 @@ function isExternalReferrer(ref) {
   }
 }
 
+// Henvisning fra VÅRT eget domene, som URL-objekt. Null ellers.
+//
+// De statiske landingssidene (/dronesertifikat-a2/, /droneeksamen-oving/,
+// /pris/) serveres FØR SPA-rewriten. Et annonseklikk lander med UTM-ene på den
+// statiske siden, brukeren går videre inn i appen, og da står det bare «/» i
+// adressefeltet: location.search er tom mens document.referrer fortsatt bærer
+// hele annonse-URL-en.
+//
+// Oppdaget 28.07.2026: to Google Ads-salg (Emil 24/7, Chris 28/7) lå i Stripe
+// helt uten utm_source, med parametrene synlige bare i referrer-feltet. Google
+// ble dermed undertalt i hvert kanalregnskap vi har laget.
+//
+// Vi leser BARE fra samme domene. En ekstern URL kan bære noen andres
+// UTM-parametre, og de er ikke våre å påberope oss.
+function sameOriginReferrer() {
+  const ref = document.referrer || ''
+  if (!ref) return null
+  try {
+    const u = new URL(ref)
+    return u.hostname === window.location.hostname ? u : null
+  } catch {
+    return null
+  }
+}
+
 // Skriv last-touch-record. Kalles ved hvert besøk som har en identifiserbar
 // kilde: enten UTM-parametre eller en ekstern henvisning (f.eks. MailerLites
 // klikk-domene, Google, Facebook).
-function recordLastTouch(cur, hasUtm) {
+function recordLastTouch(cur, hasUtm, entryPath) {
   const ref = document.referrer || ''
   if (!hasUtm && !isExternalReferrer(ref)) return
   try {
     const data = {
       ...cur,
       referrer: ref.slice(0, 300),
-      landing_path: (window.location.pathname || '/').slice(0, 200),
+      landing_path: (entryPath || window.location.pathname || '/').slice(0, 200),
       seen_at: new Date().toISOString(),
     }
     localStorage.setItem(LAST_KEY, JSON.stringify(data))
@@ -48,20 +73,44 @@ function recordLastTouch(cur, hasUtm) {
 export function captureAttribution() {
   try {
     const params = new URLSearchParams(window.location.search)
+    const refUrl = sameOriginReferrer()
     const cur = {}
     for (const k of UTM_KEYS) {
       const v = params.get(k)
       if (v) cur[k] = v.slice(0, 200)
     }
+
+    // Er adressefeltet uten kilde, men henvisningen er vår egen landingsside
+    // med annonseparametre? Da hentes de derfra. Vi krever utm_source i
+    // henvisningen før noe overtas, så en vanlig intern klikking (uten
+    // parametre) aldri kan forkludre en ekte kilde. Eksisterende verdier i
+    // adressefeltet vinner alltid.
+    let entryPath = null
+    if (!cur.utm_source && refUrl) {
+      const fraRef = {}
+      for (const k of UTM_KEYS) {
+        const v = refUrl.searchParams.get(k)
+        if (v) fraRef[k] = v.slice(0, 200)
+      }
+      if (fraRef.utm_source) {
+        for (const [k, v] of Object.entries(fraRef)) {
+          if (!cur[k]) cur[k] = v
+        }
+        // Den ekte landingssiden var den statiske siden, ikke «/».
+        entryPath = (refUrl.pathname || '/').slice(0, 200)
+      }
+    }
+
     const hasUtm = !!cur.utm_source
     // Meta klikk-ID fra annonse-URL-en. I motsetning til UTM (first touch)
     // gjelder SISTE klikk for CAPI-attribusjon, så denne oppdateres ved
     // hvert besøk med fbclid — også når first-touch-recorden er låst.
-    const fbclid = params.get('fbclid')
+    // Samme landingsside-fellen gjelder her, så samme fallback.
+    const fbclid = params.get('fbclid') || (refUrl && refUrl.searchParams.get('fbclid')) || null
 
     // Last touch registreres ALLTID (før first-touch-låsen under), slik at vi
     // ser hva som faktisk brakte brukeren tilbake denne gangen.
-    recordLastTouch(cur, hasUtm)
+    recordLastTouch(cur, hasUtm, entryPath)
 
     let existing = null
     try {
@@ -85,7 +134,7 @@ export function captureAttribution() {
     const data = {
       ...cur,
       referrer: (document.referrer || '').slice(0, 300),
-      landing_path: (window.location.pathname || '/').slice(0, 200),
+      landing_path: (entryPath || window.location.pathname || '/').slice(0, 200),
       first_seen: (existing && existing.first_seen) || new Date().toISOString(),
     }
     if (fbclid) {
