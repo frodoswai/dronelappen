@@ -27,6 +27,11 @@ slug: droneeksamen-oving
 - **Rapid-modus** for rask repetisjon
 - 25 spørsmål gratis, full tilgang {{PRIS}} kr for 12 måneder
 
+<figure class="sitat">
+<blockquote>«DroneLappen er veldig fin å øve på, spesielt den tempoknappen. Hadde fleire gonger 28 rette på fire–fem minutt.»</blockquote>
+<figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
+</figure>
+
 <div class="cta-box">
 <h2>Start øvingen</h2>
 <p>Prøv 25 spørsmål gratis nå. Full tilgang til alle 241 spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>

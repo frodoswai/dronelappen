@@ -124,6 +124,11 @@ const CSS = `
   th{background:var(--cream);color:var(--navy)}
   .faktaboks{background:#fff;border:1px solid #e3e9ef;border-left:4px solid var(--gold);
     border-radius:0 .5rem .5rem 0;padding:1rem 1.25rem;margin:1.5rem 0}
+  .sitat{background:#fff;border:1px solid #e3e9ef;border-radius:.5rem;
+    padding:1.1rem 1.25rem;margin:1.5rem 0}
+  .sitat blockquote{margin:0;font-family:"Lora",Georgia,serif;font-style:italic;
+    color:var(--navy);font-size:1.05rem;line-height:1.55}
+  .sitat figcaption{margin-top:.55rem;font-size:.9rem;color:var(--muted)}
   .faktaboks h3{margin:.1rem 0 .5rem}
   .faktaboks ul{margin:.25rem 0;padding-left:1.15rem}
   .cta-box{background:var(--navy);border-radius:.75rem;padding:1.5rem;margin:2rem 0;color:#e8eef4}

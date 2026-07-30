@@ -21,6 +21,11 @@ slug: pris
 </ul>
 </div>
 
+<figure class="sitat">
+<blockquote>«DroneLappen er veldig fin å øve på, spesielt den tempoknappen. Hadde fleire gonger 28 rette på fire–fem minutt.»</blockquote>
+<figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
+</figure>
+
 ## App-pris er ikke det samme som eksamensgebyr
 
 Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen koster hos myndighetene:
