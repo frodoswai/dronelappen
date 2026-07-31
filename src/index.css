@@ -39,12 +39,13 @@ body {
   color: var(--color-da-text-body);
 }
 
-/* Pull-to-refresh er katastrofalt midt i en quiz: all tilstand ligger i
-   React-minnet, så en utilsiktet nedtrekking på mobil kaster hele
-   eksamensforsøket/tempo-løpet (nytt spørsmålstrekk + nullstilt klokke).
-   overscroll-behavior-y skrur av nettleserens pull-to-refresh og
-   scroll-kjeding uten å påvirke vanlig scrolling i appen. */
-html, body {
+/* Pull-to-refresh midt i en quiz var katastrofalt (mistet økt) — men på
+   forsiden er nedtrekking NYTTIG: det er slik en installert PWA henter ny
+   versjon av appen (Frode 31/7). Regelen er derfor klasse-styrt: Quiz og
+   Rapid legger .dl-no-ptr på <body> ved mount og fjerner den ved unmount.
+   Quiz-øktene overlever uansett en refresh via sessionStorage
+   (lib/quizSession.js) — dette er belte i tillegg til bukseseler. */
+body.dl-no-ptr {
   overscroll-behavior-y: none;
 }
 

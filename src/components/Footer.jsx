@@ -8,6 +8,10 @@ export default function Footer() {
       <InstallAppButton />
       <TextSizeToggle />
       <div className="flex items-center justify-center gap-3 font-mono text-[11px] tracking-[0.05em]">
+        <Link to="/min-side" className="text-da-gold-text hover:text-da-navy transition-colors">
+          Min side
+        </Link>
+        <span className="text-gray-300">·</span>
         <Link to="/vilkar" className="text-gray-400 hover:text-da-navy transition-colors">
           Vilkår
         </Link>

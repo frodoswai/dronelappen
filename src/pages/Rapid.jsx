@@ -141,6 +141,13 @@ export default function Rapid() {
     }
   }, [])
 
+  // Skru av pull-to-refresh mens en økt pågår (se index.css .dl-no-ptr).
+  // Forsiden beholder nedtrekking så installert app kan hente ny versjon.
+  useEffect(() => {
+    document.body.classList.add('dl-no-ptr')
+    return () => document.body.classList.remove('dl-no-ptr')
+  }, [])
+
   // Wall-clock tick for the MM:SS display. 250ms keeps the seconds digit
   // crisp without wasting battery. Stops the moment `finished` flips true
   // so the displayed total freezes at its final value.

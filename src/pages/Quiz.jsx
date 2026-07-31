@@ -206,6 +206,13 @@ export default function Quiz() {
     })
   }, [loading, quizComplete, questions, answers, currentIndex, fetchedTier, startTime, storageKey])
 
+  // Skru av pull-to-refresh mens en økt pågår (se index.css .dl-no-ptr).
+  // Forsiden beholder nedtrekking så installert app kan hente ny versjon.
+  useEffect(() => {
+    document.body.classList.add('dl-no-ptr')
+    return () => document.body.classList.remove('dl-no-ptr')
+  }, [])
+
   // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
   // so the countdown is correct after tab-blur / backgrounding / throttling.
   // 250ms interval keeps the MM:SS display snappy without burning battery.

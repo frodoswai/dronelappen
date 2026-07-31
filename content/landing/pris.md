@@ -26,6 +26,8 @@ slug: pris
 <figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
 </figure>
 
+Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått eksamen.
+
 ## App-pris er ikke det samme som eksamensgebyr
 
 Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen koster hos myndighetene:

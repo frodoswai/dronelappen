@@ -32,6 +32,8 @@ slug: droneeksamen-oving
 <figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
 </figure>
 
+Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått eksamen — slik at formen på spørsmålene ligner den ekte prøven mest mulig.
+
 <div class="cta-box">
 <h2>Start øvingen</h2>
 <p>Prøv 25 spørsmål gratis nå. Full tilgang til alle 241 spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
