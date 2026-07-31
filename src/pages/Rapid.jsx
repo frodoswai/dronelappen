@@ -176,6 +176,7 @@ export default function Rapid() {
           completed_at: new Date().toISOString(),
           score: correctCount,
           total_questions: answeredCount,
+          mode: 'tempo', // migrasjon 008 — skiller tempo fra eksamen på Min side
         })
         .then(() => {})
         .catch(() => {})
@@ -430,6 +431,13 @@ export default function Rapid() {
                 className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <span>Nytt løp</span>
+                <span className="font-mono text-[12px] text-da-gold">→</span>
+              </button>
+              <button
+                onClick={() => navigate('/min-side')}
+                className="quiz-option w-full bg-white border-[0.5px] border-da-gold/70 hover:bg-da-cream/40 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <span>Se min side</span>
                 <span className="font-mono text-[12px] text-da-gold">→</span>
               </button>
               <button

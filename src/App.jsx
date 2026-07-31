@@ -12,6 +12,7 @@ import Personvern from './pages/Personvern'
 import Kontakt from './pages/Kontakt'
 import OvingsplanA2 from './pages/OvingsplanA2'
 import Kvittering from './pages/Kvittering'
+import MinSide from './pages/MinSide'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
 import './App.css'
@@ -29,6 +30,9 @@ function App() {
             <Route path="/practice/:examType" element={<Quiz />} />
             <Route path="/rapid/:examType" element={<Rapid />} />
             <Route path="/results" element={<Results />} />
+            {/* Personlig scoreboard — beredskap per eksamenstype/kategori
+                + eksamenshistorikk. Lenkes fra sluttskjermene. */}
+            <Route path="/min-side" element={<MinSide />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/vilkar" element={<Vilkar />} />

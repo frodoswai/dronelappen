@@ -332,6 +332,13 @@ export default function Results() {
               </button>
             )}
             <button
+              onClick={() => navigate('/min-side')}
+              className="quiz-option w-full bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              <span>Se min side</span>
+              <span className="font-mono text-[12px] text-da-gold">→</span>
+            </button>
+            <button
               onClick={() => navigate('/')}
               className="quiz-option w-full bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors"
             >

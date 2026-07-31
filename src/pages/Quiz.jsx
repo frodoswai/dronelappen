@@ -284,6 +284,8 @@ export default function Quiz() {
           completed_at: new Date().toISOString(),
           score: correctTotal,
           total_questions: questions.length,
+          // migrasjon 008 — Min side skiller eksamensforsøk fra læringsøkter
+          mode: isPracticeMode ? 'laering' : 'eksamen',
         })
         .then(() => {})
         .catch(() => {})
