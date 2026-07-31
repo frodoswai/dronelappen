@@ -10,6 +10,15 @@
     <meta name="application-name" content="DroneLappen" />
     <meta name="theme-color" content="#0a1628" />
 
+    <!-- PWA: manifestet gjør appen installerbar (Android viser
+         install-prompt via beforeinstallprompt — se InstallAppButton.jsx).
+         display: standalone fjerner adresselinjen når den kjøres installert. -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="DroneLappen" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
     <!-- Google Fonts — Barlow (UI/display, synket med droneavisa.no),
          Lora italic (slogan), JetBrains Mono (HUD labels).
          $10K-checklist punkt 2: Inter byttet ut — Barlow er Droneavisas

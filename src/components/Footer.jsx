@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import TextSizeToggle from './TextSizeToggle'
+import InstallAppButton from './InstallAppButton'
 
 export default function Footer() {
   return (
     <footer className="w-full max-w-xl mx-auto py-3 px-6 text-center text-sm text-gray-400 space-y-2">
+      <InstallAppButton />
       <TextSizeToggle />
       <div className="flex items-center justify-center gap-3 font-mono text-[11px] tracking-[0.05em]">
         <Link to="/vilkar" className="text-gray-400 hover:text-da-navy transition-colors">

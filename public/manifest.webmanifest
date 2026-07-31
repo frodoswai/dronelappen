@@ -1,0 +1,18 @@
+{
+  "name": "DroneLappen — øv til droneeksamen",
+  "short_name": "DroneLappen",
+  "description": "Øv til droneeksamen A1/A3 og A2 med 241 norske øvingsspørsmål, prøveeksamen og feilgjennomgang.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
+  "lang": "nb",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
