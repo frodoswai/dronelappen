@@ -9,6 +9,7 @@ import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
+import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { PRICE } from '../lib/pricing'
 import {
   getLastSession,
@@ -132,6 +133,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-da-bg flex flex-col">
+      {/* Engangs fullskjerm-oppfordring om å installere som app — kun
+          innloggede ekte brukere, maks én gang per enhet. Rendrer null
+          i alle andre tilfeller (se komponentens vilkår). */}
+      <InstallAppInterstitial />
       {/* ═══ Dark hero zone ═══ */}
       <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-5">
         <div className="relative max-w-xl mx-auto">

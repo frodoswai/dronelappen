@@ -1,48 +1,30 @@
 import { useEffect, useState } from 'react'
+import {
+  getInstallPrompt,
+  subscribeInstallPrompt,
+  promptInstall,
+  isStandalone,
+  isIos,
+} from '../lib/installPrompt'
 
-// «Installer som app»-knapp (PWA). Chrome/Android fyrer `beforeinstallprompt`
-// når appen er installerbar (manifest + ikoner i index.html); vi fanger
-// eventet, viser en diskré knapp, og trigger den native installasjons-
-// dialogen ved klikk. iOS Safari har ikke eventet — der viser knappen i
-// stedet en kort instruks for «Legg til på Hjem-skjerm». Rendres aldri når
-// appen allerede kjører installert (display-mode: standalone).
+// «Installer som app»-lenken i footeren (alle sider). Bruker den delte
+// beforeinstallprompt-fangsten i lib/installPrompt.js — se kommentaren der
+// for hvorfor eventet ikke kan fanges lokalt. iOS Safari har ikke eventet;
+// der viser knappen en kort «Legg til på Hjem-skjerm»-instruks i stedet.
+// Rendres aldri når appen allerede kjører installert (standalone).
 export default function InstallAppButton() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null)
+  const [deferredPrompt, setDeferredPrompt] = useState(getInstallPrompt())
   const [showIosHint, setShowIosHint] = useState(false)
 
-  const isStandalone =
-    typeof window !== 'undefined' &&
-    (window.matchMedia?.('(display-mode: standalone)')?.matches ||
-      window.navigator?.standalone === true)
+  useEffect(() => subscribeInstallPrompt(setDeferredPrompt), [])
 
-  const isIos =
-    typeof navigator !== 'undefined' &&
-    /iphone|ipad|ipod/i.test(navigator.userAgent)
-
-  useEffect(() => {
-    const handler = (e) => {
-      // Demp Chromes egen mini-infobar — vi viser vår egen knapp i stedet.
-      e.preventDefault()
-      setDeferredPrompt(e)
-    }
-    window.addEventListener('beforeinstallprompt', handler)
-    return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
-
-  if (isStandalone) return null
-  if (!deferredPrompt && !isIos) return null
+  if (isStandalone()) return null
+  if (!deferredPrompt && !isIos()) return null
 
   const handleClick = async () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt()
-      try {
-        await deferredPrompt.userChoice
-      } catch (_) {
-        /* brukeren avbrøt — helt greit */
-      }
-      // Eventet kan bare brukes én gang; Chrome fyrer et nytt ved behov.
-      setDeferredPrompt(null)
-    } else if (isIos) {
+      await promptInstall()
+    } else if (isIos()) {
       setShowIosHint((v) => !v)
     }
   }
