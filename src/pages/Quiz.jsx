@@ -4,6 +4,7 @@ import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
+import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 
 // Exam mode wall-clock budget. Using a constant keeps the display/fix and
 // handleTimeUp math in sync.
@@ -61,6 +62,12 @@ export default function Quiz() {
   // Untimed A1/A3 er altså bevisst — ikke en manglende feature.
   const needsTimer = examType === 'A2' && !isPracticeMode
 
+  // Pågående økt lagres i sessionStorage (se lib/quizSession.js) så en
+  // refresh/crash gjenopptar samme spørsmål, svar og gjenværende tid.
+  // Nøkkelen skiller modus og læringsfiltre, så en filtrert feilbank-økt
+  // aldri gjenopptas som vanlig læring.
+  const storageKey = `dl-quiz-${isPracticeMode ? 'laering' : 'eksamen'}-${examType}${mistakesOnly ? '-feil' : ''}${categoryFilter ? `-kat-${categoryFilter}` : ''}`
+
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -97,6 +104,37 @@ export default function Quiz() {
 
   // Fetch questions on mount
   useEffect(() => {
+    // Gjenoppta lagret økt hvis den finnes. startTime er et veggklokke-
+    // anker, så eksamensklokka har løpt videre gjennom reloaden — refresh
+    // gir aldri mer tid. En lagret A2-eksamen der tiden allerede er ute,
+    // forkastes i stedet for å gjenopptas rett inn i «tid ute».
+    const saved = loadQuizSession(storageKey)
+    if (saved) {
+      const expired =
+        needsTimer &&
+        typeof saved.startTime === 'number' &&
+        Date.now() - saved.startTime >= EXAM_DURATION_MS
+      if (expired) {
+        clearQuizSession(storageKey)
+      } else {
+        const idx = saved.currentIndex ?? 0
+        const restoredAnswers =
+          Array.isArray(saved.answers) && saved.answers.length === saved.questions.length
+            ? saved.answers
+            : new Array(saved.questions.length).fill(null)
+        setQuestions(saved.questions)
+        setAnswers(restoredAnswers)
+        setCurrentIndex(idx)
+        setSelectedAnswer(restoredAnswers[idx] ?? null)
+        // Læring: et besvart spørsmål er låst med forklaring — vis den igjen.
+        if (isPracticeMode && restoredAnswers[idx]) setShowExplanation(true)
+        setFetchedTier(saved.fetchedTier ?? null)
+        if (needsTimer) setStartTime(saved.startTime ?? Date.now())
+        setLoading(false)
+        return
+      }
+    }
+
     const loadQuestions = async () => {
       try {
         const { questions: data, tier } = await fetchQuestions({ examType })
@@ -152,7 +190,21 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter])
+  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey])
+
+  // Lagre økten fortløpende: spørsmålstrekk, svar, posisjon og klokkeanker.
+  // Svarene ligger allerede i `answers`-arrayet i det de gis, så en
+  // gjenopprettet økt mister aldri et avgitt svar.
+  useEffect(() => {
+    if (loading || quizComplete || questions.length === 0) return
+    saveQuizSession(storageKey, {
+      questions,
+      answers,
+      currentIndex,
+      fetchedTier,
+      startTime,
+    })
+  }, [loading, quizComplete, questions, answers, currentIndex, fetchedTier, startTime, storageKey])
 
   // Wall-clock tick — recomputes remainingMs from Date.now() on every pass,
   // so the countdown is correct after tab-blur / backgrounding / throttling.
@@ -175,6 +227,9 @@ export default function Quiz() {
   // double-run).
   useEffect(() => {
     if (!quizComplete || questions.length === 0) return
+
+    // Økten er fullført — fjern lagret tilstand så neste start gir friskt trekk.
+    clearQuizSession(storageKey)
 
     // Eksamen defers per-question logging to completion (Læring logs on
     // each answer in handleSelectAnswer) so changed answers count once.
@@ -251,7 +306,7 @@ export default function Quiz() {
         examDurationMs: needsTimer ? EXAM_DURATION_MS : null,
       },
     })
-  }, [quizComplete, questions, answers, user, examType, isPracticeMode, needsTimer, startTime, navigate])
+  }, [quizComplete, questions, answers, user, examType, isPracticeMode, needsTimer, startTime, navigate, storageKey])
 
   // Helper: find option text by id
   const getOptionText = (question, optionId) => {

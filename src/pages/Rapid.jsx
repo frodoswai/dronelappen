@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
 import CrosshairMarks from '../components/CrosshairMarks'
+import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
@@ -67,7 +68,26 @@ export default function Rapid() {
   // front so it's in scope before the early-return finish block.
   const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
 
+  // Pågående økt lagres i sessionStorage (se lib/quizSession.js) så en
+  // refresh/crash gjenopptar samme spørsmål, teller og stoppeklokke.
+  const storageKey = `dl-tempo-${examType}`
+
   useEffect(() => {
+    // Gjenoppta lagret økt hvis den finnes — samme spørsmålstrekk, samme
+    // indeks/teller, og startTime som veggklokke-anker slik at stoppe-
+    // klokka fortsetter der den slapp (refresh gir aldri bedre tid).
+    const saved = loadQuizSession(storageKey)
+    if (saved) {
+      setQuestions(saved.questions)
+      setCurrentIndex(saved.currentIndex ?? 0)
+      setCorrectCount(saved.correctCount ?? 0)
+      setAnsweredCount(saved.answeredCount ?? 0)
+      setFetchedTier(saved.fetchedTier ?? null)
+      setStartTime(saved.startTime ?? Date.now())
+      setLoading(false)
+      return
+    }
+
     const loadQuestions = async () => {
       try {
         const { questions: data, tier } = await fetchQuestions({ examType })
@@ -95,7 +115,24 @@ export default function Rapid() {
       }
     }
     loadQuestions()
-  }, [examType])
+  }, [examType, storageKey])
+
+  // Lagre økten fortløpende — men kun når gjeldende spørsmål er ubesvart
+  // (selectedAnswer === null). Da peker en gjenopprettet økt alltid på et
+  // rent, ubesvart spørsmål: en refresh midt i svar-pausen ruller tilbake
+  // til før svaret, så teller og visning aldri kommer i utakt.
+  useEffect(() => {
+    if (loading || finished || questions.length === 0 || startTime === null) return
+    if (selectedAnswer !== null) return
+    saveQuizSession(storageKey, {
+      questions,
+      currentIndex,
+      correctCount,
+      answeredCount,
+      fetchedTier,
+      startTime,
+    })
+  }, [loading, finished, questions, currentIndex, correctCount, answeredCount, fetchedTier, startTime, selectedAnswer, storageKey])
 
   // Clear timer on unmount
   useEffect(() => {
@@ -116,6 +153,9 @@ export default function Rapid() {
   }, [startTime, finished])
 
   const finishWithFinalTime = () => {
+    // Økten er over — fjern den lagrede tilstanden så «Nytt løp» starter
+    // med friskt trekk i stedet for å gjenoppta denne.
+    clearQuizSession(storageKey)
     // Capture the stopwatch at the exact moment the session ends so the
     // finish screen shows a stable number instead of whatever the interval
     // last rendered.
