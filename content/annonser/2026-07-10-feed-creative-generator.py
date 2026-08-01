@@ -107,10 +107,22 @@ def fit(text, fname, start, maxw):
         s -= 2
     return font(fname, 40), 40
 maxw = w - 2*M
-f_h1a, s1 = fit("Bestå droneeksamen", "InstrumentSans-Bold.ttf", 108, maxw)
-d.text((M,int(Y["h1"]*SS)), "Bestå droneeksamen", font=f_h1a, fill=WHITE)
+# Overskriften er parameterisert av samme grunn som prislinjen.
+# Lærdom 01.08.2026: linje 2 var hardkodet «på første forsøk.» — en påstand om
+# KUNDENS RESULTAT. Mfl. § 3 krever dokumentasjon for faktiske påstander, og
+# forbeholdet i Vilkår § 2 reparerer ikke en påstand som leses i et annonsebilde.
+# Verre: teksten var brent inn i bildet, så den kunne ikke rettes via API slik
+# annonsetekst kan — hele kreativen måtte bygges på nytt.
+# Regelen utvides derfor: ALDRI brenn inn verken kronebeløp ELLER en påstand om
+# hva kunden oppnår. Bildet skal si hva produktet er, ikke hva du garanterer.
+H1_1 = os.environ.get("DL_H1_1", "Møt forberedt")
+H1_2 = os.environ.get("DL_H1_2", "til droneeksamen.")
+# Fit på den LENGSTE av de to linjene — ellers kan linje 2 renne utenfor margen.
+_probe = H1_1 if len(H1_1) >= len(H1_2) else H1_2
+f_h1a, s1 = fit(_probe, "InstrumentSans-Bold.ttf", 108, maxw)
+d.text((M,int(Y["h1"]*SS)), H1_1, font=f_h1a, fill=WHITE)
 y2 = int(Y["h1"]*SS) + int(s1*1.12*SS)
-d.text((M,y2), "på første forsøk.", font=f_h1a, fill=GOLD)
+d.text((M,y2), H1_2, font=f_h1a, fill=GOLD)
 
 # serif italic signatur
 f_sig = font("InstrumentSerif-Italic.ttf", 40)
