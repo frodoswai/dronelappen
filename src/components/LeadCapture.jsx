@@ -133,7 +133,7 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
         <>
           <p className="text-[13px] text-da-text-body leading-[1.5] mb-3 pr-6">
             Få en gratis øvingsplan og de viktigste eksamenstipsene rett i
-            innboksen — så du består på første forsøk.
+            innboksen — så du stiller forberedt til prøven.
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
             <input
