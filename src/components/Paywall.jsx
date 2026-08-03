@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
+import { logFunnel, PAYWALL_VIEW, PAYWALL_BUY_CLICK, PAYWALL_EXIT } from '../lib/funnel'
 import LeadCapture from './LeadCapture'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
@@ -25,9 +26,17 @@ export default function Paywall({ answered = 25, onContinue }) {
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
 
+  // Serverside visning av muren. Pikselen er samtykke-gatet, denne er ikke —
+  // og bare denne kan spørres per bruker. Tom dependency: én gang per visning.
+  useEffect(() => {
+    logFunnel(PAYWALL_VIEW, { answered })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleBuy = async () => {
     if (busy) return
     setErr('')
+    logFunnel(PAYWALL_BUY_CLICK, { answered })
     window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     if (!user) {
       navigate('/login')
@@ -146,7 +155,7 @@ export default function Paywall({ answered = 25, onContinue }) {
 
           {onContinue && (
             <button
-              onClick={onContinue}
+              onClick={() => { logFunnel(PAYWALL_EXIT, { answered }); onContinue() }}
               className="quiz-option w-full text-center text-[13px] text-da-text-muted hover:text-da-navy py-2 transition-colors"
             >
               Se resultatene mine først →
