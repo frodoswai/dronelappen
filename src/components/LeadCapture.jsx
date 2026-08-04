@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
+import { getLeadAttribution } from '../lib/attribution'
 
 // Lead-magnet email capture shown to anonymous users at the two highest-intent
 // moments: the Results screen (just finished a free round) and the Paywall exit
@@ -64,7 +65,7 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
           Authorization: `Bearer ${ANON}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: value, source }),
+        body: JSON.stringify({ email: value, source, attribution: getLeadAttribution() }),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {

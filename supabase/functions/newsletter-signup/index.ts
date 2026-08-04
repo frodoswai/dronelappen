@@ -44,6 +44,28 @@ function groupForSource(source: string): string {
 // stripe-webhook uses for buyers. The Droneavisa newsletter is untouched: no
 // status field there, so the account's double opt-in still governs it.
 
+// Attribusjon på leadet. Uten dette kan vi ikke svare på «hvilken kanal
+// skaffet denne e-postadressen?» — 04.08.2026 sto Meta-lead-annonsen med
+// 372 kr brukt og 0 registrerte leads i Metas egen måling, mens lista vokste
+// med 16 personer samme uke. Ingen av delene kunne kobles sammen.
+//
+// Bare disse fire nøklene slippes gjennom, og hver verdi kappes til 255 tegn
+// (MailerLites grense for tekstfelt). Feltene må finnes i MailerLite-kontoen
+// på forhånd; de ble opprettet 04.08.2026.
+const ATTRIBUTION_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'landing_path']
+
+function cleanAttribution(raw: unknown): Record<string, string> {
+  if (!raw || typeof raw !== 'object') return {}
+  const out: Record<string, string> = {}
+  for (const key of ATTRIBUTION_KEYS) {
+    const val = (raw as Record<string, unknown>)[key]
+    if (typeof val !== 'string') continue
+    const trimmed = val.trim().slice(0, 255)
+    if (trimmed) out[key] = trimmed
+  }
+  return out
+}
+
 const ALLOWED_ORIGINS = new Set([
   'https://dronelappen.vercel.app',
   'https://dronelappen.app',
@@ -89,6 +111,7 @@ Deno.serve(async (req) => {
   const source = String(body?.source ?? '').trim().toLowerCase()
   const groupId = groupForSource(source)
   const isQuizLead = groupId === GROUP_LEADS
+  const attribution = cleanAttribution(body?.attribution)
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return json({ status: 'error', message: 'Ugyldig e-postadresse' }, 400, cors)
@@ -140,8 +163,13 @@ Deno.serve(async (req) => {
     //    the account's double opt-in decides (confirmation email sent). Quiz
     //    leads: status 'active' so the Norwegian nurture starts right away
     //    (see the note by groupForSource).
+    //    Attribusjon settes BARE ved opprettelse. En som melder seg på igjen
+    //    skal beholde kanalen som faktisk skaffet dem første gang — ellers
+    //    ville siste berøring overskrive opprinnelsen, og da måler vi bare
+    //    hvem som kom tilbake sist.
     const createBody: Record<string, unknown> = { email, groups: [groupId] }
     if (isQuizLead) createBody.status = 'active'
+    if (Object.keys(attribution).length) createBody.fields = attribution
 
     const create = await fetch(`${ML_API}/subscribers`, {
       method: 'POST',

@@ -204,3 +204,24 @@ export function getAttribution() {
   }
   return out
 }
+
+// Attribusjonen vi sender med e-postpåmeldinger. Bevisst mindre enn det Stripe
+// får: MailerLite trenger bare å svare på «hvilken kanal skaffet denne
+// adressen», ikke hele reisen. Derfor bare FIRST touch — se kommentaren i
+// newsletter-signup om hvorfor opprinnelsen ikke skal overskrives ved
+// gjenpåmelding.
+//
+// Bakgrunn 04.08.2026: Meta-lead-annonsen hadde brukt 372 kr og registrert
+// null leads i Metas egen måling, mens lista vokste med 16 personer samme uke.
+// Uten kilde på abonnenten var det umulig å avgjøre om annonsen virket.
+const LEAD_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'landing_path']
+
+export function getLeadAttribution() {
+  const all = getAttribution()
+  const out = {}
+  for (const key of LEAD_KEYS) {
+    const val = all[key]
+    if (typeof val === 'string' && val) out[key] = val
+  }
+  return out
+}

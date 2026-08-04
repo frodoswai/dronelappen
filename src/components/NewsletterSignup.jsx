@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getLeadAttribution } from '../lib/attribution'
 
 // Newsletter signup for the Droneavisa list. Posts to the newsletter-signup
 // Edge Function, which holds the MailerLite token server-side and adds the
@@ -36,7 +37,7 @@ export default function NewsletterSignup() {
           Authorization: `Bearer ${ANON}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: value }),
+        body: JSON.stringify({ email: value, attribution: getLeadAttribution() }),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {

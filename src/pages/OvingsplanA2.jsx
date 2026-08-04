@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
+import { getLeadAttribution } from '../lib/attribution'
 
 /**
  * /a2-ovingsplan — dedikert landingsside for lead-annonsen på Meta.
@@ -68,7 +69,7 @@ export default function OvingsplanA2() {
           Authorization: `Bearer ${ANON}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: value, source: SOURCE }),
+        body: JSON.stringify({ email: value, source: SOURCE, attribution: getLeadAttribution() }),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {
