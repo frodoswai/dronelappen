@@ -26,6 +26,10 @@ import { supabase } from './supabase'
 export const PAYWALL_VIEW = 'paywall_view'
 export const PAYWALL_BUY_CLICK = 'paywall_buy_click'
 export const PAYWALL_EXIT = 'paywall_exit'
+// Kjøpsknappen i quiz-headeren (QuizLayout). Egen hendelse fordi den treffer
+// et helt annet publikum enn betalingsmuren: folk som kjøper UNDERVEIS eller
+// uten å svare i det hele tatt. 8 av 23 betalende gjorde nettopp det.
+export const QUIZ_BUY_CLICK = 'quiz_buy_click'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

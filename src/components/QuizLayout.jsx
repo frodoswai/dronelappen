@@ -25,6 +25,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
+import { logFunnel, QUIZ_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
 
 export default function QuizLayout({
@@ -47,6 +48,10 @@ export default function QuizLayout({
 
   const handleUpgrade = async () => {
     if (upgradeBusy) return
+    // Ventes på: createCheckout redirecter til Stripe, og en fire-and-forget-
+    // insert rekker ikke å sende før siden lastes ut. Samme felle som gjorde
+    // paywall_buy_click ubrukelig i to døgn (se lib/funnel.js). Taket er 800 ms.
+    await logFunnel(QUIZ_BUY_CLICK, { examType })
     if (!user) {
       navigate('/login')
       return
@@ -94,12 +99,19 @@ export default function QuizLayout({
               DroneLappen<span className="text-da-gold">.app</span>
             </Link>
             {isFree && (
+              /* Variant B (05.08.2026): fylt gullpille i stedet for mono-tekst.
+                 Knappen har ligget her hele tiden, men i 11 px gull på
+                 marineblått leste den som en etikett, ikke noe trykkbart.
+                 Plasseringen er uendret med vilje — vi endrer ÉN ting, og
+                 quiz_buy_click logges nå, så vi kan se om det virket.
+                 Bakgrunn: 8 av 23 betalende kjøpte uten å svare på ett
+                 eneste spørsmål. Dette er inngangen deres. */
               <button
                 onClick={handleUpgrade}
                 disabled={upgradeBusy}
-                className="quiz-option font-mono text-[11px] text-da-gold tracking-[0.04em] hover:opacity-80 transition-opacity shrink-0 disabled:opacity-60"
+                className="quiz-option font-mono text-[11px] font-semibold bg-da-gold text-da-navy-dark tracking-[0.04em] px-2.5 py-1 rounded-full hover:brightness-105 transition-all shrink-0 disabled:opacity-60"
               >
-                {upgradeBusy ? 'Sender til betaling …' : `Full tilgang ${PRICE} kr →`}
+                {upgradeBusy ? 'Sender til betaling …' : `Kjøp · ${PRICE} kr`}
               </button>
             )}
           </div>
