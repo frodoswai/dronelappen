@@ -30,6 +30,9 @@ export const PAYWALL_EXIT = 'paywall_exit'
 // et helt annet publikum enn betalingsmuren: folk som kjøper UNDERVEIS eller
 // uten å svare i det hele tatt. 8 av 23 betalende gjorde nettopp det.
 export const QUIZ_BUY_CLICK = 'quiz_buy_click'
+// Forsidens dobbeltvalg. Med denne har alle tre kjøpsinngangene hver sin
+// hendelse, og vi kan endelig se hvilken av dem folk faktisk bruker.
+export const HOME_BUY_CLICK = 'home_buy_click'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

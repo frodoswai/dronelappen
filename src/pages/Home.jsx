@@ -10,6 +10,7 @@ import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
+import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
 import {
   getLastSession,
@@ -107,6 +108,8 @@ export default function Home() {
   const handleBuy = async () => {
     setBuyBusy(true)
     setBuyErr('')
+    // Ventes på — createCheckout redirecter til Stripe. Se lib/funnel.js.
+    await logFunnel(HOME_BUY_CLICK)
     // Funnel-instrumentering: registrer buy-klikk som InitiateCheckout så
     // forsøk er tellbare i Meta. En stille create-checkout-feil viser seg da
     // som InitiateCheckout uten matchende Purchase. Fyrer kun etter cookie-
@@ -188,18 +191,20 @@ export default function Home() {
         {/* pt-4 (var pt-8): forsiden trenger litt mer pust enn quiz-flyten,
             men 32px var mye dødplass på mobil (Frode 18/7). */}
         <div className="relative z-10 pt-4 max-w-[65%]">
-          {/* Status row: freemium pitch or PRO confirmation */}
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            {tier === 'paid' ? (
+          {/* Status row — nå BARE bekreftelse for betalende.
+              Freemium-pitchen som sto her («Full tilgang {PRICE} kr · 12 mnd ·
+              test 25 spørsmål gratis») ble fjernet 05.08.2026: den gjentok
+              ordrett de to knappene 150 px lenger ned, og den sto OVER
+              ordmerket — det første en ny besøkende leste var en pris, før
+              de visste hva produktet het. Begge budskapene lever videre som
+              knapper, der de kan trykkes. */}
+          {tier === 'paid' && (
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
               <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[2px] rounded-[3px]">
                 Full tilgang · alle spørsmål
               </span>
-            ) : (
-              <span className="font-mono text-[10px] text-da-gold tracking-[0.08em] font-medium border border-da-gold/60 px-2 py-[2px] rounded-[3px]">
-                Full tilgang {PRICE} kr · 12 mnd · test 25 spørsmål gratis
-              </span>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Auth row — email + logout, left-aligned */}
           <AuthHeader variant="dark" />
@@ -281,22 +286,27 @@ export default function Home() {
               <span className="font-mono text-[12px] text-da-gold">→</span>
             </Link>
             {user ? (
+              /* Fylt gull, ikke omriss (05.08.2026). Gull betyr nå KJØP over
+                 hele appen — samme språk som pillen i quiz-headeren. Teksten
+                 er med vilje uendret: «Full tilgang 249 kr» sier hva du får
+                 og hva det koster, mens et bart «Kjøp» bare sier at du skal
+                 betale. Vi endrer vekten, ikke ordene. */
               <button
                 onClick={handleBuy}
                 disabled={buyBusy}
-                className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40 disabled:opacity-60"
+                className="quiz-option flex-1 bg-da-gold hover:brightness-105 text-da-navy-dark font-semibold py-3 px-4 rounded-lg transition-all text-[13px] inline-flex items-center justify-center gap-1.5 active:scale-[0.99] disabled:opacity-60"
               >
                 <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
-                <span className="font-mono text-[12px] text-da-gold">{PRICE} kr</span>
+                <span className="font-mono text-[12px]">{PRICE} kr</span>
               </button>
             ) : (
               <Link
                 to="/login"
                 onClick={setPurchaseIntent}
-                className="quiz-option flex-1 bg-white border-[0.5px] border-da-gold/70 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-1.5 hover:bg-da-cream/40"
+                className="quiz-option flex-1 bg-da-gold hover:brightness-105 text-da-navy-dark font-semibold py-3 px-4 rounded-lg transition-all text-[13px] inline-flex items-center justify-center gap-1.5 active:scale-[0.99]"
               >
                 <span>Full tilgang</span>
-                <span className="font-mono text-[12px] text-da-gold">{PRICE} kr</span>
+                <span className="font-mono text-[12px]">{PRICE} kr</span>
               </Link>
             )}
           </div>

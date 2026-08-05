@@ -60,7 +60,13 @@ export default function ReadinessCard({ resume = null, onData }) {
         )
         if (Object.keys(withData).length > 0) {
           setByExam(withData)
-          onData?.()
+          // onData skjuler Homes eget fortsett-kort. Den skal derfor BARE
+          // fyre når dette kortet faktisk kommer til å rendre — altså når
+          // brukeren har nok svar til at vi har noe å si. Fra 05.08.2026
+          // returnerer vi null under 15 svar, og uten denne sjekken ville
+          // begge kortene forsvunnet: vi sa «skjul ditt», og viste ikke vårt.
+          const mest = Math.max(...Object.values(withData).map((v) => v.answered))
+          if (mest >= MIN_ANSWERED) onData?.()
         }
       })
       .catch(() => {})
@@ -80,6 +86,14 @@ export default function ReadinessCard({ resume = null, onData }) {
   const label = EXAM_LABELS[examType] || examType
   const pct = Math.round((d.correct / d.answered) * 100)
   const tooEarly = d.answered < MIN_ANSWERED
+
+  // Under 15 svar har kortet ingenting å si, og da skal det ikke ta plass.
+  // Fram til 05.08.2026 rendret det «For tidlig å si …» i den beste slotten
+  // på forsiden — rett under knappene, over A2-kortet — altså en ramme rundt
+  // en beskjed om at vi ikke har noen beskjed. Alle med 1–14 svar så den.
+  // Nå møter de A2-kortet i stedet, som er det de faktisk skal gjøre.
+  // Homes eget fortsett-kort tar over i stedet — se onData-sjekken over.
+  if (tooEarly) return null
   const weakest = [...d.categories]
     .filter((c) => c.answered >= 3)
     .sort((a, b) => a.pct - b.pct)[0]
