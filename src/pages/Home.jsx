@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import HeroPropeller from '../components/HeroPropeller'
@@ -41,7 +41,7 @@ import {
 //   - flex-1 removed from the light zone — content sizes naturally
 //     instead of stretching to viewport
 export default function Home() {
-  const { tier, user } = useAuth()
+  const { tier, user, refreshTier } = useAuth()
   const [lastSession, setLastSession] = useState(null)
   // Sammenslåing (18/7): når ReadinessCard har data tar den over
   // fortsett-rollen, og det separate fortsett-kortet skjules.
@@ -62,6 +62,47 @@ export default function Home() {
     }
     if (user && hasPurchaseIntent()) setResumeBuy(true)
   }, [user, tier])
+
+  // Direktekjøp fra e-post: ?kjop=1 starter checkout med én gang.
+  //
+  // Bakgrunnen (05.08.2026): nyhetsbrevet varsler prisøkningen 15.08, og
+  // mottakerne er folk som allerede har brukt opp de 25 gratisspørsmålene.
+  // Uten dette måtte de lande på forsiden, finne kjøpskortet og klikke igjen —
+  // tre steg for noen som allerede hadde bestemt seg.
+  //
+  // Dette er IKKE et mørkt mønster: brukeren har klikket en knapp som sier
+  // «kjøp full tilgang», og Stripes betalingsside er i seg selv
+  // bekreftelsessteget. Ingenting belastes før de fullfører der.
+  //
+  // Vernene som gjør det trygt:
+  //   - fyrer bare én gang (ref-vakt), selv om React remounter
+  //   - venter på at AuthContext har gitt en sesjon (anonym eller ikke)
+  //   - leser tilgangen på nytt FØR den bestemmer seg. `tier` står på 'free'
+  //     som utgangspunkt og settes først når entitlements-spørringen svarer;
+  //     leste vi den rått, ville en betalende kunde som klikker lenken bli
+  //     sendt til Stripe for å kjøpe noe han allerede eier. refreshTier()
+  //     returnerer den ferske verdien og fjerner det kappløpet.
+  //   - feiler den, blir brukeren stående på forsiden med feilmelding og
+  //     kjøpskortet foran seg — ingen blindvei
+  const [searchParams, setSearchParams] = useSearchParams()
+  const direktekjopFyrt = useRef(false)
+
+  useEffect(() => {
+    if (searchParams.get('kjop') !== '1') return
+    if (direktekjopFyrt.current) return
+    if (!user) return // AuthContext er ikke ferdig ennå
+    direktekjopFyrt.current = true
+    // Rydd parameteren, så en refresh ikke starter kjøpet på nytt.
+    const rest = new URLSearchParams(searchParams)
+    rest.delete('kjop')
+    setSearchParams(rest, { replace: true })
+    ;(async () => {
+      const ferskTier = await refreshTier()
+      if (ferskTier === 'paid') return // eier den allerede
+      handleBuy()
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, searchParams])
 
   const handleBuy = async () => {
     setBuyBusy(true)
