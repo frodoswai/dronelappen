@@ -414,12 +414,17 @@ export default function Home() {
               Alle {stats.questions ?? '200+'} spørsmål, alle kategorier og alle tre
               treningsmoduser. Engangsbeløp, ingen abonnement. Gratis gir deg 25 spørsmål.
             </p>
-            {/* Sosialt bevis — statisk tall, oppdateres manuelt. Live-telling
-                krever egen RPC mot auth.users; gjør det hvis tallet begynner
-                å vokse fort. ~305 brukere per 2026-07-09. */}
+            {/* Sosialt bevis — statisk tall, oppdateres manuelt.
+                GRUNNLAGET MÅ VÆRE user_progress, IKKE auth.users. Tallet «305»
+                fra 09.07.2026 var talt i auth.users, som er 97 % anonyme
+                skall opprettet ved besøk — ikke piloter som øver. Rettet
+                04.08.2026 til 240 (248 distinkte user_id har svart på minst
+                ett spørsmål). Samme feil sto i Meta-annonsen og ble fanget
+                der 01.08; den overlevde her i tre uker til.
+                Telling: select count(distinct user_id) from user_progress. */}
             <PriceIncreaseNotice className="mb-2.5" />
             <p className="font-mono text-[11px] text-da-text-muted tracking-[0.05em] mb-3.5">
-              Over 300 dronepiloter øver her allerede.
+              Over 240 dronepiloter øver her allerede.
             </p>
             {user ? (
               <button

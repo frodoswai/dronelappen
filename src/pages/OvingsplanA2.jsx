@@ -227,7 +227,7 @@ export default function OvingsplanA2() {
                 </div>
 
                 <p className="text-[13px] text-da-text-muted leading-[1.6]">
-                  Over 300 piloter øver på DroneLappen allerede. Appen har 241
+                  Over 240 piloter øver på DroneLappen allerede. Appen har 241
                   norske spørsmål for A1/A3 og A2, og er laget av{' '}
                   <a
                     href="https://droneavisa.no"

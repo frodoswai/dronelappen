@@ -143,7 +143,7 @@ export default function Paywall({ answered = 25, onContinue }) {
             )}
 
             <p className="font-mono text-[11px] text-da-text-muted mt-3 tracking-[0.04em] text-center">
-              Engangsbeløp · sikker betaling via Stripe · over 300 piloter øver her
+              Engangsbeløp · sikker betaling via Stripe · over 240 piloter øver her
             </p>
           </div>
 
