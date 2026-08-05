@@ -1,4 +1,4 @@
-// Serverside trakt-logging (03.08.2026).
+// Serverside trakt-logging (03.08.2026, gjort pålitelig 05.08.2026).
 //
 // HVORFOR: betalingsmuren fyrte bare fbq('InitiateCheckout'). Den er
 // samtykke-gatet — rundt 39 % godtar — og tallet kan uansett ikke spørres per
@@ -7,9 +7,16 @@
 // Uten det tallet kan man ikke skille «de så tilbudet og sa nei» fra «de traff
 // aldri et tilbud», og det er to helt forskjellige problemer.
 //
+// FEIL RETTET 05.08.2026 — samme felle som er dokumentert i create-checkout:
+// første versjon gjorde getUser() (nettverkskall) og DERETTER insert, mens
+// handleBuy redirecter til Stripe rett etterpå. Siden rakk aldri å sende, så
+// paywall_buy_click sto på null i to døgn mens Stripe viste påbegynte kjøp i
+// samme periode. Vi holdt på å konkludere med at betalingsmuren var død.
+// Nå: getSession() leser fra lokal lagring uten nettverkskall, og logFunnel
+// returnerer et løfte kalleren kan vente på før den navigerer bort.
+//
 // Designvalg:
-// - Fire-and-forget. Logging skal ALDRI blokkere eller velte kjøpsflyten;
-//   alle feil svelges bevisst.
+// - Feil svelges fortsatt. Logging skal ALDRI velte kjøpsflyten.
 // - Ingen persondata utover user_id, som allerede finnes i user_progress.
 // - Anonyme sesjoner teller også: AuthContext gir hver besøkende en anonym
 //   Supabase-bruker, så user_id finnes selv for dem som aldri har logget inn.
@@ -20,17 +27,29 @@ export const PAYWALL_VIEW = 'paywall_view'
 export const PAYWALL_BUY_CLICK = 'paywall_buy_click'
 export const PAYWALL_EXIT = 'paywall_exit'
 
+// Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
+// logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.
+const MAX_WAIT_MS = 800
+
 export function logFunnel(event, { examType = null, answered = null } = {}) {
-  try {
-    supabase.auth.getUser().then(({ data }) => {
-      const uid = data?.user?.id
+  const work = (async () => {
+    try {
+      const { data } = await supabase.auth.getSession()
+      const uid = data?.session?.user?.id
       if (!uid) return
-      supabase
+      await supabase
         .from('funnel_events')
         .insert({ user_id: uid, event, exam_type: examType, answered })
-        .then(() => {}, () => {})
-    }, () => {})
-  } catch (_) {
-    /* logging skal aldri velte flyten */
-  }
+    } catch {
+      /* logging skal aldri velte flyten */
+    }
+  })()
+
+  // Kallere som ikke bryr seg kan ignorere returverdien; de som er i ferd med
+  // å forlate siden gjør `await logFunnel(...)` og får uansett kontrollen
+  // tilbake innen MAX_WAIT_MS.
+  return Promise.race([
+    work,
+    new Promise((resolve) => { setTimeout(resolve, MAX_WAIT_MS) }),
+  ])
 }

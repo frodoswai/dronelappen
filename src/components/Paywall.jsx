@@ -36,7 +36,10 @@ export default function Paywall({ answered = 25, onContinue }) {
   const handleBuy = async () => {
     if (busy) return
     setErr('')
-    logFunnel(PAYWALL_BUY_CLICK, { answered })
+    // Ventes på: rett etter dette redirecter vi til Stripe, og en
+    // fire-and-forget-insert rekker ikke å sende før siden lastes ut.
+    // logFunnel gir uansett kontrollen tilbake innen 800 ms.
+    await logFunnel(PAYWALL_BUY_CLICK, { answered })
     window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     if (!user) {
       navigate('/login')
