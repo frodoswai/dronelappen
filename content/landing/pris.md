@@ -1,6 +1,6 @@
 ---
-title: Hva koster DroneLappen? Pris og hva som er inkludert | DroneLappen
-description: DroneLappen koster {{PRIS}} kr én gang for full tilgang til 241 øvingsspørsmål i 12 måneder. 25 spørsmål gratis. Ingen abonnement.
+title: Hva koster DroneLappen? Engangsbeløp, ingen abonnement
+description: Full tilgang til 241 øvingsspørsmål i 12 måneder for et engangsbeløp — ingen abonnement, ingen automatisk trekk. Prøv 25 spørsmål gratis uten innlogging.
 h1: Hva koster DroneLappen?
 slug: pris
 ---
@@ -51,13 +51,13 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 ## Ofte stilte spørsmål
 
 ### Hva koster DroneLappen?
-{{PRIS}} kr som et engangskjøp for full tilgang til alle 241 spørsmål i 12 måneder. 25 spørsmål er gratis.
+Et engangskjøp som gir full tilgang til alle 241 spørsmål i 12 måneder. 25 spørsmål er gratis. Gjeldende pris står øverst på siden.
 
 ### Er det abonnement?
-Nei. Det er et engangsbeløp på {{PRIS}} kr, ikke abonnement — det trekkes aldri automatisk. Tilgangen varer i 12 måneder fra kjøpet.
+Nei. Det er et engangsbeløp, ikke abonnement — det trekkes aldri automatisk. Tilgangen varer i 12 måneder fra kjøpet.
 
 ### Er DroneLappen det samme som eksamensgebyret?
-Nei. DroneLappen er en øvingsapp ({{PRIS}} kr). Selve eksamen er separat: A1/A3 er gratis hos Luftfartstilsynet, mens A2 koster 970 kr på trafikkstasjon.
+Nei. DroneLappen er en øvingsapp. Selve eksamen er separat: A1/A3 er gratis hos Luftfartstilsynet, mens A2 koster 970 kr på trafikkstasjon.
 
 ### Kan jeg prøve før jeg betaler?
 Ja, 25 spørsmål er gratis uten innlogging.

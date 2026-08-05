@@ -25,7 +25,7 @@ slug: droneeksamen-oving
 - **Eksamensmodus:** ekte tidsfrist og bestå-grense, som selve prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer av feilene
 - **Rapid-modus** for rask repetisjon
-- 25 spørsmål gratis, full tilgang {{PRIS}} kr for 12 måneder
+- 25 spørsmål gratis, full tilgang {{PRIS_HTML}} kr for 12 måneder
 
 <figure class="sitat">
 <blockquote>«DroneLappen er veldig fin å øve på, spesielt den tempoknappen. Hadde fleire gonger 28 rette på fire–fem minutt.»</blockquote>
@@ -47,7 +47,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 Øv på ekte spørsmålstyper i eksamensmodus med tidsfrist, og gå gjennom feilene dine med forklaring. DroneLappen er bygget for nettopp dette.
 
 ### Er øvingen gratis?
-Du kan teste 25 spørsmål gratis uten innlogging. Full tilgang til alle 241 spørsmål koster {{PRIS}} kr og gir 12 måneders tilgang.
+Du kan teste 25 spørsmål gratis uten innlogging. Full tilgang til alle 241 spørsmål er et engangskjøp og gir 12 måneders tilgang.
 
 ### Hvor mange spørsmål bør jeg øve på?
 DroneLappen har 241 norske spørsmål. Øv til du stabilt består prøveeksamen med god margin over 75 %.
