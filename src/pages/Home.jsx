@@ -191,20 +191,17 @@ export default function Home() {
         {/* pt-4 (var pt-8): forsiden trenger litt mer pust enn quiz-flyten,
             men 32px var mye dødplass på mobil (Frode 18/7). */}
         <div className="relative z-10 pt-4 max-w-[65%]">
-          {/* Status row — nå BARE bekreftelse for betalende.
-              Freemium-pitchen som sto her («Full tilgang {PRICE} kr · 12 mnd ·
-              test 25 spørsmål gratis») ble fjernet 05.08.2026: den gjentok
-              ordrett de to knappene 150 px lenger ned, og den sto OVER
-              ordmerket — det første en ny besøkende leste var en pris, før
-              de visste hva produktet het. Begge budskapene lever videre som
-              knapper, der de kan trykkes. */}
-          {tier === 'paid' && (
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <span className="font-mono text-[9px] font-semibold tracking-[0.12em] bg-da-gold/20 text-da-gold border border-da-gold/40 px-1.5 py-[2px] rounded-[3px]">
-                Full tilgang · alle spørsmål
-              </span>
-            </div>
-          )}
+          {/* Statuslinja over ordmerket er FJERNET i sin helhet (05.08.2026).
+              Den hadde to varianter, og begge måtte gå:
+              - Gratisbrukere fikk «Full tilgang 249 kr · 12 mnd · test 25
+                spørsmål gratis» — ordrett det samme som de to knappene 150 px
+                lenger ned, plassert FORAN produktnavnet. Det første en ny
+                besøkende leste var en pris.
+              - Betalende fikk «Full tilgang · alle spørsmål», som forteller
+                kunden noe han allerede vet: han merker at han har tilgang ved
+                at betalingsmuren ikke dukker opp.
+              Det kunden IKKE visste er når tilgangen utløper. Den datoen står
+              nå på Min side, der kontoinformasjon hører hjemme. */}
 
           {/* Auth row — email + logout, left-aligned */}
           <AuthHeader variant="dark" />

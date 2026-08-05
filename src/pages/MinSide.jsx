@@ -56,7 +56,7 @@ function levelFor(pct, coveragePct, answered, minAnswered) {
 
 export default function MinSide() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { user, tier, expiresAt } = useAuth()
   const [rows, setRows] = useState(null)
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
@@ -132,6 +132,35 @@ export default function MinSide() {
 
       <div className="px-6 pt-2 pb-8 bg-da-bg flex-1">
         <div className="max-w-xl mx-auto space-y-4">
+          {/* Tilgangen din. Lagt til 05.08.2026: expires_at har ligget i basen
+              siden starten, men datoen ble aldri vist noe sted — en kunde som
+              kjøpte i juli 2026 ville mistet tilgangen i juli 2027 uten
+              forvarsel. Erstatter samtidig «Full tilgang · alle spørsmål»-
+              merket i forsidens hero, som bare bekreftet noe kunden allerede
+              merket selv. */}
+          {tier === 'paid' && (
+            <div className="bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-5 py-4 flex items-baseline justify-between gap-3 flex-wrap">
+              <div>
+                <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
+                  din tilgang
+                </div>
+                <span className="text-[14px] font-medium text-da-navy">
+                  Full tilgang til alle spørsmål
+                </span>
+              </div>
+              {expiresAt && (
+                <span className="font-mono text-[12px] text-da-text-muted tabular-nums">
+                  gyldig til{' '}
+                  {new Date(expiresAt).toLocaleDateString('nb-NO', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </span>
+              )}
+            </div>
+          )}
+
           {!hasAnyData && (
             <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5 text-center">
               <p className="text-[14px] text-da-text-body mb-3">
