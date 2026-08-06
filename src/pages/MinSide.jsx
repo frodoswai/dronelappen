@@ -161,6 +161,30 @@ export default function MinSide() {
             </div>
           )}
 
+          {/* Passord. Lagt til 05.08.2026 fordi 19 av 24 betalende kunder ikke
+              HAR passord — kontoen deres ble opprettet av Stripe-webhooken, og
+              «Opprett konto» på innloggingssiden kunne ikke hjelpe dem: den
+              kaller signUp, som feiler når e-posten allerede finnes.
+              updateUser krever bare en sesjon, ikke et gammelt passord. */}
+          {user && !user.is_anonymous && (
+            <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg px-5 py-4 flex items-center justify-between gap-3 flex-wrap">
+              <div>
+                <div className="font-mono text-[11px] font-medium text-da-text-muted tracking-[0.1em] mb-0.5">
+                  innlogging
+                </div>
+                <span className="text-[13.5px] text-da-text-body">
+                  Vil du slippe å hente lenke i e-posten hver gang?
+                </span>
+              </div>
+              <button
+                onClick={() => navigate('/sett-passord')}
+                className="quiz-option bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px] shrink-0"
+              >
+                Sett passord →
+              </button>
+            </div>
+          )}
+
           {!hasAnyData && (
             <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5 text-center">
               <p className="text-[14px] text-da-text-body mb-3">

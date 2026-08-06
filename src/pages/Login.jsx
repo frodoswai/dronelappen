@@ -66,6 +66,35 @@ export default function Login() {
     }
   }
 
+  // Sender en gjenopprettingslenke som lar brukeren SETTE passord — også hvis
+  // han aldri har hatt et. Gjenoppretting sjekker aldri et gammelt passord;
+  // den beviser bare at du eier innboksen og gir deg en sesjon, og med den
+  // kan /sett-passord kalle updateUser.
+  //
+  // Ordlyden i knappen dekker derfor begge tilfellene med vilje. «Glemt
+  // passord» alene ville ikke hjulpet de 19 betalende kundene som aldri har
+  // laget et — de har ikke glemt noe, og ville aldri trykket.
+  const handleGlemtPassord = async () => {
+    if (!email) {
+      setMessage({ type: 'error', text: 'Fyll inn e-postadressen din først.' })
+      return
+    }
+    setLoading(true)
+    setMessage(null)
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/sett-passord`,
+    })
+    setLoading(false)
+    setMessage(
+      error
+        ? { type: 'error', text: error.message }
+        : {
+            type: 'success',
+            text: 'Sjekk e-posten din — lenken lar deg velge et passord.',
+          }
+    )
+  }
+
   const onSubmit =
     mode === 'magic_link'
       ? handleMagicLink
@@ -213,13 +242,29 @@ export default function Login() {
 
           {/* Within password mode: swap between login and signup */}
           {mode !== 'magic_link' && (
-            <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 text-center">
+            <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 text-center space-y-2.5">
+              {/* Denne står FØRST og tydeligst av en grunn: 19 av 24 betalende
+                  kunder har ikke passord (kontoen ble laget av Stripe-
+                  webhooken), og for dem er «Opprett konto» en blindvei —
+                  signUp feiler når e-posten finnes fra før. Denne veien virker
+                  for dem. Teksten nevner begge tilfellene fordi den som aldri
+                  har laget passord ikke har «glemt» noe. */}
+              {mode === 'password_login' && (
+                <button
+                  type="button"
+                  onClick={handleGlemtPassord}
+                  disabled={loading}
+                  className="block w-full text-[13px] font-medium text-da-navy hover:text-da-gold transition-colors disabled:opacity-60"
+                >
+                  Glemt passord — eller aldri laget et? Få en lenke →
+                </button>
+              )}
               {mode === 'password_login' ? (
                 <button
                   onClick={() => { setMode('password_signup'); setMessage(null) }}
                   className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
                 >
-                  Har du ikke konto? Opprett konto
+                  Helt ny her? Opprett konto
                 </button>
               ) : (
                 <button

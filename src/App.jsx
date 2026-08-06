@@ -13,6 +13,7 @@ import Kontakt from './pages/Kontakt'
 import OvingsplanA2 from './pages/OvingsplanA2'
 import Kvittering from './pages/Kvittering'
 import MinSide from './pages/MinSide'
+import SettPassord from './pages/SettPassord'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
 import './App.css'
@@ -35,6 +36,9 @@ function App() {
             <Route path="/min-side" element={<MinSide />} />
             <Route path="/login" element={<Login />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
+            {/* Gjenopprettingslenken fra Login peker hit, og Min side lenker
+                hit. Samme side dekker «sett for første gang» og «endre». */}
+            <Route path="/sett-passord" element={<SettPassord />} />
             <Route path="/vilkar" element={<Vilkar />} />
             <Route path="/personvern" element={<Personvern />} />
             <Route path="/kontakt" element={<Kontakt />} />
