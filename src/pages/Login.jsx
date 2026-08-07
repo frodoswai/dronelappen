@@ -187,10 +187,12 @@ export default function Login() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === 'password_signup' ? 'Velg et passord (min. 6 tegn)' : 'Ditt passord'}
+                  placeholder={mode === 'password_signup' ? 'Velg et passord (minst 8 tegn)' : 'Ditt passord'}
                   className={inputClass}
                   autoComplete={mode === 'password_signup' ? 'new-password' : 'current-password'}
-                  minLength={mode === 'password_signup' ? 6 : undefined}
+                  // 8, ikke 6: /sett-passord krever 8, og to ulike minstekrav i
+                  // samme app er bare forvirrende. Endret 06.08.2026.
+                  minLength={mode === 'password_signup' ? 8 : undefined}
                 />
               </div>
             )}
