@@ -91,6 +91,38 @@ function json(body: unknown, status: number, cors: Record<string, string>) {
   })
 }
 
+// Rate limit per IP: maks 5 forsøk per time, håndhevet av Postgres-funksjonen
+// newsletter_rate_check (migrasjon 011) — grensen justeres der, uten redeploy.
+// Bakgrunn (sikkerhetsgjennomgangen 08.08.2026): endepunktet er åpent og kunne
+// spammes med vilkårlige e-poster; duplicate-flagget beholdes bevisst (UI-et
+// bruker det), så rate-limiten er det som gjør enumerering og innmeldings-spam
+// upraktisk. Teller ALLE forsøk, også ugyldige e-poster. Feiler ÅPENT: er
+// databasen utilgjengelig skal påmelding fortsatt virke — rate-limiten
+// beskytter, den er ikke forretningskritisk.
+async function rateLimitOk(req: Request): Promise<boolean> {
+  try {
+    const ip = (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() || 'ukjent'
+    const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const resp = await fetch(`${Deno.env.get('SUPABASE_URL')}/rest/v1/rpc/newsletter_rate_check`, {
+      method: 'POST',
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ p_ip: ip }),
+    })
+    if (!resp.ok) {
+      console.error('newsletter rate-check feilet', resp.status)
+      return true
+    }
+    return (await resp.json()) === true
+  } catch (err) {
+    console.error('newsletter rate-check error', (err as Error).message)
+    return true
+  }
+}
+
 Deno.serve(async (req) => {
   const cors = getCorsHeaders(req)
 
@@ -104,6 +136,10 @@ Deno.serve(async (req) => {
   const token = Deno.env.get('MAILERLITE_API_KEY')
   if (!token) {
     return json({ status: 'error', message: 'Serverkonfigurasjon mangler.' }, 500, cors)
+  }
+
+  if (!(await rateLimitOk(req))) {
+    return json({ status: 'error', message: 'For mange forsøk. Prøv igjen om en time.' }, 429, cors)
   }
 
   const body = await req.json().catch(() => ({}))
