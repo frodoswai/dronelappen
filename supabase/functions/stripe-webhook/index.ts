@@ -73,10 +73,19 @@ Deno.serve(async (req) => {
             if (linkErr) {
               // Email already belongs to a returning customer: move the
               // entitlement onto their existing account instead.
-              const { data: list } = await admin.auth.admin.listUsers()
-              const existing = list?.users?.find(
-                (u) => u.email?.toLowerCase() === email.toLowerCase() && u.id !== userId,
-              )
+              // listUsers er paginert (50 per side som standard), og basen har
+              // 1600+ rader (mest anonyme engangs-sesjoner) — ett usidet kall
+              // fant derfor aldri kunden, og gjenkjøpere ble stående uten
+              // tilgang på sin egen konto. Søk gjennom alle sider.
+              let existing: { id: string } | undefined
+              for (let page = 1; page <= 100 && !existing; page++) {
+                const { data: list } = await admin.auth.admin.listUsers({ page, perPage: 1000 })
+                const users = list?.users ?? []
+                existing = users.find(
+                  (u) => u.email?.toLowerCase() === email.toLowerCase() && u.id !== userId,
+                )
+                if (users.length < 1000) break
+              }
               if (existing) {
                 await admin.from('entitlements').upsert(
                   { user_id: existing.id, tier: 'paid', expires_at: expires.toISOString() },
