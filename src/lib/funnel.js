@@ -18,10 +18,14 @@
 // Designvalg:
 // - Feil svelges fortsatt. Logging skal ALDRI velte kjøpsflyten.
 // - Ingen persondata utover user_id, som allerede finnes i user_progress.
+// - Kanal legges ved fra 13.08.2026 (se getFunnelAttribution i attribution.js).
+//   Uten den kunne Supabase bare svare HVOR i produktet et salg skjedde, ikke
+//   hvor trafikken kom fra.
 // - Anonyme sesjoner teller også: AuthContext gir hver besøkende en anonym
 //   Supabase-bruker, så user_id finnes selv for dem som aldri har logget inn.
 
 import { supabase } from './supabase'
+import { getFunnelAttribution } from './attribution.js'
 
 export const PAYWALL_VIEW = 'paywall_view'
 export const PAYWALL_BUY_CLICK = 'paywall_buy_click'
@@ -46,7 +50,15 @@ export function logFunnel(event, { examType = null, answered = null } = {}) {
       if (!uid) return
       await supabase
         .from('funnel_events')
-        .insert({ user_id: uid, event, exam_type: examType, answered })
+        .insert({
+          user_id: uid,
+          event,
+          exam_type: examType,
+          answered,
+          // Kanal (first touch) fra localStorage - ingen nettverkskall, så
+          // dette koster ikke millisekunder foran en Stripe-redirect.
+          ...getFunnelAttribution(),
+        })
     } catch {
       /* logging skal aldri velte flyten */
     }

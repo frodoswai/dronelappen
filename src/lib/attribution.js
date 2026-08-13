@@ -225,3 +225,47 @@ export function getLeadAttribution() {
   }
   return out
 }
+
+// Kanalfeltene som `funnel_events` faktisk har kolonner for (migrasjon
+// 20260813203301). Lagt til 13.08.2026, samme dag som et salg kl. 13:15 ikke
+// kunne tilskrives noen kanal fra Supabase alene — Stripe-metadataen viste at
+// kjøperen kom fra Droneavisa-guiden, men trakten visste ingenting.
+//
+// FIRST touch, ikke last. `sale_attribution`-viewet plukker den tidligste raden
+// med kjent kilde per bruker, så alle rader for samme bruker må bære samme
+// kilde for at «hvor kom kjøperen fra» skal bli stabilt. Hele reisen (first
+// OG last) ligger uansett i Stripe-metadataen, som create-checkout fyller fra
+// getAttribution().
+//
+// Lengdene under er DATABASENS, ikke localStorages: tabellen har en
+// CHECK-constraint på 120/120/200/200/200/500/500. getAttribution() kutter på
+// 200/300, så en lang utm_source ville brutt constrainten og veltet hele
+// innsettingen — og siden logFunnel svelger feil, ville trakthendelsen
+// forsvunnet uten et pip.
+const FUNNEL_LIMITS = {
+  utm_source: 120,
+  utm_medium: 120,
+  utm_campaign: 200,
+  utm_content: 200,
+  utm_term: 200,
+  referrer: 500,
+  landing_path: 500,
+}
+
+export function getFunnelAttribution() {
+  const out = {}
+  try {
+    const first = JSON.parse(localStorage.getItem(KEY) || '{}') || {}
+    for (const [key, max] of Object.entries(FUNNEL_LIMITS)) {
+      const val = first[key]
+      // Tom streng slippes gjennom med vilje: viewet leser referrer = '' som
+      // «direkte» og referrer IS NULL som «ukjent». Det er to forskjellige
+      // svar, og bare det første er en kanal vi faktisk har målt.
+      if (typeof val !== 'string') continue
+      out[key] = val.slice(0, max)
+    }
+  } catch {
+    /* localStorage utilgjengelig - logg hendelsen uten kanal */
+  }
+  return out
+}
