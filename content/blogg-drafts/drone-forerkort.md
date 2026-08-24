@@ -1,7 +1,7 @@
 ---
 title: Drone-førerkort: finnes det, og hva heter det egentlig?
 description: Mange søker etter drone-førerkort, men det offisielle navnet er kompetansebevis, og folk flest sier dronelappen. Her er hva som kreves, hva det koster og hvor du tar det.
-date: 2026-09-29
+date: 2026-08-28
 image: assets/drone-forerkort.png
 imageAlt: Drone-førerkort, kompetansebevis og dronelappen – DroneLappen-bloggen
 ---

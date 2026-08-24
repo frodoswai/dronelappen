@@ -1,7 +1,7 @@
 ---
 title: Hvor mange spørsmål er det på droneeksamen, og hvor mange må du ha riktig?
 description: A2-eksamen er 30 spørsmål på 60 minutter, og du må ha 23 riktige. Her er formatet på begge droneeksamenene, og hvor lang tid du bør bruke per spørsmål.
-date: 2026-09-01
+date: 2026-08-26
 image: assets/hvor-mange-sporsmal-droneeksamen.png
 imageAlt: Hvor mange spørsmål på droneeksamen – DroneLappen-bloggen
 ---
