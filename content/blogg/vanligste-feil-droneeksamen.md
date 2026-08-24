@@ -52,6 +52,6 @@ A2-eksamen tas fysisk på trafikkstasjon, og populære stasjoner fylles raskt op
 
 ## Kort oppsummert
 
-De fleste som stryker, gjør det ikke fordi pensum er for vanskelig, men fordi de øver for smalt, forveksler kategorier og tall, eller møter tidspresset uforberedt. Alt dette kan trenes bort.
+De fleste som stryker, gjør det ikke fordi pensum er for vanskelig, men fordi de øver for smalt, forveksler kategorier og tall, eller møter tidspresset uforberedt. Alt dette kan trenes bort. Skal du opp til A2, se også [hva A2-eksamen krever og hvordan du forbereder deg](/dronesertifikat-a2/), og [hva øvingen koster](/pris/) om du vil ha alle 241 spørsmålene.
 
 Vil du ha hele løpet fra registrering til bestått prøve, les den komplette guiden hos Droneavisa: [Slik tar du droneeksamen i Norge](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/).
