@@ -3,6 +3,8 @@
 # naar frontmatter-datoen er naadd. Kjoeres av cron daglig 09:00.
 # Satt opp 24.08.2026 etter Frodes klarsignar (front-lastet droppplan).
 set -euo pipefail
+# 26/8-fix: cron har minimal PATH (PIL/node ikke funnet 26/8 09:00) - sett eksplisitt
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
 cd "$(dirname "$0")/.."
 LOG="$HOME/Projects/MacMiniHub/logs/dronelappen-blogg-queue.log"
 TODAY=$(date +%Y-%m-%d)
@@ -16,7 +18,7 @@ for f in content/blogg-drafts/*.md; do
     slug=$(basename "$f" .md)
     title=$(grep -m1 '^title:' "$f" | sed 's/^title: //')
     mv "$f" "content/blogg/$slug.md"
-    python3 scripts/make-blogg-og.py "$title" "$slug" >> "$LOG" 2>&1 || true
+    /opt/homebrew/bin/python3 scripts/make-blogg-og.py "$title" "$slug" >> "$LOG" 2>&1 || true
     published=1
     echo "$(date '+%F %T') publiserer: $slug ($d)" >> "$LOG"
   fi
