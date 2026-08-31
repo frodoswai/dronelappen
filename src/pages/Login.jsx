@@ -9,7 +9,15 @@ export default function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [mode, setMode] = useState('magic_link') // 'magic_link' | 'password_login' | 'password_signup'
+  // Engangskode i stedet for klikkbar lenke. Bakgrunn: Microsoft 365 Safe
+  // Links og liknende e-postfiltre HENTER lenken automatisk før brukeren
+  // rekker å klikke. GET /verify brenner engangstokenet, skanneren blir
+  // «logget inn», og kunden får 403 «Email link is invalid or has expired».
+  // Bevist 31.08.2026 på en betalende kommune-kunde. En kode kan ikke
+  // forhåndshentes — derfor sender vi kode, ikke lenke.
+  const [code, setCode] = useState('')
+  const [codeSent, setCodeSent] = useState(false)
+  const [mode, setMode] = useState('magic_link') // 'magic_link' (kode) | 'password_login' | 'password_signup'
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null) // { type: 'success'|'error', text }
 
@@ -33,8 +41,37 @@ export default function Login() {
     if (error) {
       setMessage({ type: 'error', text: error.message })
     } else {
-      setMessage({ type: 'success', text: 'Sjekk e-posten din for innloggingslenken!' })
+      setCodeSent(true)
+      setMessage({
+        type: 'success',
+        text: 'Vi har sendt en 6-sifret kode til ' + email + '. Skriv den inn her.',
+      })
     }
+  }
+
+  const handleVerifyCode = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setMessage(null)
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: code.trim(),
+      type: 'email',
+    })
+    setLoading(false)
+    if (error) {
+      setMessage({
+        type: 'error',
+        text: 'Koden stemmer ikke, eller den er mer enn en time gammel. Be om en ny.',
+      })
+    }
+    // onAuthStateChange i AuthContext håndterer redirect
+  }
+
+  const resetCodeFlow = () => {
+    setCodeSent(false)
+    setCode('')
+    setMessage(null)
   }
 
   const handlePasswordLogin = async (e) => {
@@ -97,7 +134,9 @@ export default function Login() {
 
   const onSubmit =
     mode === 'magic_link'
-      ? handleMagicLink
+      ? codeSent
+        ? handleVerifyCode
+        : handleMagicLink
       : mode === 'password_login'
       ? handlePasswordLogin
       : handlePasswordSignup
@@ -139,18 +178,18 @@ export default function Login() {
           <div className="flex gap-1 p-1 mb-4 bg-da-cream/40 border-[0.5px] border-da-navy/15 rounded-lg">
             <button
               type="button"
-              onClick={() => { setMode('magic_link'); setMessage(null) }}
+              onClick={() => { setMode('magic_link'); resetCodeFlow() }}
               className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
                 mode === 'magic_link'
                   ? 'bg-white text-da-navy shadow-sm'
                   : 'text-da-text-muted hover:text-da-navy'
               }`}
             >
-              Innloggingslenke
+              Engangskode
             </button>
             <button
               type="button"
-              onClick={() => { setMode('password_login'); setMessage(null) }}
+              onClick={() => { setMode('password_login'); resetCodeFlow() }}
               className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
                 mode !== 'magic_link'
                   ? 'bg-white text-da-navy shadow-sm'
@@ -170,12 +209,32 @@ export default function Login() {
                 type="email"
                 required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => { setEmail(e.target.value); if (codeSent) resetCodeFlow() }}
                 placeholder="din@epost.no"
                 className={inputClass}
                 autoComplete="email"
               />
             </div>
+
+            {mode === 'magic_link' && codeSent && (
+              <div>
+                <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+                  Engangskode
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder="000000"
+                  className={`${inputClass} font-mono tracking-[0.4em] text-center text-[18px]`}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  autoFocus
+                  maxLength={6}
+                />
+              </div>
+            )}
 
             {mode !== 'magic_link' && (
               <div>
@@ -219,7 +278,9 @@ export default function Login() {
                 {loading
                   ? 'Venter...'
                   : mode === 'magic_link'
-                  ? 'Send innloggingslenke'
+                  ? codeSent
+                    ? 'Logg inn'
+                    : 'Send engangskode'
                   : mode === 'password_login'
                   ? 'Logg inn'
                   : 'Opprett konto'}
@@ -228,11 +289,26 @@ export default function Login() {
             </button>
           </form>
 
-          {mode === 'magic_link' && (
+          {mode === 'magic_link' && !codeSent && (
             <p className="mt-3 text-[12px] text-da-text-muted leading-[1.45] text-center">
-              Vi sender deg en lenke på e-post. Første gang oppretter den kontoen
-              din, ingen passord å huske.
+              Vi sender deg en 6-sifret kode på e-post. Første gang oppretter den
+              kontoen din, ingen passord å huske.
             </p>
+          )}
+
+          {mode === 'magic_link' && codeSent && (
+            <div className="mt-3 text-center space-y-2">
+              <p className="text-[12px] text-da-text-muted leading-[1.45]">
+                Koden er gyldig i en time. Finner du den ikke, sjekk søppelpost.
+              </p>
+              <button
+                type="button"
+                onClick={resetCodeFlow}
+                className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+              >
+                Send ny kode
+              </button>
+            </div>
           )}
 
           {/* «Hans-tilfellet» (supportsak 9/7): kjøpere som kommer tilbake
