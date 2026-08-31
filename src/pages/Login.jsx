@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -17,6 +17,15 @@ export default function Login() {
   // forhåndshentes — derfor sender vi kode, ikke lenke.
   const [code, setCode] = useState('')
   const [codeSent, setCodeSent] = useState(false)
+  // Gjenoppretting bruker samme kodeprinsipp som innlogging: lenka i
+  // gjenopprettings-e-posten hadde nøyaktig samme svakhet — et e-postfilter
+  // kunne hente den og brenne tokenet. Rammet de ~19 betalende uten passord.
+  const [recoveryCode, setRecoveryCode] = useState('')
+  const [recoveryCodeSent, setRecoveryCodeSent] = useState(false)
+  // Settes FØR verifyOtp slik at redirect-effekten under ikke rekker å sende
+  // dem til forsiden i det sesjonen oppstår. Ref, ikke state: effekten leser
+  // verdien når den kjører, uten å vente på en ny render.
+  const paaVeiTilSettPassord = useRef(false)
   const [mode, setMode] = useState('magic_link') // 'magic_link' (kode) | 'password_login' | 'password_signup'
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null) // { type: 'success'|'error', text }
@@ -26,7 +35,9 @@ export default function Login() {
   // dette unntaket var /login uoppnåelig for alle med anonym sesjon
   // (funnet 2026-07-10, forklarer supportsaken 9/7).
   useEffect(() => {
-    if (user && !user.is_anonymous) navigate('/', { replace: true })
+    if (user && !user.is_anonymous && !paaVeiTilSettPassord.current) {
+      navigate('/', { replace: true })
+    }
   }, [user, navigate])
 
   const handleMagicLink = async (e) => {
@@ -71,6 +82,8 @@ export default function Login() {
   const resetCodeFlow = () => {
     setCodeSent(false)
     setCode('')
+    setRecoveryCodeSent(false)
+    setRecoveryCode('')
     setMessage(null)
   }
 
@@ -122,14 +135,37 @@ export default function Login() {
       redirectTo: `${window.location.origin}/sett-passord`,
     })
     setLoading(false)
-    setMessage(
-      error
-        ? { type: 'error', text: error.message }
-        : {
-            type: 'success',
-            text: 'Sjekk e-posten din — lenken lar deg velge et passord.',
-          }
-    )
+    if (error) {
+      setMessage({ type: 'error', text: error.message })
+      return
+    }
+    setRecoveryCodeSent(true)
+    setMessage({
+      type: 'success',
+      text: 'Vi har sendt en 6-sifret kode til ' + email + '. Skriv den inn her, så får du velge passord.',
+    })
+  }
+
+  const handleVerifyRecovery = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setMessage(null)
+    paaVeiTilSettPassord.current = true
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: recoveryCode.trim(),
+      type: 'recovery',
+    })
+    setLoading(false)
+    if (error) {
+      paaVeiTilSettPassord.current = false
+      setMessage({
+        type: 'error',
+        text: 'Koden stemmer ikke, eller den er mer enn en time gammel. Be om en ny.',
+      })
+      return
+    }
+    navigate('/sett-passord', { replace: true })
   }
 
   const onSubmit =
@@ -138,7 +174,9 @@ export default function Login() {
         ? handleVerifyCode
         : handleMagicLink
       : mode === 'password_login'
-      ? handlePasswordLogin
+      ? recoveryCodeSent
+        ? handleVerifyRecovery
+        : handlePasswordLogin
       : handlePasswordSignup
 
   const inputClass =
@@ -236,7 +274,27 @@ export default function Login() {
               </div>
             )}
 
-            {mode !== 'magic_link' && (
+            {mode === 'password_login' && recoveryCodeSent && (
+              <div>
+                <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+                  Kode fra e-posten
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={recoveryCode}
+                  onChange={(e) => setRecoveryCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder="000000"
+                  className={`${inputClass} font-mono tracking-[0.4em] text-center text-[18px]`}
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  autoFocus
+                  maxLength={6}
+                />
+              </div>
+            )}
+
+            {mode !== 'magic_link' && !recoveryCodeSent && (
               <div>
                 <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
                   Passord
@@ -282,7 +340,9 @@ export default function Login() {
                     ? 'Logg inn'
                     : 'Send engangskode'
                   : mode === 'password_login'
-                  ? 'Logg inn'
+                  ? recoveryCodeSent
+                    ? 'Velg passord'
+                    : 'Logg inn'
                   : 'Opprett konto'}
               </span>
               {!loading && <span className="font-mono text-[12px] text-da-gold">&rarr;</span>}
@@ -327,7 +387,7 @@ export default function Login() {
                   signUp feiler når e-posten finnes fra før. Denne veien virker
                   for dem. Teksten nevner begge tilfellene fordi den som aldri
                   har laget passord ikke har «glemt» noe. */}
-              {mode === 'password_login' && (
+              {mode === 'password_login' && !recoveryCodeSent && (
                 <button
                   type="button"
                   onClick={handleGlemtPassord}
@@ -337,7 +397,14 @@ export default function Login() {
                   Glemt passord — eller aldri laget et? Få en lenke →
                 </button>
               )}
-              {mode === 'password_login' ? (
+              {recoveryCodeSent ? (
+                <button
+                  onClick={resetCodeFlow}
+                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                >
+                  Send ny kode
+                </button>
+              ) : mode === 'password_login' ? (
                 <button
                   onClick={() => { setMode('password_signup'); setMessage(null) }}
                   className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"

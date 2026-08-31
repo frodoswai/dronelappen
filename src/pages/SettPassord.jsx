@@ -22,6 +22,12 @@ import { useAuth } from '../contexts/AuthContext'
 // Gjenopprettingslenken fra innloggingssiden peker hit. Supabase etablerer
 // sesjonen fra URL-fragmentet selv (detectSessionInUrl), så vi trenger ikke
 // gjøre noe spesielt med token — vi må bare vente på at sesjonen finnes.
+//
+// FRA 31.08.2026 kommer de fleste hit uten lenke i det hele tatt: /login tar
+// imot en 6-sifret kode (verifyOtp type 'recovery'), etablerer sesjonen der og
+// sender dem hit ferdig innlogget. Grunnen er at e-postfiltre henter klikkbare
+// lenker automatisk og brenner engangstokenet før kunden rekker å trykke.
+// Hash-varianten beholdes fordi gamle e-poster fortsatt kan ligge i innbokser.
 const MIN_LENGDE = 8
 
 export default function SettPassord() {
@@ -110,7 +116,7 @@ export default function SettPassord() {
             <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5">
               <p className="text-[14px] text-da-text-body mb-4 leading-[1.6]">
                 Du må være innlogget for å sette passord. Logg inn med
-                innloggingslenke først, så kan du velge et passord her.
+                engangskode først, så kan du velge et passord her.
               </p>
               <button
                 onClick={() => navigate('/login')}
@@ -122,8 +128,8 @@ export default function SettPassord() {
           ) : (
             <form onSubmit={lagre} className="space-y-3">
               <p className="text-[13.5px] text-da-text-body leading-[1.6] mb-1">
-                Med passord slipper du å hente en lenke i e-posten hver gang.
-                Innloggingslenken virker fortsatt som før.
+                Med passord slipper du å hente en kode i e-posten hver gang.
+                Innlogging med engangskode virker fortsatt som før.
               </p>
               <div>
                 <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
