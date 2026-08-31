@@ -29,6 +29,10 @@ function currentPrice() {
 }
 const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
 
+// Klikk-ID-parametrene Google bruker. gclid er den vanlige; gbraid/wbraid
+// brukes for iOS- og YouTube-trafikk der gclid ikke settes.
+const GOOGLE_CLICK_PARAMS = new Set(['gclid', 'gbraid', 'wbraid'])
+
 // SHA-256 hex. Meta CAPI requires PII hashed (email lowercased + trimmed first).
 async function sha256Hex(input: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input))
@@ -84,6 +88,10 @@ Deno.serve(async (req) => {
     // both the session and the PaymentIntent so each sale's source is queryable
     // in Stripe (which channel: feed / reels / retargeting / organic).
     const meta: Record<string, string> = { user_id: user.id }
+    // Google klikk-ID fra denne fane-økta (gclid/gbraid/wbraid). Sendes
+    // separat fra attribution fordi den bare gjelder her og nå. Se
+    // src/lib/attribution.js for hvorfor den ikke lagres på enheten.
+    let googleClick: { name: string; value: string } | null = null
     try {
       const body = await req.json().catch(() => null)
       const attr = body && typeof body === 'object' ? (body as Record<string, unknown>).attribution : null
@@ -91,6 +99,18 @@ Deno.serve(async (req) => {
         for (const [k, v] of Object.entries(attr as Record<string, unknown>)) {
           if (v == null || v === '') continue
           meta[String(k).slice(0, 40)] = String(v).slice(0, 450)
+        }
+      }
+      const gc = body && typeof body === 'object' ? (body as Record<string, unknown>).google_click : null
+      if (gc && typeof gc === 'object') {
+        const name = String((gc as Record<string, unknown>).name || '')
+        const value = String((gc as Record<string, unknown>).value || '')
+        // Allowlist på navnet og streng tegnklasse på verdien: denne strengen
+        // går rett inn i en URL vi selv sender brukeren tilbake til, så den
+        // skal aldri kunne bære annet enn en klikk-ID.
+        if (GOOGLE_CLICK_PARAMS.has(name) && /^[A-Za-z0-9_.-]{1,200}$/.test(value)) {
+          googleClick = { name, value }
+          meta[name] = value
         }
       }
     } catch {
@@ -110,12 +130,25 @@ Deno.serve(async (req) => {
 
     const price = currentPrice()
 
+    // Retur-URL fra Stripe. {CHECKOUT_SESSION_ID} utvides av Stripe.
+    //
+    // Klikk-IDen henges på fordi kjøpskonverteringen fyres i PaymentReturn,
+    // altså PÅ denne siden. Har brukeren godtatt cookies, kjenner gtag
+    // klikket fra _gcl_aw uansett. Har han ikke det, er URL-en eneste bærer
+    // (url_passthrough), og den overlever ikke turen ut til Stripe med mindre
+    // vi tar den med tilbake selv. Uten dette ble to av tre ads-salg i august
+    // aldri talt i Google Ads (31.08.2026).
+    let successUrl = 'https://dronelappen.app/?betalt=ok&s={CHECKOUT_SESSION_ID}'
+    if (googleClick) {
+      successUrl += `&${googleClick.name}=${encodeURIComponent(googleClick.value)}`
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [{ price: price.id, quantity: 1 }],
       // {CHECKOUT_SESSION_ID} is expanded by Stripe on redirect; PaymentReturn
       // reads it as `s` and uses it as the Pixel/CAPI dedup event_id.
-      success_url: 'https://dronelappen.app/?betalt=ok&s={CHECKOUT_SESSION_ID}',
+      success_url: successUrl,
       cancel_url: 'https://dronelappen.app/?betalt=avbrutt',
       client_reference_id: user.id,
       // Anonymous users have email "" (not null), so use || not ?? — otherwise

@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { getAttribution, getMetaIds } from './attribution.js'
+import { getAttribution, getGoogleClick, getMetaIds } from './attribution.js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -56,7 +56,15 @@ export async function createCheckout() {
       },
       // fbc/fbp (samtykke-gatet) følger med til Stripe-metadata slik at
       // stripe-webhookens CAPI Purchase kan knyttes til annonseklikket.
-      body: JSON.stringify({ attribution: { ...getAttribution(), ...getMetaIds() } }),
+      // google_click sendes SEPARAT fra attribution, ikke som en nøkkel i den:
+      // attribution leses fra localStorage og kan være uker gammel, mens
+      // klikk-IDen bare gjelder denne fane-økta. Edge-funksjonen baker den inn
+      // i success_url slik at Google kan knytte kjøpet til annonseklikket også
+      // når brukeren har avslått cookies.
+      body: JSON.stringify({
+        attribution: { ...getAttribution(), ...getMetaIds() },
+        google_click: getGoogleClick(),
+      }),
     }
   )
 
