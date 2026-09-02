@@ -20,7 +20,7 @@ Eksamen bestilles på vegvesen.no, samme sted som teoriprøve for førerkort. Ve
 
 - Ta med gyldig legitimasjon. Uten den slipper du ikke inn.
 - Møt opp litt før tiden. Selve prøven tas på skjerm i en prøvesal, som teoriprøven for bil.
-- Du får 30 flervalgsspørsmål og 60 minutter. Kravet er 23 riktige.
+- Du får [30 flervalgsspørsmål og 60 minutter](/blogg/hvor-mange-sporsmal-droneeksamen/). Kravet er 23 riktige.
 - Mobil og notater legges igjen utenfor. Alt du trenger er hodet ditt.
 
 Resultatet får du med en gang. Består du, registreres A2-kompetansen på operatørprofilen din, og beviset er gyldig i 5 år.

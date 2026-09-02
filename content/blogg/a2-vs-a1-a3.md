@@ -6,7 +6,7 @@ image: assets/a2-vs-a1-a3.png
 imageAlt: A2 vs A1/A3 – hvilken dronelapp trenger du? DroneLappen-bloggen
 ---
 
-Skal du fly drone i Norge, må du ha kompetansebevis – «dronelappen». Men det finnes to nivåer, og mange er usikre på hvilket de faktisk trenger. Kort fortalt: A1/A3 er gratis, tas på nett og holder for de fleste hobbypiloter. A2 koster 970 kr, tas på trafikkstasjon og trengs først når du skal fly tyngre droner nær folk.
+Skal du fly drone i Norge, må du ha kompetansebevis – [også kalt dronelappen eller drone-førerkort](/blogg/drone-forerkort/). Men det finnes to nivåer, og mange er usikre på hvilket de faktisk trenger. Kort fortalt: A1/A3 er gratis, tas på nett og holder for de fleste hobbypiloter. A2 koster 970 kr, tas på trafikkstasjon og trengs først når du skal fly tyngre droner nær folk.
 
 ## Forskjellen i én tabell
 
@@ -46,7 +46,7 @@ Skal du ta A2? Se hvordan du [forbereder deg og består A2-eksamen](/dronesertif
 - **Bare A1/A3:** 230 kr (operatørgebyret – selve eksamen er gratis)
 - **A1/A3 + A2:** 1 200 kr første år (230 kr gebyr + 970 kr A2-eksamen)
 
-A2-eksamen bestilles hos Statens vegvesen, og populære trafikkstasjoner fylles fort opp – book i god tid. Hele løpet fra registrering til bestått prøve er beskrevet i [Droneavisas komplette guide til droneeksamen](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/).
+A2-eksamen bestilles hos Statens vegvesen, og populære trafikkstasjoner fylles fort opp – book i god tid. Se [hvordan A2-eksamen foregår på trafikkstasjonen](/blogg/a2-eksamen-trafikkstasjonen/), steg for steg. Hele løpet fra registrering til bestått prøve er beskrevet i [Droneavisas komplette guide til droneeksamen](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/).
 
 ## Tommelfingerregel
 

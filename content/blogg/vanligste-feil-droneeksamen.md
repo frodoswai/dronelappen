@@ -28,7 +28,7 @@ Klassikeren. Hvilken underkategori lar deg fly over enkeltpersoner? Hvor nær fo
 
 ## 4. Glemmer at gammel dronelapp ikke gjelder
 
-Tok du droneeksamen under det gamle norske regelverket? Den gjelder ikke lenger. De felleseuropeiske reglene er vesentlig annerledes, og alle må ta ny eksamen. Flere møter opp med utdatert kunnskap fra det gamle systemet og svarer feil på spørsmål der reglene er endret.
+Tok du [droneeksamen](/blogg/drone-forerkort/) under det gamle norske regelverket? Den gjelder ikke lenger. De felleseuropeiske reglene er vesentlig annerledes, og alle må ta ny eksamen. Flere møter opp med utdatert kunnskap fra det gamle systemet og svarer feil på spørsmål der reglene er endret.
 
 **Slik unngår du det:** Les pensum på nytt med friske øyne, selv om du har fløyet i årevis. Erfaring hjelper, men gamle regler trekker deg ned.
 
@@ -42,7 +42,7 @@ Ikke en eksamensfeil, men en klassisk nybegynnerfeil: A1/A3-eksamen er gratis, m
 
 A2-eksamen tas fysisk på trafikkstasjon, og populære stasjoner fylles raskt opp. Venter du til uka før du trenger beviset, kan nærmeste ledige time være flere uker unna.
 
-**Slik unngår du det:** Book time først, og bruk ventetiden til å øve. Er din stasjon full, sjekk nabostasjonene – det kan spare deg ukevis med venting.
+**Slik unngår du det:** Book time først, og bruk ventetiden til å øve. [Slik foregår eksamensdagen](/blogg/a2-eksamen-trafikkstasjonen/) hvis du lurer på hva som venter. Er din stasjon full, sjekk nabostasjonene – det kan spare deg ukevis med venting.
 
 ## 7. Øver uten tidspress
 

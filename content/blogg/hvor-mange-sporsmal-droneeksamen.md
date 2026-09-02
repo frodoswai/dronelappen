@@ -6,7 +6,7 @@ image: assets/hvor-mange-sporsmal-droneeksamen.png
 imageAlt: Hvor mange spørsmål på droneeksamen – DroneLappen-bloggen
 ---
 
-Det korteste svaret: A2-eksamen er 30 flervalgsspørsmål på 60 minutter, og du må ha minst 75 prosent riktig. Det betyr 23 av 30. Du har råd til sju feil, ikke én mer.
+Det korteste svaret: A2-eksamen – [den folk kaller drone-førerkortet](/blogg/drone-forerkort/) – er 30 flervalgsspørsmål på 60 minutter, og du må ha minst 75 prosent riktig. Det betyr 23 av 30. Du har råd til sju feil, ikke én mer.
 
 ## A2-eksamen i tall
 
@@ -19,7 +19,7 @@ Det korteste svaret: A2-eksamen er 30 flervalgsspørsmål på 60 minutter, og du
 | Sted | Trafikkstasjon, Statens vegvesen |
 | Pris | 970 kr per forsøk |
 
-To minutter per spørsmål høres mye ut, og de fleste blir ferdige lenge før tiden. Fellen er ikke klokka, det er marginene: fire-fem slurvefeil på tallspørsmål er nesten nok til å stryke alene. Vi har samlet [de vanligste feilene folk gjør på eksamen](/blogg/vanligste-feil-droneeksamen/).
+Selve dagen på trafikkstasjonen er beskrevet i [slik foregår A2-eksamen](/blogg/a2-eksamen-trafikkstasjonen/). To minutter per spørsmål høres mye ut, og de fleste blir ferdige lenge før tiden. Fellen er ikke klokka, det er marginene: fire-fem slurvefeil på tallspørsmål er nesten nok til å stryke alene. Vi har samlet [de vanligste feilene folk gjør på eksamen](/blogg/vanligste-feil-droneeksamen/).
 
 ## Hva med A1/A3?
 

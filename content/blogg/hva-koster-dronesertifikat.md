@@ -23,7 +23,7 @@ Nettkurset og eksamen på flydrone.no koster ingenting. Det du må betale er ope
 
 ## A2: 970 kr per forsøk
 
-A2-eksamen tas på en av Statens vegvesens trafikkstasjoner og koster 970 kr hver gang du prøver. Stryker du, betaler du på nytt. Det er her øving faktisk sparer deg penger: én stryk koster mer enn det dobbelte av full tilgang til [DroneLappen](/pris/). Prøven er 30 spørsmål på 60 minutter, og du må ha minst 23 riktige. Les mer om [hva A2-eksamen krever](/dronesertifikat-a2/).
+A2-eksamen tas på en av Statens vegvesens trafikkstasjoner og koster 970 kr hver gang du prøver. Stryker du, betaler du på nytt. Det er her øving faktisk sparer deg penger: én stryk koster mer enn det dobbelte av full tilgang til [DroneLappen](/pris/). Prøven er [30 spørsmål på 60 minutter, og du må ha minst 23 riktige](/blogg/hvor-mange-sporsmal-droneeksamen/), og [slik foregår dagen på trafikkstasjonen](/blogg/a2-eksamen-trafikkstasjonen/). Les mer om [hva A2-eksamen krever](/dronesertifikat-a2/).
 
 ## Trenger du kurs? Nei
 
