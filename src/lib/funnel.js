@@ -37,6 +37,12 @@ export const QUIZ_BUY_CLICK = 'quiz_buy_click'
 // Forsidens dobbeltvalg. Med denne har alle tre kjøpsinngangene hver sin
 // hendelse, og vi kan endelig se hvilken av dem folk faktisk bruker.
 export const HOME_BUY_CLICK = 'home_buy_click'
+// «Nei takk»-utveien på /a2-ovingsplan (06.09.2026). Siden hadde ingen vei
+// videre uten e-post: sa du nei, var du ute, og klikket vi hadde betalt for
+// ble et bounce. Egen hendelse fordi den svarer på et spørsmål vi ellers ikke
+// kan stille - hvor mange velger produktet fremfor muren? Blir andelen høy,
+// var muren en brems, ikke en filtrering.
+export const LEAD_SKIP = 'lead_skip'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
 import { getLeadAttribution } from '../lib/attribution'
+import { logFunnel, LEAD_SKIP } from '../lib/funnel'
 
 /**
  * /a2-ovingsplan — dedikert landingsside for lead-annonsen på Meta.
@@ -49,6 +50,17 @@ export default function OvingsplanA2() {
     const t = setTimeout(() => navigate(NESTE), REDIRECT_MS)
     return () => clearTimeout(t)
   }, [status, navigate])
+
+  // Utveien for dem som ikke vil gi e-post. Uten den var siden en binær dør:
+  // e-post eller ingenting, og hvert nei ble et betalt klikk uten verdi. De
+  // 25 spørsmålene koster oss ikke noe å gi bort, og gruppa som sender folk
+  // rett inn i produktet står for flest salg. Vi venter på loggingen før vi
+  // navigerer - samme felle som gjorde paywall_buy_click ubrukelig i to døgn.
+  const handleSkip = async (e) => {
+    e.preventDefault()
+    await logFunnel(LEAD_SKIP)
+    navigate(NESTE)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -212,6 +224,18 @@ export default function OvingsplanA2() {
                 </p>
               </div>
 
+              {/* Bevisst underordnet: e-posten er fortsatt hovedveien, men
+                  ingen skal måtte forlate siden for å komme til spørsmålene. */}
+              <p className="-mt-4 mb-7 text-center">
+                <a
+                  href={NESTE}
+                  onClick={handleSkip}
+                  className="text-[13px] text-da-text-muted underline underline-offset-2 hover:text-da-navy transition-colors"
+                >
+                  Nei takk — ta meg rett til de 25 spørsmålene
+                </a>
+              </p>
+
               <div className="border-t border-da-navy/10 pt-6">
                 <div className="bg-white border-[0.5px] border-da-navy/15 rounded-lg px-5 py-4 mb-5">
                   <div className="font-mono text-[10.5px] text-da-gold tracking-[0.12em] uppercase mb-2">
@@ -222,12 +246,12 @@ export default function OvingsplanA2() {
                     <strong className="text-da-navy">970 kr per forsøk</strong> hos
                     Statens vegvesen, og du må ha bestått A1/A3 først. Stryker du,
                     betaler du på nytt — i tillegg til ny timebestilling og
-                    ventetid. Sørg for å bestå på første.
+                    ventetid. Det er verdt å møte godt forberedt.
                   </p>
                 </div>
 
                 <p className="text-[13px] text-da-text-muted leading-[1.6]">
-                  Over 240 piloter øver på DroneLappen allerede. Appen har 241
+                  Over 350 piloter øver på DroneLappen allerede. Appen har 241
                   norske spørsmål for A1/A3 og A2, og er laget av{' '}
                   <a
                     href="https://droneavisa.no"
