@@ -1,6 +1,6 @@
 ---
 title: Drone under 250 gram: trenger du dronelappen?
-description: Nei, du trenger ikke eksamen for å fly drone under 250 gram, men har den kamera må du registrere deg for 230 kr i året. Her er reglene, og det som kan endre seg.
+description: Under 250 gram slipper du eksamen, men ikke alt. Her er hva som faktisk gjelder for lette droner, og når kameraet endrer regnestykket.
 date: 2026-09-08
 image: assets/drone-under-250-gram.png
 imageAlt: Drone under 250 gram og dronelappen – DroneLappen-bloggen

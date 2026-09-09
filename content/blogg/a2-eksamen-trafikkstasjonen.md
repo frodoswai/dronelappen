@@ -1,5 +1,5 @@
 ---
-title: A2-eksamen på trafikkstasjonen: slik foregår den fra du booker til du består
+title: A2-eksamen på trafikkstasjonen, steg for steg
 description: Booking hos Statens vegvesen, legitimasjon, 30 spørsmål på skjerm og svar med en gang. Slik foregår A2-eksamen på trafikkstasjonen, steg for steg.
 date: 2026-09-01
 image: assets/a2-eksamen-trafikkstasjonen.png

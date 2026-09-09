@@ -1,5 +1,5 @@
 ---
-title: Hva koster dronesertifikat i Norge i 2026? Full prisoversikt
+title: Hva koster dronesertifikat i Norge i 2026?
 description: A1/A3 er gratis, A2 koster 970 kr, og operatørgebyret er 230 kr i året. Her er alt dronesertifikatet faktisk koster i 2026, inkludert det folk glemmer.
 date: 2026-08-24
 image: assets/hva-koster-dronesertifikat.png
