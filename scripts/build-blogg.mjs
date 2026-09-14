@@ -23,6 +23,29 @@ const CONTENT = join(ROOT, 'content', 'blogg')
 const OUT = join(ROOT, 'public', 'blogg')
 const SITE = 'https://dronelappen.app'
 
+// ── UTM paa lenker fra bloggen inn i appen ────────────────────────
+// Bakgrunn (14.09.2026): foerste salg fra bloggen ble registrert som
+// source=referral med landing_path=/ — altsaa usynlig som egen kanal, og
+// bare mulig aa finne ved aa lese referrer-feltet. Med UTM havner bloggen i
+// sale_attribution paa linje med Droneavisa-guiden, og vi ser BAADE hvilken
+// artikkel og hvilken plassering som selger. Samme navnekonvensjon som
+// droneavisa-lenkene (utm_content=cta_topp).
+// Trygt for SEO: SPA-en setter canonical til https://dronelappen.app/ paa
+// alle ruter, saa en indeksert ?utm_-variant peker uansett hjem.
+const appLink = (path, campaign, content) => {
+  const [base, hash = ''] = path.split('#')
+  const sep = base.includes('?') ? '&' : '?'
+  const q = `utm_source=blogg&utm_medium=internal&utm_campaign=${encodeURIComponent(campaign)}&utm_content=${content}`
+  return `${base}${sep}${q}${hash ? '#' + hash : ''}`
+}
+
+// Merker lenker i brodteksten som peker inn i appen. Lar /blogg/-lenker,
+// eksterne lenker, anker og mailto staa urort.
+const tagBodyLinks = (html, campaign) =>
+  html.replace(/href="(\/[^"#][^"]*)"/g, (m, href) =>
+    href.startsWith('/blogg/') || href.startsWith('//') ? m : `href="${appLink(href, campaign, 'i_tekst')}"`
+  )
+
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -87,7 +110,7 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Lora:ital@1&display=swap" rel="stylesheet">`
 
-function page({ title, description, canonical, ogType, jsonld, bodyHtml, ogImage }) {
+function page({ title, description, canonical, ogType, jsonld, bodyHtml, ogImage, campaign }) {
   return `<!doctype html>
 <html lang="nb">
 <head>
@@ -129,8 +152,8 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 </head>
 <body>
 <header class="site">
-  <a class="wordmark" href="/">Drone<span>Lappen</span></a>
-  <a class="cta" href="/">Ta quizen →</a>
+  <a class="wordmark" href="${appLink('/', campaign, 'wordmark')}">Drone<span>Lappen</span></a>
+  <a class="cta" href="${appLink('/', campaign, 'cta_topp')}">Ta quizen →</a>
 </header>
 <main>
 ${bodyHtml}
@@ -143,10 +166,10 @@ ${bodyHtml}
 </html>`
 }
 
-const CTA_BOX = `<div class="cta-box">
+const ctaBox = (campaign) => `<div class="cta-box">
 <h2>Øv gratis til droneeksamen</h2>
 <p>200+ norske spørsmål for A1/A3 og A2. Eksamensmodus med ekte tidsfrist og bestå-grense. Ingen innlogging, ingen reklame.</p>
-<a class="btn" href="/">Start øvingen →</a>
+<a class="btn" href="${appLink('/', campaign, 'cta_bunn')}">Start øvingen →</a>
 </div>`
 
 // ── Bygg ──────────────────────────────────────────────────────────
@@ -188,14 +211,14 @@ for (const p of posts) {
 <p class="meta">Publisert <time datetime="${p.date}">${nbDate(p.date)}</time>${
     p.updated ? `, oppdatert <time datetime="${p.updated}">${nbDate(p.updated)}</time>` : ''
   } · <span class="byline">av Frode Friestad</span></p>
-${p.image ? `<a href="/" aria-label="Gå til quiz-appen"><img class="hero" src="/blogg/${p.image}" alt="${esc(p.imageAlt)}" width="1200" height="630"></a>` : ''}
-${p.html}
-${CTA_BOX}
+${p.image ? `<a href="${appLink('/', p.slug, 'hero')}" aria-label="Gå til quiz-appen"><img class="hero" src="/blogg/${p.image}" alt="${esc(p.imageAlt)}" width="1200" height="630"></a>` : ''}
+${tagBodyLinks(p.html, p.slug)}
+${ctaBox(p.slug)}
 </article>`
   mkdirSync(join(OUT, p.slug), { recursive: true })
   writeFileSync(
     join(OUT, p.slug, 'index.html'),
-    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld, bodyHtml, ogImage })
+    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld, bodyHtml, ogImage, campaign: p.slug })
   )
 }
 
@@ -227,7 +250,8 @@ writeFileSync(
 <ul class="artikler">
 ${listHtml}
 </ul>
-${CTA_BOX}`,
+${ctaBox('blogg-indeks')}`,
+    campaign: 'blogg-indeks',
   })
 )
 
