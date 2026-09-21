@@ -12,9 +12,19 @@ import CrosshairMarks from './CrosshairMarks'
 // Flisa måler i stedet for å gjette, og koster en ettermiddag mot ukene
 // spørsmålsbanken ville tatt.
 //
-// TERSKELEN ER SATT FØR LANSERING: 25 stemmer fra innloggede eller
-// betalende på 30 dager = bygg hele settet. Under det: bare guiden på
+// TERSKELEN ER SATT FØR TALLET FINNES: 5 stemmer fra innloggede eller
+// betalende på 30 dager, hvorav minst 2 med et fritekstsvar som beskriver
+// et konkret bruksbehov = bygg hele settet. Under det: bare guiden på
 // Droneavisa. Settes terskelen etterpå, leser man tallet man ønsker seg.
+//
+// JUSTERT 21.09.2026, samme dag som lansering og før første stemme.
+// Den opprinnelige terskelen var 25, satt uten å se på nevneren. Da vi
+// faktisk talte, var den umulig: 40 betalende og 55 registrerte, men bare
+// 22 innloggede hadde vært aktive de siste 30 dagene. 25 var altså flere
+// enn antallet mennesker som kunne stemme. 5 av 22 er rundt en femdel av
+// en engasjert base som ber om noe uoppfordret — et reelt signal.
+// Fritekstkravet er den egentlige kvalitetskontrollen: to som beskriver
+// hva de trenger STS til er mer verdt enn tjue som klikker.
 //
 // TRE VALG SOM ER BEVISSTE:
 //

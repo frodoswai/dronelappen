@@ -6,10 +6,15 @@
 -- øvde med Copilot fordi vi ikke dekker STS), men ett kundetilfelle er ikke
 -- grunnlag for 80-100 nye spørsmål. Flisa i appen måler i stedet for å gjette.
 --
--- TERSKELEN ER SATT FØR LANSERING, ikke etter: 25 stemmer fra innloggede
--- eller betalende brukere på 30 dager = bygg hele settet. Under det: bare
--- guiden på Droneavisa. Å sette terskelen etterpå er å lese tallet man
--- ønsker seg.
+-- TERSKELEN ER SATT FØR TALLET FINNES, ikke etter: 5 stemmer fra innloggede
+-- eller betalende brukere på 30 dager, hvorav minst 2 med fritekstsvar som
+-- beskriver et konkret bruksbehov = bygg hele settet. Under det: bare guiden
+-- på Droneavisa. Å sette terskelen etterpå er å lese tallet man ønsker seg.
+--
+-- Justert 21.09.2026, samme dag som lansering og før første stemme: den
+-- opprinnelige terskelen var 25, satt uten å se på nevneren. Tellingen viste
+-- 40 betalende og 55 registrerte, men bare 22 innloggede aktive siste 30
+-- dager. 25 var altså flere enn antallet som kunne stemme.
 --
 -- ─── To feller denne migrasjonen er bygget rundt ───────────────────────
 --
