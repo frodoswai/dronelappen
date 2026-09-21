@@ -8,6 +8,7 @@ import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
+import StsVoteCard from '../components/StsVoteCard'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
@@ -44,9 +45,14 @@ import {
 export default function Home() {
   const { tier, user, refreshTier } = useAuth()
   const [lastSession, setLastSession] = useState(null)
-  // Sammenslåing (18/7): når ReadinessCard har data tar den over
-  // fortsett-rollen, og det separate fortsett-kortet skjules.
-  const [readinessActive, setReadinessActive] = useState(false)
+  // Sammenslåing (18/7): når ReadinessCard har data tok den over
+  // fortsett-rollen, og det separate fortsett-kortet ble skjult.
+  // SATT UT AV KRAFT 21.09.2026 mens STS-målingen går: ReadinessCard
+  // står under A1/A3, så kortene stabler seg ikke lenger og stripa får
+  // stå. Signalet beholdes — setteren fyrer som før, verdien leses bare
+  // ikke — så skjulingen kan gjeninnføres 21.10 ved å sette
+  // `&& !readinessActive` tilbake på fortsett-stripa.
+  const [, setReadinessActive] = useState(false)
   const [buyBusy, setBuyBusy] = useState(false)
   const [buyErr, setBuyErr] = useState('')
   // «Fullfør kjøpet»-banner: true når brukeren klikket kjøp før innlogging
@@ -309,34 +315,33 @@ export default function Home() {
           </div>
         )}
 
-        {/* Divider with mono label */}
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-            velg eksamen
-          </span>
-          <div className="flex-1 h-px bg-da-navy/20" />
-        </div>
+        {/* ═══ STS — låst flis med stemmeknapp ═══
+            MÅLEMODUS 21.09–21.10.2026 (Frodes valg). Flisa står høyt
+            fordi den måler etterspørsel og trenger volum, men BEVISST
+            under kjøpsknappene over: annonsetrafikk lander på forsiden,
+            og valget «prøv gratis vs. kjøp» skal ikke kreve scrolling
+            for en som aldri har hørt om STS. Betalende ser derfor flisa
+            først — de har ingen kjøpsknapper å bli dyttet ned av.
+            Visuelt dempet (stiplet ramme, hengelås, grå tittel) så den
+            aldri forveksles med noe man kan starte i dag. Rendrer null
+            til vi vet om brukeren har stemt.
+            NÅR MÅLINGEN ER OVER 21.10: flytt tilbake under A1/A3-kortet
+            og sett ReadinessCard tilbake øverst (se under). */}
+        <StsVoteCard />
 
-        {/* «Er du klar?» — beredskapsscore for brukere med øvingsdata.
-            Renderer ingenting for ferske besøkende (stille komponent).
-            Sammenslåing 18/7: kortet eier nå fortsett-lenken (resume),
-            så vi slipper to overlappende kort før A2-valget. */}
-        <ReadinessCard
-          resume={
-            lastSession
-              ? {
-                  path: sessionToPath(lastSession),
-                  stats: sessionDisplayStats(lastSession),
-                }
-              : null
-          }
-          onData={() => setReadinessActive(true)}
-        />
-
-        {/* Smart resume — fallback når ReadinessCard ikke har data
-            (utlogget/fersk bruker med lokal økt). Skjules ellers. */}
-        {lastSession && !readinessActive && (
+        {/* Smart resume — slank fortsett-stripe.
+            OPPLØST SAMMENSLÅING 21.09.2026: fra 18/7 eide ReadinessCard
+            fortsett-rollen, og denne stripa var skjult når scoren rendret
+            (readinessActive). Grunnen var at to kort stablet seg rett
+            over hovedvalget. Når ReadinessCard nå står UNDER A1/A3 i
+            målemodus, forsvinner den grunnen — og uten stripa ville en
+            returbruker måtte scrolle forbi tre kort for å komme tilbake
+            til øvingen sin. Det er kjerneveien for de som allerede øver,
+            så den blir stående øverst. ReadinessCard får fortsatt
+            `resume`, så CTA-en der peker riktig.
+            NÅR MÅLINGEN ER OVER 21.10: vurder å gjeninnføre
+            readinessActive-skjulingen hvis kortene stabler seg igjen. */}
+        {lastSession && (
           <Link
             to={sessionToPath(lastSession)}
             className="quiz-option rise-in block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-3 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
@@ -354,6 +359,15 @@ export default function Home() {
             </div>
           </Link>
         )}
+
+        {/* Divider with mono label */}
+        <div className="flex items-center gap-2.5 mb-3">
+          <div className="flex-1 h-px bg-da-navy/20" />
+          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
+            velg eksamen
+          </span>
+          <div className="flex-1 h-px bg-da-navy/20" />
+        </div>
 
         {/* ═══ A2 card — dominant, primary ═══
             Round 4 affordance pass: stretched-link pattern. The card is
@@ -440,6 +454,27 @@ export default function Home() {
             </span>
           </div>
         </div>
+
+        {/* «Er du klar?» — beredskapsscore for brukere med øvingsdata.
+            Renderer ingenting for ferske besøkende (stille komponent).
+            FLYTTET HIT 21.09.2026, MIDLERTIDIG: kortet sto øverst fra
+            18/7 og dyttet STS-flisa langt ned for innloggede, som er
+            akkurat de brukerne målingen trenger svar fra. Det er et
+            kort man kommer tilbake TIL, ikke et man må møte før man har
+            valgt eksamen, så plassen under A1/A3 koster lite — og
+            fortsett-stripa øverst dekker returveien i mellomtiden.
+            SETT TILBAKE ØVERST 21.10 når målingen er over. */}
+        <ReadinessCard
+          resume={
+            lastSession
+              ? {
+                  path: sessionToPath(lastSession),
+                  stats: sessionDisplayStats(lastSession),
+                }
+              : null
+          }
+          onData={() => setReadinessActive(true)}
+        />
 
         {/* ═══ Full tilgang — purchase card, hidden for paid users ═══ */}
         {tier !== 'paid' && (
