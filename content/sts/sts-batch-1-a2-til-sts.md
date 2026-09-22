@@ -259,7 +259,7 @@ En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt uten
 
 *Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde → 10 m (≤10 kg) / 20 m (>10 kg); 60 m → 15 m / 30 m; 90 m → 20 m / 45 m; 120 m → 25 m / 60 m. 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde dronen veid 12 kg, ville svaret vært 30 m.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); JARUS SORA 2.5 Annex A kap. 5 (1:1-regelen)(C), tabell
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
 
 ---
 
@@ -274,7 +274,7 @@ Samme scenario, men dronen veier 14 kg og skal fly i inntil 120 m. Hvor stor må
 
 *Forklaring:* Over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for droner inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); JARUS SORA 2.5 Annex A kap. 5 (1:1-regelen)(C), tabell
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
 
 ---
 
