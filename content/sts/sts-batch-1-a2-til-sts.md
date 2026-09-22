@@ -34,7 +34,7 @@ Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA
 
 *Forklaring:* Begge er ferdigdefinerte rammer for vanlige operasjonstyper, men prosessen skiller: en operatør som følger et STS slipper operasjonstillatelse og sender bare en deklarasjon. En PDRA forenkler risikovurderingen i en søknad som myndigheten fortsatt må behandle og godkjenne.
 
-*Kilde:* AMC1 til art. 11 i EU 2019/947 (EASA ED Decision 2019/021); Luftfartstilsynet, spesifikk kategori (luftfartstilsynet.no/en/drones/veiledning/specific-category)
+*Kilde:* AMC til art. 11 i EU 2019/947 (PDRA-S01 = AMC4, PDRA-S02 = AMC5; EASA AMC & GM, ED Decision 2023/012/R); easa.europa.eu, «Predefined Risk Assessment (PDRA)»
 
 ---
 
@@ -242,9 +242,9 @@ Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
 - c) Flygeområdet, contingency-område minst 10 m utenfor, og bakkerisikobuffer utenfor det ✅
 - d) Flygeområdet pluss et område på 1:1 (like langt ut som dronen flyr høyt)
 
-*Forklaring:* Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen er en tommelfingerregel fra SORA, ikke STS-01-kravet.
+*Forklaring:* Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (bufferen minst like bred som flygehøyden) er en forenklet minimumsmetode for bakkerisikobuffer i SORA, ikke STS-01-kravet.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); JARUS SORA 2.5 Annex A kap. 5 (1:1-regelen)
 
 ---
 
@@ -259,7 +259,7 @@ En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt uten
 
 *Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde → 10 m (≤10 kg) / 20 m (>10 kg); 60 m → 15 m / 30 m; 90 m → 20 m / 45 m; 120 m → 25 m / 60 m. 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde dronen veid 12 kg, ville svaret vært 30 m.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); JARUS SORA 2.5 Annex A kap. 5 (1:1-regelen)(C), tabell
 
 ---
 
@@ -274,7 +274,7 @@ Samme scenario, men dronen veier 14 kg og skal fly i inntil 120 m. Hvor stor må
 
 *Forklaring:* Over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for droner inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); JARUS SORA 2.5 Annex A kap. 5 (1:1-regelen)(C), tabell
 
 ---
 
