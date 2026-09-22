@@ -1,0 +1,863 @@
+{
+  "meta": {
+    "title": "STS-spørsmålsbank — batch 1 (A2→STS-påbygget)",
+    "created": "2026-09-21",
+    "status": "UTKAST — ikke lastet inn i Supabase",
+    "exam_type": "STS",
+    "scope": "Dekker de fem emnene i den kortere prøven «Utvidelse av A2 til STS» (DRONEA2STS, 30 spm / 23 riktige): (i) regelverk, (ii) menneskelige ytelsesbegrensninger, (iii) operasjonelle prosedyrer, (iv) tekniske og operasjonelle tiltak mot bakkerisiko, (v) generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi–viii) hører til fullprøven og kommer i batch 2.",
+    "sources": {
+      "EU 2020/639": "Forordning (EU) 2020/639 (STS-01/STS-02, Appendix 1 til 2019/947) — verifisert ordrett mot EUR-Lex 21.09.2026",
+      "EU 2020/1058": "Delegert forordning (EU) 2020/1058 (C5/C6, Part 16/17 i 2019/945) — verifisert ordrett mot EUR-Lex 21.09.2026",
+      "Luftfartstilsynet": "Prøveformat (40/30 og 30/23), trafikkstasjon, NF-1172 — fra Droneavisa-guiden post 745, som er verifisert mot luftfartstilsynet.no"
+    },
+    "style": "Vegvesen-stil per stilrevisjonen 30.–31.07.2026: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe.",
+    "db_note": "questions.exam_type har CHECK IN ('A1_A3','A2'). Innlasting krever migrasjon som utvider CHECK-en i questions og quiz_sessions samt nye rader i categories. Ikke gjør det før STS-beslutningen 21.10.2026.",
+    "not_covered_on_purpose": "Norske detaljer som er uavklart per handoff 21.09 (overføring av praktisk akkreditering mellom operatører, privatperson som deklarerer alene) er bevisst IKKE brukt som fasit."
+  },
+  "categories": [
+    {
+      "slug": "sts-regelverk",
+      "name": "Regelverk og kategorier"
+    },
+    {
+      "slug": "sts-01",
+      "name": "STS-01: rammer for VLOS"
+    },
+    {
+      "slug": "sts-02",
+      "name": "STS-02: BVLOS og observatører"
+    },
+    {
+      "slug": "sts-bakkerisiko",
+      "name": "Kontrollert bakkeområde og bakkerisiko"
+    },
+    {
+      "slug": "sts-operator",
+      "name": "Operatøransvar og operasjonsmanual"
+    },
+    {
+      "slug": "sts-pilot",
+      "name": "Pilotansvar og prosedyrer"
+    },
+    {
+      "slug": "sts-mennesket",
+      "name": "Menneskelige faktorer"
+    },
+    {
+      "slug": "sts-uas",
+      "name": "UAS-kunnskap: C5, C6 og flygeavslutning"
+    }
+  ],
+  "questions": [
+    {
+      "n": 1,
+      "category": "sts-regelverk",
+      "difficulty": 1,
+      "question_text": "Et inspeksjonsfirma vil fly en 8 kg drone i VLOS over et avsperret anleggsområde midt i en by. Operasjonen passer ikke i A2. Hvilken vei inn i spesifikk kategori krever minst saksbehandling hos Luftfartstilsynet?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Deklarere operasjonen etter standardscenario STS-01"
+        },
+        {
+          "id": "b",
+          "text": "Søke om LUC (Light UAS Operator Certificate)"
+        },
+        {
+          "id": "c",
+          "text": "Søke operasjonstillatelse med full SORA-risikovurdering"
+        },
+        {
+          "id": "d",
+          "text": "Melde flygingen til politiet og fly i A3 med utvidet sikkerhetsavstand til bebyggelse"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Et standardscenario deklareres — operatøren sender deklarasjon (NF-1172 i Norge) og kan starte når myndigheten har bekreftet at den er mottatt og fullstendig. Operasjonstillatelse (SORA/PDRA) og LUC er de to andre veiene, begge med reell saksbehandling. STS-01 dekker nettopp VLOS over kontrollert bakkeområde i befolket miljø.",
+      "source": "EU 2020/639 art. 1(2) (art. 5 nr. 5) og fortalen pkt. 3"
+    },
+    {
+      "n": 2,
+      "category": "sts-regelverk",
+      "difficulty": 2,
+      "question_text": "Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA?",
+      "options": [
+        {
+          "id": "a",
+          "text": "STS deklareres uten tillatelse; PDRA er grunnlag for en søknad myndigheten må godkjenne"
+        },
+        {
+          "id": "b",
+          "text": "STS gjelder bare VLOS-flyging i befolket miljø, PDRA gjelder bare BVLOS i spredt befolket område"
+        },
+        {
+          "id": "c",
+          "text": "PDRA krever C5- eller C6-drone, STS gjør det ikke"
+        },
+        {
+          "id": "d",
+          "text": "De er identiske, PDRA er bare EASAs eldre navn på STS"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Begge er ferdigdefinerte rammer for vanlige operasjonstyper, men prosessen skiller: en operatør som følger et STS slipper operasjonstillatelse og sender bare en deklarasjon. En PDRA forenkler risikovurderingen i en søknad som myndigheten fortsatt må behandle og godkjenne.",
+      "source": "EU 2020/639 art. 1(2); Droneavisa STS-guide (Luftfartstilsynet)"
+    },
+    {
+      "n": 3,
+      "category": "sts-regelverk",
+      "difficulty": 1,
+      "question_text": "Du har A2-kompetansebevis og skal ta STS-teoriprøven på trafikkstasjonen. Hva gjelder for deg?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Du må ta full prøve med 40 spørsmål uansett"
+        },
+        {
+          "id": "b",
+          "text": "Du er fritatt fra teoriprøven fordi A2 dekker STS-pensum"
+        },
+        {
+          "id": "c",
+          "text": "En kortere prøve med 30 spørsmål som hopper over A2-emnene"
+        },
+        {
+          "id": "d",
+          "text": "Prøven kan tas på nett hos Luftfartstilsynet i stedet for på trafikkstasjon"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker forøvrig også A2.",
+      "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet via Droneavisa"
+    },
+    {
+      "n": 4,
+      "category": "sts-regelverk",
+      "difficulty": 2,
+      "question_text": "Hvor stor andel riktige svar kreves for å bestå STS-teoriprøven, og hva tilsvarer det på den fulle prøven?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Minst 80 % — 32 av 40 riktige"
+        },
+        {
+          "id": "b",
+          "text": "Minst 70 % — 28 av 40 riktige"
+        },
+        {
+          "id": "c",
+          "text": "Minst 75 % — 30 av 40 riktige"
+        },
+        {
+          "id": "d",
+          "text": "Minst 90 % — 36 av 40 riktige"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Attachment A krever minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2→STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %).",
+      "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(c); Luftfartstilsynet"
+    },
+    {
+      "n": 5,
+      "category": "sts-regelverk",
+      "difficulty": 2,
+      "question_text": "Et STS-kompetansebevis er fire år gammelt. Piloten vil unngå ny eksamen. Hva kan hun gjøre?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ingenting — beviset må fornyes med ny eksamen hvert femte år uansett"
+        },
+        {
+          "id": "b",
+          "text": "Levere flygelogg som viser minst 20 timer STS-flyging siste år til Luftfartstilsynet"
+        },
+        {
+          "id": "c",
+          "text": "Ta oppfriskningskurs i teoriemnene før beviset utløper"
+        },
+        {
+          "id": "d",
+          "text": "Søke Luftfartstilsynet om forlengelse på grunnlag av operatørens deklarasjon"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Beviset gjelder i fem år. Innenfor gyldighetsperioden kan det revalideres enten ved å demonstrere kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse.",
+      "source": "EU 2020/639 UAS.STS-01.020 (3)–(4)"
+    },
+    {
+      "n": 6,
+      "category": "sts-01",
+      "difficulty": 1,
+      "question_text": "Hvilken kombinasjon beskriver STS-01 riktig?",
+      "options": [
+        {
+          "id": "a",
+          "text": "BVLOS inntil 1 km, maks 120 m, C6-merket drone, spredt befolket område"
+        },
+        {
+          "id": "b",
+          "text": "VLOS, maks 120 m, C5-merket drone, kontrollert bakkeområde"
+        },
+        {
+          "id": "c",
+          "text": "VLOS, maks 150 m, C3-merket drone, minst 150 m fra bebyggelse"
+        },
+        {
+          "id": "d",
+          "text": "VLOS eller BVLOS, maks 120 m, valgfri klasse med Remote ID, kontrollert bakkeområde"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "STS-01 er VLOS-scenarioet: dronen holdes i synsrekkevidde hele tiden, maks 120 m over nærmeste punkt på bakken, klasse C5 med aktiv fjernidentifikasjon, over et kontrollert bakkeområde — som kan ligge i befolket miljø. Kombinasjonen med BVLOS, 1 km og C6 beskriver STS-02.",
+      "source": "EU 2020/639 UAS.STS-01.010 og .020"
+    },
+    {
+      "n": 7,
+      "category": "sts-01",
+      "difficulty": 2,
+      "question_text": "Under en STS-01-flyging skal dronen flyttes raskt fra én side av et stort industriområde til den andre. Hvilken grense gjelder for bakkehastigheten?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ingen — hastighetsgrensen i STS-01 gjelder bare ved flyging over uinvolverte personer"
+        },
+        {
+          "id": "b",
+          "text": "Under 5 m/s for ikke-tjoret drone"
+        },
+        {
+          "id": "c",
+          "text": "Under 19 m/s, som i A2"
+        },
+        {
+          "id": "d",
+          "text": "Under 3 m/s dersom det ikke brukes observatør"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er A2-grensen for lavhastighetsmodus i C2 — den gjelder ikke her.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(d); EU 2020/1058 Part 16 pkt. (4)"
+    },
+    {
+      "n": 8,
+      "category": "sts-01",
+      "difficulty": 3,
+      "question_text": "Du skal inspisere en 130 m høy telemast med C5-drone under STS-01. Masteeieren har bedt om inspeksjonen skriftlig. Hvor høyt kan du fly, og hvor høyt kan operasjonsvolumet strekke seg?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Maks 120 m — unntaket for hindringer finnes bare i åpen kategori"
+        },
+        {
+          "id": "b",
+          "text": "Ubegrenset så lenge du holder deg innenfor 50 m fra masten"
+        },
+        {
+          "id": "c",
+          "text": "Inntil 145 m innenfor 50 m fra masten, med operasjonsvolum inntil 145 m"
+        },
+        {
+          "id": "d",
+          "text": "Inntil 145 m innenfor 50 m fra masten, med operasjonsvolum inntil 175 m"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flight geography + contingency volume) gå maks 30 m over tillatt høyde — her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.",
+      "source": "EU 2020/639 UAS.STS-01.010 (1)–(3)"
+    },
+    {
+      "n": 9,
+      "category": "sts-01",
+      "difficulty": 2,
+      "question_text": "Et STS-01-oppdrag skal levere en liten prøve av et kjemisk avfallsstoff fra taket på en fabrikk ned til bakken. Er dette tillatt?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Nei, dronen skal ikke frakte farlig gods i STS-01"
+        },
+        {
+          "id": "b",
+          "text": "Ja, hvis operasjonsmanualen beskriver lasten og festet er kontrollert"
+        },
+        {
+          "id": "c",
+          "text": "Ja, STS-01 tillater nyttelast så lenge dronen er C5-merket"
+        },
+        {
+          "id": "d",
+          "text": "Nei, STS-01 tillater ikke nyttelast av noe slag"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Både STS-01 og STS-02 forbyr transport av farlig gods under flyging. Annen nyttelast (kamera, sensorer, ufarlige gjenstander) er ikke forbudt i seg selv — men den må være kompatibel med dronen, noe som inngår i planleggingen før flyging.",
+      "source": "EU 2020/639 UAS.STS-01.010 (4) og UAS.STS-02.010 (4)"
+    },
+    {
+      "n": 10,
+      "category": "sts-01",
+      "difficulty": 2,
+      "question_text": "Hva må piloten kontrollere før hver STS-01-flyging, i tillegg til den vanlige førflygingssjekken?",
+      "options": [
+        {
+          "id": "a",
+          "text": "At flygeavslutningen virker og at direkte Remote ID er aktiv og oppdatert"
+        },
+        {
+          "id": "b",
+          "text": "At Luftfartstilsynet har fått melding om dagens flyging og område"
+        },
+        {
+          "id": "c",
+          "text": "At luftromsobservatøren har fått tildelt radiokanal"
+        },
+        {
+          "id": "d",
+          "text": "At dronens programmerbare flygevolum er satt til flight geography"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum  er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
+      "source": "EU 2020/639 UAS.STS-01.040 (1)"
+    },
+    {
+      "n": 11,
+      "category": "sts-02",
+      "difficulty": 1,
+      "question_text": "Hvor langt fra piloten kan dronen fly under STS-02 dersom det ikke brukes luftromsobservatør?",
+      "options": [
+        {
+          "id": "a",
+          "text": "500 m"
+        },
+        {
+          "id": "b",
+          "text": "Så langt C2-linken rekker, forutsatt at dronen følger forhåndsprogrammert bane"
+        },
+        {
+          "id": "c",
+          "text": "2 km"
+        },
+        {
+          "id": "d",
+          "text": "1 km, med forhåndsprogrammert bane når dronen er ute av syne"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "Uten luftromsobservatør er grensen 1 km fra piloten, og dronen skal følge en forhåndsprogrammert trajektorie når den ikke er i pilotens synsrekkevidde. Med en eller flere observatører utvides grensen til 2 km fra piloten.",
+      "source": "EU 2020/639 UAS.STS-02.020 (5)–(6)"
+    },
+    {
+      "n": 12,
+      "category": "sts-02",
+      "difficulty": 3,
+      "question_text": "En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. Hvilket oppsett bryter reglene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Dronen 1,8 km fra piloten, 0,9 km fra nærmeste observatør, observatørene 0,8 km fra piloten"
+        },
+        {
+          "id": "b",
+          "text": "Dronen 1,5 km fra piloten, 0,6 km fra nærmeste observatør, én observatør 1,2 km fra piloten"
+        },
+        {
+          "id": "c",
+          "text": "Dronen 2,0 km fra piloten, 1,0 km fra nærmeste observatør, observatørene 1,0 km fra piloten"
+        },
+        {
+          "id": "d",
+          "text": "Dronen 0,7 km fra piloten, 0,3 km fra nærmeste observatør, observatørene 0,5 km fra piloten"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Med observatører gjelder tre avstander samtidig: maks 2 km fra dronen til piloten, maks 1 km fra dronen til nærmeste observatør, og maks 1 km mellom hver observatør og piloten. Oppsettet med en observatør 1,2 km fra piloten bryter dette — det er over grensen. Oppsettet med 2,0 / 1,0 / 1,0 km ligger nøyaktig på alle tre grensene og er tillatt.",
+      "source": "EU 2020/639 UAS.STS-02.020 (6)(b)–(d)"
+    },
+    {
+      "n": 13,
+      "category": "sts-02",
+      "difficulty": 2,
+      "question_text": "Sikten på inspeksjonsstedet er målt til 4 km i lett dis. Kan STS-02-oppdraget starte?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ja, hvis luftromsobservatører brukes"
+        },
+        {
+          "id": "b",
+          "text": "Nei, STS-02 krever flygesikt på mer enn 5 km"
+        },
+        {
+          "id": "c",
+          "text": "Ja, STS-02 har ingen siktkrav fordi dronen følger en forhåndsprogrammert bane"
+        },
+        {
+          "id": "d",
+          "text": "Ja, men bare innenfor 500 m fra piloten"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "STS-02 skal gjennomføres i et område der minste flygesikt er mer enn 5 km. Kravet gjelder uansett om observatører brukes — observatørene skal tvert imot være plassert slik at de dekker operasjonsvolumet med nettopp denne sikten.",
+      "source": "EU 2020/639 UAS.STS-02.020 (3) og (6)(a)"
+    },
+    {
+      "n": 14,
+      "category": "sts-02",
+      "difficulty": 2,
+      "question_text": "Under en STS-02-flyging avviker dronen fra planlagt rute. Hva er pilotens plikt overfor luftromsobservatørene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Varsle observatørene i tide om avviket og når det skjer"
+        },
+        {
+          "id": "b",
+          "text": "Ingen — observatørene følger dronen visuelt og oppdager avviket selv"
+        },
+        {
+          "id": "c",
+          "text": "Overlate styringen til nærmeste observatør"
+        },
+        {
+          "id": "d",
+          "text": "Utløse flygeavslutning umiddelbart uansett årsak"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Piloten skal informere observatørene i tide om alle avvik fra planlagt bane og tidspunktene for dem. Observatørens jobb er luftromsskanning og å varsle piloten om fare — ikke å styre. Flygeavslutning utløses først når dronen kan forlate operasjonsvolumet, ikke ved ethvert avvik fra flight geography.",
+      "source": "EU 2020/639 UAS.STS-02.040 (2)(f)–(h) og UAS.STS-02.050"
+    },
+    {
+      "n": 15,
+      "category": "sts-02",
+      "difficulty": 2,
+      "question_text": "Hva er luftromsobservatørens hovedoppgave i STS-02?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Skanne luftrommet for bemannede fly, følge dronens posisjon og varsle piloten ved fare"
+        },
+        {
+          "id": "b",
+          "text": "Holde uinvolverte personer ute av det kontrollerte bakkeområdet og bakkerisikobufferen"
+        },
+        {
+          "id": "c",
+          "text": "Overta styringen dersom C2-linken faller ut"
+        },
+        {
+          "id": "d",
+          "text": "Føre flygelogg, dokumentere operasjonen og rapportere hendelser til operatøren"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Observatøren skal ha en grundig skanning av luftrommet for å oppdage kollisjonsfare med bemannede fly, holde seg orientert om hvor dronen er (visuelt eller med elektroniske hjelpemidler) og varsle piloten når fare oppdages. Sikring av bakkeområdet er operatørens ansvar, og styringen skal aldri overføres til noen annen kontrollenhet.",
+      "source": "EU 2020/639 UAS.STS-02.050"
+    },
+    {
+      "n": 16,
+      "category": "sts-bakkerisiko",
+      "difficulty": 2,
+      "question_text": "Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Flygeområdet (flight geography area) og en fast sikkerhetsbuffer på 30 m rundt"
+        },
+        {
+          "id": "b",
+          "text": "Et inngjerdet område på minst 100 x 100 m"
+        },
+        {
+          "id": "c",
+          "text": "Flygeområdet, contingency-område minst 10 m utenfor, og bakkerisikobuffer utenfor det"
+        },
+        {
+          "id": "d",
+          "text": "Flygeområdet pluss et område på 1:1 (like langt ut som dronen flyr høyt)"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen er en tommelfingerregel fra SORA, ikke STS-01-kravet.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)"
+    },
+    {
+      "n": 17,
+      "category": "sts-bakkerisiko",
+      "difficulty": 3,
+      "question_text": "En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?",
+      "options": [
+        {
+          "id": "a",
+          "text": "10 m"
+        },
+        {
+          "id": "b",
+          "text": "60 m"
+        },
+        {
+          "id": "c",
+          "text": "30 m"
+        },
+        {
+          "id": "d",
+          "text": "15 m"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde → 10 m (≤10 kg) / 20 m (>10 kg); 60 m → 15 m / 30 m; 90 m → 20 m / 45 m; 120 m → 25 m / 60 m. 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde dronen veid 12 kg, ville svaret vært 30 m.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell"
+    },
+    {
+      "n": 18,
+      "category": "sts-bakkerisiko",
+      "difficulty": 3,
+      "question_text": "Samme scenario, men dronen veier 14 kg og skal fly i inntil 120 m. Hvor stor må bakkerisikobufferen minst være?",
+      "options": [
+        {
+          "id": "a",
+          "text": "25 m"
+        },
+        {
+          "id": "b",
+          "text": "60 m"
+        },
+        {
+          "id": "c",
+          "text": "45 m"
+        },
+        {
+          "id": "d",
+          "text": "120 m"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for droner inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell"
+    },
+    {
+      "n": 19,
+      "category": "sts-bakkerisiko",
+      "difficulty": 2,
+      "question_text": "En tjoret drone (tether-lengde 40 m) skal brukes under STS-01. Hvordan bestemmes det kontrollerte bakkeområdet?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Som for ikke-tjoret drone: flight geography + 10 m contingency + buffer etter tabellen"
+        },
+        {
+          "id": "b",
+          "text": "En sirkel med radius 120 m rundt festepunktet"
+        },
+        {
+          "id": "c",
+          "text": "En sirkel med radius lik tether-lengden pluss 5 m rundt festepunktet"
+        },
+        {
+          "id": "d",
+          "text": "Tjorede droner er unntatt fra kravet om kontrollert bakkeområde"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "For tjoret drone er området en sirkel med radius lik tether-lengden pluss 5 m, sentrert på festepunktet på bakken — her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi tetheren fysisk begrenser hvor dronen kan havne.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(ii); EU 2020/1058 Part 16"
+    },
+    {
+      "n": 20,
+      "category": "sts-bakkerisiko",
+      "difficulty": 2,
+      "question_text": "Hvordan skal bakkerisikobufferen dimensjoneres i STS-02, der høyde/vekt-tabellen fra STS-01 ikke brukes?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Minst 30 m i alle retninger"
+        },
+        {
+          "id": "b",
+          "text": "Minst lik avstanden produsenten oppgir at dronen beveger seg etter utløst flygeavslutning"
+        },
+        {
+          "id": "c",
+          "text": "Like stor som flygehøyden (1:1)"
+        },
+        {
+          "id": "d",
+          "text": "Bestemmes fritt av operatøren i operasjonsmanualen ut fra egen risikovurdering"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "STS-02 knytter bufferen til dronen: produsenten av en C6-drone skal oppgi i bruksanvisningen hvor langt dronen mest sannsynlig beveger seg etter aktivert flygeavslutning, og bufferen skal minst dekke den avstanden under de operative forholdene og innenfor produsentens begrensninger.",
+      "source": "EU 2020/639 UAS.STS-02.020 (2)(c); EU 2020/1058 Part 17 pkt. (8)(c)"
+    },
+    {
+      "n": 21,
+      "category": "sts-bakkerisiko",
+      "difficulty": 2,
+      "question_text": "Midt i en STS-01-flyging går en turgåer under sperrebåndet og inn i det kontrollerte bakkeområdet. Hva skal piloten gjøre?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fortsette flygingen, siden bakkerisikobufferen er dimensjonert nettopp for slike tilfeller"
+        },
+        {
+          "id": "b",
+          "text": "Følge operatørens contingency-prosedyre for uinvolverte i området"
+        },
+        {
+          "id": "c",
+          "text": "Utløse flygeavslutning umiddelbart"
+        },
+        {
+          "id": "d",
+          "text": "Overlate dronen til dronenobservatøren, gå ned og fjerne personen fra området"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Operasjonsmanualen skal inneholde en contingency-prosedyre for nettopp «uinvolverte personer som kommer inn i det kontrollerte bakkeområdet», og piloten skal følge den. Flygeavslutning er en nødprosedyre for når dronen kan forlate operasjonsvolumet — å tvinge dronen ned mot en person i området er ikke poenget. Piloten skal aldri overlate kontrollen.",
+      "source": "EU 2020/639 Appendix 5 pkt. (6)(d)(ii); UAS.STS-01.040 (2)(g)–(h)"
+    },
+    {
+      "n": 22,
+      "category": "sts-operator",
+      "difficulty": 2,
+      "question_text": "Før en operatør kan deklarere STS-01, må en operasjonsmanual være på plass. Hvilket av disse er IKKE et pliktig innhold etter Appendix 5?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Beredskapsplan (ERP) med kriterier for å erkjenne en nødsituasjon"
+        },
+        {
+          "id": "b",
+          "text": "Prosedyrer for rapportering av hendelser og for loggføring"
+        },
+        {
+          "id": "c",
+          "text": "Regnskap over forventet inntekt per oppdrag og prisliste for kundene"
+        },
+        {
+          "id": "d",
+          "text": "Retningslinjer for å begrense støy og miljøpåvirkning"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. Økonomi er ikke en del av manualen.",
+      "source": "EU 2020/639 Appendix 5 pkt. (6)(a)–(k); UAS.STS-01.030 (4)"
+    },
+    {
+      "n": 23,
+      "category": "sts-operator",
+      "difficulty": 2,
+      "question_text": "Operatøren har skrevet contingency- og nødprosedyrer i manualen. Hva krever STS-01 for å sikre at prosedyrene faktisk fungerer?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Godkjenning av prosedyrene hos Luftfartstilsynet før første flyging under scenarioet"
+        },
+        {
+          "id": "b",
+          "text": "Ingenting — prosedyrene i standardscenarioet er ferdig validert av EASA"
+        },
+        {
+          "id": "c",
+          "text": "At piloten har lest manualen og signert"
+        },
+        {
+          "id": "d",
+          "text": "Dedikerte flytester eller representative simuleringer"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "Operatøren skal sikre at contingency- og nødprosedyrene er tilstrekkelige gjennom enten dedikerte flytester eller simuleringer, forutsatt at simuleringen er representativ. Scenarioet er standardisert, men prosedyrene for akkurat din drone og ditt område er dine, og de skal prøves — ikke bare skrives.",
+      "source": "EU 2020/639 UAS.STS-01.030 (3)"
+    },
+    {
+      "n": 24,
+      "category": "sts-operator",
+      "difficulty": 1,
+      "question_text": "Hva må en beredskapsplan (ERP) for en STS-operasjon minst inneholde?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Forsikringsbevis og kontaktinfo til forsikringsselskapet"
+        },
+        {
+          "id": "b",
+          "text": "Nødnummer, kart over området, batteribytterutine og alternative landingsplasser"
+        },
+        {
+          "id": "c",
+          "text": "En liste over alternative landingsplasser innenfor 1 km"
+        },
+        {
+          "id": "d",
+          "text": "Plan mot eskalering, varslingsvilkår, kriterier for nødsituasjon og ansvarsfordeling"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "ERP-en skal minst ha: plan for å begrense eskalerende effekter, betingelsene for å varsle relevante myndigheter og organisasjoner, kriteriene for å identifisere en nødsituasjon, og en tydelig fordeling av pilotens og øvrig personells oppgaver. Alternative landingsplasser og kart kan høre hjemme i manualen, men er ikke ERP-minimumet.",
+      "source": "EU 2020/639 UAS.STS-01.030 (4)"
+    },
+    {
+      "n": 25,
+      "category": "sts-pilot",
+      "difficulty": 2,
+      "question_text": "Under en STS-01-flyging vil en kollega overta kontrollen fra sin egen fjernkontroll for å filme en vanskelig vinkel. Er det tillatt?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ja, hvis begge har gyldig STS-kompetansebevis og praktisk opplæring"
+        },
+        {
+          "id": "b",
+          "text": "Nei, kontrollen skal ikke overlates til en annen kontrollenhet"
+        },
+        {
+          "id": "c",
+          "text": "Ja, hvis overtakelsen står i operasjonsmanualen"
+        },
+        {
+          "id": "d",
+          "text": "Nei, men det er lov i STS-02 fordi dronen følger programmert bane"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Både STS-01 og STS-02 forbyr å overlate kontrollen av dronen til en annen kontrollenhet under flyging. Én pilot, én drone, én kontrollenhet — piloten skal også bare fly ett luftfartøy om gangen og ikke fly fra et kjøretøy i bevegelse.",
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(d)–(f); UAS.STS-02.040 (2)(c)–(e)"
+    },
+    {
+      "n": 26,
+      "category": "sts-pilot",
+      "difficulty": 3,
+      "question_text": "Dronen får en feil og driver mot yttergrensen av contingency-området. Piloten ser at den kan komme til å forlate operasjonsvolumet. Hva er riktig?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Utløse flygeavslutning, i tråd med nødprosedyren"
+        },
+        {
+          "id": "b",
+          "text": "Aktivere RTH og vente på at dronen kommer tilbake til startpunktet på egen hånd"
+        },
+        {
+          "id": "c",
+          "text": "Fortsette forsøkene på å styre dronen tilbake så lenge C2-linken er oppe"
+        },
+        {
+          "id": "d",
+          "text": "La dronen lande utenfor volumet, siden bakkerisikobufferen dekker det"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flight geography, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flight geography + contingency), skal nødprosedyren følges — inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.",
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(g)–(h)"
+    },
+    {
+      "n": 27,
+      "category": "sts-pilot",
+      "difficulty": 2,
+      "question_text": "I STS-01 kan piloten få hjelp av en «dronenobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Det er samme rolle med ulikt navn"
+        },
+        {
+          "id": "b",
+          "text": "Dronenobservatøren er obligatorisk i STS-01"
+        },
+        {
+          "id": "c",
+          "text": "Dronenobservatøren kan overta styringen ved behov, det kan aldri luftromsobservatøren"
+        },
+        {
+          "id": "d",
+          "text": "STS-01-observatøren støtter VLOS og luftromsskanning; STS-02-observatøren muliggjør BVLOS til 2 km og har egne plikter"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "I STS-01 er observatøren frivillig og skal støtte piloten i luftromsskanning mens dronen fortsatt er i VLOS — med klar kommunikasjon mellom dem. I STS-02 er luftromsobservatøren det som utvider rekkevidden fra 1 til 2 km, og rollen har egne krav (UAS.STS-02.050) til luftromsskanning, posisjonsoversikt og varsling. Ingen av dem styrer dronen.",
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(b); UAS.STS-02.020 (6) og .050"
+    },
+    {
+      "n": 28,
+      "category": "sts-mennesket",
+      "difficulty": 2,
+      "question_text": "Operasjonsmanualen skal ha en policy for hvordan piloten og annet nøkkelpersonell «erklærer seg skikket» før flyging. Hva er hensikten?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Å sikre at ingen flyr trøtt, syk, stresset eller påvirket"
+        },
+        {
+          "id": "b",
+          "text": "Å dokumentere at alle involverte har gyldig kompetansebevis og praktisk opplæring for scenarioet"
+        },
+        {
+          "id": "c",
+          "text": "Å fordele ansvar mellom operatør og pilot dersom noe går galt under flygingen"
+        },
+        {
+          "id": "d",
+          "text": "Å oppfylle forsikringsselskapets krav"
+        }
+      ],
+      "correct_option_id": "a",
+      "explanation": "Fit-to-fly-policyen er en menneskelige faktorer-mekanisme: den tvinger fram en bevisst egenvurdering før hver operasjon. En STS-operasjon skjer nær folk eller BVLOS, og feil vurdering får større konsekvenser enn i åpen kategori. Kompetansebeviset sier ingenting om formen i dag.",
+      "source": "EU 2020/639 Appendix 5 pkt. (6)(k)"
+    },
+    {
+      "n": 29,
+      "category": "sts-uas",
+      "difficulty": 2,
+      "question_text": "Hva må «midlet for å avslutte flygingen» i en C5-drone oppfylle?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Det kan være RTH-funksjonen, så lenge den er testet i dedikerte flytester før deklarasjon"
+        },
+        {
+          "id": "b",
+          "text": "Det skal kutte strømmen til alle motorer umiddelbart, uavhengig av høyde og hastighet"
+        },
+        {
+          "id": "c",
+          "text": "Uavhengig av autopiloten, tvinge dronen ned, hindre motordrevet horisontal bevegelse og dempe treffet"
+        },
+        {
+          "id": "d",
+          "text": "Det er valgfritt for droner under 10 kg"
+        }
+      ],
+      "correct_option_id": "c",
+      "explanation": "Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og inkludere midler som reduserer virkningen av treffet (f.eks. fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.",
+      "source": "EU 2020/1058 Part 16 pkt. (5)"
+    },
+    {
+      "n": 30,
+      "category": "sts-uas",
+      "difficulty": 2,
+      "question_text": "Hva skiller en C6-drone (STS-02) fra en C5-drone (STS-01) i kravene?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C6 krever fastvinge for rekkevidde, C5 krever multirotor for presis VLOS-flyging"
+        },
+        {
+          "id": "b",
+          "text": "C5 må ha fjernidentifikasjon, det trenger ikke C6"
+        },
+        {
+          "id": "c",
+          "text": "C6 er lettere: maks 4 kg mot C5 sine 25 kg, fordi den flyr utenfor synsrekkevidde"
+        },
+        {
+          "id": "d",
+          "text": "C6 må ha programmerbart operasjonsvolum, programmerbar bane og maks 50 m/s; C5 må ha lavhastighetsmodus ≤ 5 m/s"
+        }
+      ],
+      "correct_option_id": "d",
+      "explanation": "C6 er bygget for BVLOS: midler som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (≤ 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.",
+      "source": "EU 2020/1058 Part 16 og Part 17; EU 2020/639 UAS.STS-01.020 (1)(f), UAS.STS-02.020 (8)"
+    }
+  ]
+}
