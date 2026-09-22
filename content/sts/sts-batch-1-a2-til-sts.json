@@ -8,7 +8,7 @@
     "sources": {
       "EU 2020/639": "Forordning (EU) 2020/639 (STS-01/STS-02, Appendix 1 til 2019/947) — verifisert ordrett mot EUR-Lex 21.09.2026",
       "EU 2020/1058": "Delegert forordning (EU) 2020/1058 (C5/C6, Part 16/17 i 2019/945) — verifisert ordrett mot EUR-Lex 21.09.2026",
-      "Luftfartstilsynet": "Prøveformat (40/30 og 30/23), trafikkstasjon, NF-1172 — fra Droneavisa-guiden post 745, som er verifisert mot luftfartstilsynet.no"
+      "Luftfartstilsynet": "Prøveformat (40/30 og 30/23), trafikkstasjon, NF-1172 — verifisert direkte mot luftfartstilsynet.no/droner/droneregler/droneregler 22.09.2026"
     },
     "style": "Vegvesen-stil per stilrevisjonen 30.–31.07.2026: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe.",
     "db_note": "questions.exam_type har CHECK IN ('A1_A3','A2'). Innlasting krever migrasjon som utvider CHECK-en i questions og quiz_sessions samt nye rader i categories. Ikke gjør det før STS-beslutningen 21.10.2026.",
@@ -101,7 +101,7 @@
       ],
       "correct_option_id": "a",
       "explanation": "Begge er ferdigdefinerte rammer for vanlige operasjonstyper, men prosessen skiller: en operatør som følger et STS slipper operasjonstillatelse og sender bare en deklarasjon. En PDRA forenkler risikovurderingen i en søknad som myndigheten fortsatt må behandle og godkjenne.",
-      "source": "EU 2020/639 art. 1(2); Droneavisa STS-guide (Luftfartstilsynet)"
+      "source": "AMC1 til art. 11 i EU 2019/947 (EASA ED Decision 2019/021); Luftfartstilsynet, spesifikk kategori (luftfartstilsynet.no/en/drones/veiledning/specific-category)"
     },
     {
       "n": 3,
@@ -128,7 +128,7 @@
       ],
       "correct_option_id": "c",
       "explanation": "Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker forøvrig også A2.",
-      "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet via Droneavisa"
+      "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet (luftfartstilsynet.no/droner/droneregler/droneregler)"
     },
     {
       "n": 4,
@@ -227,7 +227,7 @@
         },
         {
           "id": "c",
-          "text": "Under 19 m/s, som i A2"
+          "text": "Under 19 m/s, samme grense som for C1-droner"
         },
         {
           "id": "d",
@@ -235,7 +235,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er A2-grensen for lavhastighetsmodus i C2 — den gjelder ikke her.",
+      "explanation": "STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er maksfarten for C0/C1-droner, og lavhastighetsmodusen i C2 (A2) er 3 m/s. Ingen av dem er STS-01-grensen.",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(d); EU 2020/1058 Part 16 pkt. (4)"
     },
     {
@@ -316,7 +316,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum  er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
+      "explanation": "UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
       "source": "EU 2020/639 UAS.STS-01.040 (1)"
     },
     {
@@ -609,7 +609,7 @@
         },
         {
           "id": "d",
-          "text": "Overlate dronen til dronenobservatøren, gå ned og fjerne personen fra området"
+          "text": "Overlate dronen til droneobservatøren, gå ned og fjerne personen fra området"
         }
       ],
       "correct_option_id": "b",
@@ -624,7 +624,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Beredskapsplan (ERP) med kriterier for å erkjenne en nødsituasjon"
+          "text": "Nødprosedyrer for når dronen forlater operasjonsvolumet"
         },
         {
           "id": "b",
@@ -636,7 +636,7 @@
         },
         {
           "id": "d",
-          "text": "Retningslinjer for å begrense støy og miljøpåvirkning"
+          "text": "Retningslinjer for å begrense sjenanse, som støy, og miljøpåvirkning"
         }
       ],
       "correct_option_id": "c",
@@ -755,7 +755,7 @@
       "n": 27,
       "category": "sts-pilot",
       "difficulty": 2,
-      "question_text": "I STS-01 kan piloten få hjelp av en «dronenobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?",
+      "question_text": "I STS-01 kan piloten få hjelp av en «droneobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?",
       "options": [
         {
           "id": "a",

@@ -4,7 +4,7 @@ Utkast 2026-09-21. Kanonisk fil: `content/sts/sts-batch-1-a2-til-sts.json`. Ikke
 
 Dekker de fem emnene i den kortere prøven «Utvidelse av A2 til STS» (DRONEA2STS, 30 spm / 23 riktige): (i) regelverk, (ii) menneskelige ytelsesbegrensninger, (iii) operasjonelle prosedyrer, (iv) tekniske og operasjonelle tiltak mot bakkerisiko, (v) generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi–viii) hører til fullprøven og kommer i batch 2.
 
-Kilder: EU 2020/639 og 2020/1058 verifisert ordrett mot EUR-Lex 21.09.2026; norsk prøveformat fra Luftfartstilsynet via Droneavisa-guiden (post 745).
+Kilder: EU 2020/639 og 2020/1058 verifisert ordrett mot EUR-Lex 21.09.2026; norsk prøveformat verifisert direkte mot luftfartstilsynet.no/droner/droneregler/droneregler 22.09.2026.
 
 ---
 
@@ -34,7 +34,7 @@ Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA
 
 *Forklaring:* Begge er ferdigdefinerte rammer for vanlige operasjonstyper, men prosessen skiller: en operatør som følger et STS slipper operasjonstillatelse og sender bare en deklarasjon. En PDRA forenkler risikovurderingen i en søknad som myndigheten fortsatt må behandle og godkjenne.
 
-*Kilde:* EU 2020/639 art. 1(2); Droneavisa STS-guide (Luftfartstilsynet)
+*Kilde:* AMC1 til art. 11 i EU 2019/947 (EASA ED Decision 2019/021); Luftfartstilsynet, spesifikk kategori (luftfartstilsynet.no/en/drones/veiledning/specific-category)
 
 ---
 
@@ -49,7 +49,7 @@ Du har A2-kompetansebevis og skal ta STS-teoriprøven på trafikkstasjonen. Hva 
 
 *Forklaring:* Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker forøvrig også A2.
 
-*Kilde:* EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet via Droneavisa
+*Kilde:* EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet (luftfartstilsynet.no/droner/droneregler/droneregler)
 
 ---
 
@@ -104,10 +104,10 @@ Under en STS-01-flyging skal dronen flyttes raskt fra én side av et stort indus
 
 - a) Ingen — hastighetsgrensen i STS-01 gjelder bare ved flyging over uinvolverte personer
 - b) Under 5 m/s for ikke-tjoret drone ✅
-- c) Under 19 m/s, som i A2
+- c) Under 19 m/s, samme grense som for C1-droner
 - d) Under 3 m/s dersom det ikke brukes observatør
 
-*Forklaring:* STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er A2-grensen for lavhastighetsmodus i C2 — den gjelder ikke her.
+*Forklaring:* STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er maksfarten for C0/C1-droner, og lavhastighetsmodusen i C2 (A2) er 3 m/s. Ingen av dem er STS-01-grensen.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(d); EU 2020/1058 Part 16 pkt. (4)
 
@@ -152,7 +152,7 @@ Hva må piloten kontrollere før hver STS-01-flyging, i tillegg til den vanlige 
 - c) At luftromsobservatøren har fått tildelt radiokanal
 - d) At dronens programmerbare flygevolum er satt til flight geography
 
-*Forklaring:* UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum  er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.
+*Forklaring:* UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (1)
 
@@ -315,7 +315,7 @@ Midt i en STS-01-flyging går en turgåer under sperrebåndet og inn i det kontr
 - a) Fortsette flygingen, siden bakkerisikobufferen er dimensjonert nettopp for slike tilfeller
 - b) Følge operatørens contingency-prosedyre for uinvolverte i området ✅
 - c) Utløse flygeavslutning umiddelbart
-- d) Overlate dronen til dronenobservatøren, gå ned og fjerne personen fra området
+- d) Overlate dronen til droneobservatøren, gå ned og fjerne personen fra området
 
 *Forklaring:* Operasjonsmanualen skal inneholde en contingency-prosedyre for nettopp «uinvolverte personer som kommer inn i det kontrollerte bakkeområdet», og piloten skal følge den. Flygeavslutning er en nødprosedyre for når dronen kan forlate operasjonsvolumet — å tvinge dronen ned mot en person i området er ikke poenget. Piloten skal aldri overlate kontrollen.
 
@@ -327,10 +327,10 @@ Midt i en STS-01-flyging går en turgåer under sperrebåndet og inn i det kontr
 
 Før en operatør kan deklarere STS-01, må en operasjonsmanual være på plass. Hvilket av disse er IKKE et pliktig innhold etter Appendix 5?
 
-- a) Beredskapsplan (ERP) med kriterier for å erkjenne en nødsituasjon
+- a) Nødprosedyrer for når dronen forlater operasjonsvolumet
 - b) Prosedyrer for rapportering av hendelser og for loggføring
 - c) Regnskap over forventet inntekt per oppdrag og prisliste for kundene ✅
-- d) Retningslinjer for å begrense støy og miljøpåvirkning
+- d) Retningslinjer for å begrense sjenanse, som støy, og miljøpåvirkning
 
 *Forklaring:* Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. Økonomi er ikke en del av manualen.
 
@@ -400,7 +400,7 @@ Dronen får en feil og driver mot yttergrensen av contingency-området. Piloten 
 
 ### 27. Pilotansvar og prosedyrer · vanskegrad 2
 
-I STS-01 kan piloten få hjelp av en «dronenobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?
+I STS-01 kan piloten få hjelp av en «droneobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?
 
 - a) Det er samme rolle med ulikt navn
 - b) Dronenobservatøren er obligatorisk i STS-01
