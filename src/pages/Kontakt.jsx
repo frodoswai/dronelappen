@@ -51,6 +51,23 @@ export default function Kontakt() {
           </section>
 
           <section>
+            <h2 className="text-lg font-medium text-da-navy mb-2">Flere tilganger til bedrift eller klubb?</h2>
+            <p>
+              Skal flere i firmaet, klubben eller klassen øve til dronesertifikatet?
+              Vi tilbyr gjerne rabatt på flere tilganger, og kan sende faktura
+              til organisasjonsnummer. Fortell oss hvor mange tilganger dere trenger.
+            </p>
+            <p className="mt-2">
+              <a
+                href={`mailto:kontakt@dronelappen.app?subject=${encodeURIComponent('Flere tilganger til DroneLappen')}&body=${encodeURIComponent('Hei!\n\nVi ønsker tilbud på flere tilganger.\n\nAntall tilganger:\nFirma/klubb:\nOrg.nr (for faktura):\n')}`}
+                className="font-mono text-[14px] text-da-navy underline underline-offset-2 hover:text-da-gold transition-colors"
+              >
+                Be om tilbud →
+              </a>
+            </p>
+          </section>
+
+          <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">Feil i spørsmålsbanken?</h2>
             <p>
               Har du funnet en feil i et spørsmål eller en forklaring? Send oss
