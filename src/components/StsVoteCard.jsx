@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import CrosshairMarks from './CrosshairMarks'
+import { getVoteSource } from '../lib/voteSource'
 
 // Låst STS-flis med stemmeknapp — etterspørselsmåling, ikke en funksjon.
 //
@@ -99,8 +100,11 @@ export default function StsVoteCard() {
   const stem = async () => {
     setBusy(true)
     setErr('')
+    // Kilde fra ?src= i lenken (f.eks. sts-epost-2), se lib/voteSource.js
+    // og 017_feature_votes_src.sql. null = kom ikke via en sporet lenke.
     const { error } = await supabase.rpc('cast_feature_vote', {
       p_feature: FEATURE,
+      p_src: getVoteSource(),
     })
     setBusy(false)
     if (error) {
