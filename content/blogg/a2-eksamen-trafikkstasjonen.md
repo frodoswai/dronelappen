@@ -14,7 +14,7 @@ To ting må være på plass først: du må ha bestått A1/A3-eksamen på flydron
 
 ## Booking hos Statens vegvesen
 
-Eksamen bestilles på vegvesen.no, samme sted som teoriprøve for førerkort. Velg «teoriprøve» og finn dronekategorien. Prisen er 970 kr, og du betaler ved booking. Vær ute i god tid: populære trafikkstasjoner i og rundt byene fylles fort, særlig før sommersesongen.
+Eksamen bestilles på vegvesen.no, samme sted som teoriprøve for førerkort. Velg «teoriprøve» og finn dronekategorien. Prisen er 970 kr, og ifølge Statens vegvesen betaler du ved oppmøte på trafikkstasjonen, ikke når du bestiller. Prøven tilbys på bokmål og engelsk. Vær ute i god tid: populære trafikkstasjoner i og rundt byene fylles fort, særlig før sommersesongen.
 
 ## På eksamensdagen hos vegvesenet
 
