@@ -21,7 +21,19 @@ const DISMISS_KEY = 'lead_capture_dismissed'
 const DISMISS_DAYS = 7
 
 // status: 'idle' | 'sending' | 'success' | 'duplicate' | 'error'
-export default function LeadCapture({ source = 'quiz', dismissible = true }) {
+// variant='paywall' (27.09.2026): på muren er de 25 gratis spørsmålene allerede
+// brukt opp, så øvingsplanen er det eneste de får igjen for adressen. Den må
+// derfor stå som et eget, synlig tilbud med innholdet listet FØR feltet, samme
+// prinsipp som /a2-ovingsplan. Punktene speiler MailerLite-automasjonen
+// «DroneLappen – velkomst (øvingsplan)» — endres e-postene, endres listen.
+const PAYWALL_PUNKTER = [
+  'Stegene fra A1/A3 til A2, med bestå-grensene for begge prøvene',
+  'Når du er klar til å booke A2 (tommelfingerregel: 27 av 30)',
+  '3 temaer folk oftest bommer på, i egne e-poster etterpå',
+]
+
+export default function LeadCapture({ source = 'quiz', dismissible = true, variant = 'default' }) {
+  const isPaywall = variant === 'paywall'
   const { user, loading } = useAuth()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
@@ -119,7 +131,7 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
       )}
 
       <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
-        gratis øvingsplan
+        {isPaywall ? 'ikke klar til å kjøpe? · gratis' : 'gratis øvingsplan'}
       </div>
 
       {status === 'success' ? (
@@ -132,10 +144,30 @@ export default function LeadCapture({ source = 'quiz', dismissible = true }) {
         </p>
       ) : (
         <>
-          <p className="text-[13px] text-da-text-body leading-[1.5] mb-3 pr-6">
-            Få en gratis øvingsplan og de viktigste eksamenstipsene rett i
-            innboksen — så du stiller forberedt til prøven.
-          </p>
+          {isPaywall ? (
+            <>
+              <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-2">
+                Få øvingsplanen til dronesertifikatet gratis
+              </h2>
+              <ul className="text-[13px] text-da-text-body leading-[1.6] mb-3 list-none space-y-1">
+                {PAYWALL_PUNKTER.map((p) => (
+                  <li key={p} className="flex gap-1.5">
+                    <span className="font-mono text-da-gold shrink-0">+</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[12.5px] text-da-text-muted leading-[1.5] mb-3">
+                A2-eksamen koster 970 kr per forsøk hos Statens vegvesen. Det
+                lønner seg å møte forberedt.
+              </p>
+            </>
+          ) : (
+            <p className="text-[13px] text-da-text-body leading-[1.5] mb-3 pr-6">
+              Få en gratis øvingsplan og de viktigste eksamenstipsene rett i
+              innboksen — så du stiller forberedt til prøven.
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
             <input
               type="email"

@@ -154,7 +154,7 @@ export default function Paywall({ answered = 25, onContinue }) {
               won't convert now still becomes a reachable lead. Self-hides for
               logged-in users (they already have an email on file). Always shown
               here (non-dismissible) so it stays a real alternative to the wall. */}
-          <LeadCapture source="quiz_paywall" dismissible={false} />
+          <LeadCapture source="quiz_paywall" dismissible={false} variant="paywall" />
 
           {onContinue && (
             <button
