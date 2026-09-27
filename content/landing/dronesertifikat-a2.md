@@ -56,7 +56,7 @@ Kompetansebeviset varer i 5 år. Det gjelder både A1/A3, A2 og STS. For å forn
 12 måneder fra kjøpet. Det er øvingsappen som varer i 12 måneder — selve kompetansebeviset ditt varer i 5 år, uavhengig av oss. De to henger ikke sammen.
 
 ### Hvor tar jeg A2-eksamen?
-A2-eksamen avlegges hos en trafikkstasjon (Statens vegvesen). Du må ha bestått A1/A3 først.
+A2-eksamen avlegges hos en trafikkstasjon (Statens vegvesen). Du må ha bestått A1/A3 først. Se [hvordan A2-eksamen hos Statens vegvesen foregår, steg for steg](/blogg/a2-eksamen-trafikkstasjonen/).
 
 ### Hvor mange riktige må jeg ha for å bestå A2?
 Du må ha minst 75 % riktig, altså 23 av 30 spørsmål.
@@ -66,5 +66,6 @@ For de fleste hobbyoppdrag holder A1/A3. A2 kreves når du vil fly tyngre droner
 
 ## Les også
 
+- [Drone A2-eksamen hos Statens vegvesen: slik foregår den](/blogg/a2-eksamen-trafikkstasjonen/)
 - [A2 eller A1/A3: hvilken trenger du?](/blogg/a2-vs-a1-a3/)
 - [De vanligste feilene på droneeksamen](/blogg/vanligste-feil-droneeksamen/)

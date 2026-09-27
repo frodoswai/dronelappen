@@ -1,12 +1,12 @@
 ---
-title: A2-eksamen på trafikkstasjonen, steg for steg
-description: Booking hos Statens vegvesen, legitimasjon, 30 spørsmål på skjerm og svar med en gang. Slik foregår A2-eksamen på trafikkstasjonen, steg for steg.
+title: Drone A2-eksamen hos Statens vegvesen: slik foregår den
+description: Drone A2-eksamen tas hos Statens vegvesen: booking, legitimasjon, 30 spørsmål på skjerm og svar med en gang. Hele løpet på trafikkstasjonen, steg for steg.
 date: 2026-09-01
 image: assets/a2-eksamen-trafikkstasjonen.png
-imageAlt: A2-eksamen på trafikkstasjonen steg for steg – DroneLappen-bloggen
+imageAlt: Drone A2-eksamen hos Statens vegvesen steg for steg – DroneLappen-bloggen
 ---
 
-A2-eksamen er den eneste delen av dronelappen du må møte opp fysisk for. Her er hele løpet, fra booking til beviset er ditt.
+Drone A2-eksamen tar du hos Statens vegvesen, på en trafikkstasjon. Det er den eneste delen av dronelappen du må møte opp fysisk for. Her er hele løpet, fra booking til beviset er ditt.
 
 ## Før du kan booke
 
@@ -16,7 +16,7 @@ To ting må være på plass først: du må ha bestått A1/A3-eksamen på flydron
 
 Eksamen bestilles på vegvesen.no, samme sted som teoriprøve for førerkort. Velg «teoriprøve» og finn dronekategorien. Prisen er 970 kr, og du betaler ved booking. Vær ute i god tid: populære trafikkstasjoner i og rundt byene fylles fort, særlig før sommersesongen.
 
-## På eksamensdagen
+## På eksamensdagen hos vegvesenet
 
 - Ta med gyldig legitimasjon. Uten den slipper du ikke inn.
 - Møt opp litt før tiden. Selve prøven tas på skjerm i en prøvesal, som teoriprøven for bil.
