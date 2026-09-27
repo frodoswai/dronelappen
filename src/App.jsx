@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import Home from './pages/Home'
 import ExamSelect from './pages/ExamSelect'
@@ -18,6 +18,29 @@ import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
 import './App.css'
 
+// Ugyldig eksamenstype i URL-en (f.eks. /quiz/A1A3) ga en side som aldri
+// lastet: ingen spørsmål, ingen feilmelding, ingen vei videre (oppdaget 27.09.2026).
+// Kjente skrivemåter rettes til riktig type med samme sti og query; alt annet
+// sendes til forsiden. Gyldige typer: A1_A3 og A2.
+const EXAM_TYPES = ['A1_A3', 'A2']
+
+function normalizeExamType(raw = '') {
+  const s = raw.toUpperCase().replace(/[^A-Z0-9]/g, '')
+  if (s === 'A1A3') return 'A1_A3'
+  if (s === 'A2') return 'A2'
+  return null
+}
+
+function ExamRoute({ element }) {
+  const { examType } = useParams()
+  const { pathname, search, hash } = useLocation()
+  if (EXAM_TYPES.includes(examType)) return element
+  const fixed = normalizeExamType(examType)
+  if (!fixed) return <Navigate to="/" replace />
+  const base = pathname.slice(0, pathname.lastIndexOf('/'))
+  return <Navigate to={`${base}/${fixed}${search}${hash}`} replace />
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -26,10 +49,10 @@ function App() {
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/exam/:examType" element={<ExamSelect />} />
-            <Route path="/quiz/:examType" element={<Quiz />} />
-            <Route path="/practice/:examType" element={<Quiz />} />
-            <Route path="/rapid/:examType" element={<Rapid />} />
+            <Route path="/exam/:examType" element={<ExamRoute element={<ExamSelect />} />} />
+            <Route path="/quiz/:examType" element={<ExamRoute element={<Quiz />} />} />
+            <Route path="/practice/:examType" element={<ExamRoute element={<Quiz />} />} />
+            <Route path="/rapid/:examType" element={<ExamRoute element={<Rapid />} />} />
             <Route path="/results" element={<Results />} />
             {/* Personlig scoreboard — beredskap per eksamenstype/kategori
                 + eksamenshistorikk. Lenkes fra sluttskjermene. */}
@@ -48,6 +71,10 @@ function App() {
                 på lenkeklikk; e-post 4 går bare til dem som ikke klikket. */}
             <Route path="/bestilt" element={<Kvittering />} />
             <Route path="/bestatt" element={<Kvittering />} />
+            {/* Ukjent sti i appen: forsiden i stedet for en tom side. De
+                statiske sidene (/blogg/, /pris/ osv.) serveres av Vercel før
+                appen og lenkes med <a>, så de treffes ikke her. */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
         <Footer />
