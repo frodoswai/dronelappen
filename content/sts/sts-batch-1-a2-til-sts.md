@@ -44,10 +44,10 @@ Du har A2-kompetansebevis og skal ta STS-teoriprøven på trafikkstasjonen. Hva 
 
 - a) Du må ta full prøve med 40 spørsmål uansett
 - b) Du er fritatt fra teoriprøven fordi A2 dekker STS-pensum
-- c) En kortere prøve med 30 spørsmål som hopper over A2-emnene ✅
+- c) En kortere prøve med 30 spørsmål, uten emnene meteorologi, ytelse og luftrisiko ✅
 - d) Prøven kan tas på nett hos Luftfartstilsynet i stedet for på trafikkstasjon
 
-*Forklaring:* Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker forøvrig også A2.
+*Forklaring:* Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. Meteorologi, dronens ytelse og tiltak mot luftrisiko faller bort. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker for øvrig også A2.
 
 *Kilde:* EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet (luftfartstilsynet.no/droner/droneregler/droneregler)
 
@@ -70,14 +70,14 @@ Hvor stor andel riktige svar kreves for å bestå STS-teoriprøven, og hva tilsv
 
 ### 5. Regelverk og kategorier · vanskegrad 2
 
-Et STS-kompetansebevis er fire år gammelt. Piloten vil unngå ny eksamen. Hva kan hun gjøre?
+Et STS-kompetansebevis er fire år gammelt. Hvilken vei til fornyelse innenfor gyldighetsperioden åpner EU-regelverket for, i tillegg til ny eksamen?
 
-- a) Ingenting – beviset må fornyes med ny eksamen hvert femte år uansett
+- a) Ingen, beviset kan bare fornyes etter at det har utløpt
 - b) Levere flygelogg som viser minst 20 timer STS-flyging siste år til Luftfartstilsynet
 - c) Ta oppfriskningskurs i teoriemnene før beviset utløper ✅
 - d) Søke Luftfartstilsynet om forlengelse på grunnlag av operatørens deklarasjon
 
-*Forklaring:* Beviset gjelder i fem år. Innenfor gyldighetsperioden kan det revalideres enten ved å demonstrere kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse.
+*Forklaring:* Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. I Norge tilbyr Luftfartstilsynet i dag ikke et eget oppfriskningskurs for STS: fornyelse skjer ved ny eksamen på trafikkstasjon.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (3)–(4)
 
@@ -177,7 +177,7 @@ Hvor langt fra piloten kan dronen fly under STS-02 dersom det ikke brukes luftro
 
 En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. Hvilket oppsett bryter reglene?
 
-- a) Dronen 1,8 km fra piloten, 0,9 km fra nærmeste observatør, observatørene 0,8 km fra piloten
+- a) Dronen 1,8 km fra piloten, 0,9 km fra nærmeste observatør, observatørene 0,9 km fra piloten
 - b) Dronen 1,5 km fra piloten, 0,6 km fra nærmeste observatør, én observatør 1,2 km fra piloten ✅
 - c) Dronen 2,0 km fra piloten, 1,0 km fra nærmeste observatør, observatørene 1,0 km fra piloten
 - d) Dronen 0,7 km fra piloten, 0,3 km fra nærmeste observatør, observatørene 0,5 km fra piloten
@@ -403,8 +403,8 @@ Dronen får en feil og driver mot yttergrensen av contingency-området. Piloten 
 I STS-01 kan piloten få hjelp av en «droneobservatør» (unmanned aircraft observer). Hva er forskjellen fra luftromsobservatøren i STS-02?
 
 - a) Det er samme rolle med ulikt navn
-- b) Dronenobservatøren er obligatorisk i STS-01
-- c) Dronenobservatøren kan overta styringen ved behov, det kan aldri luftromsobservatøren
+- b) Droneobservatøren er obligatorisk i STS-01
+- c) Droneobservatøren kan overta styringen ved behov, det kan aldri luftromsobservatøren
 - d) STS-01-observatøren støtter VLOS og luftromsskanning; STS-02-observatøren muliggjør BVLOS til 2 km og har egne plikter ✅
 
 *Forklaring:* I STS-01 er observatøren frivillig og skal støtte piloten i luftromsskanning mens dronen fortsatt er i VLOS – med klar kommunikasjon mellom dem. I STS-02 er luftromsobservatøren det som utvider rekkevidden fra 1 til 2 km, og rollen har egne krav (UAS.STS-02.050) til luftromsskanning, posisjonsoversikt og varsling. Ingen av dem styrer dronen.

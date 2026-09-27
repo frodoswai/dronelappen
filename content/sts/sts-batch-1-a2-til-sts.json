@@ -119,7 +119,7 @@
         },
         {
           "id": "c",
-          "text": "En kortere prøve med 30 spørsmål som hopper over A2-emnene"
+          "text": "En kortere prøve med 30 spørsmål, uten emnene meteorologi, ytelse og luftrisiko"
         },
         {
           "id": "d",
@@ -127,7 +127,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker forøvrig også A2.",
+      "explanation": "Regelverket sier at en pilot som allerede har A2 kan få en prøve på minst 30 spørsmål fordelt på emnene (i)–(v): regelverk, menneskelige faktorer, operasjonelle prosedyrer, bakkerisiko og UAS-kunnskap. Meteorologi, dronens ytelse og tiltak mot luftrisiko faller bort. I Norge heter den «Utvidelse av A2 til STS» (kode DRONEA2STS) og tas på Statens vegvesens trafikkstasjoner. Bestått STS dekker for øvrig også A2.",
       "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(b); Luftfartstilsynet (luftfartstilsynet.no/droner/droneregler/droneregler)"
     },
     {
@@ -161,11 +161,11 @@
       "n": 5,
       "category": "sts-regelverk",
       "difficulty": 2,
-      "question_text": "Et STS-kompetansebevis er fire år gammelt. Piloten vil unngå ny eksamen. Hva kan hun gjøre?",
+      "question_text": "Et STS-kompetansebevis er fire år gammelt. Hvilken vei til fornyelse innenfor gyldighetsperioden åpner EU-regelverket for, i tillegg til ny eksamen?",
       "options": [
         {
           "id": "a",
-          "text": "Ingenting – beviset må fornyes med ny eksamen hvert femte år uansett"
+          "text": "Ingen, beviset kan bare fornyes etter at det har utløpt"
         },
         {
           "id": "b",
@@ -181,7 +181,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Beviset gjelder i fem år. Innenfor gyldighetsperioden kan det revalideres enten ved å demonstrere kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse.",
+      "explanation": "Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. I Norge tilbyr Luftfartstilsynet i dag ikke et eget oppfriskningskurs for STS: fornyelse skjer ved ny eksamen på trafikkstasjon.",
       "source": "EU 2020/639 UAS.STS-01.020 (3)–(4)"
     },
     {
@@ -354,7 +354,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Dronen 1,8 km fra piloten, 0,9 km fra nærmeste observatør, observatørene 0,8 km fra piloten"
+          "text": "Dronen 1,8 km fra piloten, 0,9 km fra nærmeste observatør, observatørene 0,9 km fra piloten"
         },
         {
           "id": "b",
@@ -763,11 +763,11 @@
         },
         {
           "id": "b",
-          "text": "Dronenobservatøren er obligatorisk i STS-01"
+          "text": "Droneobservatøren er obligatorisk i STS-01"
         },
         {
           "id": "c",
-          "text": "Dronenobservatøren kan overta styringen ved behov, det kan aldri luftromsobservatøren"
+          "text": "Droneobservatøren kan overta styringen ved behov, det kan aldri luftromsobservatøren"
         },
         {
           "id": "d",
