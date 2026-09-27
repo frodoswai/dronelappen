@@ -44,3 +44,6 @@ questionbank-export.md
 /public/dronesertifikat-a2/
 /public/droneeksamen-oving/
 /public/pris/
+
+# Generert av build-landing.mjs fra src/lib/antall.json
+/public/antall.json

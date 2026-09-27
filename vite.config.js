@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -12,17 +13,12 @@ import tailwindcss from '@tailwindcss/vite'
 const PRICE_INCREASE_AT = '2026-08-15T00:00:00+02:00'
 const DL_PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? '349' : '249'
 
-// Antall spørsmål i banken. Samme mekanikk som prisen, og av samme grunn:
-// tallet sto hardkodet ni steder i index.html og hadde blitt stående på 238
-// etter at banken vokste til 241 (110 A1/A3 + 131 A2, talt i Supabase
-// 25.07.2026). Landingssidene og appen sa 241, mens meta-beskrivelsene,
-// JSON-LD-en og noscript-teksten — altså akkurat det Google og AI-svar leser
-// — sa 238. Nå står tallet ett sted.
-//
-// VOKSER BANKEN: oppdater denne, og sjekk content/landing/*.md som har sine
-// egne forekomster. Fasit:
-//   select count(*) from questions;
-const DL_ANTALL = '241'
+// Antall spørsmål i banken. Én kilde: src/lib/antall.json, som Max holder
+// oppdatert daglig fra Supabase (~/Projects/MacMiniHub/scripts/dronelappen-antall.py
+// committer ved endring -> Vercel bygger). Brukes i index.html (%DL_ANTALL%),
+// landingssider/blogg ({{ANTALL}}) og i appen (import av antall.json).
+// Innført 27.09.2026 da banken gikk fra 241 til 266.
+const DL_ANTALL = String(JSON.parse(readFileSync(new URL('./src/lib/antall.json', import.meta.url), 'utf8')).total)
 
 function prisPlugin() {
   return {

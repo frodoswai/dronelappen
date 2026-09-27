@@ -1,11 +1,11 @@
 ---
 title: Droneeksamen øving: øv til A1/A3 og A2 | DroneLappen
-description: Øv til droneeksamen med 241 norske spørsmål, prøveeksamen med ekte tidsfrist og feilgjennomgang. Test 25 spørsmål gratis, uten innlogging.
+description: Øv til droneeksamen med {{ANTALL}} norske spørsmål, prøveeksamen med ekte tidsfrist og feilgjennomgang. Test 25 spørsmål gratis, uten innlogging.
 h1: Øv til droneeksamen
 slug: droneeksamen-oving
 ---
 
-<p class="lede">Den sikreste måten å bestå droneeksamen på er å øve på ekte spørsmålstyper under realistiske forhold. DroneLappen gir deg 241 norske øvingsspørsmål for A1/A3 og A2, en prøveeksamen med ekte tidsfrist og bestå-grense, og forklaring på hvert svar. Test 25 spørsmål gratis, uten innlogging.</p>
+<p class="lede">Den sikreste måten å bestå droneeksamen på er å øve på ekte spørsmålstyper under realistiske forhold. DroneLappen gir deg {{ANTALL}} norske øvingsspørsmål for A1/A3 og A2, en prøveeksamen med ekte tidsfrist og bestå-grense, og forklaring på hvert svar. Test 25 spørsmål gratis, uten innlogging.</p>
 
 ## Hva droneeksamen krever
 
@@ -21,7 +21,7 @@ slug: droneeksamen-oving
 
 ## Slik øver du med DroneLappen
 
-- **241 norske spørsmål** for både A1/A3 og A2
+- **{{ANTALL}} norske spørsmål** for både A1/A3 og A2
 - **Eksamensmodus:** ekte tidsfrist og bestå-grense, som selve prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer av feilene
 - **Rapid-modus** for rask repetisjon
@@ -36,7 +36,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 
 <div class="cta-box">
 <h2>Start øvingen</h2>
-<p>Prøv 25 spørsmål gratis nå. Full tilgang til alle 241 spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
+<p>Prøv 25 spørsmål gratis nå. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
 <a class="btn" href="/">Prøv 25 gratis →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
@@ -47,10 +47,10 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 Øv på ekte spørsmålstyper i eksamensmodus med tidsfrist, og gå gjennom feilene dine med forklaring. DroneLappen er bygget for nettopp dette.
 
 ### Er øvingen gratis?
-Du kan teste 25 spørsmål gratis uten innlogging. Full tilgang til alle 241 spørsmål er et engangskjøp og gir 12 måneders tilgang.
+Du kan teste 25 spørsmål gratis uten innlogging. Full tilgang til alle {{ANTALL}} spørsmål er et engangskjøp og gir 12 måneders tilgang.
 
 ### Hvor mange spørsmål bør jeg øve på?
-DroneLappen har 241 norske spørsmål. Øv til du stabilt består prøveeksamen med god margin over 75 %.
+DroneLappen har {{ANTALL}} norske spørsmål. Øv til du stabilt består prøveeksamen med god margin over 75 %.
 
 ### Dekker øvingen både A1/A3 og A2?
 Ja, spørsmålsbanken dekker pensum for både A1/A3 og A2.

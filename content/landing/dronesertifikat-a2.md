@@ -5,7 +5,7 @@ h1: Drone sertifikat A2: slik består du eksamen
 slug: dronesertifikat-a2
 ---
 
-<p class="lede">A2-sertifikatet lar deg fly tyngre droner nærmere uinvolverte personer enn i A1/A3. Du tar A2-eksamen på en trafikkstasjon, den koster 970 kr, og med minst 75 % riktig får du et kompetansebevis som gjelder i hele EØS. DroneLappen forbereder deg med 241 norske øvingsspørsmål og full prøveeksamen.</p>
+<p class="lede">A2-sertifikatet lar deg fly tyngre droner nærmere uinvolverte personer enn i A1/A3. Du tar A2-eksamen på en trafikkstasjon, den koster 970 kr, og med minst 75 % riktig får du et kompetansebevis som gjelder i hele EØS. DroneLappen forbereder deg med {{ANTALL}} norske øvingsspørsmål og full prøveeksamen.</p>
 
 ## Hva A2-eksamen krever
 
@@ -24,7 +24,7 @@ slug: dronesertifikat-a2
 
 DroneLappen er bygget for å trene deg på nøyaktig de spørsmålstypene du møter på prøven:
 
-- **241 norske øvingsspørsmål** som dekker A2-pensum
+- **{{ANTALL}} norske øvingsspørsmål** som dekker A2-pensum
 - **Eksamensmodus** med ekte tidsfrist og bestå-grense, akkurat som den offisielle prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer reglene og ikke bare pugger
 - **Rapid-modus** for rask repetisjon når du har dårlig tid
@@ -39,7 +39,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 
 <div class="cta-box">
 <h2>Klar til å øve til A2?</h2>
-<p>Test deg med 25 spørsmål gratis. Full tilgang til alle 241 spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
+<p>Test deg med 25 spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
 <a class="btn" href="/">Prøv 25 gratis →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>

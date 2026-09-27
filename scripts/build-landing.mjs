@@ -48,9 +48,21 @@ function pris(str) {
     .replaceAll('{{PRIS_VARSEL}}', PRIS_VARSEL_HTML)
     .replaceAll('{{PRIS_HTML}}', `<span class="dl-pris">${PRIS}</span>`)
     .replaceAll('{{PRIS}}', String(PRIS))
+    .replaceAll('{{ANTALL_A1A3}}', String(ANTALL.A1_A3))
+    .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
+    .replaceAll('{{ANTALL}}', String(ANTALL.total))
 }
 
 // Selvkorrigerende prisskifte for allerede utrullede statiske sider.
+// ---- Antall spørsmål -------------------------------------------------------
+// Én kilde: src/lib/antall.json. Holdes oppdatert av Max
+// (~/Projects/MacMiniHub/scripts/dronelappen-antall.py, daglig), som teller i
+// Supabase og committer fila når tallet endrer seg. Commit -> Vercel-bygg -> nytt
+// tall på alle statiske sider. Kopieres også til public/antall.json, som
+// Droneavisa leser via shortcoden [dronelappen_antall].
+const ANTALL = JSON.parse(readFileSync(join(ROOT, 'src', 'lib', 'antall.json'), 'utf8'))
+writeFileSync(join(PUBLIC, 'antall.json'), JSON.stringify(ANTALL, null, 2) + '\n')
+
 const PRIS_SCRIPT = `<script>(function(){var T=Date.parse('${PRICE_INCREASE_AT}');if(Date.now()<T)return;var n=document.querySelectorAll('.dl-pris');for(var i=0;i<n.length;i++)n[i].textContent='${PRICE_AFTER}';var v=document.querySelectorAll('.dl-prisvarsel');for(var j=0;j<v.length;j++)v[j].parentNode.removeChild(v[j]);})();</script>`
 // --------------------------------------------------------------------------
 

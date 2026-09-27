@@ -35,4 +35,4 @@ Begge nivåene gjelder i 5 år. Deretter er det ny eksamen, og flydrone.no varsl
 
 ## Klar for teoriprøven?
 
-Uansett hva du kaller beviset, er veien dit den samme: pensum og øving. DroneLappen gir deg 241 norske spørsmål i eksamensformat, de første 25 helt gratis. [Start her](/droneeksamen-oving/).
+Uansett hva du kaller beviset, er veien dit den samme: pensum og øving. DroneLappen gir deg {{ANTALL}} norske spørsmål i eksamensformat, de første 25 helt gratis. [Start her](/droneeksamen-oving/).

@@ -177,13 +177,20 @@ rmSync(OUT, { recursive: true, force: true })
 mkdirSync(OUT, { recursive: true })
 
 // Kopier bilder (content/blogg/assets → public/blogg/assets)
+// Antall spørsmål: se kommentar i build-landing.mjs (kilde: src/lib/antall.json).
+const ANTALL = JSON.parse(readFileSync(join(ROOT, 'src', 'lib', 'antall.json'), 'utf8'))
+
 const ASSETS = join(CONTENT, 'assets')
 if (existsSync(ASSETS)) cpSync(ASSETS, join(OUT, 'assets'), { recursive: true })
 
 const posts = readdirSync(CONTENT)
   .filter((f) => f.endsWith('.md'))
   .map((f) => {
-    const { meta, body } = parseFrontmatter(readFileSync(join(CONTENT, f), 'utf8'), f)
+    const raw = readFileSync(join(CONTENT, f), 'utf8')
+      .replaceAll('{{ANTALL_A1A3}}', String(ANTALL.A1_A3))
+      .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
+      .replaceAll('{{ANTALL}}', String(ANTALL.total))
+    const { meta, body } = parseFrontmatter(raw, f)
     return { ...meta, html: marked.parse(body) }
   })
   .sort((a, b) => b.date.localeCompare(a.date))

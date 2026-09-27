@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import ANTALL from '../lib/antall.json'
 
 /**
  * /bestilt og /bestatt — landingssider for de to merkelenkene i kjøper-e-post 3.
@@ -39,7 +40,7 @@ const VARIANTER = {
       'Det var hele poenget. Du har fortsatt tilgang til banken ut perioden, så bruk den gjerne til å holde regelverket friskt.',
     raad: [
       'Reglene endrer seg. Banken oppdateres når regelverket gjør det, og tilgangen din følger med — du trenger ikke gjøre noe.',
-      'Skal du fly i A1 eller A3 også, ligger de 110 spørsmålene der klare.',
+      `Skal du fly i A1 eller A3 også, ligger de ${ANTALL.A1_A3} spørsmålene der klare.`,
     ],
     knapp: 'Tilbake til appen',
     hale:

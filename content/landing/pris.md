@@ -1,11 +1,11 @@
 ---
 title: Hva koster DroneLappen? Engangsbeløp, ingen abonnement
-description: Full tilgang til 241 øvingsspørsmål i 12 måneder for et engangsbeløp — ingen abonnement, ingen automatisk trekk. Prøv 25 spørsmål gratis uten innlogging.
+description: Full tilgang til {{ANTALL}} øvingsspørsmål i 12 måneder for et engangsbeløp — ingen abonnement, ingen automatisk trekk. Prøv 25 spørsmål gratis uten innlogging.
 h1: Hva koster DroneLappen?
 slug: pris
 ---
 
-<p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle 241 øvingsspørsmål i 12 måneder. Du kan teste 25 spørsmål helt gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
+<p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder. Du kan teste 25 spørsmål helt gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
 
 {{PRIS_VARSEL}}
 
@@ -15,7 +15,7 @@ slug: pris
 <h3>Inkludert</h3>
 <ul>
 <li><strong>Gratis:</strong> 25 øvingsspørsmål, uten innlogging</li>
-<li><strong>Full tilgang:</strong> {{PRIS_HTML}} kr én gang gir alle 241 spørsmål i 12 måneder</li>
+<li><strong>Full tilgang:</strong> {{PRIS_HTML}} kr én gang gir alle {{ANTALL}} spørsmål i 12 måneder</li>
 <li>Eksamensmodus, feilgjennomgang og rapid-modus</li>
 <li>Ingen abonnement, ingen reklame</li>
 </ul>
@@ -43,7 +43,7 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 
 <div class="cta-box">
 <h2>Prøv gratis, kjøp når du er klar</h2>
-<p>Test 25 spørsmål gratis. Full tilgang til alle 241 spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
+<p>Test 25 spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
 <a class="btn" href="/">Prøv 25 gratis →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
@@ -51,7 +51,7 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 ## Ofte stilte spørsmål
 
 ### Hva koster DroneLappen?
-Et engangskjøp som gir full tilgang til alle 241 spørsmål i 12 måneder. 25 spørsmål er gratis. Gjeldende pris står øverst på siden.
+Et engangskjøp som gir full tilgang til alle {{ANTALL}} spørsmål i 12 måneder. 25 spørsmål er gratis. Gjeldende pris står øverst på siden.
 
 ### Er det abonnement?
 Nei. Det er et engangsbeløp, ikke abonnement — det trekkes aldri automatisk. Tilgangen varer i 12 måneder fra kjøpet.

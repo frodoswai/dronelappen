@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
 import { getLeadAttribution } from '../lib/attribution'
 import { logFunnel, LEAD_SKIP } from '../lib/funnel'
+import ANTALL from '../lib/antall.json'
 
 /**
  * /a2-ovingsplan — dedikert landingsside for lead-annonsen på Meta.
@@ -251,7 +252,7 @@ export default function OvingsplanA2() {
                 </div>
 
                 <p className="text-[13px] text-da-text-muted leading-[1.6]">
-                  Over 350 piloter øver på DroneLappen allerede. Appen har 241
+                  Over 350 piloter øver på DroneLappen allerede. Appen har {ANTALL.total}
                   norske spørsmål for A1/A3 og A2, og er laget av{' '}
                   <a
                     href="https://droneavisa.no"

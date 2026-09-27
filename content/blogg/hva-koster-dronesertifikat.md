@@ -39,4 +39,4 @@ Begge bevisene er gyldige i 5 år. Etter det må du ta ny eksamen, og for A2 bet
 
 ## Øv før du betaler 970 kr
 
-DroneLappen har 241 norske øvingsspørsmål i samme format som eksamen, med eksamensmodus på tid og forklaring på alt du svarer feil. De første 25 spørsmålene er gratis, uten innlogging. [Start øvingen](/droneeksamen-oving/), og se [hva full tilgang koster](/pris/).
+DroneLappen har {{ANTALL}} norske øvingsspørsmål i samme format som eksamen, med eksamensmodus på tid og forklaring på alt du svarer feil. De første 25 spørsmålene er gratis, uten innlogging. [Start øvingen](/droneeksamen-oving/), og se [hva full tilgang koster](/pris/).

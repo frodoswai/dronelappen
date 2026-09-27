@@ -6,6 +6,7 @@ import { logFunnel, PAYWALL_VIEW, PAYWALL_BUY_CLICK, PAYWALL_EXIT } from '../lib
 import LeadCapture from './LeadCapture'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
+import ANTALL from '../lib/antall.json'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -108,7 +109,7 @@ export default function Paywall({ answered = 25, onContinue }) {
             </div>
             <ul className="text-[13px] text-da-text-body leading-[1.7] mb-4 list-none space-y-0.5">
               <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Alle 241 spørsmål, alle
+                <span className="font-mono text-da-gold mr-1.5">+</span>Alle {ANTALL.total} spørsmål, alle
                 kategorier
               </li>
               <li>
