@@ -15,7 +15,8 @@
     },
     "style": "Samme stil som batch 1: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker.",
     "db_note": "Samme som batch 1: exam_type-CHECK må utvides (migrasjon 018) før innlasting. Ikke last inn før lansering.",
-    "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit."
+    "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit.",
+    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56."
   },
   "categories": [
     {
@@ -184,8 +185,8 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "UAS.STS-01.020 (1)(e)(ii) nevner to utstedere: en enhet som har erklært samsvar med Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med Appendix 3. Trafikkstasjonen tar bare teoriprøven.",
-      "source": "EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3"
+      "explanation": "UAS.STS-01.020 (1)(e)(ii) nevner to utstedere: en enhet som har erklært samsvar med Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med Appendix 3. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3; luftfartstilsynet.no, «Søke om STS» og «Droneregler» (droneskoler som har deklarert for STS-opplæring)"
     },
     {
       "n": 36,
@@ -267,7 +268,8 @@
       ],
       "correct_option_id": "a",
       "explanation": "UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot, og kontrollen skal ikke overlates til en annen kontrollenhet. Koordineringen mellom pilotene bør stå i operasjonsmanualens kommunikasjonsprosedyrer.",
-      "source": "EU 2020/639 UAS.STS-01.040 (2)(d) og (f); UAS.STS-02.040 (2)(c); Appendix 5 pkt. (6)(c)(i)(E)"
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(d) og (f); UAS.STS-02.040 (2)(c); Appendix 5 pkt. (6)(c)(i)(E)",
+      "overlap_group": "en-pilot-en-drone-en-kontrollenhet"
     },
     {
       "n": 39,
@@ -348,7 +350,8 @@
       ],
       "correct_option_id": "c",
       "explanation": "UAS.STS-02.030 (10) krever at operatøren før start sjekker plassering og antall observatører, sikt og avstand, at terrenget ikke skygger, at det ikke er hull mellom sonene, at kommunikasjonen virker, og at observatørene er orientert om rute og tidsplan. Observatørene trenger opplæring fra operatøren, ikke STS-bevis. Regelverket har ingen fast avstand mellom observatørene; grensene er maks 1 km fra dronen til nærmeste observatør og maks 1 km fra hver observatør til piloten. Kontrollen skal aldri overlates til en annen kontrollenhet.",
-      "source": "EU 2020/639 UAS.STS-02.030 (10); UAS.STS-02.020 (6); UAS.SPEC.050 (1)(e)"
+      "source": "EU 2020/639 UAS.STS-02.030 (10); UAS.STS-02.020 (6); UAS.SPEC.050 (1)(e)",
+      "overlap_group": "observator-opplaering"
     },
     {
       "n": 42,
@@ -565,7 +568,8 @@
       ],
       "correct_option_id": "a",
       "explanation": "UAS.SPEC.050 (1)(g) krever at operatøren i minst 3 år tar vare på opplysninger om operasjonene, inkludert uvanlige hendelser, og om vedlikehold. Opplysninger om kvalifikasjoner og kurs for personellet skal oppbevares i minst 3 år etter at personen har sluttet eller byttet stilling.",
-      "source": "EU 2019/947 UAS.SPEC.050 (1)(g)"
+      "source": "EU 2019/947 UAS.SPEC.050 (1)(g)",
+      "overlap_group": "oppbevaring-3-aar"
     },
     {
       "n": 51,
@@ -575,7 +579,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Ingenting, leverandøren har hele ansvaret for sin egen tjeneste"
+          "text": "Ingenting, leverandøren har hele ansvaret for sin egen tjeneste og for at den virker under flygingen"
         },
         {
           "id": "b",
@@ -587,7 +591,7 @@
         },
         {
           "id": "d",
-          "text": "At Luftfartstilsynet har godkjent leverandøren før bruk"
+          "text": "At Luftfartstilsynet har godkjent leverandøren og tjenesten før den tas i bruk i spesifikk kategori"
         }
       ],
       "correct_option_id": "c",
@@ -646,7 +650,8 @@
       ],
       "correct_option_id": "a",
       "explanation": "UAS.SPEC.050 (1)(e) sier at personell med oppgaver som er avgjørende for operasjonen, utenom piloten, skal ha fullført opplæring på arbeidsplassen utviklet av operatøren, være informert om operasjonsmanualen og prosedyrene, og ha oppdatert informasjon om geografiske soner.",
-      "source": "EU 2019/947 UAS.SPEC.050 (1)(e)"
+      "source": "EU 2019/947 UAS.SPEC.050 (1)(e)",
+      "overlap_group": "observator-opplaering"
     },
     {
       "n": 54,
@@ -727,7 +732,8 @@
       ],
       "correct_option_id": "d",
       "explanation": "Operatøren skal holde dronene i sikker stand ved minst å definere vedlikeholdsinstrukser og bruke tilstrekkelig opplært og kvalifisert vedlikeholdspersonell, føre en oppdatert liste over vedlikeholdspersonellet, og ta vare på logg over vedlikeholdet i minst 3 år. Operasjonsmanualen skal også inneholde vedlikeholdsinstrukser.",
-      "source": "EU 2019/947 UAS.SPEC.050 (1)(g)(ii), (1)(i) og (1)(k); Appendix 5 pkt. (5)"
+      "source": "EU 2019/947 UAS.SPEC.050 (1)(g)(ii), (1)(i) og (1)(k); Appendix 5 pkt. (5)",
+      "overlap_group": "oppbevaring-3-aar"
     },
     {
       "n": 57,
@@ -962,11 +968,11 @@
         },
         {
           "id": "c",
-          "text": "Ingen risiko, VLOS betyr bare at dronen er innenfor synsrekkevidde"
+          "text": "Ingen risiko, VLOS betyr bare at dronen er innenfor synsrekkevidde, og skjermen viser det piloten trenger"
         },
         {
           "id": "d",
-          "text": "Bildene blir uskarpe; bytt til FPV-briller for bedre kontroll"
+          "text": "Bildene blir uskarpe; bytt til FPV-briller, som gir bedre kontroll over både utsnitt og drone"
         }
       ],
       "correct_option_id": "a",
@@ -1336,15 +1342,15 @@
         },
         {
           "id": "b",
-          "text": "Lande rett ned der den er"
+          "text": "Lande rett ned der den er, uansett hva som er under"
         },
         {
           "id": "c",
-          "text": "Fortsette oppdraget på autopilot til batteriet er tomt"
+          "text": "Fortsette oppdraget på autopilot langs den planlagte ruten til batteriet er tomt"
         },
         {
           "id": "d",
-          "text": "Sveve på stedet til piloten får kontakt igjen"
+          "text": "Sveve på stedet til piloten får kontakt igjen, eller til batteriet tvinger den ned"
         }
       ],
       "correct_option_id": "a",

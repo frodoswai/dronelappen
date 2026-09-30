@@ -4,7 +4,7 @@ Utkast 2026-09-30. Kanonisk fil: `content/sts/sts-batch-2-a2-til-sts.json`. Ikke
 
 DRONEA2STS (30 spm / 23 riktige). Emnene er verifisert mot EU 2020/639 Attachment A til kap. I pkt. (1)(b): den som har A2-bevis tar minst 30 spørsmål fordelt på emne (i)-(v): regelverk, menneskelige ytelsesbegrensninger, operasjonelle prosedyrer, tekniske og operasjonelle tiltak mot bakkerisiko, og generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi-viii) er ikke med i påbygget. Tidsgrense: ikke publisert av Luftfartstilsynet eller Statens vegvesen per 30.09.2026.
 
-Kilder: se `meta.sources` i JSON-fila.
+Kilder: se `meta.sources` i JSON-fila. Runde 3 (30.09, Fable): n 35, 51, 65 og 79 justert, flere overlap_group (se `meta.revidert`).
 
 ---
 
@@ -77,9 +77,9 @@ Hvem kan utstede beviset på gjennomført praktisk opplæring (accreditation of 
 - c) Trafikkstasjonen, samtidig med at teoriprøven blir bestått
 - d) Enhver pilot som selv har STS-bevis og minst to års erfaring i spesifikk kategori
 
-*Forklaring:* UAS.STS-01.020 (1)(e)(ii) nevner to utstedere: en enhet som har erklært samsvar med Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med Appendix 3. Trafikkstasjonen tar bare teoriprøven.
+*Forklaring:* UAS.STS-01.020 (1)(e)(ii) nevner to utstedere: en enhet som har erklært samsvar med Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med Appendix 3. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3; luftfartstilsynet.no, «Søke om STS» og «Droneregler» (droneskoler som har deklarert for STS-opplæring)
 
 ---
 
@@ -297,10 +297,10 @@ Hvor lenge skal operatøren minst ta vare på opplysninger om STS-operasjonene, 
 
 Operatøren kjøper en C2-linktjeneste fra et teleselskap til et STS-oppdrag. Hva må operatøren sikre?
 
-- a) Ingenting, leverandøren har hele ansvaret for sin egen tjeneste
+- a) Ingenting, leverandøren har hele ansvaret for sin egen tjeneste og for at den virker under flygingen
 - b) At leverandøren har eget STS-kompetansebevis
 - c) At tjenesten har tilstrekkelig ytelse for operasjonen, og at roller og ansvar mellom operatør og leverandør er fordelt ✅
-- d) At Luftfartstilsynet har godkjent leverandøren før bruk
+- d) At Luftfartstilsynet har godkjent leverandøren og tjenesten før den tas i bruk i spesifikk kategori
 
 *Forklaring:* EASA forstår en ekstern tjeneste som en tjeneste som er nødvendig for sikker flyging og leveres av en annen enn operatøren. En innkjøpt C2-linktjeneste er et eksempel. UAS.STS-01.030 (5)-(6) krever at operatøren sikrer at ytelsen er tilstrekkelig for operasjonen, og definerer fordelingen av roller og ansvar mellom operatøren og tjenesteleverandøren. Det samme står i STS-02.
 
@@ -509,8 +509,8 @@ Under en STS-01-flyging ser piloten nesten bare på kameraskjermen for å få ri
 
 - a) Hun mister oversikt over drone og luftrom; bruk en droneobservatør og veksle blikket fast mellom skjerm og luftrom ✅
 - b) Batteriet tømmes raskere; bytt batteri oftere
-- c) Ingen risiko, VLOS betyr bare at dronen er innenfor synsrekkevidde
-- d) Bildene blir uskarpe; bytt til FPV-briller for bedre kontroll
+- c) Ingen risiko, VLOS betyr bare at dronen er innenfor synsrekkevidde, og skjermen viser det piloten trenger
+- d) Bildene blir uskarpe; bytt til FPV-briller, som gir bedre kontroll over både utsnitt og drone
 
 *Forklaring:* I STS-01 skal dronen være i VLOS hele tiden, og piloten skal skanne luftrommet grundig. En droneobservatør kan hjelpe, med klar kommunikasjon. EASAs veiledning om oppmerksomhet peker på å fjerne distraksjoner og bruke skanneteknikk. Å stirre på skjermen er en typisk distraksjon.
 
@@ -718,9 +718,9 @@ Hva skal hver drone i spesifikk kategori være utstyrt med etter UAS.SPEC.050?
 Hva skal en ikke-tjoret C5-drone kunne gjøre hvis C2-linken blir borte?
 
 - a) Prøve å få linken tilbake på en forutsigbar måte, ellers avslutte flygingen skånsomt for tredjepart ✅
-- b) Lande rett ned der den er
-- c) Fortsette oppdraget på autopilot til batteriet er tomt
-- d) Sveve på stedet til piloten får kontakt igjen
+- b) Lande rett ned der den er, uansett hva som er under
+- c) Fortsette oppdraget på autopilot langs den planlagte ruten til batteriet er tomt
+- d) Sveve på stedet til piloten får kontakt igjen, eller til batteriet tvinger den ned
 
 *Forklaring:* Part 4 pkt. (5), som også gjelder C5, krever at dronen ved tapt C2-link har en pålitelig og forutsigbar metode for å gjenopprette linken, eller, hvis det ikke lykkes, avslutte flygingen slik at virkningen for tredjepart i lufta eller på bakken reduseres. Produsenten skal beskrive oppførselen ved tapt link i bruksanvisningen.
 
