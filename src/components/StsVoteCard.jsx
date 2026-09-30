@@ -4,7 +4,17 @@ import { useAuth } from '../contexts/AuthContext'
 import CrosshairMarks from './CrosshairMarks'
 import { getVoteSource } from '../lib/voteSource'
 
-// Låst STS-flis med stemmeknapp — etterspørselsmåling, ikke en funksjon.
+// STS-flis med stemmeknapp. Fra 30.09.2026: «under arbeid», ikke lenger låst.
+//
+// ENDRET 30.09.2026 (Frodes beslutning): terskelen ble nådd 29/9 (5 eksterne
+// stemmer, 2 fritekst), og STS-banken bygges. Flisa sier nå «under arbeid»
+// med arbeidsikon i stedet for hengelås, lover «lanseres i oktober» (IKKE en
+// fast dato, internt mål 15/10) og «inkludert i full tilgang». Første
+// lansering er A2->STS-påbygget (DRONEA2STS, 30 spm/23 riktige). Punkt 1
+// under («ingen dato og ingen lovnad») er dermed erstattet av dette.
+// Stemmeknappen står fortsatt: den teller hvor mange som venter.
+//
+// Opprinnelig (21.09.2026): låst flis, etterspørselsmåling, ikke en funksjon.
 //
 // HVORFOR DEN FINNES (21.09.2026): STS-etterspørselen er dokumentert med
 // nøyaktig ÉN kunde. Eivind Gaertner spurte 14/8, fikk nei, øvde med
@@ -142,34 +152,34 @@ export default function StsVoteCard() {
       <CrosshairMarks variant="muted" />
 
       <div className="font-mono text-[12px] text-da-text-muted tracking-[0.12em] font-medium mb-1.5">
-        ikke laget ennå
+        under arbeid
       </div>
 
       <div className="flex items-center gap-2 mb-2">
         <span className="text-[34px] font-medium text-da-navy/70 leading-none tracking-tight">
           STS
         </span>
-        {/* Hengelås — samme gråtone som tittelen, så den leser som status
-            og ikke som en knapp. */}
-        <svg width="15" height="18" viewBox="0 0 12 15" aria-hidden="true" className="mb-1">
+        {/* Skiftenøkkel = under arbeid. Ikke hengelås: den leses som «betal
+            for å låse opp», og det er ikke budskapet (endret 30.09.2026). */}
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className="mb-1 text-da-navy/45">
           <path
-            d="M3 6V4a3 3 0 1 1 6 0v2"
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-da-navy/45"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
-          <rect x="1" y="6" width="10" height="8" rx="1.5" className="fill-da-navy/45" />
         </svg>
       </div>
 
       {!voted ? (
         <>
           <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3">
-            Spesifikk kategori. Vi har ingen STS-spørsmål i dag, og vurderer
-            om vi skal lage dem.{' '}
+            Vi lager STS-spørsmålene nå. Først ut er påbygget fra A2 til STS,
+            og det lanseres i oktober. Inkludert i full tilgang.{' '}
             <span className="text-da-text-muted">
-              Si fra om du trenger det, så teller vi.
+              Skal du ta STS? Trykk, så vet vi hvor mange som venter.
             </span>
           </p>
 
@@ -178,7 +188,7 @@ export default function StsVoteCard() {
             disabled={busy}
             className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-2 active:scale-[0.99] disabled:opacity-60"
           >
-            <span>{busy ? 'Registrerer …' : 'Jeg trenger STS'}</span>
+            <span>{busy ? 'Registrerer …' : 'Jeg skal ta STS'}</span>
             {!busy && <span className="font-mono text-[12px] text-da-gold">+1</span>}
           </button>
         </>
@@ -189,7 +199,7 @@ export default function StsVoteCard() {
               notert
             </span>
             <span className="text-[13px] font-medium text-da-navy">
-              Stemmen din er talt.
+              Du er talt med.
             </span>
           </div>
 
@@ -203,7 +213,7 @@ export default function StsVoteCard() {
               >
                 Hva trenger du STS til?{' '}
                 <span className="text-da-text-muted">
-                  Valgfritt — men det avgjør hva spørsmålene bør handle om.
+                  Valgfritt, men det styrer hva spørsmålene handler om.
                 </span>
               </label>
               <textarea
@@ -234,9 +244,13 @@ export default function StsVoteCard() {
 
           {noteDone && (
             <p className="text-[12.5px] text-da-text-body leading-[1.55] mt-1">
-              Takk — svaret ditt er med i vurderingen.
+              Takk, svaret ditt er med når vi skriver spørsmålene.
             </p>
           )}
+
+          <p className="text-[12.5px] text-da-text-body leading-[1.55] mt-2">
+            Spørsmålene dukker opp her når de er klare i oktober.
+          </p>
 
           {/* Guiden finnes. Den som nettopp sa at han trenger STS skal få
               noe med seg videre, ikke bare en kvittering. */}
