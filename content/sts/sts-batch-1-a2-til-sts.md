@@ -2,9 +2,11 @@
 
 Utkast 2026-09-21, faktasjekket 22.09.2026. Kanonisk fil: `content/sts/sts-batch-1-a2-til-sts.json`. Ikke i Supabase.
 
-Dekker de fem emnene i den kortere prøven «Utvidelse av A2 til STS» (DRONEA2STS, 30 spm / 23 riktige): (i) regelverk, (ii) menneskelige ytelsesbegrensninger, (iii) operasjonelle prosedyrer, (iv) tekniske og operasjonelle tiltak mot bakkerisiko, (v) generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi–viii) hører til fullprøven og kommer i batch 2.
+Dekker de fem emnene i den kortere prøven «Utvidelse av A2 til STS» (DRONEA2STS, 30 spm / 23 riktige): (i) regelverk, (ii) menneskelige ytelsesbegrensninger, (iii) operasjonelle prosedyrer, (iv) tekniske og operasjonelle tiltak mot bakkerisiko, (v) generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi–viii) hører til fullprøven (DRONESTS) og kommer i runde 2.
 
 Kilder: EU 2020/639 og 2020/1058 verifisert ordrett mot EUR-Lex; norsk prøveformat verifisert direkte mot luftfartstilsynet.no 22.09.2026.
+
+Revidert 30.09.2026: n 1, 4, 5, 9, 13, 22 og 25 (se `meta.revidert`).
 
 ---
 
@@ -17,9 +19,9 @@ Et inspeksjonsfirma vil fly en 8 kg drone i VLOS over et avsperret anleggsområd
 - c) Søke operasjonstillatelse med full SORA-risikovurdering
 - d) Melde flygingen til politiet og fly i A3 med utvidet sikkerhetsavstand til bebyggelse
 
-*Forklaring:* Et standardscenario deklareres – operatøren sender deklarasjon (NF-1172 i Norge) og kan starte når myndigheten har bekreftet at den er mottatt og fullstendig. Operasjonstillatelse (SORA/PDRA) og LUC er de to andre veiene, begge med reell saksbehandling. STS-01 dekker nettopp VLOS over kontrollert bakkeområde i befolket miljø.
+*Forklaring:* Et standardscenario deklareres: operatøren sender deklarasjon (via Altinn i Norge) og kan starte når myndigheten har bekreftet at den er mottatt og fullstendig. Operasjonstillatelse (SORA/PDRA) og LUC er de to andre veiene, begge med reell saksbehandling. STS-01 dekker nettopp VLOS over kontrollert bakkeområde i befolket miljø.
 
-*Kilde:* EU 2020/639 art. 1(2) (art. 5 nr. 5) og fortalen pkt. 3
+*Kilde:* EU 2019/947 art. 5 nr. 5 (endret ved EU 2020/639) og UAS.SPEC.020 (3)-(4); luftfartstilsynet.no, «Søke om STS»
 
 ---
 
@@ -55,12 +57,12 @@ Du har A2-kompetansebevis og skal ta STS-teoriprøven på trafikkstasjonen. Hva 
 
 ### 4. Regelverk og kategorier · vanskegrad 2
 
-Hvor stor andel riktige svar kreves for å bestå STS-teoriprøven, og hva tilsvarer det på den fulle prøven?
+Hvor stor andel riktige svar krever EU-regelverket på STS-teoriprøven, og hva gir det på den fulle prøven (DRONESTS, 40 spørsmål)?
 
-- a) Minst 80 % – 32 av 40 riktige
-- b) Minst 70 % – 28 av 40 riktige
-- c) Minst 75 % – 30 av 40 riktige ✅
-- d) Minst 90 % – 36 av 40 riktige
+- a) Minst 80 %: 32 av 40 riktige
+- b) Minst 70 %: 28 av 40 riktige
+- c) Minst 75 %: 30 av 40 riktige ✅
+- d) Minst 90 %: 36 av 40 riktige
 
 *Forklaring:* Attachment A krever minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2→STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %).
 
@@ -77,9 +79,9 @@ Et STS-kompetansebevis er fire år gammelt. Hvilken vei til fornyelse innenfor g
 - c) Ta oppfriskningskurs i teoriemnene før beviset utløper ✅
 - d) Søke Luftfartstilsynet om forlengelse på grunnlag av operatørens deklarasjon
 
-*Forklaring:* Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. I Norge tilbyr Luftfartstilsynet i dag ikke et eget oppfriskningskurs for STS: fornyelse skjer ved ny eksamen på trafikkstasjon.
+*Forklaring:* Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. Luftfartstilsynet skriver (desember 2025) at fornyelse av A2- og STS-bevis i Norge skjer ved eksamen på trafikkstasjon.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (3)–(4)
+*Kilde:* EU 2020/639 UAS.STS-01.020 (3)-(4); luftfartstilsynet.no, «Flydrone fyller 5 år - det gjør også de første kompetansebevisene» (04.12.2025)
 
 ---
 
@@ -132,7 +134,7 @@ Du skal inspisere en 130 m høy telemast med C5-drone under STS-01. Masteeieren 
 
 Et STS-01-oppdrag skal levere en liten prøve av et kjemisk avfallsstoff fra taket på en fabrikk ned til bakken. Er dette tillatt?
 
-- a) Nei, dronen skal ikke frakte farlig gods i STS-01 ✅
+- a) Nei, dronen skal aldri frakte farlig gods under STS-01 ✅
 - b) Ja, hvis operasjonsmanualen beskriver lasten og festet er kontrollert
 - c) Ja, STS-01 tillater nyttelast så lenge dronen er C5-merket
 - d) Nei, STS-01 tillater ikke nyttelast av noe slag
@@ -190,16 +192,16 @@ En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. 
 
 ### 13. STS-02: BVLOS og observatører · vanskegrad 2
 
-Sikten på inspeksjonsstedet er målt til 4 km i lett dis. Kan STS-02-oppdraget starte?
+Sikten på inspeksjonsstedet er målt til 6 km i alle retninger, i lett dis. Kan STS-02-oppdraget starte, dersom alt annet er i orden?
 
-- a) Ja, hvis luftromsobservatører brukes
-- b) Nei, STS-02 krever flygesikt på mer enn 5 km ✅
-- c) Ja, STS-02 har ingen siktkrav fordi dronen følger en forhåndsprogrammert bane
+- a) Nei, STS-02 krever minst 8 km sikt ved BVLOS
+- b) Ja, kravet er flygesikt på mer enn 5 km ✅
+- c) Nei, i dis er flyging utenfor VLOS ikke tillatt uansett målt sikt
 - d) Ja, men bare innenfor 500 m fra piloten
 
-*Forklaring:* STS-02 skal gjennomføres i et område der minste flygesikt er mer enn 5 km. Kravet gjelder uansett om observatører brukes – observatørene skal tvert imot være plassert slik at de dekker operasjonsvolumet med nettopp denne sikten.
+*Forklaring:* STS-02 skal gjennomføres i et område der minste flygesikt er mer enn 5 km, og 6 km i alle retninger oppfyller det. Sikten vurderes fra pilotens og observatørenes posisjon i alle retninger, så dis som er tettere i én retning kan likevel stoppe flygingen. Kravet gjelder uansett om observatører brukes.
 
-*Kilde:* EU 2020/639 UAS.STS-02.020 (3) og (6)(a)
+*Kilde:* EU 2020/639 UAS.STS-02.020 (3) og (6)(a); EASA GM1 UAS.STS-02.020(3)
 
 ---
 
@@ -329,10 +331,10 @@ Før en operatør kan deklarere STS-01, må en operasjonsmanual være på plass.
 
 - a) Nødprosedyrer for når dronen forlater operasjonsvolumet
 - b) Prosedyrer for rapportering av hendelser og for loggføring
-- c) Regnskap over forventet inntekt per oppdrag og prisliste for kundene ✅
+- c) En fullstendig SORA-risikovurdering for operasjonen ✅
 - d) Retningslinjer for å begrense sjenanse, som støy, og miljøpåvirkning
 
-*Forklaring:* Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. Økonomi er ikke en del av manualen.
+*Forklaring:* Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene.
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(a)–(k); UAS.STS-01.030 (4)
 
@@ -373,7 +375,7 @@ Hva må en beredskapsplan (ERP) for en STS-operasjon minst inneholde?
 Under en STS-01-flyging vil en kollega overta kontrollen fra sin egen fjernkontroll for å filme en vanskelig vinkel. Er det tillatt?
 
 - a) Ja, hvis begge har gyldig STS-kompetansebevis og praktisk opplæring
-- b) Nei, kontrollen skal ikke overlates til en annen kontrollenhet ✅
+- b) Nei, kontrollen skal aldri overlates til en annen kontrollenhet under flyging ✅
 - c) Ja, hvis overtakelsen står i operasjonsmanualen
 - d) Nei, men det er lov i STS-02 fordi dronen følger programmert bane
 

@@ -1,4 +1,4 @@
-# STS-spørsmålsbank - batch 2 (A2→STS-påbygget), 49 spørsmål
+# STS-spørsmålsbank - batch 2 (A2→STS-påbygget), 48 spørsmål
 
 Utkast 2026-09-30. Kanonisk fil: `content/sts/sts-batch-2-a2-til-sts.json`. Ikke i Supabase. Nummerering 31-79 fortsetter batch 1.
 
@@ -13,13 +13,13 @@ Kilder: se `meta.sources` i JSON-fila.
 Et firma fikk bekreftet STS-01-deklarasjonen sin for to år og tre måneder siden og har ikke sendt inn noe siden. Kan de fortsatt fly på den?
 
 - a) Ja, en deklarasjon gjelder til operatøren selv trekker den tilbake
-- b) Nei, en deklarasjon har begrenset varighet på 2 år, så de må sende inn en ny ✅
+- b) Nei, en deklarasjon gjelder i 2 år, så de må sende en ny ✅
 - c) Ja, så lenge pilotenes kompetansebevis fortsatt er gyldige
-- d) Nei, deklarasjonen må fornyes hvert år, samtidig med at årsgebyret til Luftfartstilsynet betales
+- d) Nei, deklarasjonen må fornyes hvert år sammen med årsgebyret
 
 *Forklaring:* UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.
 
-*Kilde:* EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon)
+*Kilde:* EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon og årsgebyr etter gebyrforskriften)
 
 ---
 
@@ -115,16 +115,16 @@ En STS-01-operasjon har flight geography opp til 120 m over bakken, og det er in
 
 ### 38. STS-01: rammer for VLOS · vanskegrad 1
 
-Et STS-01-oppdrag skal dokumentere en stor øvelse fra to vinkler samtidig. Kan én pilot fly to droner på samme tid?
+Et STS-01-oppdrag skal dokumentere en stor øvelse fra to vinkler samtidig. To piloter flyr hver sin C5-drone i samme kontrollerte bakkeområde. Er det lov?
 
-- a) Nei, piloten skal bare operere én drone om gangen ✅
-- b) Ja, hvis begge dronene er C5-merket og står i samme deklarasjon
-- c) Ja, hvis en droneobservatør følger med på den ene dronen
-- d) Nei, det kan bare være én drone i lufta i hvert kontrollerte bakkeområde
+- a) Ja, kravet er at hver pilot bare opererer én drone om gangen ✅
+- b) Nei, det kan bare være én drone i lufta i hvert kontrollerte bakkeområde
+- c) Nei, den ene piloten må i så fall fly i åpen kategori A2
+- d) Ja, men bare hvis den ene piloten styrer begge fra samme kontrollenhet
 
-*Forklaring:* UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot.
+*Forklaring:* UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot, og kontrollen skal ikke overlates til en annen kontrollenhet. Koordineringen mellom pilotene bør stå i operasjonsmanualens kommunikasjonsprosedyrer.
 
-*Kilde:* EU 2020/639 UAS.STS-01.040 (2)(d); UAS.STS-02.040 (2)(c)
+*Kilde:* EU 2020/639 UAS.STS-01.040 (2)(d) og (f); UAS.STS-02.040 (2)(c); Appendix 5 pkt. (6)(c)(i)(E)
 
 ---
 
@@ -147,10 +147,10 @@ C5-dronen har geo-awareness, og STS-01-oppdraget ligger i en geografisk sone som
 
 Hva krever STS-02 om dronens posisjon under oppskyting og landing?
 
-- a) Den kan være BVLOS så lenge den følger den programmerte banen
-- b) Den skal være innenfor pilotens syn, med mindre landingen skyldes nødavslutning ✅
-- c) Den skal være innenfor syn til nærmeste luftromsobservatør
-- d) Det er ikke regulert, fordi STS-02 er et BVLOS-scenario der dronen kan være ute av syne hele tiden
+- a) Utenfor syne er greit så lenge den følger den programmerte banen
+- b) I pilotens syn, unntatt ved landing etter nødavslutning ✅
+- c) Innenfor syn til nærmeste luftromsobservatør
+- d) Det er ikke regulert i STS-02
 
 *Forklaring:* Selv om STS-02 er BVLOS, krever UAS.STS-02.020 (4) at dronen er i syne for piloten under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen.
 
@@ -188,29 +188,14 @@ Hva skal piloten gjøre med dronens programmerbare flygevolum før en STS-02-fly
 
 ---
 
-### 43. STS-02: BVLOS og observatører · vanskegrad 3
-
-Piloten har lav sol rett i retning av ruten for en STS-02-flyging. Hvordan skal kravet til «flight visibility» i scenarioet forstås?
-
-- a) Som den meteorologiske sikten fra nærmeste værstasjon, uavhengig av lysforhold
-- b) Som sikten i den retningen dronen flyr
-- c) Som den korteste avstanden, i alle retninger, der gjenstander kan ses og identifiseres fra pilotens eller observatørenes posisjon ✅
-- d) Som gjennomsnittet av sikten målt i fire retninger
-
-*Forklaring:* GM1 UAS.STS-02.020 (3) definerer flight visibility som den korteste avstanden fra pilotens posisjon, eller fra hver observatørs posisjon, der uopplyste gjenstander kan ses og identifiseres om dagen. Den skal vurderes i alle retninger, og operatøren bør vurdere lysforhold som sol eller sterkt lys som kan blende. Kravet i STS-02 er over 5 km.
-
-*Kilde:* EU 2020/639 UAS.STS-02.020 (3); EASA GM1 UAS.STS-02.020(3) (ED Decision 2022/002/R)
-
----
-
 ### 44. STS-02: BVLOS og observatører · vanskegrad 3
 
 Luftromsobservatøren skal holde oversikt over hvor dronen er under en STS-02-flyging. Hva kan hun bruke til det?
 
-- a) Bare direkte observasjon, siden observatøren per definisjon skal skanne luftrommet uten noen form for hjelpemidler
+- a) Direkte observasjon uten noen form for hjelpemidler
 - b) Direkte observasjon eller elektroniske hjelpemidler, for eksempel det samme systemet piloten bruker ✅
-- c) Bare radiomeldinger fra piloten om posisjonen
-- d) Bare en kikkert med avstandsmåler
+- c) Radiomeldinger fra piloten om posisjonen, men ingen skjerm
+- d) Kikkert med avstandsmåler, men ingen elektronisk posisjonsvisning
 
 *Forklaring:* Observatørens skanning etter annen lufttrafikk er visuell og uten hjelpemidler, men for å vite hvor dronen er, tillater UAS.STS-02.050 (2) både direkte observasjon og elektroniske hjelpemidler. AMC sier at observatøren bør få dronens posisjon, fart og høyde, og kan bruke samme system som piloten.
 
@@ -267,10 +252,10 @@ En STS-02-operasjon langs en rørgate har en del av bakkerisikobufferen i utkant
 
 Hva må operatøren gjøre før en STS-02-flyging for å hindre at uinvolverte kommer inn i det kontrollerte bakkeområdet?
 
-- a) Ingenting, i spredt befolket miljø regnes risikoen for inntrenging som akseptabel uten særskilte tiltak, siden bufferen dekker den
-- b) Sette i verk hensiktsmessige tiltak som reduserer risikoen for inntrenging, og koordinere med myndighetene når det kreves ✅
+- a) Ingenting, i spredt befolket miljø regnes risikoen som akseptabel
+- b) Ta hensiktsmessige tiltak mot inntrenging, og koordinere med myndighetene ved behov ✅
 - c) Gjerde inn hele bakkerisikobufferen fysisk
-- d) Sende skriftlig varsel til alle eiendommer innenfor 1 km
+- d) Sende skriftlig varsel til alle eiendommer innenfor 1 km og sette opp skilt ved innkjørselen
 
 *Forklaring:* UAS.STS-02.030 (8) krever at alle hensiktsmessige tiltak for å redusere risikoen for at uinvolverte kommer inn i området er tatt før start, og at det er koordinert med relevante myndigheter når det kreves. Regelverket sier ikke hvilke tiltak; det beskrives i operasjonsmanualen.
 
@@ -404,7 +389,7 @@ En landmåler vil følge en ny vei i STS-01 ved å kjøre sakte etter dronen med
 
 - a) Ja, så lenge bilen holder under 5 m/s
 - b) Ja, hvis en droneobservatør går langs veien
-- c) Nei, dronen skal ikke opereres fra et kjøretøy i bevegelse ✅
+- c) Nei, dronen skal aldri opereres fra et kjøretøy i bevegelse ✅
 - d) Nei, fordi STS-01 bare tillater flyging over ett fast område om gangen
 
 *Forklaring:* UAS.STS-01.040 (2)(e) forbyr å operere dronen fra et kjøretøy i bevegelse. Det samme gjelder i STS-02. Grensen på 5 m/s gjelder dronens bakkehastighet, ikke kjøretøyet.
@@ -418,9 +403,9 @@ En landmåler vil følge en ny vei i STS-01 ved å kjøre sakte etter dronen med
 Under et STS-01-oppdrag på et industriområde begynner det å brenne i nabobygget, og brannvesenet rykker ut. Hva gjelder for piloten?
 
 - a) Piloten kan fortsette, men bør tilby brannvesenet bildene
-- b) Piloten skal lande, men kan starte igjen når brannvesenet er på plass
-- c) Piloten kan fortsette uten videre innenfor det deklarerte bakkeområdet, siden deklarasjonen er bekreftet av tilsynet
-- d) Piloten skal ikke fly nær eller inne i området der redningsinnsatsen pågår, uten tillatelse fra nødetatene ✅
+- b) Piloten skal lande, men kan starte igjen så snart brannbilene står på plass
+- c) Piloten kan fortsette uten videre innenfor det deklarerte bakkeområdet
+- d) Ikke fly nær eller inne i innsatsområdet uten tillatelse fra nødetatene ✅
 
 *Forklaring:* UAS.SPEC.060 (3)(e) sier at piloten under flyging ikke skal fly nær eller inne i områder der en redningsinnsats pågår, med mindre de ansvarlige nødetatene har gitt tillatelse. Deklarasjonen endrer ikke dette.
 
@@ -432,7 +417,7 @@ Under et STS-01-oppdrag på et industriområde begynner det å brenne i nabobygg
 
 Politiet kontrollerer en pilot under en STS-01-flyging. Hva krever regelverket at piloten har med seg?
 
-- a) Bevis på egen kompetanse ✅
+- a) Alltid bevis på egen kompetanse ✅
 - b) Operatørens originale deklarasjon på papir
 - c) Dronens typesertifikat
 - d) En flygelogg signert av Luftfartstilsynet
@@ -478,9 +463,9 @@ Et vindkast får dronen til å drive ut av flight geography, men den er fortsatt
 Hva hører med i etterarbeidet etter en STS-flyging, etter kravene til praktisk opplæring?
 
 - a) Bare lading av batterier og nedlasting av data
-- b) Rapport til Luftfartstilsynet etter hver flyging, med flytid, område, pilot og eventuelle avvik fra deklarasjonen
+- b) Rapport til Luftfartstilsynet med flytid og område etter hver flyging
 - c) Ny deklarasjon hvis flygingen varte over 30 minutter
-- d) Inspeksjon og registrering av dronens tilstand og mannskapets tretthet, debrief og eventuell hendelsesrapport ✅
+- d) Inspeksjon, logg over dronens tilstand og mannskapets tretthet, debrief og ev. hendelsesrapport ✅
 
 *Forklaring:* Attachment A lister etterarbeidet: slå av og sikre dronen, inspeksjon og registrering av relevante data om dronens tilstand og mannskapets tretthet, debrief, og å gjenkjenne når en hendelsesrapport er nødvendig og fylle den ut. Det finnes ikke krav om rapport til myndigheten etter hver flyging.
 
@@ -507,10 +492,10 @@ Når slipper piloten i STS-02 selv å gjøre grundig skanning av luftrommet rund
 
 Etter en lang arbeidsdag presser kunden på for å få de siste bildene før det blir mørkt. Piloten kjenner seg sliten og ukonsentrert. Hva er riktig?
 
-- a) Fly fort ferdig, siden oppdraget nesten er gjort
+- a) Fly ferdig raskt mens det fortsatt er lyst nok til å se dronen
 - b) Fortsette, men bare med automatisk flymodus
 - c) Avbryte eller utsette, fordi piloten ikke skal fly når tretthet gjør henne uskikket ✅
-- d) Fortsette hvis en kollega står ved siden av som observatør og kan si fra om noe går galt
+- d) Fortsette hvis en kollega står ved siden av som observatør
 
 *Forklaring:* UAS.SPEC.060 (1)(a) sier at piloten ikke skal utføre oppgavene når hun er uskikket på grunn av skade, tretthet, medisiner, sykdom eller annet. EASAs veiledning nevner kommersielt press og lange arbeidsdager som fallgruver under tretthet. Automatikk eller en observatør fjerner ikke problemet.
 
@@ -565,12 +550,12 @@ Hva skal operasjonsprosedyrene i en STS-manual inneholde for å redusere mennesk
 
 ### 68. Menneskelige faktorer · vanskegrad 3
 
-Hvilke nødprosedyrer bør piloten kunne utenat, og hvilke kan hun lese fra sjekkliste?
+Operasjonsmanualen har mange nødprosedyrer. Hvilke bør piloten etter EASAs veiledning kunne utenat?
 
-- a) Alle nødprosedyrer skal kunnes utenat
-- b) Ingen; alle prosedyrer skal alltid leses fra sjekkliste
-- c) Bare prosedyrene for tapt C2-link skal kunnes utenat, fordi de er de eneste som krever rask reaksjon
-- d) Det avhenger av hvor kritisk situasjonen er og hvor lang tid det er til å reagere ✅
+- a) De som står først i manualen; resten kan leses opp av en kollega under flygingen
+- b) De som produsenten har merket som viktige i bruksanvisningen
+- c) De som piloten har øvd på minst én gang under den praktiske opplæringen
+- d) De som gjelder kritiske situasjoner med kort tid til å reagere; resten kan tas fra sjekkliste ✅
 
 *Forklaring:* EASAs veiledning om opplæring i spesifikk kategori sier at piloten, avhengig av hvor kritisk situasjonen er og tiden som er tilgjengelig, bør memorere noen prosedyrer, mens andre kan tas fra sjekkliste. Veiledningen står i AMC om opplæring i spesifikk kategori generelt, men prinsippet gjelder like godt for nødprosedyrene i en STS-manual.
 
@@ -612,10 +597,10 @@ Luftromsobservatøren roper «ned, ned!» på radioen. Piloten vet ikke om det b
 
 Hvorfor er situasjonsforståelse ekstra krevende i BVLOS-delen av en STS-02-flyging?
 
-- a) Fordi dronen alltid flyr fortere enn 50 m/s
+- a) Fordi dronen flyr fortere i BVLOS enn i VLOS
 - b) Fordi piloten må styre dronen manuelt uten GNSS-støtte i BVLOS-delen
 - c) Den er ikke mer krevende enn i VLOS
-- d) Piloten ser ikke dronen og må bygge bildet fra skjerm og observatører ✅
+- d) Fordi piloten ikke ser dronen og må bygge bildet fra skjerm og observatører ✅
 
 *Forklaring:* EASAs veiledning om menneskelige begrensninger nevner persepsjon og situasjonsforståelse i BVLOS spesielt. Derfor krever C6-klassen at piloten får dronens posisjon, fart og høyde, og STS-02 krever robuste og effektive kommunikasjonsmidler mellom pilot og observatører. Maksfarten 50 m/s er en øvre grense, ikke normal fart.
 
@@ -655,14 +640,14 @@ En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario
 
 ### 74. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 2
 
-Kan en fastvingedrone få C5-merking?
+En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merking?
 
-- a) Ja, uten begrensninger
-- b) Ja, hvis vingespennet er under 3 m
-- c) Nei, med mindre den er tjoret ✅
-- d) Ja, hvis den har lavhastighetsmodus på 5 m/s
+- a) Nei, C5 kan aldri være fastvinge
+- b) Nei, tjorede droner får ikke klassemerke
+- c) Ja, C5 utelukker fastvinge bare når dronen ikke er tjoret ✅
+- d) Ja, men bare hvis vingespennet er under 1 m
 
-*Forklaring:* Part 16 pkt. (1) sier at en C5 skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. Tilsvarende begrensning finnes ikke for C6.
+*Forklaring:* Part 16 pkt. (1) sier at en C5 skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til tjoret (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6.
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (1)
 
@@ -732,10 +717,10 @@ Hva skal hver drone i spesifikk kategori være utstyrt med etter UAS.SPEC.050?
 
 Hva skal en ikke-tjoret C5-drone kunne gjøre hvis C2-linken blir borte?
 
-- a) Ha en pålitelig og forutsigbar metode for å få linken tilbake, eller avslutte flygingen så tredjepart berøres minst mulig ✅
-- b) Alltid lande rett ned der den er
+- a) Prøve å få linken tilbake på en forutsigbar måte, ellers avslutte flygingen skånsomt for tredjepart ✅
+- b) Lande rett ned der den er
 - c) Fortsette oppdraget på autopilot til batteriet er tomt
-- d) Sveve på stedet til piloten får kontakt igjen, uansett hvor lenge det tar, siden det er den tryggeste reaksjonen for folk på bakken
+- d) Sveve på stedet til piloten får kontakt igjen
 
 *Forklaring:* Part 4 pkt. (5), som også gjelder C5, krever at dronen ved tapt C2-link har en pålitelig og forutsigbar metode for å gjenopprette linken, eller, hvis det ikke lykkes, avslutte flygingen slik at virkningen for tredjepart i lufta eller på bakken reduseres. Produsenten skal beskrive oppførselen ved tapt link i bruksanvisningen.
 

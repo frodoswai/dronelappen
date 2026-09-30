@@ -4,7 +4,8 @@
     "created": "2026-09-30",
     "status": "UTKAST - ikke lastet inn i Supabase. Venter på Frodes gjennomlesing.",
     "exam_type": "STS",
-    "numbering": "n 31-79 fortsetter batch 1 (n 1-30).",
+    "numbering": "n 31-79 fortsetter batch 1 (n 1-30). n 43 (flight visibility) er strøket 30.09 etter gjennomlesing (overlapp med n 13 og n 66, grenser mot meteorologi); nummeret brukes ikke igjen.",
+    "overlap_group": "Spørsmål med samme overlap_group (på tvers av batch 1 og 2) bør ikke trekkes i samme eksamensrunde.",
     "scope": "DRONEA2STS (30 spm / 23 riktige). Emnene er verifisert mot EU 2020/639 Attachment A til kap. I pkt. (1)(b): den som har A2-bevis tar minst 30 spørsmål fordelt på emne (i)-(v): regelverk, menneskelige ytelsesbegrensninger, operasjonelle prosedyrer, tekniske og operasjonelle tiltak mot bakkerisiko, og generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi-viii) er ikke med i påbygget. Tidsgrense: ikke publisert av Luftfartstilsynet eller Statens vegvesen per 30.09.2026.",
     "sources": {
       "EU 2020/639": "Endringsforordning til 2019/947 (UAS.SPEC, STS-01/STS-02, Attachment A, Appendix 2, 3 og 5, art. 2 nr. 24-34) - tekst hentet fra EUR-Lex via Tavily 30.09.2026",
@@ -63,7 +64,7 @@
         },
         {
           "id": "b",
-          "text": "Nei, en deklarasjon har begrenset varighet på 2 år, så de må sende inn en ny"
+          "text": "Nei, en deklarasjon gjelder i 2 år, så de må sende en ny"
         },
         {
           "id": "c",
@@ -71,12 +72,12 @@
         },
         {
           "id": "d",
-          "text": "Nei, deklarasjonen må fornyes hvert år, samtidig med at årsgebyret til Luftfartstilsynet betales"
+          "text": "Nei, deklarasjonen må fornyes hvert år sammen med årsgebyret"
         }
       ],
       "correct_option_id": "b",
       "explanation": "UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.",
-      "source": "EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon)"
+      "source": "EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon og årsgebyr etter gebyrforskriften)"
     },
     {
       "n": 32,
@@ -238,34 +239,35 @@
       ],
       "correct_option_id": "d",
       "explanation": "Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men UAS.STS-01.010 (3) lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flight geography.",
-      "source": "EU 2020/639 UAS.STS-01.010 (1) og (3)"
+      "source": "EU 2020/639 UAS.STS-01.010 (1) og (3)",
+      "overlap_group": "hoyde-30m-over-tillatt"
     },
     {
       "n": 38,
       "category": "sts-01",
       "difficulty": 1,
-      "question_text": "Et STS-01-oppdrag skal dokumentere en stor øvelse fra to vinkler samtidig. Kan én pilot fly to droner på samme tid?",
+      "question_text": "Et STS-01-oppdrag skal dokumentere en stor øvelse fra to vinkler samtidig. To piloter flyr hver sin C5-drone i samme kontrollerte bakkeområde. Er det lov?",
       "options": [
         {
           "id": "a",
-          "text": "Nei, piloten skal bare operere én drone om gangen"
+          "text": "Ja, kravet er at hver pilot bare opererer én drone om gangen"
         },
         {
           "id": "b",
-          "text": "Ja, hvis begge dronene er C5-merket og står i samme deklarasjon"
+          "text": "Nei, det kan bare være én drone i lufta i hvert kontrollerte bakkeområde"
         },
         {
           "id": "c",
-          "text": "Ja, hvis en droneobservatør følger med på den ene dronen"
+          "text": "Nei, den ene piloten må i så fall fly i åpen kategori A2"
         },
         {
           "id": "d",
-          "text": "Nei, det kan bare være én drone i lufta i hvert kontrollerte bakkeområde"
+          "text": "Ja, men bare hvis den ene piloten styrer begge fra samme kontrollenhet"
         }
       ],
       "correct_option_id": "a",
-      "explanation": "UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot.",
-      "source": "EU 2020/639 UAS.STS-01.040 (2)(d); UAS.STS-02.040 (2)(c)"
+      "explanation": "UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot, og kontrollen skal ikke overlates til en annen kontrollenhet. Koordineringen mellom pilotene bør stå i operasjonsmanualens kommunikasjonsprosedyrer.",
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(d) og (f); UAS.STS-02.040 (2)(c); Appendix 5 pkt. (6)(c)(i)(E)"
     },
     {
       "n": 39,
@@ -302,19 +304,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Den kan være BVLOS så lenge den følger den programmerte banen"
+          "text": "Utenfor syne er greit så lenge den følger den programmerte banen"
         },
         {
           "id": "b",
-          "text": "Den skal være innenfor pilotens syn, med mindre landingen skyldes nødavslutning"
+          "text": "I pilotens syn, unntatt ved landing etter nødavslutning"
         },
         {
           "id": "c",
-          "text": "Den skal være innenfor syn til nærmeste luftromsobservatør"
+          "text": "Innenfor syn til nærmeste luftromsobservatør"
         },
         {
           "id": "d",
-          "text": "Det er ikke regulert, fordi STS-02 er et BVLOS-scenario der dronen kan være ute av syne hele tiden"
+          "text": "Det er ikke regulert i STS-02"
         }
       ],
       "correct_option_id": "b",
@@ -373,34 +375,8 @@
       ],
       "correct_option_id": "b",
       "explanation": "UAS.STS-02.040 (1)(a) krever at piloten setter dronens programmerbare flygevolum slik at dronen holdes innenfor flight geography. Piloten skal også kontrollere at funksjonen og flygeavslutningen virker, og at Remote ID er aktiv.",
-      "source": "EU 2020/639 UAS.STS-02.040 (1)(a)-(b); EU 2020/1058 Part 17 pkt. (4)"
-    },
-    {
-      "n": 43,
-      "category": "sts-02",
-      "difficulty": 3,
-      "question_text": "Piloten har lav sol rett i retning av ruten for en STS-02-flyging. Hvordan skal kravet til «flight visibility» i scenarioet forstås?",
-      "options": [
-        {
-          "id": "a",
-          "text": "Som den meteorologiske sikten fra nærmeste værstasjon, uavhengig av lysforhold"
-        },
-        {
-          "id": "b",
-          "text": "Som sikten i den retningen dronen flyr"
-        },
-        {
-          "id": "c",
-          "text": "Som den korteste avstanden, i alle retninger, der gjenstander kan ses og identifiseres fra pilotens eller observatørenes posisjon"
-        },
-        {
-          "id": "d",
-          "text": "Som gjennomsnittet av sikten målt i fire retninger"
-        }
-      ],
-      "correct_option_id": "c",
-      "explanation": "GM1 UAS.STS-02.020 (3) definerer flight visibility som den korteste avstanden fra pilotens posisjon, eller fra hver observatørs posisjon, der uopplyste gjenstander kan ses og identifiseres om dagen. Den skal vurderes i alle retninger, og operatøren bør vurdere lysforhold som sol eller sterkt lys som kan blende. Kravet i STS-02 er over 5 km.",
-      "source": "EU 2020/639 UAS.STS-02.020 (3); EASA GM1 UAS.STS-02.020(3) (ED Decision 2022/002/R)"
+      "source": "EU 2020/639 UAS.STS-02.040 (1)(a)-(b); EU 2020/1058 Part 17 pkt. (4)",
+      "overlap_group": "forflyging-sjekk-sts02"
     },
     {
       "n": 44,
@@ -410,7 +386,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Bare direkte observasjon, siden observatøren per definisjon skal skanne luftrommet uten noen form for hjelpemidler"
+          "text": "Direkte observasjon uten noen form for hjelpemidler"
         },
         {
           "id": "b",
@@ -418,11 +394,11 @@
         },
         {
           "id": "c",
-          "text": "Bare radiomeldinger fra piloten om posisjonen"
+          "text": "Radiomeldinger fra piloten om posisjonen, men ingen skjerm"
         },
         {
           "id": "d",
-          "text": "Bare en kikkert med avstandsmåler"
+          "text": "Kikkert med avstandsmåler, men ingen elektronisk posisjonsvisning"
         }
       ],
       "correct_option_id": "b",
@@ -518,11 +494,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Ingenting, i spredt befolket miljø regnes risikoen for inntrenging som akseptabel uten særskilte tiltak, siden bufferen dekker den"
+          "text": "Ingenting, i spredt befolket miljø regnes risikoen som akseptabel"
         },
         {
           "id": "b",
-          "text": "Sette i verk hensiktsmessige tiltak som reduserer risikoen for inntrenging, og koordinere med myndighetene når det kreves"
+          "text": "Ta hensiktsmessige tiltak mot inntrenging, og koordinere med myndighetene ved behov"
         },
         {
           "id": "c",
@@ -530,7 +506,7 @@
         },
         {
           "id": "d",
-          "text": "Sende skriftlig varsel til alle eiendommer innenfor 1 km"
+          "text": "Sende skriftlig varsel til alle eiendommer innenfor 1 km og sette opp skilt ved innkjørselen"
         }
       ],
       "correct_option_id": "b",
@@ -769,7 +745,7 @@
         },
         {
           "id": "c",
-          "text": "Nei, dronen skal ikke opereres fra et kjøretøy i bevegelse"
+          "text": "Nei, dronen skal aldri opereres fra et kjøretøy i bevegelse"
         },
         {
           "id": "d",
@@ -792,15 +768,15 @@
         },
         {
           "id": "b",
-          "text": "Piloten skal lande, men kan starte igjen når brannvesenet er på plass"
+          "text": "Piloten skal lande, men kan starte igjen så snart brannbilene står på plass"
         },
         {
           "id": "c",
-          "text": "Piloten kan fortsette uten videre innenfor det deklarerte bakkeområdet, siden deklarasjonen er bekreftet av tilsynet"
+          "text": "Piloten kan fortsette uten videre innenfor det deklarerte bakkeområdet"
         },
         {
           "id": "d",
-          "text": "Piloten skal ikke fly nær eller inne i området der redningsinnsatsen pågår, uten tillatelse fra nødetatene"
+          "text": "Ikke fly nær eller inne i innsatsområdet uten tillatelse fra nødetatene"
         }
       ],
       "correct_option_id": "d",
@@ -815,7 +791,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Bevis på egen kompetanse"
+          "text": "Alltid bevis på egen kompetanse"
         },
         {
           "id": "b",
@@ -886,7 +862,8 @@
       ],
       "correct_option_id": "b",
       "explanation": "Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flight geography, skal contingency-prosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Contingency-volumet er en buffer for avvik, ikke et vanlig arbeidsområde.",
-      "source": "EU 2020/639 UAS.STS-01.040 (2)(g)-(h); EU 2019/947 art. 2 (28)-(32)"
+      "source": "EU 2020/639 UAS.STS-01.040 (2)(g)-(h); EU 2019/947 art. 2 (28)-(32)",
+      "overlap_group": "contingency-vs-nod-terskel"
     },
     {
       "n": 62,
@@ -900,7 +877,7 @@
         },
         {
           "id": "b",
-          "text": "Rapport til Luftfartstilsynet etter hver flyging, med flytid, område, pilot og eventuelle avvik fra deklarasjonen"
+          "text": "Rapport til Luftfartstilsynet med flytid og område etter hver flyging"
         },
         {
           "id": "c",
@@ -908,7 +885,7 @@
         },
         {
           "id": "d",
-          "text": "Inspeksjon og registrering av dronens tilstand og mannskapets tretthet, debrief og eventuell hendelsesrapport"
+          "text": "Inspeksjon, logg over dronens tilstand og mannskapets tretthet, debrief og ev. hendelsesrapport"
         }
       ],
       "correct_option_id": "d",
@@ -950,7 +927,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Fly fort ferdig, siden oppdraget nesten er gjort"
+          "text": "Fly ferdig raskt mens det fortsatt er lyst nok til å se dronen"
         },
         {
           "id": "b",
@@ -962,7 +939,7 @@
         },
         {
           "id": "d",
-          "text": "Fortsette hvis en kollega står ved siden av som observatør og kan si fra om noe går galt"
+          "text": "Fortsette hvis en kollega står ved siden av som observatør"
         }
       ],
       "correct_option_id": "c",
@@ -1054,23 +1031,23 @@
       "n": 68,
       "category": "sts-mennesket",
       "difficulty": 3,
-      "question_text": "Hvilke nødprosedyrer bør piloten kunne utenat, og hvilke kan hun lese fra sjekkliste?",
+      "question_text": "Operasjonsmanualen har mange nødprosedyrer. Hvilke bør piloten etter EASAs veiledning kunne utenat?",
       "options": [
         {
           "id": "a",
-          "text": "Alle nødprosedyrer skal kunnes utenat"
+          "text": "De som står først i manualen; resten kan leses opp av en kollega under flygingen"
         },
         {
           "id": "b",
-          "text": "Ingen; alle prosedyrer skal alltid leses fra sjekkliste"
+          "text": "De som produsenten har merket som viktige i bruksanvisningen"
         },
         {
           "id": "c",
-          "text": "Bare prosedyrene for tapt C2-link skal kunnes utenat, fordi de er de eneste som krever rask reaksjon"
+          "text": "De som piloten har øvd på minst én gang under den praktiske opplæringen"
         },
         {
           "id": "d",
-          "text": "Det avhenger av hvor kritisk situasjonen er og hvor lang tid det er til å reagere"
+          "text": "De som gjelder kritiske situasjoner med kort tid til å reagere; resten kan tas fra sjekkliste"
         }
       ],
       "correct_option_id": "d",
@@ -1139,7 +1116,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Fordi dronen alltid flyr fortere enn 50 m/s"
+          "text": "Fordi dronen flyr fortere i BVLOS enn i VLOS"
         },
         {
           "id": "b",
@@ -1151,7 +1128,7 @@
         },
         {
           "id": "d",
-          "text": "Piloten ser ikke dronen og må bygge bildet fra skjerm og observatører"
+          "text": "Fordi piloten ikke ser dronen og må bygge bildet fra skjerm og observatører"
         }
       ],
       "correct_option_id": "d",
@@ -1216,27 +1193,27 @@
       "n": 74,
       "category": "sts-uas",
       "difficulty": 2,
-      "question_text": "Kan en fastvingedrone få C5-merking?",
+      "question_text": "En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merking?",
       "options": [
         {
           "id": "a",
-          "text": "Ja, uten begrensninger"
+          "text": "Nei, C5 kan aldri være fastvinge"
         },
         {
           "id": "b",
-          "text": "Ja, hvis vingespennet er under 3 m"
+          "text": "Nei, tjorede droner får ikke klassemerke"
         },
         {
           "id": "c",
-          "text": "Nei, med mindre den er tjoret"
+          "text": "Ja, C5 utelukker fastvinge bare når dronen ikke er tjoret"
         },
         {
           "id": "d",
-          "text": "Ja, hvis den har lavhastighetsmodus på 5 m/s"
+          "text": "Ja, men bare hvis vingespennet er under 1 m"
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Part 16 pkt. (1) sier at en C5 skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. Tilsvarende begrensning finnes ikke for C6.",
+      "explanation": "Part 16 pkt. (1) sier at en C5 skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til tjoret (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6.",
       "source": "EU 2020/1058 Part 16 pkt. (1)"
     },
     {
@@ -1355,11 +1332,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Ha en pålitelig og forutsigbar metode for å få linken tilbake, eller avslutte flygingen så tredjepart berøres minst mulig"
+          "text": "Prøve å få linken tilbake på en forutsigbar måte, ellers avslutte flygingen skånsomt for tredjepart"
         },
         {
           "id": "b",
-          "text": "Alltid lande rett ned der den er"
+          "text": "Lande rett ned der den er"
         },
         {
           "id": "c",
@@ -1367,7 +1344,7 @@
         },
         {
           "id": "d",
-          "text": "Sveve på stedet til piloten får kontakt igjen, uansett hvor lenge det tar, siden det er den tryggeste reaksjonen for folk på bakken"
+          "text": "Sveve på stedet til piloten får kontakt igjen"
         }
       ],
       "correct_option_id": "a",
