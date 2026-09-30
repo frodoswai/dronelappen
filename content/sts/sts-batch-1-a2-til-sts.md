@@ -244,22 +244,22 @@ Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
 - c) Flygeområdet, contingency-område minst 10 m utenfor, og bakkerisikobuffer utenfor det ✅
 - d) Flygeområdet pluss et område på 1:1 (like langt ut som dronen flyr høyt)
 
-*Forklaring:* Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen fra A2 (horisontal avstand til uinvolverte minst lik flygehøyden) er en tommelfingerregel i åpen kategori, ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
+*Forklaring:* Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) (1:1-regelen i A2)
+*Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) og luftfartstilsynet.no, «Droneregler» (1:1-regelen i A2)
 
 ---
 
 ### 17. Kontrollert bakkeområde og bakkerisiko · vanskegrad 3
 
-En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
+En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
 
 - a) 10 m
 - b) 60 m
 - c) 30 m
 - d) 15 m ✅
 
-*Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde dronen veid 12 kg, ville svaret vært 30 m.
+*Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. MTOM 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde MTOM vært 12 kg, ville svaret vært 30 m. Det er MTOM som teller, ikke hva dronen veier på den aktuelle flygingen.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
 
@@ -267,14 +267,14 @@ En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt uten
 
 ### 18. Kontrollert bakkeområde og bakkerisiko · vanskegrad 3
 
-En C5-drone på 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
+En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
 
 - a) 25 m
 - b) 60 m ✅
 - c) 45 m
 - d) 120 m
 
-*Forklaring:* Over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for droner inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.
+*Forklaring:* MTOM over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for MTOM inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
 

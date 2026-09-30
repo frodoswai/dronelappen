@@ -13,7 +13,7 @@
     "style": "Vegvesen-stil per stilrevisjonen 30.-31.07.2026: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker eller symboler (→, ≤) i publisert tekst.",
     "db_note": "questions.exam_type har CHECK IN ('A1_A3','A2'). Innlasting krever migrasjon 018 som utvider CHECK-en i questions og quiz_sessions samt nye rader i categories. Ikke last inn før lansering (brief 2026-09-30, del B).",
     "not_covered_on_purpose": "Norske detaljer som er uavklart per handoff 21.09 (overføring av praktisk akkreditering mellom operatører, privatperson som deklarerer alene) er bevisst IKKE brukt som fasit.",
-    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38)."
+    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38). 2026-09-30 (etterkontroll, Opus): n 16 (1:1-regelen beskrevet som gjeldende A2-regel, i tråd med LT og A2-banken, ikke «tommelfingerregel»), n 17 og 18 (MTOM i stammen, siden tabellen går på MTOM)."
   },
   "categories": [
     {
@@ -483,14 +483,14 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen fra A2 (horisontal avstand til uinvolverte minst lik flygehøyden) er en tommelfingerregel i åpen kategori, ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.",
-      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) (1:1-regelen i A2)"
+      "explanation": "Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.",
+      "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) og luftfartstilsynet.no, «Droneregler» (1:1-regelen i A2)"
     },
     {
       "n": 17,
       "category": "sts-bakkerisiko",
       "difficulty": 3,
-      "question_text": "En C5-drone på 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?",
+      "question_text": "En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?",
       "options": [
         {
           "id": "a",
@@ -510,7 +510,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde dronen veid 12 kg, ville svaret vært 30 m.",
+      "explanation": "Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. MTOM 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde MTOM vært 12 kg, ville svaret vært 30 m. Det er MTOM som teller, ikke hva dronen veier på den aktuelle flygingen.",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell",
       "overlap_group": "bakkerisikobuffer-tabell"
     },
@@ -518,7 +518,7 @@
       "n": 18,
       "category": "sts-bakkerisiko",
       "difficulty": 3,
-      "question_text": "En C5-drone på 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?",
+      "question_text": "En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?",
       "options": [
         {
           "id": "a",
@@ -538,7 +538,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "Over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for droner inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.",
+      "explanation": "MTOM over 10 kg og 120 m høyde gir 60 m etter tabellen. 25 m er verdien for MTOM inntil 10 kg i samme høyde. Legg merke til at bufferen for tunge droner er over dobbelt så stor: en tyngre drone kan drive lenger og gjør mer skade.",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell",
       "overlap_group": "bakkerisikobuffer-tabell"
     },
