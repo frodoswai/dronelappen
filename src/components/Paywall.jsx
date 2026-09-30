@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import { logFunnel, PAYWALL_VIEW, PAYWALL_BUY_CLICK, PAYWALL_EXIT } from '../lib/funnel'
@@ -7,6 +7,7 @@ import LeadCapture from './LeadCapture'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
+import { examConfig } from '../lib/exams'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -20,17 +21,24 @@ import ANTALL from '../lib/antall.json'
  * Fires InitiateCheckout so the attempt is countable in Meta, and surfaces
  * CheckoutError the same way Home/UpgradePrompt do, keeping the funnel
  * instrumentation consistent (jf. anon-email-bug 2026-07-01).
+ *
+ * lockedExam (30.09.2026): eksamenstype uten gratis-pool (STS). Da vises
+ * muren før brukeren har svart på noe, så overskriften hentes fra
+ * lib/exams.js (paywallTitle), eksamenstypen følger med i trakt-loggingen,
+ * og utveien er en lenke til forsiden i stedet for resultatene. Uten
+ * lockedExam er muren som før.
  */
-export default function Paywall({ answered = 25, onContinue }) {
+export default function Paywall({ answered = 25, onContinue, lockedExam = null }) {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+  const locked = examConfig(lockedExam)
 
   // Serverside visning av muren. Pikselen er samtykke-gatet, denne er ikke —
   // og bare denne kan spørres per bruker. Tom dependency: én gang per visning.
   useEffect(() => {
-    logFunnel(PAYWALL_VIEW, { answered })
+    logFunnel(PAYWALL_VIEW, { answered, examType: lockedExam })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -40,7 +48,7 @@ export default function Paywall({ answered = 25, onContinue }) {
     // Ventes på: rett etter dette redirecter vi til Stripe, og en
     // fire-and-forget-insert rekker ikke å sende før siden lastes ut.
     // logFunnel gir uansett kontrollen tilbake innen 800 ms.
-    await logFunnel(PAYWALL_BUY_CLICK, { answered })
+    await logFunnel(PAYWALL_BUY_CLICK, { answered, examType: lockedExam })
     window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
     if (!user) {
       navigate('/login')
@@ -67,7 +75,7 @@ export default function Paywall({ answered = 25, onContinue }) {
             full tilgang
           </div>
           <h1 className="text-[26px] font-semibold text-da-bg leading-tight mb-3">
-            Du har fullført de {answered} gratis spørsmålene.
+            {locked?.paywallTitle || <>Du har fullført de {answered} gratis spørsmålene.</>}
           </h1>
           <p className="text-[14px] text-da-dark-slogan leading-[1.55] max-w-md">
             Lås opp <strong className="text-da-bg">hele spørsmålsbanken</strong> og alle
@@ -164,6 +172,18 @@ export default function Paywall({ answered = 25, onContinue }) {
             >
               Se resultatene mine først →
             </button>
+          )}
+
+          {/* Låst eksamenstype: ingen resultater å se, så utveien går til
+              forsiden. Muren skal aldri være en blindvei. */}
+          {locked && (
+            <Link
+              to="/"
+              onClick={() => logFunnel(PAYWALL_EXIT, { answered, examType: lockedExam })}
+              className="quiz-option block w-full text-center text-[13px] text-da-text-muted hover:text-da-navy py-2 transition-colors"
+            >
+              Tilbake til forsiden
+            </Link>
           )}
         </div>
       </div>

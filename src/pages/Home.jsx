@@ -9,10 +9,12 @@ import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
 import StsVoteCard from '../components/StsVoteCard'
+import StsExamCard from '../components/StsExamCard'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
+import { isExamEnabled } from '../lib/exams'
 import {
   getLastSession,
   sessionToPath,
@@ -327,7 +329,10 @@ export default function Home() {
             til vi vet om brukeren har stemt.
             NÅR MÅLINGEN ER OVER 21.10: flytt tilbake under A1/A3-kortet
             og sett ReadinessCard tilbake øverst (se under). */}
-        <StsVoteCard />
+        {/* Når STS er skrudd på (STS_LIVE eller forhåndsvisning, se
+            lib/exams.js), står et ekte STS-kort på flisas plass. Resten av
+            rekkefølgen er uendret. */}
+        {isExamEnabled('A2_STS') ? <StsExamCard /> : <StsVoteCard />}
 
         {/* Smart resume — slank fortsett-stripe.
             OPPLØST SAMMENSLÅING 21.09.2026: fra 18/7 eide ReadinessCard

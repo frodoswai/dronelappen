@@ -11,6 +11,8 @@
 // All reads/writes are wrapped in try/catch so a corrupted payload or
 // disabled storage never crashes the app.
 
+import { examConfig } from './exams'
+
 const KEY = 'dronelappen_sessions'
 const MAX_ENTRIES = 50
 const STALE_MS = 14 * 24 * 60 * 60 * 1000 // 14 days
@@ -39,7 +41,7 @@ function safeWrite(list) {
  * Record that the user just started a session. Called from ExamSelect when
  * the user commits to a mode (the tap that actually launches the quiz).
  *
- * @param {'A1_A3'|'A2'} examType
+ * @param {'A1_A3'|'A2'|'A2_STS'} examType
  * @param {'exam'|'practice'|'rapid'} mode
  */
 export function recordSessionStart(examType, mode) {
@@ -69,7 +71,10 @@ export function getLastSession({ maxAgeMs = STALE_MS } = {}) {
  */
 export function describeSession(session) {
   if (!session) return ''
-  const examLabel = session.examType === 'A1_A3' ? 'A1/A3' : 'A2'
+  // Kort etikett fra lib/exams.js. En ukjent type (f.eks. en feilskrevet
+  // type lagret før rutevakten kom 27.09.2026) har alltid vist «A2», og
+  // gjør det fortsatt.
+  const examLabel = examConfig(session.examType)?.short ?? 'A2'
   const modeLabel =
     session.mode === 'rapid'
       ? 'Tempo'

@@ -6,6 +6,7 @@ import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
 import CrosshairMarks from '../components/CrosshairMarks'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
+import { examConfig, examLabel } from '../lib/exams'
 
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
@@ -66,7 +67,10 @@ export default function Rapid() {
 
   // Short label used by the header and the finish screen. Computed up
   // front so it's in scope before the early-return finish block.
-  const poolLabel = examType === 'A1_A3' ? 'A1/A3' : 'A2'
+  const poolLabel = examLabel(examType)
+  // Eksamenstype uten gratis-pool (STS): get-questions gir gratisbrukere 0
+  // spørsmål, og de skal rett til betalingsmuren, ikke til et tomt løp.
+  const paidOnly = !!examConfig(examType)?.paidOnly
 
   // Pågående økt lagres i sessionStorage (se lib/quizSession.js) så en
   // refresh/crash gjenopptar samme spørsmål, teller og stoppeklokke.
@@ -93,6 +97,13 @@ export default function Rapid() {
         const { questions: data, tier } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
 
+        // Eksamenstype uten gratis-pool og gratis tilgang: ingen spørsmål og
+        // ingen stoppeklokke. Betalingsmuren vises i stedet (se under).
+        if (paidOnly && tier === 'free') {
+          setLoading(false)
+          return
+        }
+
         // Shuffle the pool, cap the session at RAPID_SESSION_SIZE,
         // then shuffle each question's options independently.
         const sessionQuestions = shuffleArray(data || [])
@@ -115,7 +126,7 @@ export default function Rapid() {
       }
     }
     loadQuestions()
-  }, [examType, storageKey])
+  }, [examType, storageKey, paidOnly])
 
   // Lagre økten fortløpende — men kun når gjeldende spørsmål er ubesvart
   // (selectedAnswer === null). Da peker en gjenopprettet økt alltid på et
@@ -307,6 +318,12 @@ export default function Rapid() {
         </div>
       </div>
     )
+  }
+
+  // Eksamenstype uten gratis-pool (STS) og gratis tilgang: muren med én
+  // gang, ikke et tomt løp med 0/0 på sluttskjermen.
+  if (paidOnly && fetchedTier === 'free') {
+    return <Paywall answered={0} lockedExam={examType} />
   }
 
   // Free users hit the paywall after finishing the 25-question free pool.

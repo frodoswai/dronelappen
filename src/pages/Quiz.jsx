@@ -5,17 +5,19 @@ import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
+import { examConfig } from '../lib/exams'
 
-// Exam mode wall-clock budget. Using a constant keeps the display/fix and
-// handleTimeUp math in sync.
-const EXAM_DURATION_MS = 60 * 60 * 1000 // 60 min
+// Eksamensklokka: varigheten per eksamenstype står i lib/exams.js
+// (timerMinutes) og regnes om til examDurationMs i komponenten, så visning,
+// tid ute og brukt tid alltid regnes fra samme tall. Under LOW_TIME_MS blir
+// klokka rød.
 const LOW_TIME_MS = 5 * 60 * 1000
 
 // Eksamensmodus speiler de offisielle prøvene i antall spørsmål:
-// A1/A3 = 40 (flydrone.no, verifisert 2026-07-08), A2 = 30.
+// A1/A3 = 40 (flydrone.no, verifisert 2026-07-08), A2 = 30, STS = 30
+// (examCount i lib/exams.js).
 // Bestå-terskelen (75 %) regnes dynamisk i Results: 30/40 og 23/30.
 // Læring (practice) holder seg på 30 uansett type.
-const EXAM_QUESTION_COUNT = { A1_A3: 40, A2: 30 }
 const PRACTICE_QUESTION_COUNT = 30
 
 // Fisher-Yates shuffle
@@ -26,6 +28,33 @@ function shuffleArray(array) {
     [arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
+}
+
+// Spørsmål med samme overlap_group avslører hverandre (STS-banken,
+// migrasjon 018) og skal ikke trekkes i samme eksamensrunde. Plukk i stokket
+// rekkefølge og hopp over et spørsmål når gruppen allerede er trukket. Blir
+// det for få spørsmål igjen, fylles runden opp med de overhoppede. Spørsmål
+// uten gruppe hoppes aldri over, så for A1/A3 og A2 (ingen grupper) blir
+// trekket det samme som før: de første `count` i stokket rekkefølge.
+function pickWithoutOverlap(shuffled, count) {
+  const picked = []
+  const skipped = []
+  const groups = new Set()
+  for (const q of shuffled) {
+    if (picked.length >= count) break
+    const group = q.overlap_group
+    if (group && groups.has(group)) {
+      skipped.push(q)
+    } else {
+      if (group) groups.add(group)
+      picked.push(q)
+    }
+  }
+  for (const q of skipped) {
+    if (picked.length >= count) break
+    picked.push(q)
+  }
+  return picked
 }
 
 // Round 3: this page handles both Eksamen (/quiz/:examType) and Læring
@@ -56,11 +85,18 @@ export default function Quiz() {
   const mistakesOnly = isPracticeMode && searchParams.get('feil') === '1'
   const categoryFilter = isPracticeMode ? searchParams.get('kategori') : null
   const hasFilter = mistakesOnly || !!categoryFilter
-  // Timer kun for A2: den ekte A2-eksamen på trafikkstasjonen har 60 min,
+  // Timer der eksamenstypen har tidsgrense (timerMinutes i lib/exams.js):
+  // den ekte A2-eksamen på trafikkstasjonen har 60 min, og STS får det samme,
   // mens A1/A3-netteksamen på flydrone.no er selvgående uten dokumentert
   // tidsgrense (verifisert mot Luftfartstilsynet/UAS Norway 2026-06-10).
   // Untimed A1/A3 er altså bevisst — ikke en manglende feature.
-  const needsTimer = examType === 'A2' && !isPracticeMode
+  const exam = examConfig(examType)
+  const examDurationMs = exam?.timerMinutes ? exam.timerMinutes * 60 * 1000 : null
+  const needsTimer = examDurationMs !== null && !isPracticeMode
+  const examCount = exam?.examCount ?? 30
+  // Eksamenstype uten gratis-pool (STS): get-questions gir gratisbrukere 0
+  // spørsmål, og de skal rett til betalingsmuren, ikke til en tom quiz.
+  const paidOnly = !!exam?.paidOnly
 
   // Pågående økt lagres i sessionStorage (se lib/quizSession.js) så en
   // refresh/crash gjenopptar samme spørsmål, svar og gjenværende tid.
@@ -92,7 +128,7 @@ export default function Quiz() {
   // `remainingMs` is derived from Date.now() on every tick, so tab-blur
   // (which throttles setInterval) can't pause the countdown.
   const [startTime, setStartTime] = useState(null)
-  const [remainingMs, setRemainingMs] = useState(needsTimer ? EXAM_DURATION_MS : null)
+  const [remainingMs, setRemainingMs] = useState(needsTimer ? examDurationMs : null)
   const [quizComplete, setQuizComplete] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -106,14 +142,14 @@ export default function Quiz() {
   useEffect(() => {
     // Gjenoppta lagret økt hvis den finnes. startTime er et veggklokke-
     // anker, så eksamensklokka har løpt videre gjennom reloaden — refresh
-    // gir aldri mer tid. En lagret A2-eksamen der tiden allerede er ute,
+    // gir aldri mer tid. En lagret eksamen med klokke der tiden er ute,
     // forkastes i stedet for å gjenopptas rett inn i «tid ute».
     const saved = loadQuizSession(storageKey)
     if (saved) {
       const expired =
         needsTimer &&
         typeof saved.startTime === 'number' &&
-        Date.now() - saved.startTime >= EXAM_DURATION_MS
+        Date.now() - saved.startTime >= examDurationMs
       if (expired) {
         clearQuizSession(storageKey)
       } else {
@@ -139,6 +175,13 @@ export default function Quiz() {
       try {
         const { questions: data, tier } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
+
+        // Eksamenstype uten gratis-pool og gratis tilgang: ingenting å trekke
+        // og ingen klokke å starte. Betalingsmuren vises i stedet (se under).
+        if (paidOnly && tier === 'free') {
+          setLoading(false)
+          return
+        }
 
         // Målrettet læring: snitt poolen mot feilbank- og/eller kategori-
         // IDer fra RPC-ene i migrasjon 007. RPC-feil behandles som vanlig
@@ -167,18 +210,22 @@ export default function Quiz() {
 
         // Shuffle question order, then shuffle each question's options.
         // Free tier: serveren capper poolen på 25, så slice er no-op der.
+        // Eksamen trekker uten to spørsmål fra samme overlap_group.
         const targetCount = isPracticeMode
           ? PRACTICE_QUESTION_COUNT
-          : EXAM_QUESTION_COUNT[examType] ?? 30
+          : examCount
         const shuffled = shuffleArray(pool)
-        const selected = shuffled.slice(0, targetCount).map(q => ({
+        const drawn = isPracticeMode
+          ? shuffled.slice(0, targetCount)
+          : pickWithoutOverlap(shuffled, targetCount)
+        const selected = drawn.map(q => ({
           ...q,
           options: shuffleArray(q.options)
         }))
         setQuestions(selected)
         setAnswers(new Array(selected.length).fill(null))
         setLoading(false)
-        // Anchor the wall-clock timer the moment questions are ready (A2
+        // Anchor the wall-clock timer the moment questions are ready (timed
         // Eksamen only) — not during the fetch, so network latency doesn't
         // eat into the exam budget. Set here rather than in a separate effect
         // to avoid a synchronous setState-in-effect.
@@ -190,7 +237,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey])
+  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey, examDurationMs, examCount, paidOnly])
 
   // Lagre økten fortløpende: spørsmålstrekk, svar, posisjon og klokkeanker.
   // Svarene ligger allerede i `answers`-arrayet i det de gis, så en
@@ -219,14 +266,14 @@ export default function Quiz() {
   useEffect(() => {
     if (!needsTimer || startTime === null || quizComplete) return
     const tick = () => {
-      const left = Math.max(0, EXAM_DURATION_MS - (Date.now() - startTime))
+      const left = Math.max(0, examDurationMs - (Date.now() - startTime))
       setRemainingMs(left)
       if (left <= 0) setQuizComplete(true)
     }
     tick()
     const id = setInterval(tick, 250)
     return () => clearInterval(id)
-  }, [needsTimer, startTime, quizComplete])
+  }, [needsTimer, startTime, quizComplete, examDurationMs])
 
   // On completion: persist the session (logged-in only) and route to results.
   // Done in an effect — not during render — so Date.now() isn't called in the
@@ -298,12 +345,12 @@ export default function Quiz() {
         .catch(() => {})
     }
 
-    // A2 Eksamen is the only mode with a wall-clock timer, so it's the only
-    // mode that reports time used. Compute from startTime to capture the
-    // actual elapsed value even if the user finished early.
+    // Timed Eksamen (A2, STS) is the only mode with a wall-clock timer, so
+    // it's the only mode that reports time used. Compute from startTime to
+    // capture the actual elapsed value even if the user finished early.
     const timeUsedMs =
       needsTimer && startTime !== null
-        ? Math.min(EXAM_DURATION_MS, Date.now() - startTime)
+        ? Math.min(examDurationMs, Date.now() - startTime)
         : null
     navigate('/results', {
       state: {
@@ -312,10 +359,10 @@ export default function Quiz() {
         isPracticeMode,
         examType,
         timeUsedMs,
-        examDurationMs: needsTimer ? EXAM_DURATION_MS : null,
+        examDurationMs: needsTimer ? examDurationMs : null,
       },
     })
-  }, [quizComplete, questions, answers, user, examType, isPracticeMode, needsTimer, startTime, navigate, storageKey])
+  }, [quizComplete, questions, answers, user, examType, isPracticeMode, needsTimer, startTime, navigate, storageKey, examDurationMs])
 
   // Helper: find option text by id
   const getOptionText = (question, optionId) => {
@@ -349,6 +396,13 @@ export default function Quiz() {
         </div>
       </div>
     )
+  }
+
+  // Eksamenstype uten gratis-pool (STS) og gratis tilgang: get-questions ga
+  // 0 spørsmål, så muren vises med én gang. Står før tom-tilstanden under,
+  // ellers ville et filter (?feil=1, ?kategori=) gitt «fant ingen spørsmål».
+  if (paidOnly && fetchedTier === 'free') {
+    return <Paywall answered={0} lockedExam={examType} />
   }
 
   // Tom-tilstand for målrettet læring: feilbanken er tom (alt riktig sist,

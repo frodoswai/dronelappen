@@ -7,6 +7,7 @@
 // Props:
 //   mode      — 'eksamen' | 'laering' | 'tempo' — drives the mono label
 //   examType  — 'A2' | 'A1_A3' — shown in the header after a middot
+//               (also 'A2_STS'; the name comes from examDisplay in lib/exams.js)
 //   progress  — { current, total } — "Spørsmål 7/30" in the header
 //   stats     — optional extra string (e.g. "5/7 riktige" in Læring/Tempo)
 //   timer     — optional string (e.g. "57:23" Eksamen, "⏱ 1:42" Tempo)
@@ -27,6 +28,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import { logFunnel, QUIZ_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
+import { examDisplay } from '../lib/exams'
 
 export default function QuizLayout({
   mode,
@@ -74,8 +76,7 @@ export default function QuizLayout({
       ? 'tempo'
       : mode || ''
 
-  const displayExam =
-    examType === 'A1_A3' ? 'A1 / A3' : examType || ''
+  const displayExam = examDisplay(examType)
 
   const pct =
     progress && progress.total > 0
