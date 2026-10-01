@@ -12,6 +12,10 @@ captureAttribution()
 // ?src= for funksjonsstemmer (STS-flisa). Se lib/voteSource.js.
 captureVoteSource()
 
+// index.html har en statisk bunntekst-navigasjon for crawlere uten JavaScript.
+// Appen rendrer de samme lenkene selv (components/Footer.jsx), saa den fjernes her.
+document.getElementById('dl-static-nav')?.remove()
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>

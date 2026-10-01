@@ -153,11 +153,21 @@ const CSS = `
   summary{cursor:pointer;font-weight:600;color:var(--navy)}
   footer.site{border-top:1px solid #e3e9ef;margin-top:2rem;padding:1.5rem 1.25rem;
     text-align:center;font-size:.85rem;color:var(--muted)}
+  footer.site .sitenav{margin:0 0 .6rem;font-weight:600}
+  footer.site .sitenav a{color:var(--navy);text-decoration:none}
+  footer.site .sitenav a:hover{text-decoration:underline}
 `
 
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Lora:ital@1&display=swap" rel="stylesheet">`
+
+// Statisk sidenavigasjon i bunnteksten. Landingssidene og bloggen er statisk HTML,
+// og appens React-footer (src/components/Footer.jsx) rendres bare med JavaScript.
+// Uten disse lenkene har /droneeksamen-oving/, /pris/ og /dronesertifikat-a2/
+// ingen href-innlenker for crawlere som ikke kjoerer JS (Ahrefs 17.09.2026).
+const SITENAV = `<p class="sitenav"><a href="/droneeksamen-oving/">Øv til droneeksamen</a> ·
+  <a href="/dronesertifikat-a2/">A2-sertifikat</a> · <a href="/pris/">Pris</a> · <a href="/blogg/">Blogg</a></p>`
 
 const CONSENT = `<script>
 (function(){
@@ -205,7 +215,8 @@ ${CONSENT}
 ${bodyHtml}
 </main>
 <footer class="site">
-  <p>© ${new Date().getFullYear()} DroneLappen · <a href="/blogg/">Blogg</a> ·
+  ${SITENAV}
+  <p>© ${new Date().getFullYear()} DroneLappen ·
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
 </footer>
 ${PRIS_SCRIPT}

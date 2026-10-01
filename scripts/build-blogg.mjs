@@ -104,7 +104,17 @@ const CSS = `
   ul.artikler .d{font-size:.85rem;color:var(--muted);margin:.25rem 0 .4rem}
   footer.site{border-top:1px solid #e3e9ef;margin-top:2rem;padding:1.5rem 1.25rem;
     text-align:center;font-size:.85rem;color:var(--muted)}
+  footer.site .sitenav{margin:0 0 .6rem;font-weight:600}
+  footer.site .sitenav a{color:var(--navy);text-decoration:none}
+  footer.site .sitenav a:hover{text-decoration:underline}
 `
+
+// Statisk sidenavigasjon i bunnteksten (samme som landingssidene). Gir
+// /droneeksamen-oving/, /pris/ og /dronesertifikat-a2/ href-innlenker fra hver
+// bloggside, ogsaa for crawlere uten JavaScript (Ahrefs 17.09.2026). Ligger
+// utenfor bodyHtml, saa tagBodyLinks legger ikke UTM paa dem.
+const SITENAV = `<p class="sitenav"><a href="/droneeksamen-oving/">Øv til droneeksamen</a> ·
+  <a href="/dronesertifikat-a2/">A2-sertifikat</a> · <a href="/pris/">Pris</a> · <a href="/blogg/">Blogg</a></p>`
 
 const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,7 +169,8 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 ${bodyHtml}
 </main>
 <footer class="site">
-  <p>© ${new Date().getFullYear()} DroneLappen · <a href="/blogg/">Blogg</a> ·
+  ${SITENAV}
+  <p>© ${new Date().getFullYear()} DroneLappen ·
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
 </footer>
 </body>

@@ -234,6 +234,16 @@
       <p>Prøv gratis med 25 spørsmål uten innlogging. Full tilgang til alle spørsmål og moduser koster %DL_PRIS% kr som engangsbeløp (12 måneders tilgang, ingen abonnement). DroneLappen fungerer på både mobil og PC, og er uten reklame.</p>
       <p>Offisielle ressurser: <a href="https://flydrone.no">flydrone.no</a> (registrering og A1/A3-eksamen hos Luftfartstilsynet), <a href="https://luftfartstilsynet.no/droner/">Luftfartstilsynet</a>, og <a href="https://www.vegvesen.no/forerkort/ta-forerkort/teoriprove/droneeksamen/">Statens vegvesen</a> (A2-eksamen).</p>
     </noscript>
+    <!-- Statisk sidenavigasjon for crawlere uten JavaScript (Ahrefs, AI-crawlere), lagt til 01.10.2026.
+         Fjernes av src/main.jsx idet appen starter; appens egen footer (components/Footer.jsx) har de samme lenkene. -->
+    <footer id="dl-static-nav" style="text-align:center;padding:1.25rem;font:600 .85rem Barlow,Inter,-apple-system,'Segoe UI',Roboto,sans-serif;color:#083554">
+      <nav aria-label="Sider på DroneLappen">
+        <a href="/droneeksamen-oving/" style="color:#083554">Øv til droneeksamen</a> ·
+        <a href="/dronesertifikat-a2/" style="color:#083554">A2-sertifikat</a> ·
+        <a href="/pris/" style="color:#083554">Pris</a> ·
+        <a href="/blogg/" style="color:#083554">Blogg</a>
+      </nav>
+    </footer>
     <!-- Apply saved text-size preference before paint to avoid a flash -->
     <script>
       (function () {
