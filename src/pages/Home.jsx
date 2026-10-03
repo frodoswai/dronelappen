@@ -14,7 +14,8 @@ import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
-import { isExamEnabled } from '../lib/exams'
+import { isExamEnabled, antallParentes } from '../lib/exams'
+import ANTALL from '../lib/antall.json'
 import {
   getLastSession,
   sessionToPath,
@@ -557,7 +558,7 @@ export default function Home() {
         <div className="flex items-center justify-between pt-3 border-t-[0.5px] border-da-navy/15">
           <span className="font-mono text-[11px] text-da-text-muted tracking-wide tabular-nums">
             {stats.questions !== null
-              ? `${stats.questions} spørsmål · ${stats.categories} kategorier`
+              ? `${stats.questions} spørsmål${antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)} · ${stats.categories} kategorier`
               : '··· spørsmål · ··· kategorier'}
           </span>
           <span className="font-mono text-[11px] text-da-text-muted">v1.1</span>

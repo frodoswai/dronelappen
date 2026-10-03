@@ -266,6 +266,14 @@ export default function StsVoteCard() {
         </>
       )}
 
+      {/* Fra 03.10.2026: STS-spørsmålene er lastet inn for testing før
+          lanseringen 6.10, så totalen på siden har gått opp. Fjernes når
+          flisa byttes ut med StsExamCard ved lansering. */}
+      <p className="text-[11.5px] text-da-text-muted leading-[1.5] mt-3">
+        STS-spørsmålene er lagt inn og testes nå. Derfor viser totalen på siden
+        flere spørsmål noen dager før STS åpner tirsdag 6. oktober.
+      </p>
+
       {err && (
         <p className="text-[12px] text-da-text-muted mt-2">{err}</p>
       )}

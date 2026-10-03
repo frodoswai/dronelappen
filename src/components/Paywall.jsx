@@ -7,7 +7,7 @@ import LeadCapture from './LeadCapture'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
-import { examConfig } from '../lib/exams'
+import { examConfig, antallParentes } from '../lib/exams'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -117,7 +117,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null }
             </div>
             <ul className="text-[13px] text-da-text-body leading-[1.7] mb-4 list-none space-y-0.5">
               <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Alle {ANTALL.total} spørsmål, alle
+                <span className="font-mono text-da-gold mr-1.5">+</span>Alle {ANTALL.total} spørsmål{antallParentes(ANTALL.total, ANTALL.A1_A3 + ANTALL.A2)}, alle
                 kategorier
               </li>
               <li>

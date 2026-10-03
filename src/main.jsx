@@ -5,12 +5,15 @@ import App from './App.jsx'
 import './index.css'
 import { captureAttribution } from './lib/attribution.js'
 import { captureVoteSource } from './lib/voteSource.js'
+import { captureStsPreview } from './lib/exams.js'
 
 // Capture acquisition source (UTM/referrer) on first known-channel visit,
 // so it can be attached to the Stripe checkout for sales attribution.
 captureAttribution()
 // ?src= for funksjonsstemmer (STS-flisa). Se lib/voteSource.js.
 captureVoteSource()
+// ?sts-test=1 for STS-testere før lansering. Se lib/exams.js.
+captureStsPreview()
 
 // index.html har en statisk bunntekst-navigasjon for crawlere uten JavaScript.
 // Appen rendrer de samme lenkene selv (components/Footer.jsx), saa den fjernes her.

@@ -115,3 +115,26 @@ export function examLabel(type) {
 export function examDisplay(type) {
   return examConfig(type)?.display ?? (type || '')
 }
+
+// Testlenke (03.10.2026): dronelappen.app/?sts-test=1 skrur på
+// forhåndsvisningen i nettleseren som åpner lenken, ?sts-test=0 skrur den av.
+// Kalles én gang ved oppstart (main.jsx). Slik kan testere på mobil slippe
+// nettleserkonsollen. Ingen effekt når STS_LIVE er true.
+export function captureStsPreview() {
+  try {
+    const v = new URLSearchParams(window.location.search).get('sts-test')
+    if (v === '1') localStorage.setItem(STS_PREVIEW_KEY, '1')
+    if (v === '0') localStorage.removeItem(STS_PREVIEW_KEY)
+  } catch (_) {
+    // blokkert lagring: ingen forhåndsvisning
+  }
+}
+
+// Før lansering ligger STS-spørsmålene i banken, men er ikke åpne ennå.
+// Der totalen vises, legger vi da til hvor mange som gjelder A1/A3 og A2
+// (Frode 03.10.2026). Tom streng etter lansering eller når totalen ikke
+// inneholder STS.
+export function antallParentes(total, a1a3PlussA2) {
+  if (STS_LIVE || !total || !a1a3PlussA2 || total <= a1a3PlussA2) return ''
+  return ` (${a1a3PlussA2} på A1/A3 og A2)`
+}

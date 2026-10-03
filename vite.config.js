@@ -18,7 +18,10 @@ const DL_PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? '349' : '249'
 // committer ved endring -> Vercel bygger). Brukes i index.html (%DL_ANTALL%),
 // landingssider/blogg ({{ANTALL}}) og i appen (import av antall.json).
 // Innført 27.09.2026 da banken gikk fra 241 til 266.
-const DL_ANTALL = String(JSON.parse(readFileSync(new URL('./src/lib/antall.json', import.meta.url), 'utf8')).total)
+// Til STS-lanseringen 6.10.2026 sier tekstene i index.html «A1/A3 og A2»,
+// så tallet er A1/A3 + A2. Ved lansering: skriv om tekstene og bruk total.
+const DL_ANT = JSON.parse(readFileSync(new URL('./src/lib/antall.json', import.meta.url), 'utf8'))
+const DL_ANTALL = String(DL_ANT.A1_A3 + DL_ANT.A2)
 
 function prisPlugin() {
   return {
