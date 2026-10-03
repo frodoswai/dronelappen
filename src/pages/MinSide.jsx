@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import CrosshairMarks from '../components/CrosshairMarks'
+import { enabledExamTypes, examLabel } from '../lib/exams'
 
 // «Min side» — personlig scoreboard (Frode 31/7; tempo-rekorder bevisst
 // utsatt). Datagrunnlag: get_readiness() (siste svar per spørsmål, per
@@ -15,7 +16,6 @@ import CrosshairMarks from '../components/CrosshairMarks'
 //   grønn → ≥ 75 %
 //   GULL  → ≥ 90 % treff OG ≥ 80 % dekning — man skal ikke nå gull ved å
 //           bare svare på det man allerede kan.
-const EXAM_LABELS = { A1_A3: 'A1/A3', A2: 'A2' }
 
 function levelFor(pct, coveragePct, answered, minAnswered) {
   if (answered < minAnswered) {
@@ -104,7 +104,12 @@ export default function MinSide() {
     if (!byType[r.exam_type]) byType[r.exam_type] = []
     byType[r.exam_type].push(r)
   }
-  const hasAnyData = (rows || []).some((r) => r.answered > 0)
+  // Bare eksamenstyper som er skrudd på (lib/exams.js). Når STS-banken er
+  // lastet inn, gir get_readiness STS-rader til alle, også før STS er synlig.
+  const examTypes = enabledExamTypes()
+  const hasAnyData = (rows || []).some(
+    (r) => r.answered > 0 && examTypes.includes(r.exam_type)
+  )
 
   return (
     <div className="min-h-screen bg-da-bg flex flex-col">
@@ -200,7 +205,7 @@ export default function MinSide() {
             </div>
           )}
 
-          {['A1_A3', 'A2'].map((type) => {
+          {examTypes.map((type) => {
             const cats = byType[type] || []
             if (cats.length === 0) return null
             const answered = cats.reduce((s, c) => s + c.answered, 0)
@@ -226,7 +231,7 @@ export default function MinSide() {
                 <CrosshairMarks variant="gold" />
                 <div className="flex items-baseline justify-between mb-1">
                   <h2 className="text-[18px] font-medium text-da-navy">
-                    {EXAM_LABELS[type] || type}
+                    {examLabel(type)}
                   </h2>
                   <span
                     className={`font-mono text-[11px] font-semibold tracking-[0.08em] ${level.text}`}
@@ -307,7 +312,7 @@ export default function MinSide() {
                   return (
                     <div key={i} className="flex items-center justify-between py-2">
                       <span className="font-mono text-[11px] text-da-text-muted tabular-nums">
-                        {dateStr} · {EXAM_LABELS[s.exam_type] || s.exam_type}
+                        {dateStr} · {examLabel(s.exam_type)}
                       </span>
                       <span className="font-mono text-[12px] font-semibold tabular-nums text-da-navy">
                         {s.score}/{s.total_questions}{' '}

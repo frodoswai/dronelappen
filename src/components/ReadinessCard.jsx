@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { enabledExamTypes, examLabel } from '../lib/exams'
 
 /**
  * «Er du klar?» — beredskapsscore per eksamenstype, basert på brukerens
@@ -21,7 +22,6 @@ import { useAuth } from '../contexts/AuthContext'
  */
 const PASS = 75
 const MIN_ANSWERED = 15
-const EXAM_LABELS = { A2: 'A2', A1_A3: 'A1/A3' }
 
 // Sammenslåing (Frode 18/7): «Er du klar?» og fortsett-kortet på Home
 // overlappet for returbrukere — to kort før hovedvalget. Nå eier dette
@@ -40,8 +40,13 @@ export default function ReadinessCard({ resume = null, onData }) {
       .then(({ data, error }) => {
         if (cancelled || error || !data || data.length === 0) return
         const agg = {}
+        // Bare eksamenstyper som er skrudd på (lib/exams.js). Når STS-banken
+        // er lastet inn, gir get_readiness STS-rader til alle brukere, også
+        // før STS er synlig i appen.
+        const enabled = enabledExamTypes()
         for (const row of data) {
           const k = row.exam_type
+          if (!enabled.includes(k)) continue
           agg[k] ??= { answered: 0, correct: 0, total: 0, categories: [] }
           agg[k].answered += row.answered
           agg[k].correct += row.correct
@@ -83,7 +88,7 @@ export default function ReadinessCard({ resume = null, onData }) {
   const [examType, d] = Object.entries(byExam).sort(
     (a, b) => b[1].answered - a[1].answered
   )[0]
-  const label = EXAM_LABELS[examType] || examType
+  const label = examLabel(examType)
   const pct = Math.round((d.correct / d.answered) * 100)
   const tooEarly = d.answered < MIN_ANSWERED
 

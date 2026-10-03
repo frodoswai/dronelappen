@@ -3,6 +3,7 @@ import ModeCard from '../components/ModeCard'
 import UpgradePrompt from '../components/UpgradePrompt'
 import { useAuth } from '../contexts/AuthContext'
 import { recordSessionStart } from '../lib/sessionHistory'
+import { EXAMS, examConfig } from '../lib/exams'
 
 // Step 2 of the two-step home flow. User picked an exam on Home, now
 // picks a mode. Round 2 visual redesign: compact dark hero (no
@@ -24,21 +25,18 @@ export default function ExamSelect() {
 
   const { tier } = useAuth()
 
-  const isA2 = examType === 'A2'
-  const categoryLabel = isA2 ? 'trafikkstasjonen' : 'online, gratis'
-  const displayName = isA2 ? 'A2' : 'A1 / A3'
+  // Navn, stikkord og tekster per eksamenstype står i lib/exams.js. Ruten
+  // slipper bare gjennom kjente typer; A1/A3 er reserven, som før.
+  const exam = examConfig(examType) ?? EXAMS.A1_A3
+  const categoryLabel = exam.tag
+  const displayName = exam.display
 
   // Tier-aware: free tier gets a 25-question pool (pass: 19 = 75%),
-  // PRO gets the full simulation i offisielt format (A2: 30/23,
-  // A1/A3: 40/30 — se EXAM_QUESTION_COUNT i Quiz.jsx). Describe what
-  // the user will actually get, not more.
-  const examDescription = isA2
-    ? tier === 'paid'
-      ? 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.'
-      : 'Simulering med 25 gratis spørsmål, 60 min, 19 riktige for å bestå.'
-    : tier === 'paid'
-      ? 'Realistisk simulering. 40 spørsmål, 30 riktige for å bestå — som den offisielle prøven.'
-      : 'Simulering med 25 gratis spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål.'
+  // PRO gets the full simulation i offisielt format (A2 og STS: 30/23,
+  // A1/A3: 40/30, se examCount i lib/exams.js). STS har ingen gratis-pool.
+  // Describe what the user will actually get, not more.
+  const examDescription =
+    tier === 'paid' ? exam.examDescription.paid : exam.examDescription.free
 
   // Gate each mode tap on recordSessionStart so smart resume stays
   // honest. Using onClick rather than wrapping the Link target because
@@ -66,6 +64,13 @@ export default function ExamSelect() {
           <h1 className="text-4xl font-medium text-da-bg leading-none tracking-tight">
             {displayName}
           </h1>
+          {/* Innledning der eksamenstypen har en (STS-påbygget): format og
+              hvorfor eksamensmodusen har 60 minutter. */}
+          {exam.intro && (
+            <p className="text-[13px] text-da-dark-slogan leading-[1.55] mt-3 max-w-md">
+              {exam.intro}
+            </p>
+          )}
         </div>
       </div>
 

@@ -16,27 +16,30 @@ import MinSide from './pages/MinSide'
 import SettPassord from './pages/SettPassord'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
+import { enabledExamTypes } from './lib/exams'
 import './App.css'
 
 // Ugyldig eksamenstype i URL-en (f.eks. /quiz/A1A3) ga en side som aldri
 // lastet: ingen spørsmål, ingen feilmelding, ingen vei videre (oppdaget 27.09.2026).
 // Kjente skrivemåter rettes til riktig type med samme sti og query; alt annet
-// sendes til forsiden. Gyldige typer: A1_A3 og A2.
-const EXAM_TYPES = ['A1_A3', 'A2']
-
+// sendes til forsiden. Gyldige typer: enabledExamTypes() i lib/exams.js, altså
+// A1_A3 og A2, pluss A2_STS når STS er skrudd på. Så lenge STS er av, sendes
+// også STS-adresser til forsiden, som før.
 function normalizeExamType(raw = '') {
   const s = raw.toUpperCase().replace(/[^A-Z0-9]/g, '')
   if (s === 'A1A3') return 'A1_A3'
   if (s === 'A2') return 'A2'
+  if (s === 'A2STS' || s === 'STS') return 'A2_STS'
   return null
 }
 
 function ExamRoute({ element }) {
   const { examType } = useParams()
   const { pathname, search, hash } = useLocation()
-  if (EXAM_TYPES.includes(examType)) return element
+  const enabled = enabledExamTypes()
+  if (enabled.includes(examType)) return element
   const fixed = normalizeExamType(examType)
-  if (!fixed) return <Navigate to="/" replace />
+  if (!fixed || !enabled.includes(fixed)) return <Navigate to="/" replace />
   const base = pathname.slice(0, pathname.lastIndexOf('/'))
   return <Navigate to={`${base}/${fixed}${search}${hash}`} replace />
 }

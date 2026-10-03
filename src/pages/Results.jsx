@@ -4,6 +4,7 @@ import CrosshairMarks from '../components/CrosshairMarks'
 import LeadCapture from '../components/LeadCapture'
 import UpgradePrompt from '../components/UpgradePrompt'
 import { useAuth } from '../contexts/AuthContext'
+import { examDisplay } from '../lib/exams'
 
 // Pass threshold mirrors the real A2 exam: 23/30 = 76.6% ≥ 75%.
 const PASS_PERCENT = 75
@@ -81,7 +82,7 @@ export default function Results() {
   // Home if we somehow got here without an examType.
   const retryPath = examType ? `/exam/${examType}` : '/'
 
-  const displayExam = examType === 'A1_A3' ? 'A1 / A3' : examType || ''
+  const displayExam = examDisplay(examType)
 
   // Mode + verdict selection. Three visual variants:
   //   Læring          → navy label, navy accent border, neutral copy
