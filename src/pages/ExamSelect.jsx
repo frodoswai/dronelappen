@@ -91,7 +91,7 @@ export default function ExamSelect() {
 
         {/* Upsell to full access for free users (hidden for paid).
             Placed above the mode cards so it's visible without scrolling. */}
-        <UpgradePrompt />
+        <UpgradePrompt paidOnlyTitle={exam.paidOnly ? exam.paywallTitle : ''} />
 
         <div className="flex items-center gap-2.5 mb-3">
           <div className="flex-1 h-px bg-da-navy/20" />
