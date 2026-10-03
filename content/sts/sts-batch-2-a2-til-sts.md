@@ -1,10 +1,25 @@
 # STS-spørsmålsbank - batch 2 (A2→STS-påbygget), 48 spørsmål
 
-Utkast 2026-09-30. Kanonisk fil: `content/sts/sts-batch-2-a2-til-sts.json`. Ikke i Supabase. Nummerering 31-79 fortsetter batch 1. n 31, 40 og 73 er flyttet til sts-smakebit.json (landingssiden).
+Utkast 2026-09-30. Kanonisk fil: `content/sts/sts-batch-2-a2-til-sts.json`. Ikke i Supabase. Nummerering 31-79 fortsetter batch 1. n 31, 40 og 73 vises også som eksempler på /sts-eksamen/ (kopi i sts-smakebit.json). Endres de her, må landingssiden endres samme sted.
 
 DRONEA2STS (30 spm / 23 riktige). Emnene er verifisert mot EU 2020/639 Attachment A til kap. I pkt. (1)(b): den som har A2-bevis tar minst 30 spørsmål fordelt på emne (i)-(v): regelverk, menneskelige ytelsesbegrensninger, operasjonelle prosedyrer, tekniske og operasjonelle tiltak mot bakkerisiko, og generell UAS-kunnskap. Meteorologi, flygeytelse og luftrisiko (vi-viii) er ikke med i påbygget. Tidsgrense: ikke publisert av Luftfartstilsynet eller Statens vegvesen per 30.09.2026.
 
 Kilder: se `meta.sources` i JSON-fila. Runde 3 (30.09, Fable): n 35, 51, 65 og 79 justert, flere overlap_group (se `meta.revidert`).
+
+---
+
+### 31. Regelverk og kategorier · vanskegrad 1
+
+Et firma fikk bekreftet STS-01-deklarasjonen sin for to år og tre måneder siden og har ikke sendt inn noe siden. Kan de fortsatt fly på den?
+
+- a) Ja, en deklarasjon gjelder til operatøren selv trekker den tilbake
+- b) Nei, en deklarasjon gjelder i 2 år, så de må sende en ny ✅
+- c) Ja, så lenge pilotenes kompetansebevis fortsatt er gyldige
+- d) Nei, deklarasjonen må fornyes hvert år sammen med årsgebyret
+
+*Forklaring:* UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.
+
+*Kilde:* EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon og årsgebyr etter gebyrforskriften)
 
 ---
 
@@ -125,6 +140,21 @@ C5-dronen har geo-awareness, og STS-01-oppdraget ligger i en geografisk sone som
 *Forklaring:* UAS.STS-01.030 (7) pålegger operatøren å laste opp oppdatert informasjon i geo-awareness-funksjonen, dersom dronen har den, når den geografiske sonen krever det. Piloten skal i tillegg hente oppdatert informasjon om geografiske soner før flyging.
 
 *Kilde:* EU 2020/639 UAS.STS-01.030 (7); UAS.SPEC.060 (2)(a)
+
+---
+
+### 40. STS-02: BVLOS og observatører · vanskegrad 1
+
+Hva krever STS-02 om dronens posisjon under oppskyting og landing?
+
+- a) Utenfor syne er greit så lenge den følger den programmerte banen
+- b) I pilotens syn, unntatt ved landing etter nødavslutning ✅
+- c) Innenfor syn til nærmeste luftromsobservatør
+- d) Det er ikke regulert i STS-02
+
+*Forklaring:* Selv om STS-02 er BVLOS, krever UAS.STS-02.020 (4) at dronen er i syne for piloten under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen.
+
+*Kilde:* EU 2020/639 UAS.STS-02.020 (4)
 
 ---
 
@@ -590,6 +620,21 @@ Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til C5
 *Forklaring:* En C5 kan være en C3 med tilbehørssett. Da skal C5-merket sitte på alt tilbehøret, og samsvarserklæringen skal vise til C3 og tilbehørssettet. Settet skal ikke endre programvaren til C3-dronen, og operatøren skal installere det etter produsentens instruks.
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (8); EU 2020/639 UAS.STS-01.030 (10)
+
+---
+
+### 73. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
+
+En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Hvilken klasse kan den få?
+
+- a) C5, så lenge den har en fallskjerm som demper virkningen av treffet
+- b) C6, fordi C6 er unntatt kravet om ren elektrisk drift ✅
+- c) Begge, drivstoffet er ikke regulert i klassene
+- d) Ingen av dem, begge klassene krever elektrisk drift
+
+*Forklaring:* Både C5 og C6 bygger på kravene til C3 i Part 4, der pkt. (7) krever ren elektrisk drift. C5 er bare unntatt pkt. (2) og (10), mens C6 er unntatt pkt. (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.
+
+*Kilde:* EU 2020/1058 Part 4 pkt. (7); Part 16 og Part 17 (innledningen)
 
 ---
 

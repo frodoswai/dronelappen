@@ -2,8 +2,8 @@
   "meta": {
     "title": "STS-smakebit: 3 eksempelspørsmål på dronelappen.app/sts-eksamen/",
     "created": "2026-10-03",
-    "status": "Publiseres på landingssiden /sts-eksamen/ ved STS-lanseringen 6.10.2026. Ligger IKKE i banken i appen (Frode 3/10: tas ut av eksamenstrekket).",
-    "kilde": "Flyttet fra sts-batch-2-a2-til-sts.json (n 31, 40, 73), samme tekst og fasit som etter tre gjennomlesinger."
+    "status": "Vises på landingssiden /sts-eksamen/ fra STS-lanseringen 6.10.2026. Spørsmålene ligger OGSÅ i banken i appen (sts-batch-2, n 31, 40 og 73): de ble tatt ut 3/10 og lagt tilbake samme kveld etter Frodes beslutning. Fila er en kopi. Endres et av spørsmålene i banken, må content/landing/sts-eksamen.md endres likt.",
+    "kilde": "Kopi av sts-batch-2-a2-til-sts.json (n 31, 40, 73), samme tekst og fasit som etter tre gjennomlesinger."
   },
   "categories": [
     {
