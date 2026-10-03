@@ -70,7 +70,7 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 </ol>
 <details>
 <summary>Se svaret</summary>
-<p><strong>Riktig svar: A.</strong> Både C5 og C6 bygger på kravene til C3 (EU 2020/1058, Part 4), der punkt (7) krever ren elektrisk drift. C5 er bare unntatt punkt (2) og (10), mens C6 er unntatt punkt (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.</p>
+<p><strong>Riktig svar: A.</strong> Både C5 og C6 bygger på kravene til C3 (forordning 2019/945, del 4), der punkt (7) krever ren elektrisk drift. C5 er bare unntatt punkt (2) og (10), mens C6 er unntatt punkt (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.</p>
 </details>
 </div>
 
