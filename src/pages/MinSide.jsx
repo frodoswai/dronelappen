@@ -354,7 +354,7 @@ export default function MinSide() {
               }}
               className="block mx-auto font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] py-2 transition-colors"
             >
-              {stsPreviewOn() ? 'STS-test: på (trykk for å slå av)' : 'STS-test'}
+              {stsPreviewOn() ? 'STS-test er på · trykk for å slå av' : 'STS-test er av · trykk for å slå på'}
             </button>
           )}
         </div>

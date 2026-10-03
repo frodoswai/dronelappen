@@ -11,7 +11,7 @@
 // All reads/writes are wrapped in try/catch so a corrupted payload or
 // disabled storage never crashes the app.
 
-import { examConfig } from './exams'
+import { examConfig, enabledExamTypes } from './exams'
 
 const KEY = 'dronelappen_sessions'
 const MAX_ENTRIES = 50
@@ -55,7 +55,11 @@ export function recordSessionStart(examType, mode) {
  * entry is older than `maxAgeMs` (default 14 days — stale resume).
  */
 export function getLastSession({ maxAgeMs = STALE_MS } = {}) {
-  const list = safeRead()
+  // Hopp over økter for eksamenstyper som ikke er skrudd på (03.10.2026):
+  // en STS-økt fra forhåndsvisningen ga ellers en fortsett-stripe som bare
+  // sendte brukeren tilbake til forsiden når STS-testen var av.
+  const enabled = enabledExamTypes()
+  const list = safeRead().filter((s) => s && enabled.includes(s.examType))
   if (list.length === 0) return null
   const last = list[list.length - 1]
   if (!last || typeof last.startedAt !== 'number') return null
