@@ -154,7 +154,7 @@ Hva må piloten kontrollere før hver STS-01-flyging, i tillegg til den vanlige 
 - c) At luftromsobservatøren har fått tildelt radiokanal
 - d) At dronens programmerbare flygevolum er satt til flight geography
 
-*Forklaring:* UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.
+*Forklaring:* UAS.STS-01.040 krever at piloten før start kontrollerer at flygeavslutningen virker og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (1)
 
@@ -432,14 +432,14 @@ Operasjonsmanualen skal ha en policy for hvordan piloten og annet nøkkelpersone
 
 ### 29. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 2
 
-Hva må «midlet for å avslutte flygingen» i en C5-drone oppfylle?
+En C5-drone skal ha en egen funksjon som piloten kan bruke til å avslutte flygingen. Hva må den oppfylle?
 
-- a) Det kan være RTH-funksjonen, så lenge den er testet i dedikerte flytester før deklarasjon
-- b) Det skal kutte strømmen til alle motorer umiddelbart, uavhengig av høyde og hastighet
+- a) Den kan være RTH-funksjonen, så lenge den er testet i dedikerte flytester før deklarasjon
+- b) Den skal kutte strømmen til alle motorer umiddelbart, uavhengig av høyde og hastighet
 - c) Uavhengig av autopiloten, tvinge dronen ned, hindre motordrevet horisontal bevegelse og dempe treffet ✅
-- d) Det er valgfritt for droner under 10 kg
+- d) Den er valgfri for droner under 10 kg
 
-*Forklaring:* Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og inkludere midler som reduserer virkningen av treffet (f.eks. fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.
+*Forklaring:* Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og ha noe som demper treffet (for eksempel fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (5)
 
@@ -454,7 +454,7 @@ Hva skiller en C6-drone (STS-02) fra en C5-drone (STS-01) i kravene?
 - c) C6 er lettere: maks 4 kg mot C5 sine 25 kg, fordi den flyr utenfor synsrekkevidde
 - d) C6 må ha programmerbart operasjonsvolum, programmerbar bane og maks 50 m/s; C5 må ha lavhastighetsmodus på maks 5 m/s ✅
 
-*Forklaring:* C6 er bygget for BVLOS: midler som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (maks 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.
+*Forklaring:* C6 er bygget for BVLOS: funksjoner som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (maks 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.
 
 *Kilde:* EU 2020/1058 Part 16 og Part 17; EU 2020/639 UAS.STS-01.020 (1)(f), UAS.STS-02.020 (8)
 

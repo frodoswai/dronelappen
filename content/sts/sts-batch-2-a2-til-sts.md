@@ -707,7 +707,7 @@ Hva skal hver drone i spesifikk kategori være utstyrt med etter UAS.SPEC.050?
 - c) Minst ett grønt blinklys for synlighet om natta og aktiv, oppdatert Remote ID ✅
 - d) Et varmesøkende kamera
 
-*Forklaring:* UAS.SPEC.050 (1)(l) krever at hver drone har minst ett grønt blinkende lys for synlighet om natta og et aktivt og oppdatert fjernidentifikasjonssystem. Fallskjerm er ikke et generelt krav, men C5 skal ha midler som demper treffet ved flygeavslutning.
+*Forklaring:* UAS.SPEC.050 (1)(l) krever at hver drone har minst ett grønt blinkende lys for synlighet om natta og et aktivt og oppdatert fjernidentifikasjonssystem. Fallskjerm er ikke et generelt krav, men C5 skal ha noe som demper treffet ved flygeavslutning, for eksempel fallskjerm.
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(l); EU 2020/1058 Part 16 pkt. (5)(c)
 

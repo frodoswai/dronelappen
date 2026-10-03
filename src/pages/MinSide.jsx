@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import CrosshairMarks from '../components/CrosshairMarks'
-import { enabledExamTypes, examLabel } from '../lib/exams'
+import { enabledExamTypes, examLabel, STS_LIVE, stsPreviewOn, setStsPreview } from '../lib/exams'
 
 // «Min side» — personlig scoreboard (Frode 31/7; tempo-rekorder bevisst
 // utsatt). Datagrunnlag: get_readiness() (siste svar per spørsmål, per
@@ -342,6 +342,21 @@ export default function MinSide() {
           >
             Tilbake til hjem
           </button>
+
+          {/* STS-test før lansering (03.10.2026): i den installerte appen kan
+              man ikke legge ?sts-test=1 i adressen, så bryteren står her.
+              Forsvinner når STS_LIVE settes til true. */}
+          {!STS_LIVE && (
+            <button
+              onClick={() => {
+                setStsPreview(!stsPreviewOn())
+                window.location.assign('/')
+              }}
+              className="block mx-auto font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] py-2 transition-colors"
+            >
+              {stsPreviewOn() ? 'STS-test: på (trykk for å slå av)' : 'STS-test'}
+            </button>
+          )}
         </div>
       </div>
     </div>

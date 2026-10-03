@@ -138,3 +138,17 @@ export function antallParentes(total, a1a3PlussA2) {
   if (STS_LIVE || !total || !a1a3PlussA2 || total <= a1a3PlussA2) return ''
   return ` (${a1a3PlussA2} på A1/A3 og A2)`
 }
+
+// Bryter på Min side (03.10.2026) for testere i den installerte appen, der
+// adressefeltet ikke kan redigeres. Vises bare så lenge STS_LIVE er false.
+export function stsPreviewOn() {
+  return stsPreview()
+}
+export function setStsPreview(on) {
+  try {
+    if (on) localStorage.setItem(STS_PREVIEW_KEY, '1')
+    else localStorage.removeItem(STS_PREVIEW_KEY)
+  } catch (_) {
+    // blokkert lagring: ingenting å gjøre
+  }
+}

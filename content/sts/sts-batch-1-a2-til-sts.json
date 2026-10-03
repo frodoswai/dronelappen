@@ -13,7 +13,7 @@
     "style": "Vegvesen-stil per stilrevisjonen 30.-31.07.2026: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker eller symboler (→, ≤) i publisert tekst.",
     "db_note": "questions.exam_type har CHECK IN ('A1_A3','A2'). Innlasting krever migrasjon 018 som utvider CHECK-en i questions og quiz_sessions samt nye rader i categories. Ikke last inn før lansering (brief 2026-09-30, del B).",
     "not_covered_on_purpose": "Norske detaljer som er uavklart per handoff 21.09 (overføring av praktisk akkreditering mellom operatører, privatperson som deklarerer alene) er bevisst IKKE brukt som fasit.",
-    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38). 2026-09-30 (etterkontroll, Opus): n 16 (1:1-regelen beskrevet som gjeldende A2-regel, i tråd med LT og A2-banken, ikke «tommelfingerregel»), n 17 og 18 (MTOM i stammen, siden tabellen går på MTOM)."
+    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38). 2026-09-30 (etterkontroll, Opus): n 16 (1:1-regelen beskrevet som gjeldende A2-regel, i tråd med LT og A2-banken, ikke «tommelfingerregel»), n 17 og 18 (MTOM i stammen, siden tabellen går på MTOM). 2026-10-03: n 29 ny stamme (Frode: «midlet» var tungt), «midler» skrevet om i forklaringene i n 10, 29 og 30."
   },
   "categories": [
     {
@@ -320,7 +320,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "UAS.STS-01.040 krever at piloten før start verifiserer at midlene for å avslutte flygingen er operative og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
+      "explanation": "UAS.STS-01.040 krever at piloten før start kontrollerer at flygeavslutningen virker og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
       "source": "EU 2020/639 UAS.STS-01.040 (1)",
       "overlap_group": "forflyging-sjekk-sts02"
     },
@@ -818,15 +818,15 @@
       "n": 29,
       "category": "sts-uas",
       "difficulty": 2,
-      "question_text": "Hva må «midlet for å avslutte flygingen» i en C5-drone oppfylle?",
+      "question_text": "En C5-drone skal ha en egen funksjon som piloten kan bruke til å avslutte flygingen. Hva må den oppfylle?",
       "options": [
         {
           "id": "a",
-          "text": "Det kan være RTH-funksjonen, så lenge den er testet i dedikerte flytester før deklarasjon"
+          "text": "Den kan være RTH-funksjonen, så lenge den er testet i dedikerte flytester før deklarasjon"
         },
         {
           "id": "b",
-          "text": "Det skal kutte strømmen til alle motorer umiddelbart, uavhengig av høyde og hastighet"
+          "text": "Den skal kutte strømmen til alle motorer umiddelbart, uavhengig av høyde og hastighet"
         },
         {
           "id": "c",
@@ -834,11 +834,11 @@
         },
         {
           "id": "d",
-          "text": "Det er valgfritt for droner under 10 kg"
+          "text": "Den er valgfri for droner under 10 kg"
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og inkludere midler som reduserer virkningen av treffet (f.eks. fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.",
+      "explanation": "Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og ha noe som demper treffet (for eksempel fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.",
       "source": "EU 2020/1058 Part 16 pkt. (5)"
     },
     {
@@ -865,7 +865,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "C6 er bygget for BVLOS: midler som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (maks 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.",
+      "explanation": "C6 er bygget for BVLOS: funksjoner som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (maks 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.",
       "source": "EU 2020/1058 Part 16 og Part 17; EU 2020/639 UAS.STS-01.020 (1)(f), UAS.STS-02.020 (8)"
     }
   ]
