@@ -1,0 +1,105 @@
+{
+  "meta": {
+    "title": "STS-smakebit: 3 eksempelspørsmål på dronelappen.app/sts-eksamen/",
+    "created": "2026-10-03",
+    "status": "Publiseres på landingssiden /sts-eksamen/ ved STS-lanseringen 6.10.2026. Ligger IKKE i banken i appen (Frode 3/10: tas ut av eksamenstrekket).",
+    "kilde": "Flyttet fra sts-batch-2-a2-til-sts.json (n 31, 40, 73), samme tekst og fasit som etter tre gjennomlesinger."
+  },
+  "categories": [
+    {
+      "slug": "sts-regelverk",
+      "name": "Regelverk og kategorier"
+    },
+    {
+      "slug": "sts-02",
+      "name": "STS-02: BVLOS og observatører"
+    },
+    {
+      "slug": "sts-uas",
+      "name": "UAS-kunnskap: C5, C6 og flygeavslutning"
+    }
+  ],
+  "questions": [
+    {
+      "n": 31,
+      "category": "sts-regelverk",
+      "difficulty": 1,
+      "question_text": "Et firma fikk bekreftet STS-01-deklarasjonen sin for to år og tre måneder siden og har ikke sendt inn noe siden. Kan de fortsatt fly på den?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ja, en deklarasjon gjelder til operatøren selv trekker den tilbake"
+        },
+        {
+          "id": "b",
+          "text": "Nei, en deklarasjon gjelder i 2 år, så de må sende en ny"
+        },
+        {
+          "id": "c",
+          "text": "Ja, så lenge pilotenes kompetansebevis fortsatt er gyldige"
+        },
+        {
+          "id": "d",
+          "text": "Nei, deklarasjonen må fornyes hvert år sammen med årsgebyret"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.",
+      "source": "EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon og årsgebyr etter gebyrforskriften)"
+    },
+    {
+      "n": 40,
+      "category": "sts-02",
+      "difficulty": 1,
+      "question_text": "Hva krever STS-02 om dronens posisjon under oppskyting og landing?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Utenfor syne er greit så lenge den følger den programmerte banen"
+        },
+        {
+          "id": "b",
+          "text": "I pilotens syn, unntatt ved landing etter nødavslutning"
+        },
+        {
+          "id": "c",
+          "text": "Innenfor syn til nærmeste luftromsobservatør"
+        },
+        {
+          "id": "d",
+          "text": "Det er ikke regulert i STS-02"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Selv om STS-02 er BVLOS, krever UAS.STS-02.020 (4) at dronen er i syne for piloten under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen.",
+      "source": "EU 2020/639 UAS.STS-02.020 (4)"
+    },
+    {
+      "n": 73,
+      "category": "sts-uas",
+      "difficulty": 3,
+      "question_text": "En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Hvilken klasse kan den få?",
+      "options": [
+        {
+          "id": "a",
+          "text": "C5, så lenge den har en fallskjerm som demper virkningen av treffet"
+        },
+        {
+          "id": "b",
+          "text": "C6, fordi C6 er unntatt kravet om ren elektrisk drift"
+        },
+        {
+          "id": "c",
+          "text": "Begge, drivstoffet er ikke regulert i klassene"
+        },
+        {
+          "id": "d",
+          "text": "Ingen av dem, begge klassene krever elektrisk drift"
+        }
+      ],
+      "correct_option_id": "b",
+      "explanation": "Både C5 og C6 bygger på kravene til C3 i Part 4, der pkt. (7) krever ren elektrisk drift. C5 er bare unntatt pkt. (2) og (10), mens C6 er unntatt pkt. (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.",
+      "source": "EU 2020/1058 Part 4 pkt. (7); Part 16 og Part 17 (innledningen)"
+    }
+  ]
+}
