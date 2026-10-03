@@ -10,6 +10,7 @@ import NewsletterSignup from '../components/NewsletterSignup'
 import ReadinessCard from '../components/ReadinessCard'
 import StsVoteCard from '../components/StsVoteCard'
 import StsExamCard from '../components/StsExamCard'
+import HarTilgangLoggInn from '../components/HarTilgangLoggInn'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
@@ -317,6 +318,7 @@ export default function Home() {
             )}
           </div>
         )}
+        {tier !== 'paid' && <HarTilgangLoggInn className="text-center -mt-1 mb-3" />}
 
         {/* ═══ STS — låst flis med stemmeknapp ═══
             MÅLEMODUS 21.09–21.10.2026 (Frodes valg). Flisa står høyt
@@ -537,6 +539,7 @@ export default function Home() {
             {buyErr && (
               <p role="alert" className="mt-2 text-[12px] text-amber-700">{buyErr}</p>
             )}
+            <HarTilgangLoggInn className="mt-3" />
           </div>
         )}
 

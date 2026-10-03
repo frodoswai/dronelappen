@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
+import HarTilgangLoggInn from './HarTilgangLoggInn'
 
 /**
  * Upsell to full access (se src/lib/pricing.js / 12 months).
@@ -68,6 +69,8 @@ export default function UpgradePrompt({ compact = false, requireUser = false }) 
       {error && (
         <p className="text-[12px] text-red-600 mt-2" role="alert">{error}</p>
       )}
+
+      <HarTilgangLoggInn className="mt-3" />
 
       {!compact && (
         <p className="font-mono text-[11px] text-da-text-muted mt-3 tracking-[0.04em]">

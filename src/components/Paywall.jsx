@@ -8,6 +8,7 @@ import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
 import { examConfig, antallParentes } from '../lib/exams'
+import HarTilgangLoggInn from './HarTilgangLoggInn'
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
@@ -158,17 +159,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null }
               Engangsbeløp · sikker betaling via Stripe · over 240 piloter øver her
             </p>
 
-            {/* 03.10.2026: en betalende bruker (Eivind) testet STS på en enhet der
-                han ikke var logget inn, og møtte muren som anonym. Her finner
-                han veien inn i stedet for å kjøpe på nytt. */}
-            {(!user || user.is_anonymous) && (
-              <p className="text-[12.5px] text-da-text-body text-center mt-3">
-                Har du allerede full tilgang?{' '}
-                <Link to="/login" className="text-da-navy font-medium underline underline-offset-2">
-                  Logg inn
-                </Link>
-              </p>
-            )}
+            <HarTilgangLoggInn className="text-center mt-3" />
           </div>
 
           {/* Not-ready-to-buy path: capture the email so an anonymous user who
