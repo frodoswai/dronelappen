@@ -500,7 +500,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-2">
-              Alle {stats.questions ?? '200+'} spørsmål, alle kategorier og alle tre
+              Alle {stats.questions ?? '200+'} spørsmål{antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og alle tre
               treningsmoduser. Engangsbeløp, ingen abonnement. Gratis gir deg 25 spørsmål.
             </p>
             {/* Sosialt bevis — statisk tall, oppdateres manuelt.
