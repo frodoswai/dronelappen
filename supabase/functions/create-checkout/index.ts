@@ -158,6 +158,17 @@ Deno.serve(async (req) => {
       payment_intent_data: { metadata: meta },
       locale: 'nb',
       allow_promotion_codes: true,
+      // 03.10.2026: alle besøkende har en anonym sesjon, så en betalende
+      // kunde på en ny enhet kan havne her uten å være logget inn (Eivind,
+      // STS-testen). Teksten står rett over betal-knappen hos Stripe.
+      // Stripe godtok parameteren med samme API-versjon før deploy (testøkt
+      // opprettet og utløpt 03.10, ubetalt).
+      custom_text: {
+        submit: {
+          message:
+            'Har du allerede full tilgang? Da skal du ikke betale på nytt. Gå tilbake til dronelappen.app og logg inn med e-posten du kjøpte med.',
+        },
+      },
     })
 
     // Server-side InitiateCheckout -> Meta Conversions API. The browser also
