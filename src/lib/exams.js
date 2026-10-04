@@ -10,6 +10,8 @@
 //   short            kort etikett: Min side, beredskap, fortsett-stripa, Tempo
 //   display          visningsnavn i headere: quiz, resultat, modusvalg
 //   examCount        antall spørsmål i eksamensmodus (Læring er alltid 30)
+//   examMaxHard      valgfritt: høyst så mange spørsmål med vanskelighetsgrad 3
+//                    per eksamensrunde (lib/examDraw.js). Mangler = ingen grense
 //   timerMinutes     klokke i eksamensmodus, null = ingen tidsgrense
 //   paidOnly         ingen gratis-pool: gratisbrukere møter betalingsmuren
 //   paywallTitle     overskrift på muren når paidOnly stenger (Paywall.jsx)
@@ -69,6 +71,9 @@ export const EXAMS = {
     // Luftfartstilsynet oppgir ingen tidsgrense, så Frode satte 60 min som
     // på A2 (30.09.2026). Ingen gratis-pool: STS er med i full tilgang.
     examCount: 30,
+    // Høyst 5 av grad 3 per eksamen (Frode 04.10.2026). Resten fordeles på
+    // grad 1 og 2. Læring og tempo bruker hele banken.
+    examMaxHard: 5,
     timerMinutes: 60,
     paidOnly: true,
     paywallTitle: 'STS-påbygget er med i full tilgang.',

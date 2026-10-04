@@ -6,6 +6,8 @@ import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 import { examConfig } from '../lib/exams'
+// Eksamenstrekket (overlap_group og grensen for grad 3) står i lib/examDraw.js.
+import { drawExamQuestions } from '../lib/examDraw'
 
 // Eksamensklokka: varigheten per eksamenstype står i lib/exams.js
 // (timerMinutes) og regnes om til examDurationMs i komponenten, så visning,
@@ -28,33 +30,6 @@ function shuffleArray(array) {
     [arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
-}
-
-// Spørsmål med samme overlap_group avslører hverandre (STS-banken,
-// migrasjon 018) og skal ikke trekkes i samme eksamensrunde. Plukk i stokket
-// rekkefølge og hopp over et spørsmål når gruppen allerede er trukket. Blir
-// det for få spørsmål igjen, fylles runden opp med de overhoppede. Spørsmål
-// uten gruppe hoppes aldri over, så for A1/A3 og A2 (ingen grupper) blir
-// trekket det samme som før: de første `count` i stokket rekkefølge.
-function pickWithoutOverlap(shuffled, count) {
-  const picked = []
-  const skipped = []
-  const groups = new Set()
-  for (const q of shuffled) {
-    if (picked.length >= count) break
-    const group = q.overlap_group
-    if (group && groups.has(group)) {
-      skipped.push(q)
-    } else {
-      if (group) groups.add(group)
-      picked.push(q)
-    }
-  }
-  for (const q of skipped) {
-    if (picked.length >= count) break
-    picked.push(q)
-  }
-  return picked
 }
 
 // Round 3: this page handles both Eksamen (/quiz/:examType) and Læring
@@ -94,6 +69,8 @@ export default function Quiz() {
   const examDurationMs = exam?.timerMinutes ? exam.timerMinutes * 60 * 1000 : null
   const needsTimer = examDurationMs !== null && !isPracticeMode
   const examCount = exam?.examCount ?? 30
+  // Høyst så mange spørsmål med vanskelighetsgrad 3 per eksamensrunde (STS: 5).
+  const examMaxHard = exam?.examMaxHard ?? Infinity
   // Eksamenstype uten gratis-pool (STS): get-questions gir gratisbrukere 0
   // spørsmål, og de skal rett til betalingsmuren, ikke til en tom quiz.
   const paidOnly = !!exam?.paidOnly
@@ -210,14 +187,15 @@ export default function Quiz() {
 
         // Shuffle question order, then shuffle each question's options.
         // Free tier: serveren capper poolen på 25, så slice er no-op der.
-        // Eksamen trekker uten to spørsmål fra samme overlap_group.
+        // Eksamen trekker uten to spørsmål fra samme overlap_group, og med
+        // høyst examMaxHard av grad 3. Læring bruker hele banken som før.
         const targetCount = isPracticeMode
           ? PRACTICE_QUESTION_COUNT
           : examCount
         const shuffled = shuffleArray(pool)
         const drawn = isPracticeMode
           ? shuffled.slice(0, targetCount)
-          : pickWithoutOverlap(shuffled, targetCount)
+          : drawExamQuestions(shuffled, targetCount, examMaxHard)
         const selected = drawn.map(q => ({
           ...q,
           options: shuffleArray(q.options)
@@ -237,7 +215,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey, examDurationMs, examCount, paidOnly])
+  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey, examDurationMs, examCount, examMaxHard, paidOnly])
 
   // Lagre økten fortløpende: spørsmålstrekk, svar, posisjon og klokkeanker.
   // Svarene ligger allerede i `answers`-arrayet i det de gis, så en

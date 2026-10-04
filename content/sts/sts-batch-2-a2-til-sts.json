@@ -16,7 +16,7 @@
     "style": "Samme stil som batch 1: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker.",
     "db_note": "Samme som batch 1: exam_type-CHECK må utvides (migrasjon 018) før innlasting. Ikke last inn før lansering.",
     "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit.",
-    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder."
+    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md."
   },
   "categories": [
     {
@@ -88,24 +88,25 @@
       "options": [
         {
           "id": "a",
-          "text": "Straks deklarasjonen er sendt, siden STS ikke krever tillatelse"
+          "text": "Med en gang den er sendt inn i Altinn"
         },
         {
           "id": "b",
-          "text": "Etter at Luftfartstilsynet har vært på stedet og sett en prøveflyging"
+          "text": "Etter en prøveflyging for Luftfartstilsynet"
         },
         {
           "id": "c",
-          "text": "Når operatøren har fått bekreftelse på at deklarasjonen er mottatt og fullstendig"
+          "text": "Når den er bekreftet mottatt og fullstendig"
         },
         {
           "id": "d",
-          "text": "Etter 14 dager, dersom Luftfartstilsynet ikke har kommet med innsigelser til deklarasjonen i mellomtiden"
+          "text": "Etter 14 dager uten innsigelser fra tilsynet"
         }
       ],
       "correct_option_id": "c",
       "explanation": "Myndigheten skal kontrollere at deklarasjonen har alle pliktige opplysninger og gi en bekreftelse på mottak og fullstendighet uten unødig opphold. Først når den bekreftelsen er mottatt, har operatøren rett til å starte. Det er ingen godkjenning av selve operasjonen, men heller ingen automatisk start ved innsending.",
-      "source": "EU 2019/947 UAS.SPEC.020 (3)-(4); luftfartstilsynet.no, «Søke om STS» (deklarasjon via Altinn)"
+      "source": "EU 2019/947 UAS.SPEC.020 (3)-(4); luftfartstilsynet.no, «Søke om STS» (deklarasjon via Altinn)",
+      "overlap_group": "deklarasjon-altinn"
     },
     {
       "n": 33,
@@ -115,11 +116,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Ingenting, deklarasjonen gjelder operatøren og ikke dronen"
+          "text": "Ingenting, deklarasjonen gjelder operatøren, ikke dronen"
         },
         {
           "id": "b",
-          "text": "Operatøren må søke operasjonstillatelse for den nye modellen før den kan tas i bruk under STS"
+          "text": "Søke operasjonstillatelse for den nye modellen"
         },
         {
           "id": "c",
@@ -127,7 +128,7 @@
         },
         {
           "id": "d",
-          "text": "Operatøren skal uten opphold melde endringen til Luftfartstilsynet"
+          "text": "Melde endringen til Luftfartstilsynet uten opphold"
         }
       ],
       "correct_option_id": "d",
@@ -142,19 +143,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Ingenting ekstra, STS-01 er VLOS og kan derfor brukes i alt luftrom under 120 m"
+          "text": "Ingenting, VLOS under 120 m er lov i alt luftrom"
         },
         {
           "id": "b",
-          "text": "At den følger publiserte prosedyrer for området, slik at sannsynligheten for å møte bemannede luftfartøy er lav"
+          "text": "At den følger publiserte prosedyrer for området"
         },
         {
           "id": "c",
-          "text": "Det går ikke, et STS kan bare deklareres for luftromsklasse G"
+          "text": "Det går ikke, STS gjelder bare luftromsklasse G"
         },
         {
           "id": "d",
-          "text": "At operatøren har LUC, siden kontrollert luftrom krever sertifikat"
+          "text": "At operatøren har LUC for kontrollert luftrom"
         }
       ],
       "correct_option_id": "b",
@@ -164,12 +165,12 @@
     {
       "n": 35,
       "category": "sts-regelverk",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hvem kan utstede beviset på gjennomført praktisk opplæring (accreditation of completion) for STS-01?",
       "options": [
         {
           "id": "a",
-          "text": "En opplæringsenhet anerkjent av myndigheten, eller en STS-01-operatør, som begge har erklært samsvar med Appendix 3"
+          "text": "En anerkjent droneskole eller en STS-01-operatør med deklarert opplæring"
         },
         {
           "id": "b",
@@ -181,7 +182,7 @@
         },
         {
           "id": "d",
-          "text": "Enhver pilot som selv har STS-bevis og minst to års erfaring i spesifikk kategori"
+          "text": "Enhver pilot med STS-bevis og minst to års erfaring"
         }
       ],
       "correct_option_id": "a",
@@ -323,7 +324,8 @@
       ],
       "correct_option_id": "b",
       "explanation": "Selv om STS-02 er flyging utenfor synsrekkevidde, sier driftsreglene at piloten skal se dronen under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen. (Driftsreglene for STS-02, punkt 4: UAS.STS-02.020)",
-      "source": "EU 2020/639 UAS.STS-02.020 (4)"
+      "source": "EU 2020/639 UAS.STS-02.020 (4)",
+      "overlap_group": "sts02-bane-utenfor-syne"
     },
     {
       "n": 41,
@@ -333,19 +335,19 @@
       "options": [
         {
           "id": "a",
-          "text": "At observatørene har STS-bevis og praktisk opplæring for STS-02"
+          "text": "At observatørene har eget STS-kompetansebevis"
         },
         {
           "id": "b",
-          "text": "At observatørene står nøyaktig 1 km fra hverandre langs linjen"
+          "text": "At de står nøyaktig 1 km fra hverandre"
         },
         {
           "id": "c",
-          "text": "At det ikke er hull mellom sonene observatørene dekker, og at terrenget ikke skjuler sikten for noen av dem"
+          "text": "At sonene ikke har hull og terrenget ikke skygger"
         },
         {
           "id": "d",
-          "text": "At hver observatør har sin egen kontrollenhet i tilfelle piloten mister linken"
+          "text": "At hver observatør har egen kontrollenhet for nødsituasjoner"
         }
       ],
       "correct_option_id": "c",
@@ -356,7 +358,7 @@
     {
       "n": 42,
       "category": "sts-02",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hva skal piloten gjøre med dronens programmerbare flygevolum før en STS-02-flyging?",
       "options": [
         {
@@ -389,11 +391,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Direkte observasjon uten noen form for hjelpemidler"
+          "text": "Bare direkte observasjon, uten hjelpemidler"
         },
         {
           "id": "b",
-          "text": "Direkte observasjon eller elektroniske hjelpemidler, for eksempel det samme systemet piloten bruker"
+          "text": "Direkte observasjon eller elektroniske hjelpemidler"
         },
         {
           "id": "c",
@@ -401,7 +403,7 @@
         },
         {
           "id": "d",
-          "text": "Kikkert med avstandsmåler, men ingen elektronisk posisjonsvisning"
+          "text": "Kikkert med avstandsmåler, men ingen skjerm"
         }
       ],
       "correct_option_id": "b",
@@ -411,7 +413,7 @@
     {
       "n": 45,
       "category": "sts-bakkerisiko",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Tabellen i STS-01 gir 25 m bakkerisikobuffer for en drone med MTOM 6 kg som flyr inntil 120 m. Det blåser jevnt 9 m/s. Hva sier EASAs veiledning om tabellverdiene?",
       "options": [
         {
@@ -470,7 +472,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Det går så lenge ingen uinvolverte oppholder seg i den delen av bufferen mens dronen er i lufta"
+          "text": "Det går hvis den delen av bufferen er tom for folk"
         },
         {
           "id": "b",
@@ -482,12 +484,13 @@
         },
         {
           "id": "d",
-          "text": "Det går ikke; hele det kontrollerte bakkeområdet skal ligge i spredt befolket miljø"
+          "text": "Det går ikke; hele området skal være spredt befolket"
         }
       ],
       "correct_option_id": "d",
       "explanation": "Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flight geography-området, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)",
-      "source": "EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»"
+      "source": "EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»",
+      "overlap_group": "sts02-spredt-befolket"
     },
     {
       "n": 48,
@@ -497,11 +500,11 @@
       "options": [
         {
           "id": "a",
-          "text": "Ingenting, i spredt befolket miljø regnes risikoen som akseptabel"
+          "text": "Ingenting, bakkerisikobufferen er nok i seg selv"
         },
         {
           "id": "b",
-          "text": "Ta hensiktsmessige tiltak mot inntrenging, og koordinere med myndighetene ved behov"
+          "text": "Ta hensiktsmessige tiltak og koordinere ved behov"
         },
         {
           "id": "c",
@@ -509,12 +512,13 @@
         },
         {
           "id": "d",
-          "text": "Sende skriftlig varsel til alle eiendommer innenfor 1 km og sette opp skilt ved innkjørselen"
+          "text": "Varsle alle eiendommer innenfor 1 km skriftlig"
         }
       ],
       "correct_option_id": "b",
       "explanation": "Operatørens plikter i STS-02 sier at alle hensiktsmessige tiltak for å redusere risikoen for at uinvolverte kommer inn i området skal være tatt før start, og at det er koordinert med relevante myndigheter når det kreves. Regelverket sier ikke hvilke tiltak; det beskrives i operasjonsmanualen. (UAS.STS-02.030)",
-      "source": "EU 2020/639 UAS.STS-02.030 (8); Appendix 5 pkt. (6)(c)(i)(G)"
+      "source": "EU 2020/639 UAS.STS-02.030 (8); Appendix 5 pkt. (6)(c)(i)(G)",
+      "overlap_group": "bakkeomraade-uinvolverte"
     },
     {
       "n": 49,
@@ -524,7 +528,7 @@
       "options": [
         {
           "id": "a",
-          "text": "At alle står minst 30 m fra dronen, slik som i A2, eller minst 5 m hvis dronen flyr i lavhastighetsmodus"
+          "text": "At alle står minst 30 m fra dronen, som i A2"
         },
         {
           "id": "b",
@@ -536,7 +540,7 @@
         },
         {
           "id": "d",
-          "text": "At alle er informert om risikoen, har fått sikkerhetsinstruks og uttrykkelig har sagt ja til å delta"
+          "text": "At alle er informert, instruert og har sagt ja"
         }
       ],
       "correct_option_id": "d",
@@ -546,7 +550,7 @@
     {
       "n": 50,
       "category": "sts-operator",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hvor lenge skal operatøren minst ta vare på opplysninger om STS-operasjonene, inkludert uvanlige tekniske eller operative hendelser?",
       "options": [
         {
@@ -574,12 +578,12 @@
     {
       "n": 51,
       "category": "sts-operator",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Operatøren kjøper en C2-linktjeneste fra et teleselskap til et STS-oppdrag. Hva må operatøren sikre?",
       "options": [
         {
           "id": "a",
-          "text": "Ingenting, leverandøren har hele ansvaret for sin egen tjeneste og for at den virker under flygingen"
+          "text": "Ingenting, leverandøren har hele ansvaret"
         },
         {
           "id": "b",
@@ -587,11 +591,11 @@
         },
         {
           "id": "c",
-          "text": "At tjenesten har tilstrekkelig ytelse for operasjonen, og at roller og ansvar mellom operatør og leverandør er fordelt"
+          "text": "At ytelsen er god nok og ansvaret er fordelt"
         },
         {
           "id": "d",
-          "text": "At Luftfartstilsynet har godkjent leverandøren og tjenesten før den tas i bruk i spesifikk kategori"
+          "text": "At Luftfartstilsynet har godkjent leverandøren"
         }
       ],
       "correct_option_id": "c",
@@ -606,7 +610,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Håndtering av at dronen forlater operasjonsvolumet"
+          "text": "Håndtering av at dronen forlater hele operasjonsvolumet"
         },
         {
           "id": "b",
@@ -614,11 +618,11 @@
         },
         {
           "id": "c",
-          "text": "Tiltak for å unngå, eller i det minste begrense, skade på tredjepart i lufta eller på bakken"
+          "text": "Tiltak som begrenser skade på tredjepart"
         },
         {
           "id": "d",
-          "text": "Håndtering av at eksterne systemer som støtter operasjonen, blir dårligere"
+          "text": "Svekkelse i eksterne systemer som støtter operasjonen"
         }
       ],
       "correct_option_id": "d",
@@ -628,24 +632,24 @@
     {
       "n": 53,
       "category": "sts-operator",
-      "difficulty": 1,
+      "difficulty": 3,
       "question_text": "Operatøren skal bruke en luftromsobservatør i STS-02. Hvilken opplæring krever regelverket for observatøren?",
       "options": [
         {
           "id": "a",
-          "text": "Opplæring på arbeidsplassen utviklet av operatøren, og kjennskap til manualen og prosedyrene"
+          "text": "Opplæring fra operatøren og kjennskap til manualen"
         },
         {
           "id": "b",
-          "text": "Samme STS-teoriprøve som piloten, tatt på trafikkstasjon, men uten krav om praktisk opplæring"
+          "text": "Samme STS-teoriprøve på trafikkstasjon som piloten"
         },
         {
           "id": "c",
-          "text": "A2-kompetansebevis"
+          "text": "Et A2-kompetansebevis fra trafikkstasjonen"
         },
         {
           "id": "d",
-          "text": "Ingen, rollen krever bare godt syn"
+          "text": "Ingen opplæring, bare godt syn og hørsel"
         }
       ],
       "correct_option_id": "a",
@@ -656,12 +660,12 @@
     {
       "n": 54,
       "category": "sts-operator",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "En STS-01-operatør vil selv gi praktisk opplæring og vurdering av egne piloter. Hva er ett av kravene i Appendix 3?",
       "options": [
         {
           "id": "a",
-          "text": "Et klart skille mellom opplæringen og annen operativ virksomhet, slik at vurderingen blir uavhengig"
+          "text": "Et klart skille mellom opplæring og annen drift"
         },
         {
           "id": "b",
@@ -669,11 +673,11 @@
         },
         {
           "id": "c",
-          "text": "At hver kandidat vurderes av en sensor fra Luftfartstilsynet som er til stede under den praktiske prøven"
+          "text": "At en sensor fra Luftfartstilsynet er til stede"
         },
         {
           "id": "d",
-          "text": "At vurderingen er en enkelt avsluttende prøve på én dag"
+          "text": "At vurderingen er én avsluttende prøve på én dag"
         }
       ],
       "correct_option_id": "a",
@@ -688,19 +692,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Én deklarasjon per drone"
+          "text": "Én deklarasjon for hver av de tre dronene"
         },
         {
           "id": "b",
-          "text": "Én deklarasjon per produsent"
+          "text": "Én deklarasjon for hver av de to produsentene"
         },
         {
           "id": "c",
-          "text": "Én deklarasjon, med produsent, modell og serienummer for hver drone"
+          "text": "Én deklarasjon som lister alle tre dronene"
         },
         {
           "id": "d",
-          "text": "Dronene oppgis ikke i det hele tatt, fordi deklarasjonen bare gjelder operatøren og scenarioet"
+          "text": "Ingen droner oppgis, bare operatøren"
         }
       ],
       "correct_option_id": "c",
@@ -710,7 +714,7 @@
     {
       "n": 56,
       "category": "sts-operator",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hva krever regelverket for spesifikk kategori av operatøren når det gjelder vedlikehold av dronene?",
       "options": [
         {
@@ -719,15 +723,15 @@
         },
         {
           "id": "b",
-          "text": "En årlig teknisk kontroll av hver drone hos Luftfartstilsynet"
+          "text": "Årlig teknisk kontroll av hver drone hos Luftfartstilsynet"
         },
         {
           "id": "c",
-          "text": "Ingenting ut over produsentens anbefalinger, siden vedlikehold er pilotens ansvar før hver flyging"
+          "text": "Ingenting, vedlikehold er pilotens ansvar"
         },
         {
           "id": "d",
-          "text": "Vedlikeholdsinstrukser, egnet vedlikeholdspersonell og logg over vedlikeholdet i minst 3 år"
+          "text": "Instrukser, kvalifisert personell og logg i 3 år"
         }
       ],
       "correct_option_id": "d",
@@ -883,15 +887,15 @@
         },
         {
           "id": "b",
-          "text": "Rapport til Luftfartstilsynet med flytid og område etter hver flyging"
+          "text": "Rapport til Luftfartstilsynet etter hver flyging"
         },
         {
           "id": "c",
-          "text": "Ny deklarasjon hvis flygingen varte over 30 minutter"
+          "text": "Ny deklarasjon etter flyginger over 30 minutter"
         },
         {
           "id": "d",
-          "text": "Inspeksjon, logg over dronens tilstand og mannskapets tretthet, debrief og ev. hendelsesrapport"
+          "text": "Inspeksjon, logg, debrief og ev. hendelsesrapport"
         }
       ],
       "correct_option_id": "d",
@@ -933,7 +937,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Fly ferdig raskt mens det fortsatt er lyst nok til å se dronen"
+          "text": "Fly ferdig raskt før det blir mørkt"
         },
         {
           "id": "b",
@@ -941,11 +945,11 @@
         },
         {
           "id": "c",
-          "text": "Avbryte eller utsette, fordi piloten ikke skal fly når tretthet gjør henne uskikket"
+          "text": "Avbryte eller utsette, fordi hun er uskikket"
         },
         {
           "id": "d",
-          "text": "Fortsette hvis en kollega står ved siden av som observatør"
+          "text": "Fortsette med en kollega som observatør"
         }
       ],
       "correct_option_id": "c",
@@ -960,19 +964,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Hun mister oversikt over drone og luftrom; bruk en droneobservatør og veksle blikket fast mellom skjerm og luftrom"
+          "text": "Hun mister oversikten; bruk observatør og fast skanning"
         },
         {
           "id": "b",
-          "text": "Batteriet tømmes raskere; bytt batteri oftere"
+          "text": "Batteriet tømmes fortere; planlegg flere batteribytter"
         },
         {
           "id": "c",
-          "text": "Ingen risiko, VLOS betyr bare at dronen er innenfor synsrekkevidde, og skjermen viser det piloten trenger"
+          "text": "Ingen, skjermen viser alt piloten trenger i VLOS"
         },
         {
           "id": "d",
-          "text": "Bildene blir uskarpe; bytt til FPV-briller, som gir bedre kontroll over både utsnitt og drone"
+          "text": "Bildene blir uskarpe; bytt til FPV-briller i stedet"
         }
       ],
       "correct_option_id": "a",
@@ -991,15 +995,15 @@
         },
         {
           "id": "b",
-          "text": "Varmen, fordi sola varmer opp batteriet slik at spenningen faller raskere enn normalt"
+          "text": "Varme, som får batterispenningen til å falle"
         },
         {
           "id": "c",
-          "text": "Blending, som kan hindre pilot og observatører i å se dronen og annen trafikk"
+          "text": "Blending, som kan hindre piloten i å se dronen"
         },
         {
           "id": "d",
-          "text": "Fargesyn, som er grunnen til at dronen har grønt blinklys"
+          "text": "Fargesyn, som er grunnen til det grønne lyset"
         }
       ],
       "correct_option_id": "c",
@@ -1014,19 +1018,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Krav om minst 50 loggførte flytimer for alle piloter før de får fly under operatørens deklarasjon"
+          "text": "Minst 50 loggførte flytimer for alle piloter"
         },
         {
           "id": "b",
-          "text": "En klar fordeling av oppgaver og en intern sjekkliste for å kontrollere at oppgavene blir gjort"
+          "text": "Klar oppgavefordeling og en intern sjekkliste"
         },
         {
           "id": "c",
-          "text": "Automatisk logging av alle kommandoer fra fjernkontrollen"
+          "text": "Automatisk logging av alle kommandoer"
         },
         {
           "id": "d",
-          "text": "Forbud mot flyginger som varer mer enn 30 minutter"
+          "text": "Forbud mot flyginger over 30 minutter"
         }
       ],
       "correct_option_id": "b",
@@ -1041,7 +1045,7 @@
       "options": [
         {
           "id": "a",
-          "text": "De som står først i manualen; resten kan leses opp av en kollega under flygingen"
+          "text": "De som står først i nødkapittelet i manualen"
         },
         {
           "id": "b",
@@ -1049,11 +1053,11 @@
         },
         {
           "id": "c",
-          "text": "De som piloten har øvd på minst én gang under den praktiske opplæringen"
+          "text": "De som piloten har øvd på i opplæringen"
         },
         {
           "id": "d",
-          "text": "De som gjelder kritiske situasjoner med kort tid til å reagere; resten kan tas fra sjekkliste"
+          "text": "De kritiske, der det er kort tid til å reagere"
         }
       ],
       "correct_option_id": "d",
@@ -1068,19 +1072,19 @@
       "options": [
         {
           "id": "a",
-          "text": "At det begrenser risikoen for pilotfeil og ikke gir urimelig tretthet"
+          "text": "At det begrenser pilotfeil og urimelig tretthet"
         },
         {
           "id": "b",
-          "text": "At det er på norsk, slik at norske piloter forstår alle varsler"
+          "text": "At alle varsler vises på pilotens eget språk"
         },
         {
           "id": "c",
-          "text": "At det har berøringsskjerm"
+          "text": "At det har berøringsskjerm med store knapper"
         },
         {
           "id": "d",
-          "text": "At det viser video i minst full HD, slik at piloten ser hindringer tydelig nok"
+          "text": "At videoen vises i minst full HD-oppløsning"
         }
       ],
       "correct_option_id": "a",
@@ -1144,24 +1148,24 @@
     {
       "n": 72,
       "category": "sts-uas",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til C5. Hva må være på plass før STS-01-flyging?",
       "options": [
         {
           "id": "a",
-          "text": "Samsvarserklæring som viser C3 og tilbehørssettet, og C5-merke på tilbehøret"
+          "text": "Samsvarserklæring for C3 og settet, og C5-merke på settet"
         },
         {
           "id": "b",
-          "text": "Bare C5-merket; samsvarserklæringen for C3 er ikke lenger relevant"
+          "text": "Bare C5-merket, C3-erklæringen gjelder ikke lenger"
         },
         {
           "id": "c",
-          "text": "Luftfartstilsynet må godkjenne ombyggingen og utstede ny samsvarserklæring før første flyging"
+          "text": "Godkjenning av ombyggingen hos Luftfartstilsynet"
         },
         {
           "id": "d",
-          "text": "Operatøren må oppgradere dronens programvare til en C5-versjon"
+          "text": "Ny programvare fra produsenten, som gjør C3-dronen til en C5"
         }
       ],
       "correct_option_id": "a",
@@ -1198,7 +1202,7 @@
     {
       "n": 74,
       "category": "sts-uas",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merking?",
       "options": [
         {
@@ -1225,24 +1229,24 @@
     {
       "n": 75,
       "category": "sts-uas",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hva skal en ikke-tjoret C5-drone gi piloten om kvaliteten på C2-linken?",
       "options": [
         {
           "id": "a",
-          "text": "Løpende overvåking, med ett varsel når linken trolig blir tapt eller svekket, og ett når den er tapt"
+          "text": "Løpende overvåking, varsel før og når linken tapes"
         },
         {
           "id": "b",
-          "text": "Bare ett varsel, når linken faktisk er tapt, slik at piloten kan starte prosedyren for tapt link med en gang"
+          "text": "Ett varsel, først når linken faktisk er tapt"
         },
         {
           "id": "c",
-          "text": "Ingenting, C2-linken er produsentens ansvar"
+          "text": "Ingenting, kvaliteten på C2-linken er produsentens ansvar"
         },
         {
           "id": "d",
-          "text": "En måling av signalstyrken før start"
+          "text": "En måling av signalstyrken før hver start"
         }
       ],
       "correct_option_id": "a",
@@ -1252,7 +1256,7 @@
     {
       "n": 76,
       "category": "sts-uas",
-      "difficulty": 2,
+      "difficulty": 3,
       "question_text": "Hvilken fluginformasjon skal en C5-drone minst gi piloten under flyging, sammenlignet med en C6?",
       "options": [
         {
@@ -1261,7 +1265,7 @@
         },
         {
           "id": "b",
-          "text": "Begge: bare batterinivå og gjenværende flytid, siden posisjonen vises av Remote ID"
+          "text": "Begge: bare batterinivå og gjenværende flytid"
         },
         {
           "id": "c",
@@ -1269,7 +1273,7 @@
         },
         {
           "id": "d",
-          "text": "C5: høyde over bakken eller startpunktet. C6: i tillegg posisjon og fart"
+          "text": "C5: høyde. C6: høyde, posisjon og fart"
         }
       ],
       "correct_option_id": "d",
@@ -1288,15 +1292,15 @@
         },
         {
           "id": "b",
-          "text": "Kortere enn 50 m, og minst 10 ganger så sterkt som vekten av dronen ved maks masse"
+          "text": "Under 50 m og minst 10 ganger dronens maksvekt"
         },
         {
           "id": "c",
-          "text": "Nøyaktig 30 m, slik at bakkeområdet blir standard"
+          "text": "Nøyaktig 30 m, så bakkeområdet blir standard"
         },
         {
           "id": "d",
-          "text": "Minst 50 m langt, for å gi rom for manøvrering, og like sterkt som dronens egen vekt"
+          "text": "Minst 50 m, og like sterkt som dronens vekt"
         }
       ],
       "correct_option_id": "b",
@@ -1311,19 +1315,19 @@
       "options": [
         {
           "id": "a",
-          "text": "En ADS-B-transponder som gjør dronen synlig for bemannede luftfartøy i nærheten"
+          "text": "En ADS-B-transponder for bemannet trafikk"
         },
         {
           "id": "b",
-          "text": "Fallskjerm"
+          "text": "Fallskjerm som demper treffet ved fall"
         },
         {
           "id": "c",
-          "text": "Minst ett grønt blinklys for synlighet om natta og aktiv, oppdatert Remote ID"
+          "text": "Grønt blinklys og aktiv, oppdatert Remote ID"
         },
         {
           "id": "d",
-          "text": "Et varmesøkende kamera"
+          "text": "Et varmesøkende kamera for nattflyging"
         }
       ],
       "correct_option_id": "c",
@@ -1338,19 +1342,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Prøve å få linken tilbake på en forutsigbar måte, ellers avslutte flygingen skånsomt for tredjepart"
+          "text": "Hente linken tilbake, ellers avslutte skånsomt for tredjepart"
         },
         {
           "id": "b",
-          "text": "Lande rett ned der den er, uansett hva som er under"
+          "text": "Lande rett ned, uansett hva som er under"
         },
         {
           "id": "c",
-          "text": "Fortsette oppdraget på autopilot langs den planlagte ruten til batteriet er tomt"
+          "text": "Fortsette ruten på autopilot til batteriet er tomt"
         },
         {
           "id": "d",
-          "text": "Sveve på stedet til piloten får kontakt igjen, eller til batteriet tvinger den ned"
+          "text": "Sveve på stedet til kontakten er tilbake eller batteriet er tomt"
         }
       ],
       "correct_option_id": "a",

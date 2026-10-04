@@ -26,7 +26,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const FILES = ['sts-batch-1-a2-til-sts.json', 'sts-batch-2-a2-til-sts.json'].map((f) => join(ROOT, 'content', 'sts', f))
+const FILES = ['sts-batch-1-a2-til-sts.json', 'sts-batch-2-a2-til-sts.json', 'sts-batch-3-a2-til-sts.json'].map((f) => join(ROOT, 'content', 'sts', f))
 const EXAM = 'A2_STS'
 const APPLY = process.argv.includes('--apply')
 
