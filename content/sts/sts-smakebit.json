@@ -78,7 +78,7 @@
       "n": 73,
       "category": "sts-uas",
       "difficulty": 3,
-      "question_text": "En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Hvilken klasse kan den få?",
+      "question_text": "En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Kan den få klasse C5 eller C6?",
       "options": [
         {
           "id": "a",
@@ -90,11 +90,11 @@
         },
         {
           "id": "c",
-          "text": "Begge, drivstoffet er ikke regulert i klassene"
+          "text": "Begge, drivstoffet er ikke regulert i C5 og C6"
         },
         {
           "id": "d",
-          "text": "Ingen av dem, begge klassene krever elektrisk drift"
+          "text": "Ingen av dem, både C5 og C6 krever elektrisk drift"
         }
       ],
       "correct_option_id": "b",

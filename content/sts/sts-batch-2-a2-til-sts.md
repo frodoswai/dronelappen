@@ -627,12 +627,12 @@ Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til C5
 
 ### 73. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Hvilken klasse kan den få?
+En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Kan den få klasse C5 eller C6?
 
 - a) C5, så lenge den har en fallskjerm som demper virkningen av treffet
 - b) C6, fordi C6 er unntatt kravet om ren elektrisk drift ✅
-- c) Begge, drivstoffet er ikke regulert i klassene
-- d) Ingen av dem, begge klassene krever elektrisk drift
+- c) Begge, drivstoffet er ikke regulert i C5 og C6
+- d) Ingen av dem, både C5 og C6 krever elektrisk drift
 
 *Forklaring:* Både C5 og C6 bygger på kravene til C3, og ett av C3-kravene er ren elektrisk drift. C5 er bare unntatt to av C3-kravene, mens C6 i tillegg er unntatt kravet om elektrisk drift. En C6 kan derfor ha forbrenningsmotor. (Klassekravene i forordning 2019/945: del 4 for C3, punkt 7, og del 16 og 17 for C5 og C6)
 
