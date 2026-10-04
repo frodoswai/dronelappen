@@ -42,7 +42,7 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 </ol>
 <details>
 <summary>Se svaret</summary>
-<p><strong>Riktig svar: C.</strong> Selv om STS-02 er BVLOS, krever UAS.STS-02.020 (4) at dronen er i syne for piloten under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen.</p>
+<p><strong>Riktig svar: C.</strong> Selv om STS-02 er flyging utenfor synsrekkevidde, sier driftsreglene at piloten skal se dronen under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen. (Driftsreglene for STS-02, punkt 4: UAS.STS-02.020)</p>
 </details>
 </div>
 
@@ -56,7 +56,7 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 </ol>
 <details>
 <summary>Se svaret</summary>
-<p><strong>Riktig svar: B.</strong> UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.</p>
+<p><strong>Riktig svar: B.</strong> En deklarasjon gjelder i 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen. (Regelen om varighet for deklarasjoner: UAS.SPEC.085)</p>
 </details>
 </div>
 
@@ -70,7 +70,7 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 </ol>
 <details>
 <summary>Se svaret</summary>
-<p><strong>Riktig svar: A.</strong> Både C5 og C6 bygger på kravene til C3 (forordning 2019/945, del 4), der punkt (7) krever ren elektrisk drift. C5 er bare unntatt punkt (2) og (10), mens C6 er unntatt punkt (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.</p>
+<p><strong>Riktig svar: A.</strong> Både C5 og C6 bygger på kravene til C3, og ett av C3-kravene er ren elektrisk drift. C5 er bare unntatt to av C3-kravene, mens C6 i tillegg er unntatt kravet om elektrisk drift. En C6 kan derfor ha forbrenningsmotor. (Klassekravene i forordning 2019/945: del 4 for C3, punkt 7, og del 16 og 17 for C5 og C6)</p>
 </details>
 </div>
 
