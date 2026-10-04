@@ -29,8 +29,10 @@ export default function StsExamCard() {
       <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-1">
         For deg som har A2 og skal ta «Utvidelse av A2 til STS».
       </p>
+      {/* «Over 90» (Frode 04.10.2026), likt lanseringsmailen. Stemmer så lenge
+          A2_STS har minst 91 spørsmål (93 per 04.10). */}
       <p className="text-[11.5px] text-da-text-muted leading-[1.5] mb-2.5">
-        30 spørsmål på prøven · 23 riktige for å bestå
+        Over 90 spørsmål · 30 på prøven · 23 riktige for å bestå
       </p>
       <div className="relative z-20">
         <ModePillRow variant="muted" examType="A2_STS" />
