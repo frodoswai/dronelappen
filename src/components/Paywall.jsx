@@ -5,6 +5,7 @@ import { createCheckout } from '../lib/supabase'
 import { logFunnel, PAYWALL_VIEW, PAYWALL_BUY_CLICK, PAYWALL_EXIT } from '../lib/funnel'
 import LeadCapture from './LeadCapture'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
+import Lanseringspris from './Lanseringspris'
 import { PRICE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
 import { examConfig, antallParentes } from '../lib/exams'
@@ -116,6 +117,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null }
                 </span>
               </div>
             </div>
+            <Lanseringspris className="mb-2.5" />
             <ul className="text-[13px] text-da-text-body leading-[1.7] mb-4 list-none space-y-0.5">
               <li>
                 <span className="font-mono text-da-gold mr-1.5">+</span>Alle {ANTALL.total} spørsmål{antallParentes(ANTALL.total, ANTALL.A1_A3 + ANTALL.A2)}, alle

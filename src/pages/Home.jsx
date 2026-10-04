@@ -12,6 +12,7 @@ import StsVoteCard from '../components/StsVoteCard'
 import StsExamCard from '../components/StsExamCard'
 import HarTilgangLoggInn from '../components/HarTilgangLoggInn'
 import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
+import Lanseringspris from '../components/Lanseringspris'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
@@ -513,6 +514,7 @@ export default function Home() {
                 ett spørsmål). Samme feil sto i Meta-annonsen og ble fanget
                 der 01.08; den overlevde her i tre uker til.
                 Telling: select count(distinct user_id) from user_progress. */}
+            <Lanseringspris className="mb-2" />
             <PriceIncreaseNotice className="mb-2.5" />
             <p className="font-mono text-[11px] text-da-text-muted tracking-[0.05em] mb-3.5">
               Over 240 dronepiloter øver her allerede.
