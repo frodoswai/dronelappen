@@ -61,12 +61,12 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 </div>
 
 <div class="faktaboks">
-<h3>3. En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Hvilken klasse kan den få?</h3>
+<h3>3. En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario. Kan den få klasse C5 eller C6?</h3>
 <ol type="A">
 <li>C6, fordi C6 er unntatt kravet om ren elektrisk drift</li>
 <li>C5, så lenge den har en fallskjerm som demper virkningen av treffet</li>
-<li>Begge, drivstoffet er ikke regulert i klassene</li>
-<li>Ingen av dem, begge klassene krever elektrisk drift</li>
+<li>Begge, drivstoffet er ikke regulert i C5 og C6</li>
+<li>Ingen av dem, både C5 og C6 krever elektrisk drift</li>
 </ol>
 <details>
 <summary>Se svaret</summary>
