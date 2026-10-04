@@ -320,7 +320,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "UAS.STS-01.040 krever at piloten før start kontrollerer at flygeavslutningen virker og at direkte Remote ID er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert.",
+      "explanation": "Pilotens plikter i STS-01 sier at piloten før start skal kontrollere at flygeavslutningen virker, og at direkte fjernidentifikasjon (Remote ID) er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert. (UAS.STS-01.040)",
       "source": "EU 2020/639 UAS.STS-01.040 (1)",
       "overlap_group": "forflyging-sjekk-sts02"
     },
@@ -784,7 +784,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "I STS-01 er observatøren frivillig og skal støtte piloten i luftromsskanning mens dronen fortsatt er i VLOS, med klar kommunikasjon mellom dem. I STS-02 er luftromsobservatøren det som utvider rekkevidden fra 1 til 2 km, og rollen har egne krav (UAS.STS-02.050) til luftromsskanning, posisjonsoversikt og varsling. Ingen av dem styrer dronen.",
+      "explanation": "I STS-01 er observatøren frivillig og skal støtte piloten i luftromsskanning mens dronen fortsatt er i VLOS, med klar kommunikasjon mellom dem. I STS-02 er luftromsobservatøren det som utvider rekkevidden fra 1 til 2 km, og rollen har egne plikter til luftromsskanning, posisjonsoversikt og varsling. Ingen av dem styrer dronen. (Observatørens plikter i STS-02: UAS.STS-02.050)",
       "source": "EU 2020/639 UAS.STS-01.040 (2)(b); UAS.STS-02.020 (6) og .050"
     },
     {

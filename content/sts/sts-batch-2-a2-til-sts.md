@@ -17,7 +17,7 @@ Et firma fikk bekreftet STS-01-deklarasjonen sin for to år og tre måneder side
 - c) Ja, så lenge pilotenes kompetansebevis fortsatt er gyldige
 - d) Nei, deklarasjonen må fornyes hvert år sammen med årsgebyret
 
-*Forklaring:* UAS.SPEC.085 gir en operasjonell deklarasjon begrenset varighet på 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen.
+*Forklaring:* En deklarasjon gjelder i 2 år. Luftfartstilsynet skriver det samme: operatøren må sende inn en ny deklarasjon for å fortsette på STS. Pilotenes kompetansebevis (5 år) er en egen sak, og årsgebyret etter gebyrforskriften er ikke en fornyelse av deklarasjonen. (Regelen om varighet for deklarasjoner: UAS.SPEC.085)
 
 *Kilde:* EU 2019/947 UAS.SPEC.085 (innført ved EU 2020/639); luftfartstilsynet.no, «Søke om STS» (tidsbegrenset deklarasjon og årsgebyr etter gebyrforskriften)
 
@@ -47,7 +47,7 @@ Etter at STS-01-deklarasjonen er bekreftet, bytter operatøren til en C5-drone a
 - c) Endringen tas med når deklarasjonen fornyes etter to år
 - d) Operatøren skal uten opphold melde endringen til Luftfartstilsynet ✅
 
-*Forklaring:* Deklarasjonsskjemaet inneholder produsent, modell og serienummer for dronen. UAS.SPEC.020 (5) krever at operatøren uten opphold varsler myndigheten om enhver endring i opplysningene i deklarasjonen. Et modellbytte innenfor C5 krever ikke operasjonstillatelse, men det skal meldes.
+*Forklaring:* Deklarasjonsskjemaet inneholder produsent, modell og serienummer for dronen. Reglene for deklarasjoner sier at operatøren uten opphold skal varsle myndigheten om enhver endring i opplysningene. Et modellbytte innenfor C5 krever ikke operasjonstillatelse, men det skal meldes. (UAS.SPEC.020 punkt 5)
 
 *Kilde:* EU 2019/947 UAS.SPEC.020 (5) og Appendix 2 (deklarasjonsskjemaet)
 
@@ -62,7 +62,7 @@ En STS-01-operasjon er planlagt i kontrollert luftrom. Hva krever regelverket fo
 - c) Det går ikke, et STS kan bare deklareres for luftromsklasse G
 - d) At operatøren har LUC, siden kontrollert luftrom krever sertifikat
 
-*Forklaring:* UAS.SPEC.020 (1)(b) åpner for deklarasjon under 120 m i ukontrollert luftrom (klasse F eller G), eller i kontrollert luftrom når operasjonen følger publiserte prosedyrer for området, slik at sannsynligheten for å møte bemannede luftfartøy er lav. Den praktiske opplæringen for STS omfatter derfor også prosedyrer for kontakt med flygekontrollen og klarering når det trengs.
+*Forklaring:* Reglene for deklarasjoner åpner for STS under 120 m i ukontrollert luftrom (klasse F eller G), eller i kontrollert luftrom når operasjonen følger publiserte prosedyrer for området, slik at sannsynligheten for å møte bemannede luftfartøy er lav. Den praktiske opplæringen for STS omfatter derfor også prosedyrer for kontakt med flygekontrollen og klarering når det trengs. (UAS.SPEC.020 punkt 1 b)
 
 *Kilde:* EU 2019/947 UAS.SPEC.020 (1)(b); EU 2020/639 Attachment A til kap. I, tabell 1 (a)(i)(I)
 
@@ -77,7 +77,7 @@ Hvem kan utstede beviset på gjennomført praktisk opplæring (accreditation of 
 - c) Trafikkstasjonen, samtidig med at teoriprøven blir bestått
 - d) Enhver pilot som selv har STS-bevis og minst to års erfaring i spesifikk kategori
 
-*Forklaring:* UAS.STS-01.020 (1)(e)(ii) nevner to utstedere: en enhet som har erklært samsvar med Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med Appendix 3. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring.
+*Forklaring:* Driftsreglene for STS-01 nevner to som kan utstede beviset: en enhet som har erklært samsvar med kravene i Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med de samme kravene. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring. (UAS.STS-01.020)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3; luftfartstilsynet.no, «Søke om STS» og «Droneregler» (droneskoler som har deklarert for STS-opplæring)
 
@@ -92,7 +92,7 @@ Hva gjør at en STS-deklarasjon ikke lenger regnes som fullstendig, selv om det 
 - c) Operatøren tar inn en ny pilot med gyldig STS-bevis og praktisk opplæring
 - d) Dronen har vært til service hos produsenten og fått nye propeller
 
-*Forklaring:* UAS.SPEC.085 lister tre forhold: tilsynet finner at operasjonen ikke skjer i samsvar med deklarasjonen, forholdene har endret seg slik at deklarasjonen ikke lenger oppfyller kravene, eller myndigheten ikke får tilgang etter UAS.SPEC.090. Opphold i flygingen eller nye, kvalifiserte piloter påvirker ikke gyldigheten.
+*Forklaring:* Regelverket lister tre forhold: tilsynet finner at operasjonen ikke skjer slik deklarasjonen sier, forholdene har endret seg slik at deklarasjonen ikke lenger oppfyller kravene, eller myndigheten ikke får tilgang til operatøren for tilsyn. Opphold i flygingen eller nye, kvalifiserte piloter påvirker ikke gyldigheten. (Regelen om gyldighet for deklarasjoner: UAS.SPEC.085)
 
 *Kilde:* EU 2019/947 UAS.SPEC.085 (1)-(3)
 
@@ -107,7 +107,7 @@ En STS-01-operasjon har flight geography opp til 120 m over bakken, og det er in
 - c) Det finnes ingen øvre grense for contingency-volumet
 - d) 150 m ✅
 
-*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men UAS.STS-01.010 (3) lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flight geography.
+*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flight geography. (UAS.STS-01.010 punkt 3)
 
 *Kilde:* EU 2020/639 UAS.STS-01.010 (1) og (3)
 
@@ -122,7 +122,7 @@ Et STS-01-oppdrag skal dokumentere en stor øvelse fra to vinkler samtidig. To p
 - c) Nei, den ene piloten må i så fall fly i åpen kategori A2
 - d) Ja, men bare hvis den ene piloten styrer begge fra samme kontrollenhet
 
-*Forklaring:* UAS.STS-01.040 (2)(d) sier at piloten bare skal operere ett ubemannet luftfartøy om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot, og kontrollen skal ikke overlates til en annen kontrollenhet. Koordineringen mellom pilotene bør stå i operasjonsmanualens kommunikasjonsprosedyrer.
+*Forklaring:* Pilotens plikter i STS-01 sier at piloten bare skal operere én drone om gangen. Det samme gjelder i STS-02. Regelverket forbyr ikke flere droner i samme område, men hver drone må ha sin egen pilot, og kontrollen skal ikke overlates til en annen kontrollenhet. Koordineringen mellom pilotene bør stå i operasjonsmanualens kommunikasjonsprosedyrer. (UAS.STS-01.040)
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(d) og (f); UAS.STS-02.040 (2)(c); Appendix 5 pkt. (6)(c)(i)(E)
 
@@ -137,7 +137,7 @@ C5-dronen har geo-awareness, og STS-01-oppdraget ligger i en geografisk sone som
 - c) Operatøren ✅
 - d) Ingen, geo-awareness brukes ikke i spesifikk kategori
 
-*Forklaring:* UAS.STS-01.030 (7) pålegger operatøren å laste opp oppdatert informasjon i geo-awareness-funksjonen, dersom dronen har den, når den geografiske sonen krever det. Piloten skal i tillegg hente oppdatert informasjon om geografiske soner før flyging.
+*Forklaring:* Operatørens plikter i STS-01 sier at operatøren skal laste opp oppdatert informasjon i geo-awareness-funksjonen, dersom dronen har den, når den geografiske sonen krever det. Piloten skal i tillegg hente oppdatert informasjon om geografiske soner før flyging. (UAS.STS-01.030)
 
 *Kilde:* EU 2020/639 UAS.STS-01.030 (7); UAS.SPEC.060 (2)(a)
 
@@ -152,7 +152,7 @@ Hva krever STS-02 om dronens posisjon under oppskyting og landing?
 - c) Innenfor syn til nærmeste luftromsobservatør
 - d) Det er ikke regulert i STS-02
 
-*Forklaring:* Selv om STS-02 er BVLOS, krever UAS.STS-02.020 (4) at dronen er i syne for piloten under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen.
+*Forklaring:* Selv om STS-02 er flyging utenfor synsrekkevidde, sier driftsreglene at piloten skal se dronen under oppskyting og landing. Unntaket er når landingen er resultatet av en nødavslutning av flygingen. (Driftsreglene for STS-02, punkt 4: UAS.STS-02.020)
 
 *Kilde:* EU 2020/639 UAS.STS-02.020 (4)
 
@@ -167,7 +167,7 @@ Før en STS-02-flyging med tre luftromsobservatører langs en kraftlinje: hva m�
 - c) At det ikke er hull mellom sonene observatørene dekker, og at terrenget ikke skjuler sikten for noen av dem ✅
 - d) At hver observatør har sin egen kontrollenhet i tilfelle piloten mister linken
 
-*Forklaring:* UAS.STS-02.030 (10) krever at operatøren før start sjekker plassering og antall observatører, sikt og avstand, at terrenget ikke skygger, at det ikke er hull mellom sonene, at kommunikasjonen virker, og at observatørene er orientert om rute og tidsplan. Observatørene trenger opplæring fra operatøren, ikke STS-bevis. Regelverket har ingen fast avstand mellom observatørene; grensene er maks 1 km fra dronen til nærmeste observatør og maks 1 km fra hver observatør til piloten. Kontrollen skal aldri overlates til en annen kontrollenhet.
+*Forklaring:* Operatørens plikter i STS-02 sier at operatøren før start skal sjekke plassering og antall observatører, sikt og avstand, at terrenget ikke skygger, at det ikke er hull mellom sonene, at kommunikasjonen virker, og at observatørene er orientert om rute og tidsplan. Observatørene trenger opplæring fra operatøren, ikke STS-bevis. Regelverket har ingen fast avstand mellom observatørene; grensene er maks 1 km fra dronen til nærmeste observatør og maks 1 km fra hver observatør til piloten. Kontrollen skal aldri overlates til en annen kontrollenhet. (UAS.STS-02.030)
 
 *Kilde:* EU 2020/639 UAS.STS-02.030 (10); UAS.STS-02.020 (6); UAS.SPEC.050 (1)(e)
 
@@ -182,7 +182,7 @@ Hva skal piloten gjøre med dronens programmerbare flygevolum før en STS-02-fly
 - c) Ingenting, funksjonen aktiveres bare hvis C2-linken går tapt
 - d) Slå det av, fordi det kan komme i konflikt med den programmerte banen
 
-*Forklaring:* UAS.STS-02.040 (1)(a) krever at piloten setter dronens programmerbare flygevolum slik at dronen holdes innenfor flight geography. Piloten skal også kontrollere at funksjonen og flygeavslutningen virker, og at Remote ID er aktiv.
+*Forklaring:* Pilotens plikter i STS-02 sier at piloten skal sette dronens programmerbare flygevolum slik at dronen holdes innenfor flight geography. Piloten skal også kontrollere at funksjonen og flygeavslutningen virker, og at Remote ID er aktiv. (UAS.STS-02.040)
 
 *Kilde:* EU 2020/639 UAS.STS-02.040 (1)(a)-(b); EU 2020/1058 Part 17 pkt. (4)
 
@@ -197,7 +197,7 @@ Luftromsobservatøren skal holde oversikt over hvor dronen er under en STS-02-fl
 - c) Radiomeldinger fra piloten om posisjonen, men ingen skjerm
 - d) Kikkert med avstandsmåler, men ingen elektronisk posisjonsvisning
 
-*Forklaring:* Observatørens skanning etter annen lufttrafikk er visuell og uten hjelpemidler, men for å vite hvor dronen er, tillater UAS.STS-02.050 (2) både direkte observasjon og elektroniske hjelpemidler. AMC sier at observatøren bør få dronens posisjon, fart og høyde, og kan bruke samme system som piloten.
+*Forklaring:* Observatørens skanning etter annen lufttrafikk er visuell og uten hjelpemidler. Men for å vite hvor dronen er, tillater observatørens plikter både direkte observasjon og elektroniske hjelpemidler. EASAs veiledning sier at observatøren bør få dronens posisjon, fart og høyde, og kan bruke samme system som piloten. (UAS.STS-02.050)
 
 *Kilde:* EU 2019/947 art. 2 (25); EU 2020/639 UAS.STS-02.050 (1)-(2); EASA AMC1 UAS.STS-02.050(2)
 
@@ -212,7 +212,7 @@ Tabellen i STS-01 gir 25 m bakkerisikobuffer for en drone med MTOM 6 kg som flyr
 - c) De gjelder bare i vindstille; i vind brukes 1:1-regelen i stedet
 - d) De er minsteverdier, og vind og reaksjonstid kan kreve mer ✅
 
-*Forklaring:* GM1 UAS.STS-01.020(1)(c) sier at tabellverdiene skal regnes som minimum, og at det bør legges til margin for faktorer som øker avstanden dronen kan bevege seg, for eksempel autorotasjon, vind og pilotens reaksjonstid. For en drone med MTOM inntil 10 kg i 120 m er minstebufferen 25 m.
+*Forklaring:* EASAs veiledning til STS-01 sier at tabellverdiene skal regnes som minimum, og at det bør legges til margin for faktorer som øker avstanden dronen kan bevege seg, for eksempel autorotasjon, vind og pilotens reaksjonstid. For en drone med MTOM inntil 10 kg i 120 m er minstebufferen 25 m. (GM1 til UAS.STS-01.020)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C); EASA GM1 UAS.STS-01.020(1)(c) (ED Decision 2022/002/R)
 
@@ -227,7 +227,7 @@ Hva menes med operasjonsvolumet (operational volume)?
 - c) Hele det kontrollerte bakkeområdet, inkludert bufferen
 - d) Luftrommet innenfor pilotens synsrekkevidde
 
-*Forklaring:* Etter definisjonene i art. 2 er operasjonsvolumet kombinasjonen av flight geography og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen.
+*Forklaring:* Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flight geography og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)
 
 *Kilde:* EU 2019/947 art. 2 (28)-(33), innført ved EU 2020/639; UAS.STS-01.030 (2)
 
@@ -242,7 +242,7 @@ En STS-02-operasjon langs en rørgate har en del av bakkerisikobufferen i utkant
 - c) Det går hvis en luftromsobservatør står ved tettstedet
 - d) Det går ikke; hele det kontrollerte bakkeområdet skal ligge i spredt befolket miljø ✅
 
-*Forklaring:* UAS.STS-02.020 (2) krever at det kontrollerte bakkeområdet, altså flight geography-området, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS.
+*Forklaring:* Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flight geography-området, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)
 
 *Kilde:* EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»
 
@@ -257,7 +257,7 @@ Hva må operatøren gjøre før en STS-02-flyging for å hindre at uinvolverte k
 - c) Gjerde inn hele bakkerisikobufferen fysisk
 - d) Sende skriftlig varsel til alle eiendommer innenfor 1 km og sette opp skilt ved innkjørselen
 
-*Forklaring:* UAS.STS-02.030 (8) krever at alle hensiktsmessige tiltak for å redusere risikoen for at uinvolverte kommer inn i området er tatt før start, og at det er koordinert med relevante myndigheter når det kreves. Regelverket sier ikke hvilke tiltak; det beskrives i operasjonsmanualen.
+*Forklaring:* Operatørens plikter i STS-02 sier at alle hensiktsmessige tiltak for å redusere risikoen for at uinvolverte kommer inn i området skal være tatt før start, og at det er koordinert med relevante myndigheter når det kreves. Regelverket sier ikke hvilke tiltak; det beskrives i operasjonsmanualen. (UAS.STS-02.030)
 
 *Kilde:* EU 2020/639 UAS.STS-02.030 (8); Appendix 5 pkt. (6)(c)(i)(G)
 
@@ -287,7 +287,7 @@ Hvor lenge skal operatøren minst ta vare på opplysninger om STS-operasjonene, 
 - c) 5 år
 - d) Til deklarasjonen utløper
 
-*Forklaring:* UAS.SPEC.050 (1)(g) krever at operatøren i minst 3 år tar vare på opplysninger om operasjonene, inkludert uvanlige hendelser, og om vedlikehold. Opplysninger om kvalifikasjoner og kurs for personellet skal oppbevares i minst 3 år etter at personen har sluttet eller byttet stilling.
+*Forklaring:* Operatørens plikter i spesifikk kategori sier at opplysninger om operasjonene, inkludert uvanlige hendelser, og om vedlikehold skal tas vare på i minst 3 år. Opplysninger om kvalifikasjoner og kurs for personellet skal oppbevares i minst 3 år etter at personen har sluttet eller byttet stilling. (UAS.SPEC.050)
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(g)
 
@@ -302,7 +302,7 @@ Operatøren kjøper en C2-linktjeneste fra et teleselskap til et STS-oppdrag. Hv
 - c) At tjenesten har tilstrekkelig ytelse for operasjonen, og at roller og ansvar mellom operatør og leverandør er fordelt ✅
 - d) At Luftfartstilsynet har godkjent leverandøren og tjenesten før den tas i bruk i spesifikk kategori
 
-*Forklaring:* EASA forstår en ekstern tjeneste som en tjeneste som er nødvendig for sikker flyging og leveres av en annen enn operatøren. En innkjøpt C2-linktjeneste er et eksempel. UAS.STS-01.030 (5)-(6) krever at operatøren sikrer at ytelsen er tilstrekkelig for operasjonen, og definerer fordelingen av roller og ansvar mellom operatøren og tjenesteleverandøren. Det samme står i STS-02.
+*Forklaring:* EASA forstår en ekstern tjeneste som en tjeneste som er nødvendig for sikker flyging og leveres av en annen enn operatøren. En innkjøpt C2-linktjeneste er et eksempel. Operatørens plikter i STS-01 sier at operatøren skal sikre at ytelsen er tilstrekkelig for operasjonen, og definere fordelingen av roller og ansvar mellom operatøren og tjenesteleverandøren. Det samme står i STS-02. (UAS.STS-01.030)
 
 *Kilde:* EU 2020/639 UAS.STS-01.030 (5)-(6) og UAS.STS-02.030 (5)-(6); EASA GM1 UAS.STS-01.030(5)&(6)
 
@@ -332,7 +332,7 @@ Operatøren skal bruke en luftromsobservatør i STS-02. Hvilken opplæring kreve
 - c) A2-kompetansebevis
 - d) Ingen, rollen krever bare godt syn
 
-*Forklaring:* UAS.SPEC.050 (1)(e) sier at personell med oppgaver som er avgjørende for operasjonen, utenom piloten, skal ha fullført opplæring på arbeidsplassen utviklet av operatøren, være informert om operasjonsmanualen og prosedyrene, og ha oppdatert informasjon om geografiske soner.
+*Forklaring:* Operatørens plikter i spesifikk kategori sier at personell med oppgaver som er avgjørende for operasjonen, utenom piloten, skal ha fullført opplæring på arbeidsplassen utviklet av operatøren, være informert om operasjonsmanualen og prosedyrene, og ha oppdatert informasjon om geografiske soner. (UAS.SPEC.050)
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(e)
 
@@ -370,14 +370,14 @@ Operatøren har tre C5-droner fra to produsenter som skal brukes under STS-01, m
 
 ### 56. Operatøransvar og operasjonsmanual · vanskegrad 2
 
-Hva krever UAS.SPEC.050 av operatøren når det gjelder vedlikehold av dronene?
+Hva krever regelverket for spesifikk kategori av operatøren når det gjelder vedlikehold av dronene?
 
 - a) At alt vedlikehold gjøres hos produsenten
 - b) En årlig teknisk kontroll av hver drone hos Luftfartstilsynet
 - c) Ingenting ut over produsentens anbefalinger, siden vedlikehold er pilotens ansvar før hver flyging
 - d) Vedlikeholdsinstrukser, egnet vedlikeholdspersonell og logg over vedlikeholdet i minst 3 år ✅
 
-*Forklaring:* Operatøren skal holde dronene i sikker stand ved minst å definere vedlikeholdsinstrukser og bruke tilstrekkelig opplært og kvalifisert vedlikeholdspersonell, føre en oppdatert liste over vedlikeholdspersonellet, og ta vare på logg over vedlikeholdet i minst 3 år. Operasjonsmanualen skal også inneholde vedlikeholdsinstrukser.
+*Forklaring:* Operatøren skal holde dronene i sikker stand ved minst å definere vedlikeholdsinstrukser og bruke tilstrekkelig opplært og kvalifisert vedlikeholdspersonell, føre en oppdatert liste over vedlikeholdspersonellet, og ta vare på logg over vedlikeholdet i minst 3 år. Operasjonsmanualen skal også inneholde vedlikeholdsinstrukser. (Operatørens plikter: UAS.SPEC.050)
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(g)(ii), (1)(i) og (1)(k); Appendix 5 pkt. (5)
 
@@ -392,7 +392,7 @@ En landmåler vil følge en ny vei i STS-01 ved å kjøre sakte etter dronen med
 - c) Nei, dronen skal aldri opereres fra et kjøretøy i bevegelse ✅
 - d) Nei, fordi STS-01 bare tillater flyging over ett fast område om gangen
 
-*Forklaring:* UAS.STS-01.040 (2)(e) forbyr å operere dronen fra et kjøretøy i bevegelse. Det samme gjelder i STS-02. Grensen på 5 m/s gjelder dronens bakkehastighet, ikke kjøretøyet.
+*Forklaring:* Pilotens plikter i STS-01 forbyr å operere dronen fra et kjøretøy i bevegelse. Det samme gjelder i STS-02. Grensen på 5 m/s gjelder dronens bakkehastighet, ikke kjøretøyet. (UAS.STS-01.040)
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(e); UAS.STS-02.040 (2)(d)
 
@@ -407,7 +407,7 @@ Under et STS-01-oppdrag på et industriområde begynner det å brenne i nabobygg
 - c) Piloten kan fortsette uten videre innenfor det deklarerte bakkeområdet
 - d) Ikke fly nær eller inne i innsatsområdet uten tillatelse fra nødetatene ✅
 
-*Forklaring:* UAS.SPEC.060 (3)(e) sier at piloten under flyging ikke skal fly nær eller inne i områder der en redningsinnsats pågår, med mindre de ansvarlige nødetatene har gitt tillatelse. Deklarasjonen endrer ikke dette.
+*Forklaring:* Pilotens plikter i spesifikk kategori sier at piloten under flyging ikke skal fly nær eller inne i områder der en redningsinnsats pågår, med mindre de ansvarlige nødetatene har gitt tillatelse. Deklarasjonen endrer ikke dette. (UAS.SPEC.060)
 
 *Kilde:* EU 2019/947 UAS.SPEC.060 (3)(e)
 
@@ -422,7 +422,7 @@ Politiet kontrollerer en pilot under en STS-01-flyging. Hva krever regelverket a
 - c) Dronens typesertifikat
 - d) En flygelogg signert av Luftfartstilsynet
 
-*Forklaring:* UAS.SPEC.060 (1)(b) krever at piloten har den kompetansen scenarioet krever og har med bevis på kompetansen under flyging.
+*Forklaring:* Pilotens plikter i spesifikk kategori sier at piloten skal ha den kompetansen scenarioet krever og ha med bevis på kompetansen under flyging. (UAS.SPEC.060)
 
 *Kilde:* EU 2019/947 UAS.SPEC.060 (1)(b)
 
@@ -430,14 +430,14 @@ Politiet kontrollerer en pilot under en STS-01-flyging. Hva krever regelverket a
 
 ### 60. Pilotansvar og prosedyrer · vanskegrad 2
 
-Operasjonsområdet ligger i en geografisk sone der vilkårene krever at flygekontrollen varsles før flyging. Hvem har etter UAS.SPEC.060 plikt til å sørge for at det er gjort før start?
+Operasjonsområdet ligger i en geografisk sone der vilkårene krever at flygekontrollen varsles før flyging. Hvem har plikt til å sørge for at det er gjort før start?
 
 - a) Luftfartstilsynet, når deklarasjonen bekreftes
 - b) Piloten ✅
 - c) Ingen, deklarasjonen fungerer som varsel
 - d) Dronens geo-awareness-funksjon, som varsler automatisk
 
-*Forklaring:* Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Deklarasjonen er ikke et varsel om enkeltflyginger.
+*Forklaring:* Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Deklarasjonen er ikke et varsel om enkeltflyginger. (Pilotens plikter: UAS.SPEC.060)
 
 *Kilde:* EU 2019/947 UAS.SPEC.060 (2)(d)
 
@@ -482,7 +482,7 @@ Når slipper piloten i STS-02 selv å gjøre grundig skanning av luftrommet rund
 - c) Når luftromsobservatører støtter operasjonen med skanningen ✅
 - d) Aldri, piloten skal alltid skanne selv
 
-*Forklaring:* UAS.STS-02.040 (2)(a) sier at piloten skal skanne luftrommet grundig, med mindre luftromsobservatører støtter operasjonen. Da er det observatørene som skanner og varsler piloten, jf. UAS.STS-02.050.
+*Forklaring:* Pilotens plikter i STS-02 sier at piloten skal skanne luftrommet grundig, med mindre luftromsobservatører støtter operasjonen. Da er det observatørene som skanner og varsler piloten. (UAS.STS-02.040 og UAS.STS-02.050)
 
 *Kilde:* EU 2020/639 UAS.STS-02.040 (2)(a); UAS.STS-02.050
 
@@ -497,7 +497,7 @@ Etter en lang arbeidsdag presser kunden på for å få de siste bildene før det
 - c) Avbryte eller utsette, fordi piloten ikke skal fly når tretthet gjør henne uskikket ✅
 - d) Fortsette hvis en kollega står ved siden av som observatør
 
-*Forklaring:* UAS.SPEC.060 (1)(a) sier at piloten ikke skal utføre oppgavene når hun er uskikket på grunn av skade, tretthet, medisiner, sykdom eller annet. EASAs veiledning nevner kommersielt press og lange arbeidsdager som fallgruver under tretthet. Automatikk eller en observatør fjerner ikke problemet.
+*Forklaring:* Pilotens plikter i spesifikk kategori sier at piloten ikke skal utføre oppgavene når hun er uskikket på grunn av skade, tretthet, medisiner, sykdom eller annet. EASAs veiledning nevner kommersielt press og lange arbeidsdager som fallgruver under tretthet. Automatikk eller en observatør fjerner ikke problemet. (UAS.SPEC.060)
 
 *Kilde:* EU 2019/947 UAS.SPEC.060 (1)(a); EASA AMC1 UAS.SPEC.050(1)(d) (menneskelige begrensninger, tretthet)
 
@@ -565,14 +565,14 @@ Operasjonsmanualen har mange nødprosedyrer. Hvilke bør piloten etter EASAs vei
 
 ### 69. Menneskelige faktorer · vanskegrad 1
 
-Hva krever UAS.SPEC.050 av grensesnittet mellom pilot og dronesystem (HMI)?
+Hva krever regelverket for spesifikk kategori av grensesnittet mellom pilot og dronesystem (HMI)?
 
 - a) At det begrenser risikoen for pilotfeil og ikke gir urimelig tretthet ✅
 - b) At det er på norsk, slik at norske piloter forstår alle varsler
 - c) At det har berøringsskjerm
 - d) At det viser video i minst full HD, slik at piloten ser hindringer tydelig nok
 
-*Forklaring:* UAS.SPEC.050 (1)(h) krever at grensesnittet mellom menneske og maskin er slik at det minimerer risikoen for pilotfeil og ikke gir urimelig tretthet. Menneskelige faktorer er altså også et krav til utstyret, ikke bare til piloten.
+*Forklaring:* Operatørens plikter i spesifikk kategori sier at grensesnittet mellom menneske og maskin skal minimere risikoen for pilotfeil og ikke gi urimelig tretthet. Menneskelige faktorer er altså også et krav til utstyret, ikke bare til piloten. (UAS.SPEC.050)
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(h)
 
@@ -632,7 +632,7 @@ En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario
 - c) Begge, drivstoffet er ikke regulert i klassene
 - d) Ingen av dem, begge klassene krever elektrisk drift
 
-*Forklaring:* Både C5 og C6 bygger på kravene til C3 i Part 4, der pkt. (7) krever ren elektrisk drift. C5 er bare unntatt pkt. (2) og (10), mens C6 er unntatt pkt. (2), (7) og (10). En C6 kan derfor ha forbrenningsmotor.
+*Forklaring:* Både C5 og C6 bygger på kravene til C3, og ett av C3-kravene er ren elektrisk drift. C5 er bare unntatt to av C3-kravene, mens C6 i tillegg er unntatt kravet om elektrisk drift. En C6 kan derfor ha forbrenningsmotor. (Klassekravene i forordning 2019/945: del 4 for C3, punkt 7, og del 16 og 17 for C5 og C6)
 
 *Kilde:* EU 2020/1058 Part 4 pkt. (7); Part 16 og Part 17 (innledningen)
 
@@ -647,7 +647,7 @@ En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merki
 - c) Ja, C5 utelukker fastvinge bare når dronen ikke er tjoret ✅
 - d) Ja, men bare hvis vingespennet er under 1 m
 
-*Forklaring:* Part 16 pkt. (1) sier at en C5 skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til tjoret (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6.
+*Forklaring:* Kravene til C5 sier at dronen skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til tjoret (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6. (Kravene til C5: forordning 2019/945, del 16 punkt 1)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (1)
 
@@ -662,7 +662,7 @@ Hva skal en ikke-tjoret C5-drone gi piloten om kvaliteten på C2-linken?
 - c) Ingenting, C2-linken er produsentens ansvar
 - d) En måling av signalstyrken før start
 
-*Forklaring:* Part 16 pkt. (6) krever at piloten løpende kan overvåke kvaliteten på C2-linken og får et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og et nytt varsel når linken er tapt. C6 har samme krav i Part 17 pkt. (7).
+*Forklaring:* Kravene til C5 sier at piloten løpende skal kunne overvåke kvaliteten på C2-linken, få et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og få et nytt varsel når linken er tapt. C6 har samme krav. (Forordning 2019/945, del 16 punkt 6 og del 17 punkt 7)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (6); Part 17 pkt. (7)
 
@@ -677,7 +677,7 @@ Hvilken fluginformasjon skal en C5-drone minst gi piloten under flyging, sammenl
 - c) Begge: direkte video fra kameraet
 - d) C5: høyde over bakken eller startpunktet. C6: i tillegg posisjon og fart ✅
 
-*Forklaring:* Part 16 pkt. (3) krever at C5 gir klar informasjon om høyden over bakken eller startpunktet. Part 17 pkt. (3) krever at C6 gir geografisk posisjon, fart og høyde, fordi piloten ikke ser dronen i BVLOS-delen. Batterivarsel kreves også, gjennom C3-kravene, men er ikke det klassene skiller seg på her.
+*Forklaring:* Kravene til C5 sier at dronen skal gi klar informasjon om høyden over bakken eller startpunktet. Kravene til C6 sier at dronen skal gi geografisk posisjon, fart og høyde, fordi piloten ikke ser dronen i BVLOS-delen. Batterivarsel kreves også, gjennom C3-kravene, men er ikke det klassene skiller seg på her. (Forordning 2019/945, del 16 punkt 3 og del 17 punkt 3)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (3); Part 17 pkt. (3); Part 4 pkt. (13)
 
@@ -692,7 +692,7 @@ En C5-drone skal brukes tjoret. Hvilket krav gjelder tjoret for en drone som er 
 - c) Nøyaktig 30 m, slik at bakkeområdet blir standard
 - d) Minst 50 m langt, for å gi rom for manøvrering, og like sterkt som dronens egen vekt
 
-*Forklaring:* C5 skal oppfylle C3-kravene i Part 4. Pkt. (4) sier at tjoret skal være kortere enn 50 m og ha en mekanisk styrke på minst 10 ganger vekten av luftfartøyet ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus.
+*Forklaring:* C5 skal oppfylle kravene til C3. Der står det at tjoret skal være kortere enn 50 m og ha en mekanisk styrke på minst 10 ganger vekten av luftfartøyet ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)
 
 *Kilde:* EU 2020/1058 Part 4 pkt. (4); Part 16 pkt. (4)-(6)
 
@@ -700,14 +700,14 @@ En C5-drone skal brukes tjoret. Hvilket krav gjelder tjoret for en drone som er 
 
 ### 78. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 1
 
-Hva skal hver drone i spesifikk kategori være utstyrt med etter UAS.SPEC.050?
+Hva skal hver drone i spesifikk kategori være utstyrt med?
 
 - a) En ADS-B-transponder som gjør dronen synlig for bemannede luftfartøy i nærheten
 - b) Fallskjerm
 - c) Minst ett grønt blinklys for synlighet om natta og aktiv, oppdatert Remote ID ✅
 - d) Et varmesøkende kamera
 
-*Forklaring:* UAS.SPEC.050 (1)(l) krever at hver drone har minst ett grønt blinkende lys for synlighet om natta og et aktivt og oppdatert fjernidentifikasjonssystem. Fallskjerm er ikke et generelt krav, men C5 skal ha noe som demper treffet ved flygeavslutning, for eksempel fallskjerm.
+*Forklaring:* Operatørens plikter i spesifikk kategori sier at hver drone skal ha minst ett grønt blinkende lys for synlighet om natta og et aktivt og oppdatert fjernidentifikasjonssystem. Fallskjerm er ikke et generelt krav, men C5 skal ha noe som demper treffet ved flygeavslutning, for eksempel fallskjerm. (UAS.SPEC.050)
 
 *Kilde:* EU 2019/947 UAS.SPEC.050 (1)(l); EU 2020/1058 Part 16 pkt. (5)(c)
 
@@ -722,7 +722,7 @@ Hva skal en ikke-tjoret C5-drone kunne gjøre hvis C2-linken blir borte?
 - c) Fortsette oppdraget på autopilot langs den planlagte ruten til batteriet er tomt
 - d) Sveve på stedet til piloten får kontakt igjen, eller til batteriet tvinger den ned
 
-*Forklaring:* Part 4 pkt. (5), som også gjelder C5, krever at dronen ved tapt C2-link har en pålitelig og forutsigbar metode for å gjenopprette linken, eller, hvis det ikke lykkes, avslutte flygingen slik at virkningen for tredjepart i lufta eller på bakken reduseres. Produsenten skal beskrive oppførselen ved tapt link i bruksanvisningen.
+*Forklaring:* Kravene til C3, som også gjelder C5, sier at dronen ved tapt C2-link skal ha en pålitelig og forutsigbar metode for å gjenopprette linken, eller, hvis det ikke lykkes, avslutte flygingen slik at virkningen for tredjepart i lufta eller på bakken reduseres. Produsenten skal beskrive oppførselen ved tapt link i bruksanvisningen. (Kravene til C3: forordning 2019/945, del 4 punkt 5)
 
 *Kilde:* EU 2020/1058 Part 4 pkt. (5) og (15)(a)
 
