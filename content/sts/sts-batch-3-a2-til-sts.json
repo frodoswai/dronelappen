@@ -15,7 +15,8 @@
       "Luftfartstilsynet": "«Søke om STS» (Altinn, STS-01/STS-02 i kortform, 120 m fra nærmeste punkt), lest 04.10.2026, lagret som lt-soke-om-sts.txt"
     },
     "style": "Kort stamme og korte, omtrent like lange svaralternativer. Plausible distraktorer som er tydelig gale for den som kan regelen. Forklaring på klarspråk med regelkoden i parentes bakerst. Ingen tankestreker.",
-    "not_covered_on_purpose": "De to spørsmålene som er sendt til LT (overføring av praktisk opplæring mellom operatører, og hva en privatperson som deklarerer alene må oppfylle) er ikke brukt. Forsikring er ikke brukt som fasit."
+    "not_covered_on_purpose": "De to spørsmålene som er sendt til LT (overføring av praktisk opplæring mellom operatører, og hva en privatperson som deklarerer alene må oppfylle) er ikke brukt. Forsikring er ikke brukt som fasit.",
+    "revidert": " 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md."
   },
   "categories": [
     {
@@ -457,7 +458,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Contingency-området skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik tether-lengden pluss 5 m. Utenfor contingency-området ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)",
+      "explanation": "Contingency-området skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på lina pluss 5 m. Utenfor contingency-området ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i)(B) og UAS.STS-02.020 (2)(b)",
       "overlap_group": "bakkeomraade-lag"
     }

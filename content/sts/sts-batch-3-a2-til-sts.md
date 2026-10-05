@@ -229,7 +229,7 @@ Hvor langt utenfor flygeområdet skal contingency-området minst gå for en dron
 - c) 10 m ✅
 - d) 50 m
 
-*Forklaring:* Contingency-området skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik tether-lengden pluss 5 m. Utenfor contingency-området ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
+*Forklaring:* Contingency-området skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på lina pluss 5 m. Utenfor contingency-området ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(B) og UAS.STS-02.020 (2)(b)
 

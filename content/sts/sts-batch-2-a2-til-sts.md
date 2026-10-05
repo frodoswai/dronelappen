@@ -62,7 +62,7 @@ En STS-01-operasjon er planlagt i kontrollert luftrom. Hva krever regelverket fo
 - a) Ingenting, VLOS under 120 m er lov i alt luftrom
 - b) At den følger publiserte prosedyrer for området ✅
 - c) Det går ikke, STS gjelder bare luftromsklasse G
-- d) At operatøren har LUC for kontrollert luftrom
+- d) At operatøren har et operatørsertifikat (LUC)
 
 *Forklaring:* Reglene for deklarasjoner åpner for STS under 120 m i ukontrollert luftrom (klasse F eller G), eller i kontrollert luftrom når operasjonen følger publiserte prosedyrer for området, slik at sannsynligheten for å møte bemannede luftfartøy er lav. Den praktiske opplæringen for STS omfatter derfor også prosedyrer for kontakt med flygekontrollen og klarering når det trengs. (UAS.SPEC.020 punkt 1 b)
 
@@ -79,7 +79,7 @@ Hvem kan utstede beviset på gjennomført praktisk opplæring (accreditation of 
 - c) Trafikkstasjonen, samtidig med at teoriprøven blir bestått
 - d) Enhver pilot med STS-bevis og minst to års erfaring
 
-*Forklaring:* Driftsreglene for STS-01 nevner to som kan utstede beviset: en enhet som har erklært samsvar med kravene i Appendix 3 og er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med de samme kravene. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring. (UAS.STS-01.020)
+*Forklaring:* Driftsreglene for STS-01 nevner to som kan utstede beviset: en enhet som har erklært at den oppfyller kravene til opplæringsenheter, og som er anerkjent av myndigheten, eller en operatør som har deklarert STS-01 og i tillegg erklært samsvar med de samme kravene. Trafikkstasjonen tar bare teoriprøven. I Norge viser Luftfartstilsynet til praktisk trening hos droneskoler som har deklarert for STS-opplæring. (Driftsreglene for STS-01: UAS.STS-01.020 punkt 1 e. Kravene til opplæringsenheter: Appendix 3)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(e)(ii); Appendix 3; luftfartstilsynet.no, «Søke om STS» og «Droneregler» (droneskoler som har deklarert for STS-opplæring)
 
@@ -102,14 +102,14 @@ Hva gjør at en STS-deklarasjon ikke lenger regnes som fullstendig, selv om det 
 
 ### 37. STS-01: rammer for VLOS · vanskegrad 2
 
-En STS-01-operasjon har flight geography opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet (flight geography pluss contingency-volumet) maksimalt gå?
+Under en STS-01-operasjon skal dronen fly opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet, altså flygeområdet pluss contingency-volumet, maksimalt gå?
 
 - a) 120 m, contingency-volumet må ligge under grensen
 - b) 135 m
 - c) Det finnes ingen øvre grense for contingency-volumet
 - d) 150 m ✅
 
-*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flight geography. (UAS.STS-01.010 punkt 3)
+*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flygeområdet. (UAS.STS-01.010 punkt 3)
 
 *Kilde:* EU 2020/639 UAS.STS-01.010 (1) og (3)
 
@@ -166,7 +166,7 @@ Før en STS-02-flyging med tre luftromsobservatører langs en kraftlinje: hva m�
 
 - a) At observatørene har eget STS-kompetansebevis
 - b) At de står nøyaktig 1 km fra hverandre
-- c) At sonene ikke har hull og terrenget ikke skygger ✅
+- c) At sonene deres henger sammen og terrenget ikke skygger ✅
 - d) At hver observatør har egen kontrollenhet for nødsituasjoner
 
 *Forklaring:* Operatørens plikter i STS-02 sier at operatøren før start skal sjekke plassering og antall observatører, sikt og avstand, at terrenget ikke skygger, at det ikke er hull mellom sonene, at kommunikasjonen virker, og at observatørene er orientert om rute og tidsplan. Observatørene trenger opplæring fra operatøren, ikke STS-bevis. Regelverket har ingen fast avstand mellom observatørene; grensene er maks 1 km fra dronen til nærmeste observatør og maks 1 km fra hver observatør til piloten. Kontrollen skal aldri overlates til en annen kontrollenhet. (UAS.STS-02.030)
@@ -180,11 +180,11 @@ Før en STS-02-flyging med tre luftromsobservatører langs en kraftlinje: hva m�
 Hva skal piloten gjøre med dronens programmerbare flygevolum før en STS-02-flyging?
 
 - a) Sette det lik yttergrensen for bakkerisikobufferen
-- b) Sette det slik at dronen holdes innenfor flight geography ✅
+- b) Sette det slik at dronen holdes innenfor flygeområdet ✅
 - c) Ingenting, funksjonen aktiveres bare hvis C2-linken går tapt
 - d) Slå det av, fordi det kan komme i konflikt med den programmerte banen
 
-*Forklaring:* Pilotens plikter i STS-02 sier at piloten skal sette dronens programmerbare flygevolum slik at dronen holdes innenfor flight geography. Piloten skal også kontrollere at funksjonen og flygeavslutningen virker, og at Remote ID er aktiv. (UAS.STS-02.040)
+*Forklaring:* Pilotens plikter i STS-02 sier at piloten skal sette dronens programmerbare flygevolum slik at dronen holdes innenfor flygeområdet (flight geography). Piloten skal også kontrollere at funksjonen og flygeavslutningen virker, og at Remote ID er aktiv. (UAS.STS-02.040)
 
 *Kilde:* EU 2020/639 UAS.STS-02.040 (1)(a)-(b); EU 2020/1058 Part 17 pkt. (4)
 
@@ -224,12 +224,12 @@ Tabellen i STS-01 gir 25 m bakkerisikobuffer for en drone med MTOM 6 kg som flyr
 
 Hva menes med operasjonsvolumet (operational volume)?
 
-- a) Flight geography og contingency-volumet til sammen ✅
-- b) Flight geography og bakkerisikobufferen til sammen
+- a) Flygeområdet og contingency-volumet til sammen ✅
+- b) Flygeområdet og bakkerisikobufferen til sammen
 - c) Hele det kontrollerte bakkeområdet, inkludert bufferen
 - d) Luftrommet innenfor pilotens synsrekkevidde
 
-*Forklaring:* Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flight geography og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)
+*Forklaring:* Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flygeområdet (flight geography) og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)
 
 *Kilde:* EU 2019/947 art. 2 (28)-(33), innført ved EU 2020/639; UAS.STS-01.030 (2)
 
@@ -244,7 +244,7 @@ En STS-02-flyging langs en kraftlinje har en del av bakkerisikobufferen i et bol
 - c) Det går hvis en luftromsobservatør står ved tettstedet
 - d) Det går ikke; hele området skal være spredt befolket ✅
 
-*Forklaring:* Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flight geography-området, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)
+*Forklaring:* Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flygeområdet, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)
 
 *Kilde:* EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»
 
@@ -255,9 +255,9 @@ En STS-02-flyging langs en kraftlinje har en del av bakkerisikobufferen i et bol
 Hva må operatøren gjøre før en STS-02-flyging for å hindre at uinvolverte kommer inn i det kontrollerte bakkeområdet?
 
 - a) Ingenting, bakkerisikobufferen er nok i seg selv
-- b) Ta hensiktsmessige tiltak og koordinere ved behov ✅
-- c) Gjerde inn hele bakkerisikobufferen fysisk
-- d) Varsle alle eiendommer innenfor 1 km skriftlig
+- b) Ta egnede tiltak og koordinere med myndighetene ved behov ✅
+- c) Gjerde inn hele bakkerisikobufferen fysisk før start
+- d) Varsle alle eiendommer innenfor 1 km skriftlig på forhånd
 
 *Forklaring:* Operatørens plikter i STS-02 sier at alle hensiktsmessige tiltak for å redusere risikoen for at uinvolverte kommer inn i området skal være tatt før start, og at det er koordinert med relevante myndigheter når det kreves. Regelverket sier ikke hvilke tiltak; det beskrives i operasjonsmanualen. (UAS.STS-02.030)
 
@@ -297,7 +297,7 @@ Hvor lenge skal operatøren minst ta vare på opplysninger om STS-operasjonene, 
 
 ### 51. Operatøransvar og operasjonsmanual · vanskegrad 3
 
-Operatøren kjøper en C2-linktjeneste fra et teleselskap til et STS-oppdrag. Hva må operatøren sikre?
+Til et STS-oppdrag leier operatøren styre- og kontrollforbindelsen til dronen (C2-linken) som en tjeneste fra et teleselskap. Hva må operatøren sikre?
 
 - a) Ingenting, leverandøren har hele ansvaret
 - b) At leverandøren har eget STS-kompetansebevis
@@ -342,14 +342,14 @@ Operatøren skal bruke en luftromsobservatør i STS-02. Hvilken opplæring kreve
 
 ### 54. Operatøransvar og operasjonsmanual · vanskegrad 3
 
-En STS-01-operatør vil selv gi praktisk opplæring og vurdering av egne piloter. Hva er ett av kravene i Appendix 3?
+En STS-01-operatør vil selv gi praktisk opplæring og vurdering av egne piloter. Hva er ett av kravene til slik opplæring?
 
 - a) Et klart skille mellom opplæring og annen drift ✅
 - b) At opplæringen skjer på en godkjent flyplass
 - c) At en sensor fra Luftfartstilsynet er til stede
 - d) At vurderingen er én avsluttende prøve på én dag
 
-*Forklaring:* Appendix 3 krever blant annet et klart skille mellom opplæring og annen operativ virksomhet for å sikre uavhengig vurdering, en ansvarlig leder, kompetent og upartisk personell, opplæring i et miljø som er representativt for scenarioet, og at vurderingen er en løpende evaluering av kandidaten, ikke én enkelt prøve.
+*Forklaring:* Kravene til opplæringen omfatter blant annet et klart skille mellom opplæring og annen operativ virksomhet for å sikre uavhengig vurdering, en ansvarlig leder, kompetent og upartisk personell, opplæring i et miljø som er representativt for scenarioet, og at vurderingen er en løpende evaluering av kandidaten, ikke én enkelt prøve. (Kravene til opplæringsenheter: Appendix 3)
 
 *Kilde:* EU 2020/639 Appendix 3 pkt. (1)-(7)
 
@@ -447,14 +447,14 @@ Operasjonsområdet ligger i en geografisk sone der vilkårene krever at flygekon
 
 ### 61. Pilotansvar og prosedyrer · vanskegrad 2
 
-Et vindkast får dronen til å drive ut av flight geography, men den er fortsatt godt innenfor contingency-volumet. Hva skal piloten gjøre?
+Et vindkast får dronen til å drive ut av flygeområdet, men den er fortsatt godt innenfor contingency-volumet. Hva skal piloten gjøre?
 
 - a) Utløse flygeavslutning straks
 - b) Følge operatørens contingency-prosedyrer for å få dronen tilbake ✅
 - c) Ingenting, contingency-volumet er en del av det tillatte området
 - d) Aktivere automatisk retur (RTH), siden det alltid er første tiltak ved avvik
 
-*Forklaring:* Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flight geography, skal contingency-prosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Contingency-volumet er en buffer for avvik, ikke et vanlig arbeidsområde.
+*Forklaring:* Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flygeområdet, skal contingency-prosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Contingency-volumet er en buffer for avvik, ikke et vanlig arbeidsområde.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(g)-(h); EU 2019/947 art. 2 (28)-(32)
 
@@ -469,7 +469,7 @@ Hva hører med i etterarbeidet etter en STS-flyging, etter kravene til praktisk 
 - c) Ny deklarasjon etter flyginger over 30 minutter
 - d) Inspeksjon, logg, debrief og ev. hendelsesrapport ✅
 
-*Forklaring:* Attachment A lister etterarbeidet: slå av og sikre dronen, inspeksjon og registrering av relevante data om dronens tilstand og mannskapets tretthet, debrief, og å gjenkjenne når en hendelsesrapport er nødvendig og fylle den ut. Det finnes ikke krav om rapport til myndigheten etter hver flyging.
+*Forklaring:* Kravene til den praktiske opplæringen lister etterarbeidet: slå av og sikre dronen, inspeksjon og registrering av relevante data om dronens tilstand og mannskapets tretthet, debrief, og å gjenkjenne når en hendelsesrapport er nødvendig og fylle den ut. Det finnes ikke krav om rapport til myndigheten etter hver flyging. (Den praktiske opplæringen: Attachment A til kapittel I, tabell 1 c)
 
 *Kilde:* EU 2020/639 Attachment A til kap. I, tabell 1 (c)
 
@@ -509,7 +509,7 @@ Etter en lang arbeidsdag presser kunden på for å få de siste bildene før det
 
 Under en STS-01-flyging ser piloten nesten bare på kameraskjermen for å få riktig bildeutsnitt. Hva er den største risikoen, og hva er et godt tiltak?
 
-- a) Hun mister oversikten; bruk observatør og fast skanning ✅
+- a) Hun mister oversikten; bruk observatør og skann jevnlig ✅
 - b) Batteriet tømmes fortere; planlegg flere batteribytter
 - c) Ingen, skjermen viser alt piloten trenger i VLOS
 - d) Bildene blir uskarpe; bytt til FPV-briller i stedet
@@ -529,7 +529,7 @@ Ruten går rett mot lav kveldssol. Hvilken menneskelig begrensning er mest aktue
 - c) Blending, som kan hindre piloten i å se dronen ✅
 - d) Fargesyn, som er grunnen til det grønne lyset
 
-*Forklaring:* EASAs veiledning om menneskelige begrensninger nevner endret syn når man er vendt mot sola. For STS-02 sier veiledningen om flight visibility at sol eller sterkt lys som kan blende pilot og observatører, skal vurderes før start.
+*Forklaring:* EASAs veiledning om menneskelige begrensninger nevner endret syn når man er vendt mot sola. For STS-02 sier veiledningen om flygesikt at sol eller sterkt lys som kan blende pilot og observatører, skal vurderes før start.
 
 *Kilde:* EASA AMC1 UAS.SPEC.050(1)(d) (miljøfaktorer); EASA GM1 UAS.STS-02.020(3)
 
@@ -544,7 +544,7 @@ Hva skal operasjonsprosedyrene i en STS-manual inneholde for å redusere mennesk
 - c) Automatisk logging av alle kommandoer
 - d) Forbud mot flyginger over 30 minutter
 
-*Forklaring:* Appendix 5 pkt. (6)(a) sier at operasjonsprosedyrene, for å minimere menneskelige feil, skal ta hensyn til en klar fordeling og tildeling av oppgaver, og en intern sjekkliste for å kontrollere at personellet utfører oppgavene sine. Timekrav og tidsgrenser står ikke i regelverket.
+*Forklaring:* Kravene til operasjonsmanualen sier at operasjonsprosedyrene, for å minimere menneskelige feil, skal ta hensyn til en klar fordeling og tildeling av oppgaver, og en intern sjekkliste for å kontrollere at personellet utfører oppgavene sine. Timekrav og tidsgrenser står ikke i regelverket. (Innholdet i operasjonsmanualen: Appendix 5 punkt 6 a)
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(a)
 
@@ -559,7 +559,7 @@ Operasjonsmanualen har mange nødprosedyrer. Hvilke bør piloten etter EASAs vei
 - c) De som piloten har øvd på i opplæringen
 - d) De kritiske, der det er kort tid til å reagere ✅
 
-*Forklaring:* EASAs veiledning om opplæring i spesifikk kategori sier at piloten, avhengig av hvor kritisk situasjonen er og tiden som er tilgjengelig, bør memorere noen prosedyrer, mens andre kan tas fra sjekkliste. Veiledningen står i AMC om opplæring i spesifikk kategori generelt, men prinsippet gjelder like godt for nødprosedyrene i en STS-manual.
+*Forklaring:* EASAs veiledning om opplæring i spesifikk kategori sier at piloten, avhengig av hvor kritisk situasjonen er og tiden som er tilgjengelig, bør memorere noen prosedyrer, mens andre kan tas fra sjekkliste. Veiledningen er skrevet for opplæring til operasjoner med tillatelse i spesifikk kategori, men prinsippet passer like godt for nødprosedyrene i en STS-manual. (EASAs veiledning: AMC3 UAS.SPEC.050(1)(d))
 
 *Kilde:* EASA AMC3 UAS.SPEC.050(1)(d) (ED Decision 2022/002/R)
 
@@ -646,10 +646,10 @@ En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merki
 
 - a) Nei, C5 kan aldri være fastvinge
 - b) Nei, tjorede droner får ikke klassemerke
-- c) Ja, C5 utelukker fastvinge bare når dronen ikke er tjoret ✅
+- c) Ja, C5 kan være fastvinge når den er tjoret ✅
 - d) Ja, men bare hvis vingespennet er under 1 m
 
-*Forklaring:* Kravene til C5 sier at dronen skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til tjoret (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6. (Kravene til C5: forordning 2019/945, del 16 punkt 1)
+*Forklaring:* Kravene til C5 sier at dronen skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til lina (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6. (Kravene til C5: forordning 2019/945, del 16 punkt 1)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (1)
 
@@ -672,7 +672,7 @@ Hvordan skal en C5-drone som ikke er tjoret, holde piloten oppdatert om signalkv
 
 ### 76. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Hvilken fluginformasjon skal en C5-drone minst gi piloten under flyging, sammenlignet med en C6?
+Hvilken informasjon om flygingen skal C5 og C6 minst gi piloten underveis?
 
 - a) C5: posisjon og fart. C6: bare høyde
 - b) Begge: bare batterinivå og gjenværende flytid

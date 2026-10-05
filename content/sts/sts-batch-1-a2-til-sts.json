@@ -13,7 +13,7 @@
     "style": "Vegvesen-stil per stilrevisjonen 30.-31.07.2026: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker eller symboler (→, ≤) i publisert tekst.",
     "db_note": "questions.exam_type har CHECK IN ('A1_A3','A2'). Innlasting krever migrasjon 018 som utvider CHECK-en i questions og quiz_sessions samt nye rader i categories. Ikke last inn før lansering (brief 2026-09-30, del B).",
     "not_covered_on_purpose": "Norske detaljer som er uavklart per handoff 21.09 (overføring av praktisk akkreditering mellom operatører, privatperson som deklarerer alene) er bevisst IKKE brukt som fasit.",
-    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38). 2026-09-30 (etterkontroll, Opus): n 16 (1:1-regelen beskrevet som gjeldende A2-regel, i tråd med LT og A2-banken, ikke «tommelfingerregel»), n 17 og 18 (MTOM i stammen, siden tabellen går på MTOM). 2026-10-03: n 29 ny stamme (Frode: «midlet» var tungt), «midler» skrevet om i forklaringene i n 10, 29 og 30. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme."
+    "revidert": "2026-09-30: n 1 (Altinn), 9 og 25 (fasit med «aldri»), 4 (stamme), 5 (norsk kilde), 13 (snudd til Ja), 22 (distraktor c) etter gjennomlesing. overlap_group lagt til på n 8, 10, 26. 2026-09-30 (runde 3, Fable): tankestreker og symboler fjernet fra publisert tekst (n 3, 4, 6, 7, 8, 9, 11, 12, 14, 17, 19, 21, 22, 23, 25, 26, 27, 30), n 1 (C5-merket i stammen), n 16 (1:1-regelen forklart som A2-regel, kilde AMC1 UAS.OPEN.030(1)), n 18 (selvstendig stamme, var «Samme scenario»), overlap_group på n 3/4, 17/18 og 25 (med 38). 2026-09-30 (etterkontroll, Opus): n 16 (1:1-regelen beskrevet som gjeldende A2-regel, i tråd med LT og A2-banken, ikke «tommelfingerregel»), n 17 og 18 (MTOM i stammen, siden tabellen går på MTOM). 2026-10-03: n 29 ny stamme (Frode: «midlet» var tungt), «midler» skrevet om i forklaringene i n 10, 29 og 30. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme. 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md."
   },
   "categories": [
     {
@@ -81,7 +81,7 @@
       "n": 2,
       "category": "sts-regelverk",
       "difficulty": 2,
-      "question_text": "Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA?",
+      "question_text": "Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA (forhåndsdefinert risikovurdering)?",
       "options": [
         {
           "id": "a",
@@ -156,7 +156,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Attachment A krever minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2-til-STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %).",
+      "explanation": "Kravene til teoriprøven sier minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2-til-STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %). (Kravene til teoriprøven: Attachment A til kapittel I, punkt 1 c)",
       "source": "EU 2020/639 Appendix 1, Attachment A pkt. (1)(c); Luftfartstilsynet",
       "overlap_group": "eksamensformat-sts"
     },
@@ -164,15 +164,15 @@
       "n": 5,
       "category": "sts-regelverk",
       "difficulty": 2,
-      "question_text": "Et STS-kompetansebevis er fire år gammelt. Hvilken vei til fornyelse innenfor gyldighetsperioden åpner EU-regelverket for, i tillegg til ny eksamen?",
+      "question_text": "Et STS-kompetansebevis er fire år gammelt. Hvordan kan det etter EU-regelverket fornyes før det går ut, utenom ny eksamen?",
       "options": [
         {
           "id": "a",
-          "text": "Ingen, beviset kan bare fornyes etter at det har utløpt"
+          "text": "Det går ikke, det kan bare fornyes når det er utløpt"
         },
         {
           "id": "b",
-          "text": "Levere flygelogg som viser minst 20 timer STS-flyging siste år til Luftfartstilsynet"
+          "text": "Levere logg med minst 20 timer STS-flyging siste år"
         },
         {
           "id": "c",
@@ -180,7 +180,7 @@
         },
         {
           "id": "d",
-          "text": "Søke Luftfartstilsynet om forlengelse på grunnlag av operatørens deklarasjon"
+          "text": "Søke forlengelse med operatørens deklarasjon som grunnlag"
         }
       ],
       "correct_option_id": "c",
@@ -266,7 +266,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flight geography + contingency volume) gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.",
+      "explanation": "STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flygeområdet pluss contingency-volumet) gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.",
       "source": "EU 2020/639 UAS.STS-01.010 (1)-(3)",
       "overlap_group": "hoyde-30m-over-tillatt"
     },
@@ -317,7 +317,7 @@
         },
         {
           "id": "d",
-          "text": "At dronens programmerbare flygevolum er satt til flight geography"
+          "text": "At dronens programmerbare flygevolum er satt til flygeområdet"
         }
       ],
       "correct_option_id": "a",
@@ -349,7 +349,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "Uten luftromsobservatør er grensen 1 km fra piloten, og dronen skal følge en forhåndsprogrammert trajektorie når den ikke er i pilotens synsrekkevidde. Med en eller flere observatører utvides grensen til 2 km fra piloten.",
+      "explanation": "Uten luftromsobservatør er grensen 1 km fra piloten, og dronen skal følge en forhåndsprogrammert bane når den ikke er i pilotens synsrekkevidde. Med en eller flere observatører utvides grensen til 2 km fra piloten.",
       "source": "EU 2020/639 UAS.STS-02.020 (5)-(6)",
       "overlap_group": "sts02-rekkevidde"
     },
@@ -357,23 +357,23 @@
       "n": 12,
       "category": "sts-02",
       "difficulty": 3,
-      "question_text": "En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. Tallene viser avstanden fra dronen til piloten, fra dronen til nærmeste observatør, og fra observatøren som står lengst fra piloten, til piloten. Hvilket oppsett bryter reglene?",
+      "question_text": "En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. «Til pilot» og «til observatør» er dronens avstand til piloten og til nærmeste observatør. «Observatør fra pilot» er den største avstanden mellom en observatør og piloten. Hvilket oppsett bryter reglene?",
       "options": [
         {
           "id": "a",
-          "text": "1,8 km, 0,9 km og 0,9 km"
+          "text": "Til pilot 1,8 km, til observatør 0,9 km, observatør fra pilot 0,9 km"
         },
         {
           "id": "b",
-          "text": "1,5 km, 0,6 km og 1,2 km"
+          "text": "Til pilot 1,5 km, til observatør 0,6 km, observatør fra pilot 1,2 km"
         },
         {
           "id": "c",
-          "text": "2,0 km, 1,0 km og 1,0 km"
+          "text": "Til pilot 2,0 km, til observatør 1,0 km, observatør fra pilot 1,0 km"
         },
         {
           "id": "d",
-          "text": "0,7 km, 0,3 km og 0,5 km"
+          "text": "Til pilot 0,7 km, til observatør 0,3 km, observatør fra pilot 0,5 km"
         }
       ],
       "correct_option_id": "b",
@@ -432,7 +432,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "Piloten skal informere observatørene i tide om alle avvik fra planlagt bane og tidspunktene for dem. Observatørens jobb er luftromsskanning og å varsle piloten om fare, ikke å styre. Flygeavslutning utløses først når dronen kan forlate operasjonsvolumet, ikke ved ethvert avvik fra flight geography.",
+      "explanation": "Piloten skal informere observatørene i tide om alle avvik fra planlagt bane og tidspunktene for dem. Observatørens jobb er luftromsskanning og å varsle piloten om fare, ikke å styre. Flygeavslutning utløses først når dronen kan forlate operasjonsvolumet, ikke ved ethvert avvik fra flygeområdet.",
       "source": "EU 2020/639 UAS.STS-02.040 (2)(f)-(h) og UAS.STS-02.050"
     },
     {
@@ -486,7 +486,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.",
+      "explanation": "Tre lag: flygeområdet (flight geography area, der du planlegger å fly), contingency-området med yttergrense minst 10 m utenfor flygeområdet, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) og luftfartstilsynet.no, «Droneregler» (1:1-regelen i A2)",
       "overlap_group": "bakkeomraade-lag"
     },
@@ -550,11 +550,11 @@
       "n": 19,
       "category": "sts-bakkerisiko",
       "difficulty": 3,
-      "question_text": "En tjoret drone (tether-lengde 40 m) skal brukes under STS-01. Hvordan bestemmes det kontrollerte bakkeområdet?",
+      "question_text": "Under STS-01 skal en drone være festet til bakken med en 40 m lang line (tjoret). Hvordan bestemmes det kontrollerte bakkeområdet?",
       "options": [
         {
           "id": "a",
-          "text": "Som for ikke-tjoret drone, med buffer etter tabellen"
+          "text": "Som for en drone uten line, med buffer etter tabellen"
         },
         {
           "id": "b",
@@ -562,7 +562,7 @@
         },
         {
           "id": "c",
-          "text": "En sirkel med radius lik tether-lengden pluss 5 m"
+          "text": "En sirkel med radius lik linelengden pluss 5 m"
         },
         {
           "id": "d",
@@ -570,22 +570,22 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "For tjoret drone er området en sirkel med radius lik tether-lengden pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi tetheren fysisk begrenser hvor dronen kan havne.",
+      "explanation": "For tjoret drone er området en sirkel med radius lik lengden på lina pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi lina fysisk begrenser hvor dronen kan havne.",
       "source": "EU 2020/639 UAS.STS-01.020 (1)(c)(ii); EU 2020/1058 Part 16"
     },
     {
       "n": 20,
       "category": "sts-bakkerisiko",
       "difficulty": 3,
-      "question_text": "Hvordan skal bakkerisikobufferen dimensjoneres i STS-02, der høyde/vekt-tabellen fra STS-01 ikke brukes?",
+      "question_text": "I STS-02 brukes ikke tabellen for høyde og vekt fra STS-01. Hvor stor skal bakkerisikobufferen da være?",
       "options": [
         {
           "id": "a",
-          "text": "Minst 30 m i alle retninger rundt volumet"
+          "text": "Minst 30 m i alle retninger rundt operasjonsvolumet"
         },
         {
           "id": "b",
-          "text": "Minst produsentens avstand etter flygeavslutning"
+          "text": "Minst produsentens oppgitte avstand etter flygeavslutning"
         },
         {
           "id": "c",
@@ -632,7 +632,7 @@
       "n": 22,
       "category": "sts-operator",
       "difficulty": 3,
-      "question_text": "Før en operatør kan deklarere STS-01, må en operasjonsmanual være på plass. Hvilket av disse er IKKE et pliktig innhold etter Appendix 5?",
+      "question_text": "Før en operatør kan deklarere STS-01, må operasjonsmanualen være på plass. Hva trenger IKKE å stå i manualen?",
       "options": [
         {
           "id": "a",
@@ -652,7 +652,7 @@
         }
       ],
       "correct_option_id": "c",
-      "explanation": "Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene.",
+      "explanation": "Kravene til manualen lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene. (Innholdet i operasjonsmanualen: Appendix 5)",
       "source": "EU 2020/639 Appendix 5 pkt. (6)(a)-(k); UAS.STS-01.030 (4)"
     },
     {
@@ -721,7 +721,7 @@
         },
         {
           "id": "b",
-          "text": "Nei, aldri til en annen kontrollenhet"
+          "text": "Nei, aldri til en annen fjernkontroll"
         },
         {
           "id": "c",
@@ -733,7 +733,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "Både STS-01 og STS-02 forbyr å overlate kontrollen av dronen til en annen kontrollenhet under flyging. Én pilot, én drone, én kontrollenhet. Piloten skal også bare fly ett luftfartøy om gangen og ikke fly fra et kjøretøy i bevegelse.",
+      "explanation": "Både STS-01 og STS-02 forbyr å overlate kontrollen av dronen til en annen kontrollenhet, for eksempel en annen fjernkontroll, under flyging. Én pilot, én drone, én fjernkontroll. Piloten skal også bare fly ett luftfartøy om gangen og ikke fly fra et kjøretøy i bevegelse.",
       "source": "EU 2020/639 UAS.STS-01.040 (2)(d)-(f); UAS.STS-02.040 (2)(c)-(e)",
       "overlap_group": "en-pilot-en-drone-en-kontrollenhet"
     },
@@ -749,7 +749,7 @@
         },
         {
           "id": "b",
-          "text": "Aktivere RTH og la dronen fly hjem selv"
+          "text": "Slå på automatisk retur (RTH) og la dronen fly hjem"
         },
         {
           "id": "c",
@@ -761,7 +761,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flight geography, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flight geography + contingency), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.",
+      "explanation": "Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flygeområdet, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flygeområdet pluss contingency-volumet), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.",
       "source": "EU 2020/639 UAS.STS-01.040 (2)(g)-(h)",
       "overlap_group": "contingency-vs-nod-terskel"
     },
@@ -817,7 +817,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "Fit-to-fly-policyen er en menneskelige faktorer-mekanisme: den tvinger fram en bevisst egenvurdering før hver operasjon. En STS-operasjon skjer nær folk eller BVLOS, og feil vurdering får større konsekvenser enn i åpen kategori. Kompetansebeviset sier ingenting om formen i dag.",
+      "explanation": "Policyen for å erklære seg skikket handler om menneskelige faktorer: den tvinger fram en bevisst egenvurdering før hver operasjon. En STS-operasjon skjer nær folk eller BVLOS, og feil vurdering får større konsekvenser enn i åpen kategori. Kompetansebeviset sier ingenting om formen i dag. (Innholdet i operasjonsmanualen: Appendix 5 punkt 6 k)",
       "source": "EU 2020/639 Appendix 5 pkt. (6)(k)"
     },
     {
@@ -828,19 +828,19 @@
       "options": [
         {
           "id": "a",
-          "text": "Den kan være RTH, hvis den er testet før deklarasjon"
+          "text": "Den kan være automatisk retur (RTH), hvis funksjonen er testet"
         },
         {
           "id": "b",
-          "text": "Den skal kutte strømmen til alle motorer straks"
+          "text": "Den skal kutte strømmen til alle motorer med en gang, uansett høyde"
         },
         {
           "id": "c",
-          "text": "Uavhengig av autopiloten, tvinge ned og dempe treffet"
+          "text": "Virke uavhengig av autopiloten, tvinge dronen ned og dempe treffet"
         },
         {
           "id": "d",
-          "text": "Den er valgfri for C5-droner under 10 kg MTOM"
+          "text": "Den er valgfri for C5-droner som veier mindre enn 10 kg"
         }
       ],
       "correct_option_id": "c",

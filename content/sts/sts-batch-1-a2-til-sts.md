@@ -29,7 +29,7 @@ Et inspeksjonsfirma vil fly en C5-merket drone på 8 kg i VLOS over et avsperret
 
 ### 2. Regelverk og kategorier · vanskegrad 2
 
-Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA?
+Hva er den praktiske forskjellen mellom å operere etter et STS og etter en PDRA (forhåndsdefinert risikovurdering)?
 
 - a) STS deklareres, PDRA brukes i en søknad om tillatelse ✅
 - b) STS er bare VLOS, PDRA er bare BVLOS
@@ -66,7 +66,7 @@ Hvor stor andel riktige svar krever EU-regelverket på STS-teoriprøven, og hva 
 - c) Minst 75 %: 30 av 40 riktige ✅
 - d) Minst 90 %: 36 av 40 riktige
 
-*Forklaring:* Attachment A krever minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2-til-STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %).
+*Forklaring:* Kravene til teoriprøven sier minst 75 % av totalpoengene. Full prøve: 40 spørsmål, minst 30 riktige. Den kortere A2-til-STS-prøven: 30 spørsmål, minst 23 riktige (som er 76,7 %, altså første hele tall over 75 %). (Kravene til teoriprøven: Attachment A til kapittel I, punkt 1 c)
 
 *Kilde:* EU 2020/639 Appendix 1, Attachment A pkt. (1)(c); Luftfartstilsynet
 
@@ -74,12 +74,12 @@ Hvor stor andel riktige svar krever EU-regelverket på STS-teoriprøven, og hva 
 
 ### 5. Regelverk og kategorier · vanskegrad 2
 
-Et STS-kompetansebevis er fire år gammelt. Hvilken vei til fornyelse innenfor gyldighetsperioden åpner EU-regelverket for, i tillegg til ny eksamen?
+Et STS-kompetansebevis er fire år gammelt. Hvordan kan det etter EU-regelverket fornyes før det går ut, utenom ny eksamen?
 
-- a) Ingen, beviset kan bare fornyes etter at det har utløpt
-- b) Levere flygelogg som viser minst 20 timer STS-flyging siste år til Luftfartstilsynet
+- a) Det går ikke, det kan bare fornyes når det er utløpt
+- b) Levere logg med minst 20 timer STS-flyging siste år
 - c) Ta oppfriskningskurs i teoriemnene før beviset utløper ✅
-- d) Søke Luftfartstilsynet om forlengelse på grunnlag av operatørens deklarasjon
+- d) Søke forlengelse med operatørens deklarasjon som grunnlag
 
 *Forklaring:* Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. Luftfartstilsynet skriver (desember 2025) at fornyelse av A2- og STS-bevis i Norge skjer ved eksamen på trafikkstasjon.
 
@@ -126,7 +126,7 @@ Du skal inspisere en 130 m høy telemast med C5-drone under STS-01. Masteeieren 
 - c) Flyging 145 m, volum 150 m
 - d) Flyging 145 m, volum 175 m ✅
 
-*Forklaring:* STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flight geography + contingency volume) gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.
+*Forklaring:* STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flygeområdet pluss contingency-volumet) gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.
 
 *Kilde:* EU 2020/639 UAS.STS-01.010 (1)-(3)
 
@@ -154,7 +154,7 @@ Hva må piloten kontrollere før hver STS-01-flyging, i tillegg til den vanlige 
 - a) At flygeavslutningen virker og at direkte Remote ID er aktiv og oppdatert ✅
 - b) At Luftfartstilsynet har fått melding om dagens flyging og område
 - c) At luftromsobservatøren har fått tildelt radiokanal
-- d) At dronens programmerbare flygevolum er satt til flight geography
+- d) At dronens programmerbare flygevolum er satt til flygeområdet
 
 *Forklaring:* Pilotens plikter i STS-01 sier at piloten før start skal kontrollere at flygeavslutningen virker, og at direkte fjernidentifikasjon (Remote ID) er aktiv og oppdatert. Programmerbart flygevolum er et STS-02-krav for C6-droner. Ingen daglig melding til myndigheten kreves når scenarioet er deklarert. (UAS.STS-01.040)
 
@@ -171,7 +171,7 @@ Hvor langt fra piloten kan dronen fly under STS-02 dersom det ikke brukes luftro
 - c) 2 km
 - d) 1 km ✅
 
-*Forklaring:* Uten luftromsobservatør er grensen 1 km fra piloten, og dronen skal følge en forhåndsprogrammert trajektorie når den ikke er i pilotens synsrekkevidde. Med en eller flere observatører utvides grensen til 2 km fra piloten.
+*Forklaring:* Uten luftromsobservatør er grensen 1 km fra piloten, og dronen skal følge en forhåndsprogrammert bane når den ikke er i pilotens synsrekkevidde. Med en eller flere observatører utvides grensen til 2 km fra piloten.
 
 *Kilde:* EU 2020/639 UAS.STS-02.020 (5)-(6)
 
@@ -179,12 +179,12 @@ Hvor langt fra piloten kan dronen fly under STS-02 dersom det ikke brukes luftro
 
 ### 12. STS-02: BVLOS og observatører · vanskegrad 3
 
-En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. Tallene viser avstanden fra dronen til piloten, fra dronen til nærmeste observatør, og fra observatøren som står lengst fra piloten, til piloten. Hvilket oppsett bryter reglene?
+En operatør planlegger en STS-02-linjeinspeksjon med to luftromsobservatører. «Til pilot» og «til observatør» er dronens avstand til piloten og til nærmeste observatør. «Observatør fra pilot» er den største avstanden mellom en observatør og piloten. Hvilket oppsett bryter reglene?
 
-- a) 1,8 km, 0,9 km og 0,9 km
-- b) 1,5 km, 0,6 km og 1,2 km ✅
-- c) 2,0 km, 1,0 km og 1,0 km
-- d) 0,7 km, 0,3 km og 0,5 km
+- a) Til pilot 1,8 km, til observatør 0,9 km, observatør fra pilot 0,9 km
+- b) Til pilot 1,5 km, til observatør 0,6 km, observatør fra pilot 1,2 km ✅
+- c) Til pilot 2,0 km, til observatør 1,0 km, observatør fra pilot 1,0 km
+- d) Til pilot 0,7 km, til observatør 0,3 km, observatør fra pilot 0,5 km
 
 *Forklaring:* Med observatører gjelder tre avstander samtidig: maks 2 km fra dronen til piloten, maks 1 km fra dronen til nærmeste observatør, og maks 1 km mellom hver observatør og piloten. Oppsettet med en observatør 1,2 km fra piloten bryter dette: det er over grensen. Oppsettet med 2,0 / 1,0 / 1,0 km ligger nøyaktig på alle tre grensene og er tillatt.
 
@@ -216,7 +216,7 @@ Under en STS-02-flyging avviker dronen fra planlagt rute. Hva er pilotens plikt 
 - c) Overlate styringen til nærmeste observatør
 - d) Utløse flygeavslutning umiddelbart uansett årsak
 
-*Forklaring:* Piloten skal informere observatørene i tide om alle avvik fra planlagt bane og tidspunktene for dem. Observatørens jobb er luftromsskanning og å varsle piloten om fare, ikke å styre. Flygeavslutning utløses først når dronen kan forlate operasjonsvolumet, ikke ved ethvert avvik fra flight geography.
+*Forklaring:* Piloten skal informere observatørene i tide om alle avvik fra planlagt bane og tidspunktene for dem. Observatørens jobb er luftromsskanning og å varsle piloten om fare, ikke å styre. Flygeavslutning utløses først når dronen kan forlate operasjonsvolumet, ikke ved ethvert avvik fra flygeområdet.
 
 *Kilde:* EU 2020/639 UAS.STS-02.040 (2)(f)-(h) og UAS.STS-02.050
 
@@ -246,7 +246,7 @@ Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
 - c) Flygeområdet, contingency-område og bakkerisikobuffer ✅
 - d) Flygeområdet og en sone like bred som flygehøyden (1:1)
 
-*Forklaring:* Tre lag: flight geography area (der du planlegger å fly), contingency area med yttergrense minst 10 m utenfor flight geography, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
+*Forklaring:* Tre lag: flygeområdet (flight geography area, der du planlegger å fly), contingency-området med yttergrense minst 10 m utenfor flygeområdet, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) og luftfartstilsynet.no, «Droneregler» (1:1-regelen i A2)
 
@@ -284,14 +284,14 @@ En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor lan
 
 ### 19. Kontrollert bakkeområde og bakkerisiko · vanskegrad 3
 
-En tjoret drone (tether-lengde 40 m) skal brukes under STS-01. Hvordan bestemmes det kontrollerte bakkeområdet?
+Under STS-01 skal en drone være festet til bakken med en 40 m lang line (tjoret). Hvordan bestemmes det kontrollerte bakkeområdet?
 
-- a) Som for ikke-tjoret drone, med buffer etter tabellen
+- a) Som for en drone uten line, med buffer etter tabellen
 - b) En sirkel med radius 120 m rundt festepunktet
-- c) En sirkel med radius lik tether-lengden pluss 5 m ✅
+- c) En sirkel med radius lik linelengden pluss 5 m ✅
 - d) Tjorede droner trenger ikke kontrollert bakkeområde
 
-*Forklaring:* For tjoret drone er området en sirkel med radius lik tether-lengden pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi tetheren fysisk begrenser hvor dronen kan havne.
+*Forklaring:* For tjoret drone er området en sirkel med radius lik lengden på lina pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi lina fysisk begrenser hvor dronen kan havne.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(ii); EU 2020/1058 Part 16
 
@@ -299,10 +299,10 @@ En tjoret drone (tether-lengde 40 m) skal brukes under STS-01. Hvordan bestemmes
 
 ### 20. Kontrollert bakkeområde og bakkerisiko · vanskegrad 3
 
-Hvordan skal bakkerisikobufferen dimensjoneres i STS-02, der høyde/vekt-tabellen fra STS-01 ikke brukes?
+I STS-02 brukes ikke tabellen for høyde og vekt fra STS-01. Hvor stor skal bakkerisikobufferen da være?
 
-- a) Minst 30 m i alle retninger rundt volumet
-- b) Minst produsentens avstand etter flygeavslutning ✅
+- a) Minst 30 m i alle retninger rundt operasjonsvolumet
+- b) Minst produsentens oppgitte avstand etter flygeavslutning ✅
 - c) Like bred som flygehøyden, etter 1:1-regelen
 - d) Fritt, etter operatørens egen risikovurdering
 
@@ -329,14 +329,14 @@ Midt i en STS-01-flyging går en turgåer under sperrebåndet og inn i det kontr
 
 ### 22. Operatøransvar og operasjonsmanual · vanskegrad 3
 
-Før en operatør kan deklarere STS-01, må en operasjonsmanual være på plass. Hvilket av disse er IKKE et pliktig innhold etter Appendix 5?
+Før en operatør kan deklarere STS-01, må operasjonsmanualen være på plass. Hva trenger IKKE å stå i manualen?
 
 - a) Nødprosedyrer for når dronen forlater operasjonsvolumet
 - b) Prosedyrer for rapportering av hendelser og for loggføring
 - c) En fullstendig SORA-risikovurdering for operasjonen ✅
 - d) Retningslinjer for å begrense sjenanse, som støy, og miljøpåvirkning
 
-*Forklaring:* Appendix 5 lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene.
+*Forklaring:* Kravene til manualen lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene. (Innholdet i operasjonsmanualen: Appendix 5)
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(a)-(k); UAS.STS-01.030 (4)
 
@@ -377,11 +377,11 @@ Hva må en beredskapsplan (ERP) for en STS-operasjon minst inneholde?
 Under en STS-01-flyging vil en kollega overta kontrollen fra sin egen fjernkontroll for å filme en vanskelig vinkel. Er det tillatt?
 
 - a) Ja, hvis begge har STS-bevis og opplæring
-- b) Nei, aldri til en annen kontrollenhet ✅
+- b) Nei, aldri til en annen fjernkontroll ✅
 - c) Ja, hvis overtakelsen står i operasjonsmanualen
 - d) Nei i STS-01, men det er lov i STS-02
 
-*Forklaring:* Både STS-01 og STS-02 forbyr å overlate kontrollen av dronen til en annen kontrollenhet under flyging. Én pilot, én drone, én kontrollenhet. Piloten skal også bare fly ett luftfartøy om gangen og ikke fly fra et kjøretøy i bevegelse.
+*Forklaring:* Både STS-01 og STS-02 forbyr å overlate kontrollen av dronen til en annen kontrollenhet, for eksempel en annen fjernkontroll, under flyging. Én pilot, én drone, én fjernkontroll. Piloten skal også bare fly ett luftfartøy om gangen og ikke fly fra et kjøretøy i bevegelse.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(d)-(f); UAS.STS-02.040 (2)(c)-(e)
 
@@ -392,11 +392,11 @@ Under en STS-01-flyging vil en kollega overta kontrollen fra sin egen fjernkontr
 Dronen får en feil og driver mot yttergrensen av contingency-området. Piloten ser at den kan komme til å forlate operasjonsvolumet. Hva er riktig?
 
 - a) Utløse flygeavslutning, i tråd med nødprosedyren ✅
-- b) Aktivere RTH og la dronen fly hjem selv
+- b) Slå på automatisk retur (RTH) og la dronen fly hjem
 - c) Fortsette å styre den tilbake så lenge linken er oppe
 - d) La den lande utenfor, bufferen dekker det
 
-*Forklaring:* Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flight geography, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flight geography + contingency), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.
+*Forklaring:* Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flygeområdet, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flygeområdet pluss contingency-volumet), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(g)-(h)
 
@@ -426,7 +426,7 @@ Operasjonsmanualen skal ha en policy for hvordan piloten og annet nøkkelpersone
 - c) Å fordele ansvar mellom operatør og pilot
 - d) Å oppfylle forsikringsselskapets krav
 
-*Forklaring:* Fit-to-fly-policyen er en menneskelige faktorer-mekanisme: den tvinger fram en bevisst egenvurdering før hver operasjon. En STS-operasjon skjer nær folk eller BVLOS, og feil vurdering får større konsekvenser enn i åpen kategori. Kompetansebeviset sier ingenting om formen i dag.
+*Forklaring:* Policyen for å erklære seg skikket handler om menneskelige faktorer: den tvinger fram en bevisst egenvurdering før hver operasjon. En STS-operasjon skjer nær folk eller BVLOS, og feil vurdering får større konsekvenser enn i åpen kategori. Kompetansebeviset sier ingenting om formen i dag. (Innholdet i operasjonsmanualen: Appendix 5 punkt 6 k)
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(k)
 
@@ -436,10 +436,10 @@ Operasjonsmanualen skal ha en policy for hvordan piloten og annet nøkkelpersone
 
 En C5-drone skal ha en egen funksjon som piloten kan bruke til å avslutte flygingen. Hva må den oppfylle?
 
-- a) Den kan være RTH, hvis den er testet før deklarasjon
-- b) Den skal kutte strømmen til alle motorer straks
-- c) Uavhengig av autopiloten, tvinge ned og dempe treffet ✅
-- d) Den er valgfri for C5-droner under 10 kg MTOM
+- a) Den kan være automatisk retur (RTH), hvis funksjonen er testet
+- b) Den skal kutte strømmen til alle motorer med en gang, uansett høyde
+- c) Virke uavhengig av autopiloten, tvinge dronen ned og dempe treffet ✅
+- d) Den er valgfri for C5-droner som veier mindre enn 10 kg
 
 *Forklaring:* Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og ha noe som demper treffet (for eksempel fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.
 
