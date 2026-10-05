@@ -29,6 +29,10 @@ export default function Footer() {
           A2-sertifikat
         </a>
         <span className="text-gray-300">·</span>
+        <a href="/sts-eksamen/" className="text-gray-400 hover:text-da-navy transition-colors">
+          STS-eksamen
+        </a>
+        <span className="text-gray-300">·</span>
         <a href="/droneeksamen-oving/" className="text-gray-400 hover:text-da-navy transition-colors">
           Øv til eksamen
         </a>
