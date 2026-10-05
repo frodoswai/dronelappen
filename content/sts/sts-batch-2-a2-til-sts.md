@@ -612,7 +612,7 @@ Hvorfor er situasjonsforståelse ekstra krevende i BVLOS-delen av en STS-02-flyg
 
 ### 72. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til C5. Hva må være på plass før STS-01-flyging?
+Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til en C5-drone. Hva må være på plass før STS-01-flyging?
 
 - a) Samsvarserklæring for C3 og settet, og C5-merke på settet ✅
 - b) Bare C5-merket, C3-erklæringen gjelder ikke lenger
@@ -672,7 +672,7 @@ Hvordan skal en C5-drone som ikke er tjoret, holde piloten oppdatert om signalkv
 
 ### 76. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Hvilken informasjon om flygingen skal C5 og C6 minst gi piloten underveis?
+Hvilken informasjon om flygingen skal C5- og C6-droner minst gi piloten underveis?
 
 - a) C5: posisjon og fart. C6: bare høyde
 - b) Begge: bare batterinivå og gjenværende flytid

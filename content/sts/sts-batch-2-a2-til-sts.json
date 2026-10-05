@@ -16,7 +16,7 @@
     "style": "Samme stil som batch 1: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker.",
     "db_note": "Samme som batch 1: exam_type-CHECK må utvides (migrasjon 018) før innlasting. Ikke last inn før lansering.",
     "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit.",
-    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme. 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md. 2026-10-05 (Frode): «contingency» heter nå avviksområdet, avviksvolumet og avviksprosedyrer, med «(contingency)» i parentes første gang i hvert spørsmål. Riktig svar er det samme."
+    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme. 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md. 2026-10-05 (Frode): «contingency» heter nå avviksområdet, avviksvolumet og avviksprosedyrer, med «(contingency)» i parentes første gang i hvert spørsmål. Riktig svar er det samme. 2026-10-05 (Frode): n 72 og 76 skriver «C5-drone» og «C5- og C6-droner» i stammen i stedet for bare «C5»/«C5 og C6»."
   },
   "categories": [
     {
@@ -1150,7 +1150,7 @@
       "n": 72,
       "category": "sts-uas",
       "difficulty": 3,
-      "question_text": "Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til C5. Hva må være på plass før STS-01-flyging?",
+      "question_text": "Operatøren har en C3-drone og kjøper et tilbehørssett som gjør den om til en C5-drone. Hva må være på plass før STS-01-flyging?",
       "options": [
         {
           "id": "a",
@@ -1258,7 +1258,7 @@
       "n": 76,
       "category": "sts-uas",
       "difficulty": 3,
-      "question_text": "Hvilken informasjon om flygingen skal C5 og C6 minst gi piloten underveis?",
+      "question_text": "Hvilken informasjon om flygingen skal C5- og C6-droner minst gi piloten underveis?",
       "options": [
         {
           "id": "a",
