@@ -22,11 +22,9 @@
 // Bestå-grensen er 75 % for alle typene og regnes i Results.jsx ut fra antall
 // spørsmål: A1/A3 30 av 40, A2 og STS 23 av 30.
 
-// STS er skjult til lansering. Settes til true på lanseringsdagen, etter at
-// spørsmålene er lastet inn (supabase/seed-sts.mjs --apply). I motsatt
-// rekkefølge får betalende en tom STS-runde, fordi get-questions ikke har
-// noe å gi dem ennå.
-export const STS_LIVE = false
+// STS er åpent for alle fra lanseringen 6.10.2026 (Frode). Spørsmålene ble
+// lastet inn før (supabase/seed-sts.mjs --apply). Rollback: sett false og push.
+export const STS_LIVE = true
 
 // Forhåndsvisning for testere før lansering. I nettleserkonsollen:
 //   localStorage.setItem('dl-sts-forhandsvisning', '1')   skrur den på

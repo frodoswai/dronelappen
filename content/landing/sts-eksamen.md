@@ -1,11 +1,11 @@
 ---
 title: STS-eksamen: øv til påbygget fra A2 til STS | DroneLappen
-description: Øv til STS-eksamen på trafikkstasjonen. Over 70 norske øvingsspørsmål til «Utvidelse av A2 til STS», med forklaring på hvert svar. Se tre eksempler.
+description: Øv til STS-eksamen på trafikkstasjonen. Over 90 norske øvingsspørsmål til «Utvidelse av A2 til STS», med forklaring på hvert svar. Se tre eksempler.
 h1: STS-eksamen: øv til påbygget fra A2 til STS
 slug: sts-eksamen
 ---
 
-<p class="lede">Har du A2 og skal fly i et standardscenario? Da tar du påbygget «Utvidelse av A2 til STS» på en trafikkstasjon. Prøven har 30 spørsmål, og du må ha minst 23 riktige for å bestå. DroneLappen har over 70 norske øvingsspørsmål til denne prøven, med forklaring på hvert svar.</p>
+<p class="lede">Har du A2 og skal fly i et standardscenario? Da tar du påbygget «Utvidelse av A2 til STS» på en trafikkstasjon. Prøven har 30 spørsmål, og du må ha minst 23 riktige for å bestå. DroneLappen har over 90 norske øvingsspørsmål til denne prøven, med forklaring på hvert svar.</p>
 
 ## STS-eksamen kort fortalt
 
@@ -76,7 +76,7 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 
 ## Hva du får med STS i DroneLappen
 
-- **Over 70 STS-spørsmål** i 8 kategorier: regelverk og kategorier, STS-01, STS-02, operatøransvar og operasjonsmanual, pilotansvar og prosedyrer, kontrollert bakkeområde og bakkerisiko, menneskelige faktorer, og UAS-kunnskap om C5, C6 og flygeavslutning.
+- **Over 90 STS-spørsmål** i 8 kategorier: regelverk og kategorier, STS-01, STS-02, operatøransvar og operasjonsmanual, pilotansvar og prosedyrer, kontrollert bakkeområde og bakkerisiko, menneskelige faktorer, og UAS-kunnskap om C5, C6 og flygeavslutning.
 - **Eksamensmodus** med 30 spørsmål og 60 minutter. Du består med 23 riktige.
 - **Læringsmodus** med forklaring etter hvert svar, så du forstår regelen og ikke bare husker svaret.
 - **Tempomodus** for rask repetisjon når du har dårlig tid.

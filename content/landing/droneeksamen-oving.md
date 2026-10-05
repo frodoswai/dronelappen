@@ -5,7 +5,7 @@ h1: Øv til droneeksamen
 slug: droneeksamen-oving
 ---
 
-<p class="lede">Den sikreste måten å bestå droneeksamen på er å øve på ekte spørsmålstyper under realistiske forhold. DroneLappen gir deg {{ANTALL}} norske øvingsspørsmål for A1/A3 og A2, en prøveeksamen med ekte tidsfrist og bestå-grense, og forklaring på hvert svar. Test 25 spørsmål gratis, uten innlogging.</p>
+<p class="lede">Den sikreste måten å bestå droneeksamen på er å øve på ekte spørsmålstyper under realistiske forhold. DroneLappen gir deg {{ANTALL}} norske øvingsspørsmål for A1/A3, A2 og STS, en prøveeksamen med ekte tidsfrist og bestå-grense, og forklaring på hvert svar. Test 25 spørsmål gratis, uten innlogging.</p>
 
 ## Hva droneeksamen krever
 
@@ -21,7 +21,7 @@ slug: droneeksamen-oving
 
 ## Slik øver du med DroneLappen
 
-- **{{ANTALL}} norske spørsmål** for både A1/A3 og A2
+- **{{ANTALL}} norske spørsmål** for A1/A3, A2 og STS
 - **Eksamensmodus:** ekte tidsfrist og bestå-grense, som selve prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer av feilene
 - **Rapid-modus** for rask repetisjon

@@ -201,7 +201,7 @@ const posts = readdirSync(CONTENT)
     const raw = readFileSync(join(CONTENT, f), 'utf8')
       .replaceAll('{{ANTALL_A1A3}}', String(ANTALL.A1_A3))
       .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
-      .replaceAll('{{ANTALL}}', String(ANTALL.A1_A3 + ANTALL.A2)) // A1/A3 + A2 til STS-lansering 6.10, se vite.config.js
+      .replaceAll('{{ANTALL}}', String(ANTALL.total)) // totalen med STS fra lanseringen 6.10.2026, se vite.config.js
     const { meta, body } = parseFrontmatter(raw, f)
     return { ...meta, html: marked.parse(body) }
   })

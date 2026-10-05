@@ -24,7 +24,7 @@ slug: dronesertifikat-a2
 
 DroneLappen er bygget for å trene deg på nøyaktig de spørsmålstypene du møter på prøven:
 
-- **{{ANTALL}} norske øvingsspørsmål** som dekker A2-pensum
+- **{{ANTALL_A2}} norske øvingsspørsmål** som dekker A2-pensum
 - **Eksamensmodus** med ekte tidsfrist og bestå-grense, akkurat som den offisielle prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer reglene og ikke bare pugger
 - **Rapid-modus** for rask repetisjon når du har dårlig tid
