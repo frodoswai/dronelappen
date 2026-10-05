@@ -16,7 +16,7 @@
     "style": "Samme stil som batch 1: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker.",
     "db_note": "Samme som batch 1: exam_type-CHECK må utvides (migrasjon 018) før innlasting. Ikke last inn før lansering.",
     "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit.",
-    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt."
+    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme."
   },
   "categories": [
     {
@@ -468,7 +468,7 @@
       "n": 47,
       "category": "sts-bakkerisiko",
       "difficulty": 2,
-      "question_text": "En STS-02-operasjon langs en rørgate har en del av bakkerisikobufferen i utkanten av et tettsted. Hva sier scenarioet?",
+      "question_text": "En STS-02-flyging langs en kraftlinje har en del av bakkerisikobufferen i et boligfelt i utkanten av et tettsted. Er det lov?",
       "options": [
         {
           "id": "a",
@@ -606,7 +606,7 @@
       "n": 52,
       "category": "sts-operator",
       "difficulty": 3,
-      "question_text": "Hvilket av disse hører etter Appendix 5 til contingency-prosedyrene i operasjonsmanualen, ikke til nødprosedyrene?",
+      "question_text": "Operasjonsmanualen skiller mellom avviksprosedyrer (contingency) og nødprosedyrer. Hvilken av disse hører til avviksprosedyrene?",
       "options": [
         {
           "id": "a",
@@ -622,12 +622,13 @@
         },
         {
           "id": "d",
-          "text": "Svekkelse i eksterne systemer som støtter operasjonen"
+          "text": "Håndtering av at eksterne systemer blir dårligere"
         }
       ],
       "correct_option_id": "d",
-      "explanation": "Appendix 5 skiller: contingency-prosedyrene dekker blant annet at dronen forlater flight geography, at uinvolverte kommer inn i området, ugunstige forhold, svikt i eksterne systemer, fraseologi med observatører og konfliktunngåelse. Nødprosedyrene dekker skade på tredjepart, at dronen forlater operasjonsvolumet, og nødberging.",
-      "source": "EU 2020/639 Appendix 5 pkt. (6)(d)-(e)"
+      "explanation": "Utenom de vanlige prosedyrene har manualen to trinn. Avviksprosedyrene (contingency) brukes i unormale situasjoner, for eksempel når piloten ser at dronen kan komme ut av det planlagte flygeområdet. Hit hører også uinvolverte som kommer inn i det kontrollerte bakkeområdet, dårlige forhold, eksterne systemer som støtter operasjonen og blir dårligere, fraseologien med luftromsobservatørene, og det å unngå konflikt med annen lufttrafikk. Nødprosedyrene brukes i nødsituasjoner, for eksempel når piloten ser at dronen kan forlate hele operasjonsvolumet. Hit hører det å unngå eller begrense skade på andre, at dronen forlater operasjonsvolumet, og nødberging av dronen. (Innholdet i operasjonsmanualen: Appendix 5 punkt 6 d og e. Pilotens plikter: UAS.STS-01.040 og UAS.STS-02.040 punkt 2 g og h)",
+      "source": "EU 2020/639 Appendix 5 pkt. (6)(d)-(e); UAS.STS-01.040 (2)(g)-(h) og UAS.STS-02.040 (2)(g)-(h)",
+      "overlap_group": "contingency-vs-nod-terskel"
     },
     {
       "n": 53,
@@ -844,7 +845,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Deklarasjonen er ikke et varsel om enkeltflyginger. (Pilotens plikter: UAS.SPEC.060)",
+      "explanation": "Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Huskeregel: deklarasjonen går til Luftfartstilsynet og er ikke et varsel til flygekontrollen. Krever sonen at flygekontrollen varsles, er det piloten som sørger for det før start. (Pilotens plikter: UAS.SPEC.060 punkt 2 d)",
       "source": "EU 2019/947 UAS.SPEC.060 (2)(d)"
     },
     {
@@ -1230,11 +1231,11 @@
       "n": 75,
       "category": "sts-uas",
       "difficulty": 3,
-      "question_text": "Hva skal en ikke-tjoret C5-drone gi piloten om kvaliteten på C2-linken?",
+      "question_text": "Hvordan skal en C5-drone som ikke er tjoret, holde piloten oppdatert om signalkvaliteten på C2-linken?",
       "options": [
         {
           "id": "a",
-          "text": "Løpende overvåking, varsel før og når linken tapes"
+          "text": "Løpende, med varsel før og når linken faller ut"
         },
         {
           "id": "b",
@@ -1242,15 +1243,15 @@
         },
         {
           "id": "c",
-          "text": "Ingenting, kvaliteten på C2-linken er produsentens ansvar"
+          "text": "Ikke i det hele tatt, det er produsentens sak"
         },
         {
           "id": "d",
-          "text": "En måling av signalstyrken før hver start"
+          "text": "Bare med en måling av signalstyrken før start"
         }
       ],
       "correct_option_id": "a",
-      "explanation": "Kravene til C5 sier at piloten løpende skal kunne overvåke kvaliteten på C2-linken, få et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og få et nytt varsel når linken er tapt. C6 har samme krav. (Forordning 2019/945, del 16 punkt 6 og del 17 punkt 7)",
+      "explanation": "C2-linken er styre- og kontrollforbindelsen mellom kontrollenheten (for eksempel fjernkontrollen) og dronen. Kravene til C5 sier at piloten løpende skal kunne overvåke kvaliteten på C2-linken, få et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og få et nytt varsel når linken er tapt. C6 har samme krav. (Forordning 2019/945, del 16 punkt 6 og del 17 punkt 7)",
       "source": "EU 2020/1058 Part 16 pkt. (6); Part 17 pkt. (7)"
     },
     {
@@ -1284,7 +1285,7 @@
       "n": 77,
       "category": "sts-uas",
       "difficulty": 3,
-      "question_text": "En C5-drone skal brukes tjoret. Hvilket krav gjelder tjoret for en drone som er tyngre enn luft?",
+      "question_text": "Du skal fly en C5-multirotor tjoret, altså festet til bakken med en line. Hvilke krav gjelder for lina?",
       "options": [
         {
           "id": "a",
@@ -1304,7 +1305,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "C5 skal oppfylle kravene til C3. Der står det at tjoret skal være kortere enn 50 m og ha en mekanisk styrke på minst 10 ganger vekten av luftfartøyet ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)",
+      "explanation": "C5 skal oppfylle kravene til C3. Der står det at lina skal være kortere enn 50 m. For en drone som er tyngre enn luft, som en multirotor, skal den også tåle minst 10 ganger vekten av dronen ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)",
       "source": "EU 2020/1058 Part 4 pkt. (4); Part 16 pkt. (4)-(6)"
     },
     {

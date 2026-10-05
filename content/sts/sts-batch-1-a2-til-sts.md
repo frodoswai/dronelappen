@@ -456,7 +456,7 @@ Hva skiller en C6-drone (STS-02) fra en C5-drone (STS-01) i kravene?
 - c) C6 kan veie maks 4 kg, mens C5 kan veie 25 kg
 - d) C6: programmerbart volum. C5: lavhastighetsmodus ✅
 
-*Forklaring:* C6 er bygget for BVLOS: funksjoner som hindrer dronen i å bryte horisontale og vertikale grenser for et programmerbart operasjonsvolum, mulighet til å programmere trajektorien, maks bakkehastighet 50 m/s i planflukt, og en flygeavslutning som er uavhengig både av autopiloten og av geo-sperren. C5 er VLOS-klassen med lavhastighetsmodus (maks 5 m/s). Begge skal opereres med aktiv direkte Remote ID, og C5 kan ikke være fastvinge med mindre den er tjoret.
+*Forklaring:* C6 er laget for flyging utenfor synsrekkevidde. Den skal derfor kunne programmeres til å holde seg inne i et avgrenset volum, både sideveis og i høyden (programmerbart operasjonsvolum), kunne følge en forhåndsprogrammert rute, og ikke kunne fly fortere enn 50 m/s over bakken i planflukt. C5 er laget for flyging i synsrekkevidde i befolket område, og skal derfor ha en saktemodus (lavhastighetsmodus) som piloten kan slå på, med maks 5 m/s. Begge skal ha aktiv Remote ID under flyging, og C5 kan bare være fastvinge hvis den er tjoret. (Klassekravene: forordning 2019/945, del 16 for C5 og del 17 for C6)
 
 *Kilde:* EU 2020/1058 Part 16 og Part 17; EU 2020/639 UAS.STS-01.020 (1)(f), UAS.STS-02.020 (8)
 

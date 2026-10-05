@@ -237,7 +237,7 @@ Hva menes med operasjonsvolumet (operational volume)?
 
 ### 47. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-En STS-02-operasjon langs en rørgate har en del av bakkerisikobufferen i utkanten av et tettsted. Hva sier scenarioet?
+En STS-02-flyging langs en kraftlinje har en del av bakkerisikobufferen i et boligfelt i utkanten av et tettsted. Er det lov?
 
 - a) Det går hvis den delen av bufferen er tom for folk
 - b) Det går hvis dronen har fallskjerm som demper treffet
@@ -312,16 +312,16 @@ Operatøren kjøper en C2-linktjeneste fra et teleselskap til et STS-oppdrag. Hv
 
 ### 52. Operatøransvar og operasjonsmanual · vanskegrad 3
 
-Hvilket av disse hører etter Appendix 5 til contingency-prosedyrene i operasjonsmanualen, ikke til nødprosedyrene?
+Operasjonsmanualen skiller mellom avviksprosedyrer (contingency) og nødprosedyrer. Hvilken av disse hører til avviksprosedyrene?
 
 - a) Håndtering av at dronen forlater hele operasjonsvolumet
 - b) Nødberging (emergency recovery) av dronen
 - c) Tiltak som begrenser skade på tredjepart
-- d) Svekkelse i eksterne systemer som støtter operasjonen ✅
+- d) Håndtering av at eksterne systemer blir dårligere ✅
 
-*Forklaring:* Appendix 5 skiller: contingency-prosedyrene dekker blant annet at dronen forlater flight geography, at uinvolverte kommer inn i området, ugunstige forhold, svikt i eksterne systemer, fraseologi med observatører og konfliktunngåelse. Nødprosedyrene dekker skade på tredjepart, at dronen forlater operasjonsvolumet, og nødberging.
+*Forklaring:* Utenom de vanlige prosedyrene har manualen to trinn. Avviksprosedyrene (contingency) brukes i unormale situasjoner, for eksempel når piloten ser at dronen kan komme ut av det planlagte flygeområdet. Hit hører også uinvolverte som kommer inn i det kontrollerte bakkeområdet, dårlige forhold, eksterne systemer som støtter operasjonen og blir dårligere, fraseologien med luftromsobservatørene, og det å unngå konflikt med annen lufttrafikk. Nødprosedyrene brukes i nødsituasjoner, for eksempel når piloten ser at dronen kan forlate hele operasjonsvolumet. Hit hører det å unngå eller begrense skade på andre, at dronen forlater operasjonsvolumet, og nødberging av dronen. (Innholdet i operasjonsmanualen: Appendix 5 punkt 6 d og e. Pilotens plikter: UAS.STS-01.040 og UAS.STS-02.040 punkt 2 g og h)
 
-*Kilde:* EU 2020/639 Appendix 5 pkt. (6)(d)-(e)
+*Kilde:* EU 2020/639 Appendix 5 pkt. (6)(d)-(e); UAS.STS-01.040 (2)(g)-(h) og UAS.STS-02.040 (2)(g)-(h)
 
 ---
 
@@ -439,7 +439,7 @@ Operasjonsområdet ligger i en geografisk sone der vilkårene krever at flygekon
 - c) Ingen, deklarasjonen fungerer som varsel
 - d) Dronens geo-awareness-funksjon, som varsler automatisk
 
-*Forklaring:* Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Deklarasjonen er ikke et varsel om enkeltflyginger. (Pilotens plikter: UAS.SPEC.060)
+*Forklaring:* Før start skal piloten sørge for at informasjon om operasjonen er gjort tilgjengelig for relevant lufttrafikktjeneste, andre luftromsbrukere og berørte parter, når tillatelsen eller vilkårene for den geografiske sonen krever det. Huskeregel: deklarasjonen går til Luftfartstilsynet og er ikke et varsel til flygekontrollen. Krever sonen at flygekontrollen varsles, er det piloten som sørger for det før start. (Pilotens plikter: UAS.SPEC.060 punkt 2 d)
 
 *Kilde:* EU 2019/947 UAS.SPEC.060 (2)(d)
 
@@ -657,14 +657,14 @@ En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merki
 
 ### 75. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Hva skal en ikke-tjoret C5-drone gi piloten om kvaliteten på C2-linken?
+Hvordan skal en C5-drone som ikke er tjoret, holde piloten oppdatert om signalkvaliteten på C2-linken?
 
-- a) Løpende overvåking, varsel før og når linken tapes ✅
+- a) Løpende, med varsel før og når linken faller ut ✅
 - b) Ett varsel, først når linken faktisk er tapt
-- c) Ingenting, kvaliteten på C2-linken er produsentens ansvar
-- d) En måling av signalstyrken før hver start
+- c) Ikke i det hele tatt, det er produsentens sak
+- d) Bare med en måling av signalstyrken før start
 
-*Forklaring:* Kravene til C5 sier at piloten løpende skal kunne overvåke kvaliteten på C2-linken, få et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og få et nytt varsel når linken er tapt. C6 har samme krav. (Forordning 2019/945, del 16 punkt 6 og del 17 punkt 7)
+*Forklaring:* C2-linken er styre- og kontrollforbindelsen mellom kontrollenheten (for eksempel fjernkontrollen) og dronen. Kravene til C5 sier at piloten løpende skal kunne overvåke kvaliteten på C2-linken, få et varsel når det er sannsynlig at linken blir tapt eller så svekket at sikker gjennomføring er i fare, og få et nytt varsel når linken er tapt. C6 har samme krav. (Forordning 2019/945, del 16 punkt 6 og del 17 punkt 7)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (6); Part 17 pkt. (7)
 
@@ -687,14 +687,14 @@ Hvilken fluginformasjon skal en C5-drone minst gi piloten under flyging, sammenl
 
 ### 77. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-En C5-drone skal brukes tjoret. Hvilket krav gjelder tjoret for en drone som er tyngre enn luft?
+Du skal fly en C5-multirotor tjoret, altså festet til bakken med en line. Hvilke krav gjelder for lina?
 
 - a) Kortere enn 120 m, uten styrkekrav
 - b) Under 50 m og minst 10 ganger dronens maksvekt ✅
 - c) Nøyaktig 30 m, så bakkeområdet blir standard
 - d) Minst 50 m, og like sterkt som dronens vekt
 
-*Forklaring:* C5 skal oppfylle kravene til C3. Der står det at tjoret skal være kortere enn 50 m og ha en mekanisk styrke på minst 10 ganger vekten av luftfartøyet ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)
+*Forklaring:* C5 skal oppfylle kravene til C3. Der står det at lina skal være kortere enn 50 m. For en drone som er tyngre enn luft, som en multirotor, skal den også tåle minst 10 ganger vekten av dronen ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)
 
 *Kilde:* EU 2020/1058 Part 4 pkt. (4); Part 16 pkt. (4)-(6)
 
