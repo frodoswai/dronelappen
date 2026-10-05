@@ -16,7 +16,7 @@
     "style": "Samme stil som batch 1: scenario-stammer, plausible distraktorer, fasit ikke systematisk lengst, forklaring som lærer noe. Ingen tankestreker.",
     "db_note": "Samme som batch 1: exam_type-CHECK må utvides (migrasjon 018) før innlasting. Ikke last inn før lansering.",
     "not_covered_on_purpose": "Overføring av praktisk opplæring mellom operatører og krav til privatperson som deklarerer alene er ikke brukt som fasit.",
-    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme. 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md."
+    "revidert": "2026-09-30 (runde 3, Fable): n 35 (norsk praksis i forklaringen), n 51, 65 og 79 (lengre distraktorer), overlap_group på n 38 (med 25), 41/53 og 50/56. 2026-10-03 kveld: n 31, 40 og 73 vises også som eksempler på landingssiden /sts-eksamen/ (kopi i sts-smakebit.json). De ble tatt ut av banken samme kveld og lagt tilbake etter Frodes beslutning, så de står begge steder. 2026-10-04 (batch 3-briefen): ny vanskelighetsgrad (grad 3 for detaljer fra vedleggene, AMC/GM og klassekravene, n 17 og 18 ned til 2), kortere svaralternativer der et alternativ var langt eller hadde flere ledd, ny stamme i n 8 og 12, og nye overlap_group mot batch 3. Riktig svar er det samme. Liste i MacMiniHub/notes/completion-pages/2026-10-04-sts-batch3-LIVE.md. 2026-10-04 (Frode): n 73 stamme spør nå «Kan den få klasse C5 eller C6?», og c og d nevner C5 og C6, fordi «Begge» og «Ingen av dem» ble uklare når appen stokker alternativene. Riktig svar er det samme. Landingssiden og sts-smakebit.json er endret likt. 2026-10-05 (Frodes gjennomlesing): klarere ordlyd i n 30 (forklaring), 47 (kraftlinje i stedet for rørgate), 52 (stamme, d og forklaring uten Appendix 5 i stammen), 60 (huskeregel), 75 (signalkvalitet, alternativer) og 77 («lina» i stedet for «tjoret» som substantiv). Riktig svar er det samme. 2026-10-05 (klarspråk, Frode): regelkoder ut av stamme og brødtekst, forkortelser forklart, «flight geography» skrevet som «flygeområdet», og knappe eller tvetydige stammer og svar skrevet tydeligere. Riktig svar er det samme. Endringsliste: MacMiniHub notes/reports/innhold/2026-10-05-sts-klarsprak-endringer.md. 2026-10-05 (Frode): «contingency» heter nå avviksområdet, avviksvolumet og avviksprosedyrer, med «(contingency)» i parentes første gang i hvert spørsmål. Riktig svar er det samme."
   },
   "categories": [
     {
@@ -220,11 +220,11 @@
       "n": 37,
       "category": "sts-01",
       "difficulty": 2,
-      "question_text": "Under en STS-01-operasjon skal dronen fly opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet, altså flygeområdet pluss contingency-volumet, maksimalt gå?",
+      "question_text": "Under en STS-01-operasjon skal dronen fly opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet, altså flygeområdet pluss avviksvolumet (contingency), maksimalt gå?",
       "options": [
         {
           "id": "a",
-          "text": "120 m, contingency-volumet må ligge under grensen"
+          "text": "120 m, avviksvolumet må ligge under grensen"
         },
         {
           "id": "b",
@@ -232,7 +232,7 @@
         },
         {
           "id": "c",
-          "text": "Det finnes ingen øvre grense for contingency-volumet"
+          "text": "Det finnes ingen øvre grense for avviksvolumet"
         },
         {
           "id": "d",
@@ -240,7 +240,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flygeområdet. (UAS.STS-01.010 punkt 3)",
+      "explanation": "Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for avviksprosedyrer over flygeområdet. (UAS.STS-01.010 punkt 3)",
       "source": "EU 2020/639 UAS.STS-01.010 (1) og (3)",
       "overlap_group": "hoyde-30m-over-tillatt"
     },
@@ -445,7 +445,7 @@
       "options": [
         {
           "id": "a",
-          "text": "Flygeområdet og contingency-volumet til sammen"
+          "text": "Flygeområdet og avviksvolumet til sammen"
         },
         {
           "id": "b",
@@ -461,7 +461,7 @@
         }
       ],
       "correct_option_id": "a",
-      "explanation": "Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flygeområdet (flight geography) og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)",
+      "explanation": "Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flygeområdet (flight geography) og avviksvolumet (contingency). Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)",
       "source": "EU 2019/947 art. 2 (28)-(33), innført ved EU 2020/639; UAS.STS-01.030 (2)"
     },
     {
@@ -488,7 +488,7 @@
         }
       ],
       "correct_option_id": "d",
-      "explanation": "Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flygeområdet, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)",
+      "explanation": "Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flygeområdet, avviksområdet (contingency) og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)",
       "source": "EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»",
       "overlap_group": "sts02-spredt-befolket"
     },
@@ -852,7 +852,7 @@
       "n": 61,
       "category": "sts-pilot",
       "difficulty": 2,
-      "question_text": "Et vindkast får dronen til å drive ut av flygeområdet, men den er fortsatt godt innenfor contingency-volumet. Hva skal piloten gjøre?",
+      "question_text": "Et vindkast får dronen til å drive ut av flygeområdet, men den er fortsatt godt innenfor avviksvolumet (contingency). Hva skal piloten gjøre?",
       "options": [
         {
           "id": "a",
@@ -860,11 +860,11 @@
         },
         {
           "id": "b",
-          "text": "Følge operatørens contingency-prosedyrer for å få dronen tilbake"
+          "text": "Følge operatørens avviksprosedyrer for å få dronen tilbake"
         },
         {
           "id": "c",
-          "text": "Ingenting, contingency-volumet er en del av det tillatte området"
+          "text": "Ingenting, avviksvolumet er en del av det tillatte området"
         },
         {
           "id": "d",
@@ -872,7 +872,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flygeområdet, skal contingency-prosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Contingency-volumet er en buffer for avvik, ikke et vanlig arbeidsområde.",
+      "explanation": "Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flygeområdet, skal avviksprosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Avviksvolumet er en buffer for avvik, ikke et vanlig arbeidsområde.",
       "source": "EU 2020/639 UAS.STS-01.040 (2)(g)-(h); EU 2019/947 art. 2 (28)-(32)",
       "overlap_group": "contingency-vs-nod-terskel"
     },
@@ -1116,7 +1116,7 @@
         }
       ],
       "correct_option_id": "b",
-      "explanation": "Når luftromsobservatører brukes, skal contingency-prosedyrene i manualen inneholde fraseologien som skal brukes. Den praktiske opplæringen for STS-02 omfatter et konfliktløsningsopplegg med fraseologi, koordinering og kommunikasjonsmidler. Observatøren i STS-02 står gjerne langt fra piloten, så håndsignaler og samlokalisering er ikke løsningen.",
+      "explanation": "Når luftromsobservatører brukes, skal avviksprosedyrene (contingency) i manualen inneholde fraseologien som skal brukes. Den praktiske opplæringen for STS-02 omfatter et konfliktløsningsopplegg med fraseologi, koordinering og kommunikasjonsmidler. Observatøren i STS-02 står gjerne langt fra piloten, så håndsignaler og samlokalisering er ikke løsningen.",
       "source": "EU 2020/639 Appendix 5 pkt. (6)(d)(v); Attachment A til kap. II, tabell 1 (a)(i)(B)"
     },
     {

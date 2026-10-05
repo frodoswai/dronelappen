@@ -102,14 +102,14 @@ Hva gjør at en STS-deklarasjon ikke lenger regnes som fullstendig, selv om det 
 
 ### 37. STS-01: rammer for VLOS · vanskegrad 2
 
-Under en STS-01-operasjon skal dronen fly opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet, altså flygeområdet pluss contingency-volumet, maksimalt gå?
+Under en STS-01-operasjon skal dronen fly opp til 120 m over bakken, og det er ingen høye hindringer i nærheten. Hvor høyt kan operasjonsvolumet, altså flygeområdet pluss avviksvolumet (contingency), maksimalt gå?
 
-- a) 120 m, contingency-volumet må ligge under grensen
+- a) 120 m, avviksvolumet må ligge under grensen
 - b) 135 m
-- c) Det finnes ingen øvre grense for contingency-volumet
+- c) Det finnes ingen øvre grense for avviksvolumet
 - d) 150 m ✅
 
-*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for contingency-prosedyrer over flygeområdet. (UAS.STS-01.010 punkt 3)
+*Forklaring:* Dronen skal holdes innenfor 120 m fra nærmeste punkt på bakken, men de generelle reglene for STS-01 lar operasjonsvolumet gå inntil 30 m over den høyden som ellers er tillatt. 120 + 30 = 150 m. Det gir rom for avviksprosedyrer over flygeområdet. (UAS.STS-01.010 punkt 3)
 
 *Kilde:* EU 2020/639 UAS.STS-01.010 (1) og (3)
 
@@ -224,12 +224,12 @@ Tabellen i STS-01 gir 25 m bakkerisikobuffer for en drone med MTOM 6 kg som flyr
 
 Hva menes med operasjonsvolumet (operational volume)?
 
-- a) Flygeområdet og contingency-volumet til sammen ✅
+- a) Flygeområdet og avviksvolumet til sammen ✅
 - b) Flygeområdet og bakkerisikobufferen til sammen
 - c) Hele det kontrollerte bakkeområdet, inkludert bufferen
 - d) Luftrommet innenfor pilotens synsrekkevidde
 
-*Forklaring:* Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flygeområdet (flight geography) og contingency-volumet. Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)
+*Forklaring:* Etter definisjonene i droneregelverket er operasjonsvolumet kombinasjonen av flygeområdet (flight geography) og avviksvolumet (contingency). Bakkerisikobufferen ligger på bakken rundt operasjonsvolumet og er ikke en del av det. Kontrollert bakkeområde er projeksjonen av både volumet og bufferen. (Forordning 2019/947, artikkel 2)
 
 *Kilde:* EU 2019/947 art. 2 (28)-(33), innført ved EU 2020/639; UAS.STS-01.030 (2)
 
@@ -244,7 +244,7 @@ En STS-02-flyging langs en kraftlinje har en del av bakkerisikobufferen i et bol
 - c) Det går hvis en luftromsobservatør står ved tettstedet
 - d) Det går ikke; hele området skal være spredt befolket ✅
 
-*Forklaring:* Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flygeområdet, contingency-området og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)
+*Forklaring:* Driftsreglene for STS-02 krever at det kontrollerte bakkeområdet, altså flygeområdet, avviksområdet (contingency) og bakkerisikobufferen, ligger helt i et spredt befolket miljø. At bufferen er tom for folk i øyeblikket, er ikke nok når den ligger i et befolket område. Befolket miljø med kontrollert bakkeområde er STS-01, og det er VLOS. (UAS.STS-02.020)
 
 *Kilde:* EU 2020/639 UAS.STS-02.020 (2); luftfartstilsynet.no, «Søke om STS»
 
@@ -447,14 +447,14 @@ Operasjonsområdet ligger i en geografisk sone der vilkårene krever at flygekon
 
 ### 61. Pilotansvar og prosedyrer · vanskegrad 2
 
-Et vindkast får dronen til å drive ut av flygeområdet, men den er fortsatt godt innenfor contingency-volumet. Hva skal piloten gjøre?
+Et vindkast får dronen til å drive ut av flygeområdet, men den er fortsatt godt innenfor avviksvolumet (contingency). Hva skal piloten gjøre?
 
 - a) Utløse flygeavslutning straks
-- b) Følge operatørens contingency-prosedyrer for å få dronen tilbake ✅
-- c) Ingenting, contingency-volumet er en del av det tillatte området
+- b) Følge operatørens avviksprosedyrer for å få dronen tilbake ✅
+- c) Ingenting, avviksvolumet er en del av det tillatte området
 - d) Aktivere automatisk retur (RTH), siden det alltid er første tiltak ved avvik
 
-*Forklaring:* Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flygeområdet, skal contingency-prosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Contingency-volumet er en buffer for avvik, ikke et vanlig arbeidsområde.
+*Forklaring:* Regelverket har to terskler. Får piloten indikasjon på at dronen kan forlate flygeområdet, skal avviksprosedyrene følges. Først når dronen kan komme til å forlate hele operasjonsvolumet, gjelder nødprosedyrene, der flygeavslutning inngår. Avviksvolumet er en buffer for avvik, ikke et vanlig arbeidsområde.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(g)-(h); EU 2019/947 art. 2 (28)-(32)
 
@@ -589,7 +589,7 @@ Luftromsobservatøren roper «ned, ned!» på radioen. Piloten vet ikke om det b
 - c) At bare piloten får snakke på radioen
 - d) At observatøren bruker avtalte håndsignaler i stedet for radio
 
-*Forklaring:* Når luftromsobservatører brukes, skal contingency-prosedyrene i manualen inneholde fraseologien som skal brukes. Den praktiske opplæringen for STS-02 omfatter et konfliktløsningsopplegg med fraseologi, koordinering og kommunikasjonsmidler. Observatøren i STS-02 står gjerne langt fra piloten, så håndsignaler og samlokalisering er ikke løsningen.
+*Forklaring:* Når luftromsobservatører brukes, skal avviksprosedyrene (contingency) i manualen inneholde fraseologien som skal brukes. Den praktiske opplæringen for STS-02 omfatter et konfliktløsningsopplegg med fraseologi, koordinering og kommunikasjonsmidler. Observatøren i STS-02 står gjerne langt fra piloten, så håndsignaler og samlokalisering er ikke løsningen.
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(d)(v); Attachment A til kap. II, tabell 1 (a)(i)(B)
 

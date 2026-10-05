@@ -126,7 +126,7 @@ Du skal inspisere en 130 m høy telemast med C5-drone under STS-01. Masteeieren 
 - c) Flyging 145 m, volum 150 m
 - d) Flyging 145 m, volum 175 m ✅
 
-*Forklaring:* STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet (flygeområdet pluss contingency-volumet) gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.
+*Forklaring:* STS-01 har samme hindringsunntak som åpen kategori: innenfor 50 m horisontalt fra en kunstig hindring høyere enn 105 m kan flygehøyden økes til 15 m over hindringens topp, på forespørsel fra den ansvarlige for hindringen (130 + 15 = 145 m). I tillegg kan operasjonsvolumet, altså flygeområdet pluss avviksvolumet (contingency), gå maks 30 m over tillatt høyde, her 175 m. Flygingen skal likevel skje innenfor 145 m; de siste 30 m er buffer for avvik.
 
 *Kilde:* EU 2020/639 UAS.STS-01.010 (1)-(3)
 
@@ -243,10 +243,10 @@ Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
 
 - a) Flygeområdet og en fast sikkerhetsbuffer på 30 m rundt
 - b) Et inngjerdet område på minst 100 x 100 m
-- c) Flygeområdet, contingency-område og bakkerisikobuffer ✅
+- c) Flygeområdet, avviksområde og bakkerisikobuffer ✅
 - d) Flygeområdet og en sone like bred som flygehøyden (1:1)
 
-*Forklaring:* Tre lag: flygeområdet (flight geography area, der du planlegger å fly), contingency-området med yttergrense minst 10 m utenfor flygeområdet, og en bakkerisikobuffer utenfor contingency-området igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
+*Forklaring:* Tre lag: flygeområdet (flight geography area, der du planlegger å fly), avviksområdet (contingency) med yttergrense minst 10 m utenfor flygeområdet, og en bakkerisikobuffer utenfor avviksområdet igjen. Bufferens størrelse avhenger av flygehøyde og dronens MTOM etter tabellen i STS-01. 1:1-regelen (horisontal avstand til uinvolverte minst lik flygehøyden) gjelder i A2 i åpen kategori. Den er ikke måten det kontrollerte bakkeområdet i STS-01 fastsettes på.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i); EASA AMC1 UAS.OPEN.030(1) og luftfartstilsynet.no, «Droneregler» (1:1-regelen i A2)
 
@@ -254,7 +254,7 @@ Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
 
 ### 17. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
+En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt utenfor avviksområdet (contingency) må bakkerisikobufferen minst strekke seg?
 
 - a) 10 m
 - b) 60 m
@@ -269,7 +269,7 @@ En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt
 
 ### 18. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor contingency-området må bakkerisikobufferen minst strekke seg?
+En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor langt utenfor avviksområdet (contingency) må bakkerisikobufferen minst strekke seg?
 
 - a) 25 m
 - b) 60 m ✅
@@ -321,7 +321,7 @@ Midt i en STS-01-flyging går en turgåer under sperrebåndet og inn i det kontr
 - c) Utløse flygeavslutning umiddelbart
 - d) Gi dronen til observatøren og hente personen ut
 
-*Forklaring:* Operasjonsmanualen skal inneholde en contingency-prosedyre for nettopp «uinvolverte personer som kommer inn i det kontrollerte bakkeområdet», og piloten skal følge den. Flygeavslutning er en nødprosedyre for når dronen kan forlate operasjonsvolumet. Å tvinge dronen ned mot en person i området er ikke poenget. Piloten skal aldri overlate kontrollen.
+*Forklaring:* Operasjonsmanualen skal inneholde en avviksprosedyre (contingency) for nettopp «uinvolverte personer som kommer inn i det kontrollerte bakkeområdet», og piloten skal følge den. Flygeavslutning er en nødprosedyre for når dronen kan forlate operasjonsvolumet. Å tvinge dronen ned mot en person i området er ikke poenget. Piloten skal aldri overlate kontrollen.
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(d)(ii); UAS.STS-01.040 (2)(g)-(h)
 
@@ -336,7 +336,7 @@ Før en operatør kan deklarere STS-01, må operasjonsmanualen være på plass. 
 - c) En fullstendig SORA-risikovurdering for operasjonen ✅
 - d) Retningslinjer for å begrense sjenanse, som støy, og miljøpåvirkning
 
-*Forklaring:* Kravene til manualen lister blant annet normale, contingency- og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene. (Innholdet i operasjonsmanualen: Appendix 5)
+*Forklaring:* Kravene til manualen lister blant annet normale prosedyrer, avviksprosedyrer (contingency) og nødprosedyrer, sikkerhetsprosedyrer, personvern, retningslinjer mot sjenanse og miljøpåvirkning, hendelsesrapportering, loggføring og en policy for at mannskapet erklærer seg skikket før flyging. En full SORA-risikovurdering hører til søknad om operasjonstillatelse; STS er nettopp alternativet til den. Manualen skal likevel beskrive aktivitetene og de tilhørende risikoene. (Innholdet i operasjonsmanualen: Appendix 5)
 
 *Kilde:* EU 2020/639 Appendix 5 pkt. (6)(a)-(k); UAS.STS-01.030 (4)
 
@@ -344,14 +344,14 @@ Før en operatør kan deklarere STS-01, må operasjonsmanualen være på plass. 
 
 ### 23. Operatøransvar og operasjonsmanual · vanskegrad 2
 
-Operatøren har skrevet contingency- og nødprosedyrer i manualen. Hva krever STS-01 for å sikre at prosedyrene faktisk fungerer?
+Operatøren har skrevet avviksprosedyrer (contingency) og nødprosedyrer i manualen. Hva krever STS-01 for å sikre at prosedyrene faktisk fungerer?
 
 - a) Godkjenning hos Luftfartstilsynet før første flyging
 - b) Ingenting, EASA har validert standardprosedyrene
 - c) At alle piloter har lest og signert manualen
 - d) Dedikerte flytester eller representative simuleringer ✅
 
-*Forklaring:* Operatøren skal sikre at contingency- og nødprosedyrene er tilstrekkelige gjennom enten dedikerte flytester eller simuleringer, forutsatt at simuleringen er representativ. Scenarioet er standardisert, men prosedyrene for akkurat din drone og ditt område er dine, og de skal prøves, ikke bare skrives.
+*Forklaring:* Operatøren skal sikre at avviks- og nødprosedyrene er tilstrekkelige gjennom enten dedikerte flytester eller simuleringer, forutsatt at simuleringen er representativ. Scenarioet er standardisert, men prosedyrene for akkurat din drone og ditt område er dine, og de skal prøves, ikke bare skrives.
 
 *Kilde:* EU 2020/639 UAS.STS-01.030 (3)
 
@@ -389,14 +389,14 @@ Under en STS-01-flyging vil en kollega overta kontrollen fra sin egen fjernkontr
 
 ### 26. Pilotansvar og prosedyrer · vanskegrad 3
 
-Dronen får en feil og driver mot yttergrensen av contingency-området. Piloten ser at den kan komme til å forlate operasjonsvolumet. Hva er riktig?
+Dronen får en feil og driver mot yttergrensen av avviksområdet (contingency). Piloten ser at den kan komme til å forlate operasjonsvolumet. Hva er riktig?
 
 - a) Utløse flygeavslutning, i tråd med nødprosedyren ✅
 - b) Slå på automatisk retur (RTH) og la dronen fly hjem
 - c) Fortsette å styre den tilbake så lenge linken er oppe
 - d) La den lande utenfor, bufferen dekker det
 
-*Forklaring:* Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flygeområdet, gjelder contingency-prosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flygeområdet pluss contingency-volumet), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.
+*Forklaring:* Regelverket skiller to terskler: får piloten indikasjon på at dronen kan forlate flygeområdet, gjelder avviksprosedyrene. Får piloten indikasjon på at den kan forlate hele operasjonsvolumet (flygeområdet pluss avviksvolumet), skal nødprosedyren følges, inkludert å utløse flygeavslutning. Bakkerisikobufferen finnes for at en avsluttet flyging skal havne der, ikke for å la dronen fly videre.
 
 *Kilde:* EU 2020/639 UAS.STS-01.040 (2)(g)-(h)
 

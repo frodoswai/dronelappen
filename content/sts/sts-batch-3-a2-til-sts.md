@@ -79,7 +79,7 @@ Hva er bakkerisikobufferen til for?
 - c) Holde bemannede fly på trygg avstand fra operasjonen
 - d) Gi plass til oppskyting og landing utenfor selve flygeområdet
 
-*Forklaring:* Bakkerisikobufferen er et område på bakken rundt operasjonsvolumet. Den skal begrense risikoen for tredjepersoner på bakken hvis dronen kommer ut av operasjonsvolumet, for eksempel etter at flygingen er avsluttet med flygeavslutning. Å rette opp avvik fra planlagt rute er det contingency-volumet er til for. (Definisjonene i droneforordningen: forordning 2019/947, artikkel 2 nr. 30 og 33, innført ved forordning 2020/639)
+*Forklaring:* Bakkerisikobufferen er et område på bakken rundt operasjonsvolumet. Den skal begrense risikoen for tredjepersoner på bakken hvis dronen kommer ut av operasjonsvolumet, for eksempel etter at flygingen er avsluttet med flygeavslutning. Å rette opp avvik fra planlagt rute er det avviksvolumet (contingency) er til for. (Definisjonene i droneforordningen: forordning 2019/947, artikkel 2 nr. 30 og 33, innført ved forordning 2020/639)
 
 *Kilde:* EU 2019/947 art. 2 (30) og (33), innført ved EU 2020/639; UAS.STS-02.020 (2)(c)
 
@@ -222,14 +222,14 @@ Hvor sender en norsk operatør STS-deklarasjonen?
 
 ### 94. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-Hvor langt utenfor flygeområdet skal contingency-området minst gå for en drone som ikke er tjoret?
+Hvor langt utenfor flygeområdet skal avviksområdet (contingency) minst gå for en drone som ikke er tjoret?
 
 - a) 5 m
 - b) 30 m
 - c) 10 m ✅
 - d) 50 m
 
-*Forklaring:* Contingency-området skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på lina pluss 5 m. Utenfor contingency-området ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
+*Forklaring:* Avviksområdet skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på lina pluss 5 m. Utenfor avviksområdet ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(B) og UAS.STS-02.020 (2)(b)
 
