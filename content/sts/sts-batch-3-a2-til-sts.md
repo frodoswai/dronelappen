@@ -222,14 +222,14 @@ Hvor sender en norsk operatør STS-deklarasjonen?
 
 ### 94. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-Hvor langt utenfor flygeområdet skal avviksområdet (contingency) minst gå for en drone som ikke er tjoret?
+Hvor langt utenfor flygeområdet skal avviksområdet (contingency) minst gå for en drone som ikke er forankret?
 
 - a) 5 m
 - b) 30 m
 - c) 10 m ✅
 - d) 50 m
 
-*Forklaring:* Avviksområdet skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for ikke-tjoret drone i STS-01 og i STS-02. For tjoret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på lina pluss 5 m. Utenfor avviksområdet ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
+*Forklaring:* Avviksområdet skal ha yttergrensen minst 10 m utenfor flygeområdet (flight geography area). Det gjelder for drone uten forankring i STS-01 og i STS-02. For forankret drone i STS-01 er bakkeområdet i stedet en sirkel med radius lik lengden på sikringslina pluss 5 m. Utenfor avviksområdet ligger bakkerisikobufferen. (Driftsreglene for STS-01 og STS-02: UAS.STS-01.020 punkt 1 c og UAS.STS-02.020 punkt 2 b)
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(B) og UAS.STS-02.020 (2)(b)
 

@@ -107,11 +107,11 @@ Hvilken kombinasjon beskriver STS-01 riktig?
 Under en STS-01-flyging skal dronen flyttes raskt fra én side av et stort industriområde til den andre. Hvilken grense gjelder for bakkehastigheten?
 
 - a) Ingen, grensen gjelder bare over uinvolverte
-- b) Under 5 m/s for ikke-tjoret drone ✅
+- b) Under 5 m/s for ikke-forankret drone ✅
 - c) Under 19 m/s, samme grense som for C1-droner
 - d) Under 3 m/s dersom det ikke brukes observatør
 
-*Forklaring:* STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en ikke-tjoret drone. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er maksfarten for C0/C1-droner, og lavhastighetsmodusen i C2 (A2) er 3 m/s. Ingen av dem er STS-01-grensen.
+*Forklaring:* STS-01 skal gjennomføres med bakkehastighet under 5 m/s for en drone som ikke er forankret. Det er derfor C5-klassen krever en lavhastighetsmodus som piloten kan velge og som begrenser bakkehastigheten til maks 5 m/s. 19 m/s er maksfarten for C0/C1-droner, og lavhastighetsmodusen i C2 (A2) er 3 m/s. Ingen av dem er STS-01-grensen.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(d); EU 2020/1058 Part 16 pkt. (4)
 
@@ -239,7 +239,7 @@ Hva er luftromsobservatørens hovedoppgave i STS-02?
 
 ### 16. Kontrollert bakkeområde og bakkerisiko · vanskegrad 2
 
-Hva må et kontrollert bakkeområde for en ikke-tjoret drone i STS-01 bestå av?
+Hva må et kontrollert bakkeområde for en drone som ikke er forankret i STS-01 bestå av?
 
 - a) Flygeområdet og en fast sikkerhetsbuffer på 30 m rundt
 - b) Et inngjerdet område på minst 100 x 100 m
@@ -261,7 +261,7 @@ En C5-drone med MTOM 7 kg skal fly i inntil 60 m høyde under STS-01. Hvor langt
 - c) 30 m
 - d) 15 m ✅
 
-*Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for ikke-tjoret drone etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. MTOM 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde MTOM vært 12 kg, ville svaret vært 30 m. Det er MTOM som teller, ikke hva dronen veier på den aktuelle flygingen.
+*Forklaring:* Tabellen i STS-01 gir minste bakkerisikobuffer for drone uten forankring etter maks høyde og MTOM: inntil 30 m høyde gir 10 m (MTOM inntil 10 kg) eller 20 m (over 10 kg); 60 m gir 15 m eller 30 m; 90 m gir 20 m eller 45 m; 120 m gir 25 m eller 60 m. MTOM 7 kg er under 10 kg, så 60 m høyde gir 15 m. Hadde MTOM vært 12 kg, ville svaret vært 30 m. Det er MTOM som teller, ikke hva dronen veier på den aktuelle flygingen.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(i)(C), tabell
 
@@ -284,14 +284,14 @@ En C5-drone med MTOM 14 kg skal fly i inntil 120 m høyde under STS-01. Hvor lan
 
 ### 19. Kontrollert bakkeområde og bakkerisiko · vanskegrad 3
 
-Under STS-01 skal en drone være festet til bakken med en 40 m lang line (tjoret). Hvordan bestemmes det kontrollerte bakkeområdet?
+Under STS-01 skal en drone være forankret, altså festet til bakken med en 40 m lang sikringsline. Hvordan bestemmes det kontrollerte bakkeområdet?
 
-- a) Som for en drone uten line, med buffer etter tabellen
+- a) Som for en drone uten forankring, med buffer etter tabellen
 - b) En sirkel med radius 120 m rundt festepunktet
-- c) En sirkel med radius lik linelengden pluss 5 m ✅
-- d) Tjorede droner trenger ikke kontrollert bakkeområde
+- c) En sirkel med radius lik lengden på lina pluss 5 m ✅
+- d) Forankrede droner trenger ikke kontrollert bakkeområde
 
-*Forklaring:* For tjoret drone er området en sirkel med radius lik lengden på lina pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Tjorede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi lina fysisk begrenser hvor dronen kan havne.
+*Forklaring:* For en forankret drone er området en sirkel med radius lik lengden på sikringslina pluss 5 m, sentrert på festepunktet på bakken, her 45 m. Forankrede droner er også unntatt fra kravene om lavhastighetsmodus, flygeavslutning og C2-overvåking i C5-klassen, fordi lina fysisk begrenser hvor dronen kan havne.
 
 *Kilde:* EU 2020/639 UAS.STS-01.020 (1)(c)(ii); EU 2020/1058 Part 16
 
@@ -441,7 +441,7 @@ En C5-drone skal ha en egen funksjon som piloten kan bruke til å avslutte flygi
 - c) Virke uavhengig av autopiloten, tvinge dronen ned og dempe treffet ✅
 - d) Den er valgfri for C5-droner som veier mindre enn 10 kg
 
-*Forklaring:* Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og ha noe som demper treffet (for eksempel fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er tjoret.
+*Forklaring:* Flygeavslutningen skal være uavhengig av autopiloten (også aktiveringen), tvinge nedstigning, hindre motordrevet horisontal forflytning og ha noe som demper treffet (for eksempel fallskjerm). RTH er en autopilotfunksjon og oppfyller ikke kravet om uavhengighet. Kravet gjelder alle C5-droner som ikke er forankret.
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (5)
 
@@ -456,7 +456,7 @@ Hva skiller en C6-drone (STS-02) fra en C5-drone (STS-01) i kravene?
 - c) C6 kan veie maks 4 kg, mens C5 kan veie 25 kg
 - d) C6: programmerbart volum. C5: lavhastighetsmodus ✅
 
-*Forklaring:* C6 er laget for flyging utenfor synsrekkevidde. Den skal derfor kunne programmeres til å holde seg inne i et avgrenset volum, både sideveis og i høyden (programmerbart operasjonsvolum), kunne følge en forhåndsprogrammert rute, og ikke kunne fly fortere enn 50 m/s over bakken i planflukt. C5 er laget for flyging i synsrekkevidde i befolket område, og skal derfor ha en saktemodus (lavhastighetsmodus) som piloten kan slå på, med maks 5 m/s. Begge skal ha aktiv Remote ID under flyging, og C5 kan bare være fastvinge hvis den er tjoret. (Klassekravene: forordning 2019/945, del 16 for C5 og del 17 for C6)
+*Forklaring:* C6 er laget for flyging utenfor synsrekkevidde. Den skal derfor kunne programmeres til å holde seg inne i et avgrenset volum, både sideveis og i høyden (programmerbart operasjonsvolum), kunne følge en forhåndsprogrammert rute, og ikke kunne fly fortere enn 50 m/s over bakken i planflukt. C5 er laget for flyging i synsrekkevidde i befolket område, og skal derfor ha en saktemodus (lavhastighetsmodus) som piloten kan slå på, med maks 5 m/s. Begge skal ha aktiv Remote ID under flyging, og C5 kan bare være fastvinge hvis den er forankret. (Klassekravene: forordning 2019/945, del 16 for C5 og del 17 for C6)
 
 *Kilde:* EU 2020/1058 Part 16 og Part 17; EU 2020/639 UAS.STS-01.020 (1)(f), UAS.STS-02.020 (8)
 

@@ -642,14 +642,14 @@ En produsent vil lage en drone med forbrenningsmotor for bruk i standardscenario
 
 ### 74. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merking?
+En produsent vil selge en forankret fastvingedrone for STS-01. Kan den få C5-merking?
 
 - a) Nei, C5 kan aldri være fastvinge
-- b) Nei, tjorede droner får ikke klassemerke
-- c) Ja, C5 kan være fastvinge når den er tjoret ✅
+- b) Nei, forankrede droner får ikke klassemerke
+- c) Ja, C5 kan være fastvinge når den er forankret ✅
 - d) Ja, men bare hvis vingespennet er under 1 m
 
-*Forklaring:* Kravene til C5 sier at dronen skal være et annet luftfartøy enn fastvinge, med mindre det er tjoret. En tjoret fastvinge er altså ikke utelukket, og C3-kravene til lina (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6. (Kravene til C5: forordning 2019/945, del 16 punkt 1)
+*Forklaring:* Kravene til C5 sier at dronen skal være et annet luftfartøy enn fastvinge, med mindre det er forankret, altså festet til bakken med en sikringsline. En forankret fastvinge er derfor ikke utelukket, og C3-kravene til sikringslina (under 50 m, styrke minst 10 ganger vekten) gjelder. Tilsvarende begrensning finnes ikke for C6. (Kravene til C5: forordning 2019/945, del 16 punkt 1)
 
 *Kilde:* EU 2020/1058 Part 16 pkt. (1)
 
@@ -657,7 +657,7 @@ En produsent vil selge en tjoret fastvingedrone for STS-01. Kan den få C5-merki
 
 ### 75. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Hvordan skal en C5-drone som ikke er tjoret, holde piloten oppdatert om signalkvaliteten på C2-linken?
+Hvordan skal en C5-drone som ikke er forankret, holde piloten oppdatert om signalkvaliteten på C2-linken?
 
 - a) Løpende, med varsel før og når linken faller ut ✅
 - b) Ett varsel, først når linken faktisk er tapt
@@ -687,14 +687,14 @@ Hvilken informasjon om flygingen skal C5- og C6-droner minst gi piloten undervei
 
 ### 77. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 3
 
-Du skal fly en C5-multirotor tjoret, altså festet til bakken med en line. Hvilke krav gjelder for lina?
+Du skal fly en C5-multirotor som er forankret, altså festet til bakken med en sikringsline. Hvilke krav gjelder for lina?
 
 - a) Kortere enn 120 m, uten styrkekrav
 - b) Under 50 m og minst 10 ganger dronens maksvekt ✅
 - c) Nøyaktig 30 m, så bakkeområdet blir standard
 - d) Minst 50 m, og like sterkt som dronens vekt
 
-*Forklaring:* C5 skal oppfylle kravene til C3. Der står det at lina skal være kortere enn 50 m. For en drone som er tyngre enn luft, som en multirotor, skal den også tåle minst 10 ganger vekten av dronen ved maks masse. En tjoret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)
+*Forklaring:* C5 skal oppfylle kravene til C3. Der står det at sikringslina skal være kortere enn 50 m. For en drone som er tyngre enn luft, som en multirotor, skal den også tåle minst 10 ganger vekten av dronen ved maks masse. En forankret C5 er unntatt kravet om flygeavslutning og lavhastighetsmodus. (Kravene til C3: forordning 2019/945, del 4 punkt 4)
 
 *Kilde:* EU 2020/1058 Part 4 pkt. (4); Part 16 pkt. (4)-(6)
 
@@ -717,7 +717,7 @@ Hva skal hver drone i spesifikk kategori være utstyrt med?
 
 ### 79. UAS-kunnskap: C5, C6 og flygeavslutning · vanskegrad 2
 
-Hva skal en ikke-tjoret C5-drone kunne gjøre hvis C2-linken blir borte?
+Hva skal en C5-drone uten forankring kunne gjøre hvis C2-linken blir borte?
 
 - a) Hente linken tilbake, ellers avslutte skånsomt for tredjepart ✅
 - b) Lande rett ned, uansett hva som er under
