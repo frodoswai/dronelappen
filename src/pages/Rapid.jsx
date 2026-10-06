@@ -7,6 +7,7 @@ import Paywall from '../components/Paywall'
 import CrosshairMarks from '../components/CrosshairMarks'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 import { examConfig, examLabel } from '../lib/exams'
+import { logQuizStart } from '../lib/visits'
 
 // Easy to tweak at the top of the file:
 const CORRECT_FLASH_MS = 400
@@ -113,6 +114,8 @@ export default function Rapid() {
             options: shuffleArray(q.options),
           }))
         setQuestions(sessionQuestions)
+        // Klikk -> økt (lib/visits.js): bare nye økter med spørsmål, ikke gjenopptak.
+        if (sessionQuestions.length > 0) logQuizStart({ examType, mode: 'tempo' })
         setLoading(false)
         // Anchor the stopwatch the moment questions are ready — not during
         // the fetch, so a slow network doesn't pad the user's apparent time.

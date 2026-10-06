@@ -8,6 +8,7 @@ import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizS
 import { examConfig } from '../lib/exams'
 // Eksamenstrekket (overlap_group og grensen for grad 3) står i lib/examDraw.js.
 import { drawExamQuestions } from '../lib/examDraw'
+import { logQuizStart } from '../lib/visits'
 
 // Eksamensklokka: varigheten per eksamenstype står i lib/exams.js
 // (timerMinutes) og regnes om til examDurationMs i komponenten, så visning,
@@ -202,6 +203,8 @@ export default function Quiz() {
         }))
         setQuestions(selected)
         setAnswers(new Array(selected.length).fill(null))
+        // Klikk -> økt (lib/visits.js): bare nye økter med spørsmål, ikke gjenopptak.
+        if (selected.length > 0) logQuizStart({ examType, mode: isPracticeMode ? 'laering' : 'eksamen' })
         setLoading(false)
         // Anchor the wall-clock timer the moment questions are ready (timed
         // Eksamen only) — not during the fetch, so network latency doesn't

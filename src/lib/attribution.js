@@ -50,12 +50,39 @@ function sameOriginReferrer() {
   }
 }
 
+// Kilden for besøket som lastet denne siden, eller null hvis besøket ikke har
+// en kjent kilde (direkte, eller intern klikking). Brukes av landingsloggen i
+// visits.js (06.10.2026): funnel_events bærer first touch, og da kan en
+// mailkampanje til eksisterende lesere aldri dukke opp der.
+let currentVisitTouch = null
+
+export function getCurrentVisitTouch() {
+  return currentVisitTouch
+}
+
+// Siste kjente eksterne kilde (kan være fra et tidligere besøk), eller {}.
+export function getLastTouch() {
+  try {
+    return JSON.parse(localStorage.getItem(LAST_KEY) || '{}') || {}
+  } catch {
+    return {}
+  }
+}
+
 // Skriv last-touch-record. Kalles ved hvert besøk som har en identifiserbar
 // kilde: enten UTM-parametre eller en ekstern henvisning (f.eks. MailerLites
 // klikk-domene, Google, Facebook).
 function recordLastTouch(cur, hasUtm, entryPath) {
   const ref = document.referrer || ''
   if (!hasUtm && !isExternalReferrer(ref)) return
+  // Kilden for DETTE besøket, i minnet (se getCurrentVisitTouch). Settes før
+  // localStorage-skrivingen, så landingsloggen virker også uten lagring.
+  currentVisitTouch = {
+    ...cur,
+    referrer: ref.slice(0, 300),
+    landing_path: (entryPath || window.location.pathname || '/').slice(0, 200),
+    seen_at: new Date().toISOString(),
+  }
   try {
     const data = {
       ...cur,
