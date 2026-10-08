@@ -21,6 +21,7 @@ const DISMISS_KEY = 'lead_capture_dismissed'
 const DISMISS_DAYS = 7
 
 // status: 'idle' | 'sending' | 'success' | 'duplicate' | 'error'
+// (08.10.2026: muren gjelder bare A2 nå, A1/A3 er gratis i sin helhet.)
 // variant='paywall' (27.09.2026): på muren er de 25 gratis spørsmålene allerede
 // brukt opp, så øvingsplanen er det eneste de får igjen for adressen. Den må
 // derfor stå som et eget, synlig tilbud med innholdet listet FØR feltet, samme

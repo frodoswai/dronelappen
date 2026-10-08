@@ -39,4 +39,4 @@ Erfaringen fra trafikkstasjonen er at det sjelden er regelverket folk stryker p�
 
 ## Slik bruker du formatet til din fordel
 
-Siden du vet det er 30 spørsmål og 75 prosent-krav, kan du øve mot nøyaktig det: DroneLappens eksamensmodus gir deg 30 tilfeldige spørsmål på tid med samme bestå-grense, så du vet om du er klar før du betaler 970 kr. [Prøv 25 spørsmål gratis](/droneeksamen-oving/), ingen innlogging.
+Siden du vet det er 30 spørsmål og 75 prosent-krav, kan du øve mot nøyaktig det: DroneLappens eksamensmodus gir deg 30 tilfeldige spørsmål på tid med samme bestå-grense, så du vet om du er klar før du betaler 970 kr. [Prøv 25 A2-spørsmål gratis](/droneeksamen-oving/), ingen innlogging.

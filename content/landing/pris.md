@@ -1,11 +1,11 @@
 ---
 title: Hva koster DroneLappen? Engangsbeløp, ingen abonnement
-description: Full tilgang til {{ANTALL}} øvingsspørsmål i 12 måneder for et engangsbeløp — ingen abonnement, ingen automatisk trekk. Prøv 25 spørsmål gratis uten innlogging.
+description: Full tilgang til {{ANTALL}} øvingsspørsmål i 12 måneder for et engangsbeløp — ingen abonnement, ingen automatisk trekk. A1/A3 er gratis, og du kan prøve 25 A2-spørsmål gratis uten innlogging.
 h1: Hva koster DroneLappen?
 slug: pris
 ---
 
-<p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder. Du kan teste 25 spørsmål helt gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
+<p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder. A1/A3 er gratis i sin helhet, og du kan teste 25 A2-spørsmål gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
 
 {{PRIS_VARSEL}}
 
@@ -43,15 +43,15 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 
 <div class="cta-box">
 <h2>Prøv gratis, kjøp når du er klar</h2>
-<p>Test 25 spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
-<a class="btn" href="/">Prøv 25 gratis →</a>
+<p>Øv gratis på hele A1/A3 og test 25 A2-spørsmål. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
+<a class="btn" href="/">Øv gratis nå →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
 
 ## Ofte stilte spørsmål
 
 ### Hva koster DroneLappen?
-Et engangskjøp som gir full tilgang til alle {{ANTALL}} spørsmål i 12 måneder. 25 spørsmål er gratis. Gjeldende pris står øverst på siden.
+Et engangskjøp som gir full tilgang til alle {{ANTALL}} spørsmål i 12 måneder. A1/A3 er gratis, og 25 A2-spørsmål er gratis. Gjeldende pris står øverst på siden.
 
 ### Er det abonnement?
 Nei. Det er et engangsbeløp, ikke abonnement — det trekkes aldri automatisk. Tilgangen varer i 12 måneder fra kjøpet.
@@ -60,7 +60,7 @@ Nei. Det er et engangsbeløp, ikke abonnement — det trekkes aldri automatisk. 
 Nei. DroneLappen er en øvingsapp. Selve eksamen er separat: A1/A3 er gratis hos Luftfartstilsynet, mens A2 koster 970 kr på trafikkstasjon.
 
 ### Kan jeg prøve før jeg betaler?
-Ja, 25 spørsmål er gratis uten innlogging.
+Ja. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og 25 A2-spørsmål er gratis, uten innlogging.
 
 ## Les også
 

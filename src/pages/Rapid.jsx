@@ -43,7 +43,8 @@ export default function Rapid() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   // Tier from get-questions: 'free' means the set is the 25-question pool,
-  // so the natural end of a Tempo run is the paywall moment.
+  // so the natural end of a Tempo run is the paywall moment. Unntak fra
+  // 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
   const [showPaywall, setShowPaywall] = useState(false)
 
@@ -204,7 +205,8 @@ export default function Rapid() {
     }
   }
 
-  const freeCapped = fetchedTier === 'free'
+  // A1/A3 er gratis for alle fra 08.10.2026: ingen mur etter Tempo.
+  const freeCapped = fetchedTier === 'free' && examType !== 'A1_A3'
 
   const advance = () => {
     timerRef.current = null
@@ -216,6 +218,7 @@ export default function Rapid() {
         finishWithFinalTime()
         // End of the free 25-question pool → paywall interstitial before the
         // tempo finish screen. Only on natural completion, not handleStop.
+        // Bare A2 fra 08.10.2026 (A1/A3 er gratis), så FreePoolCompleted er A2.
         if (freeCapped) {
           window.fbq?.('trackCustom', 'FreePoolCompleted')
           setShowPaywall(true)
@@ -329,7 +332,8 @@ export default function Rapid() {
     return <Paywall answered={0} lockedExam={examType} />
   }
 
-  // Free users hit the paywall after finishing the 25-question free pool.
+  // Free users hit the paywall after finishing the 25-question free pool (A2;
+  // A1/A3 er gratis i sin helhet fra 08.10.2026).
   // Interstitial before the tempo finish screen; onContinue reveals the
   // score/time achievement so the wall never hides the user's own result.
   if (showPaywall) {

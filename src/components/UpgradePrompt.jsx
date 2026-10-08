@@ -5,6 +5,7 @@ import { createCheckout } from '../lib/supabase'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
 import { PRICE } from '../lib/pricing'
 import HarTilgangLoggInn from './HarTilgangLoggInn'
+import { logFunnel, UPGRADE_BUY_CLICK } from '../lib/funnel'
 
 /**
  * Upsell to full access (se src/lib/pricing.js / 12 months).
@@ -15,7 +16,9 @@ import HarTilgangLoggInn from './HarTilgangLoggInn'
 // paidOnlyTitle: eksamenstyper uten gratis-pool (STS) sender paywallTitle fra
 // lib/exams.js, så kortet ikke lover «25 spørsmål» der det er null gratis
 // (03.10.2026, landingssida /sts-eksamen/ sender gratisbrukere hit).
-export default function UpgradePrompt({ compact = false, requireUser = false, paidOnlyTitle = '' }) {
+// examType (08.10.2026): A1/A3 er gratis for alle, så kortet selger A2 og STS
+// der i stedet for å love «25 spørsmål».
+export default function UpgradePrompt({ compact = false, requireUser = false, paidOnlyTitle = '', examType = null }) {
   const { user, tier, loading } = useAuth()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -30,6 +33,8 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
     setError('')
     // Funnel-instrumentering (se Home.jsx): tell buy-forsøk i Meta + synliggjør feil.
     window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
+    // Ventes på (maks 800 ms) før redirect, samme mønster som QuizLayout.
+    await logFunnel(UPGRADE_BUY_CLICK, { examType })
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
@@ -45,8 +50,17 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
         full tilgang
       </div>
       <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
-        {paidOnlyTitle ? `${paidOnlyTitle} ` : 'Gratisversjonen gir deg 25 spørsmål. '}Betal <strong>{PRICE} kr én gang</strong> og
-        l&aring;s opp <strong>hele sp&oslash;rsm&aring;lsbanken</strong> i 12 m&aring;neder. Ingen abonnement.
+        {examType === 'A1_A3' && !paidOnlyTitle ? (
+          <>
+            A1/A3 er gratis for alle. Skal du videre til A2? Betal <strong>{PRICE} kr én gang</strong> og
+            f&aring; <strong>A2 og STS-p&aring;bygget</strong> i 12 m&aring;neder. Ingen abonnement.
+          </>
+        ) : (
+          <>
+            {paidOnlyTitle ? `${paidOnlyTitle} ` : 'Gratisversjonen gir deg 25 A2-spørsmål. '}Betal <strong>{PRICE} kr én gang</strong> og
+            l&aring;s opp <strong>hele sp&oslash;rsm&aring;lsbanken</strong> i 12 m&aring;neder. Ingen abonnement.
+          </>
+        )}
       </p>
       <PriceIncreaseNotice className="mb-3 -mt-1" compact />
 

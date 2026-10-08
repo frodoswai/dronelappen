@@ -31,7 +31,8 @@ export default function ExamSelect() {
   const categoryLabel = exam.tag
   const displayName = exam.display
 
-  // Tier-aware: free tier gets a 25-question pool (pass: 19 = 75%),
+  // Tier-aware: free tier gets a 25-question pool on A2 (pass: 19 = 75%).
+  // A1/A3 er unntatt fra 08.10.2026: gratis i sin helhet, 40/30 for alle.
   // PRO gets the full simulation i offisielt format (A2 og STS: 30/23,
   // A1/A3: 40/30, se examCount i lib/exams.js). STS har ingen gratis-pool.
   // Describe what the user will actually get, not more.
@@ -91,7 +92,7 @@ export default function ExamSelect() {
 
         {/* Upsell to full access for free users (hidden for paid).
             Placed above the mode cards so it's visible without scrolling. */}
-        <UpgradePrompt paidOnlyTitle={exam.paidOnly ? exam.paywallTitle : ''} />
+        <UpgradePrompt paidOnlyTitle={exam.paidOnly ? exam.paywallTitle : ''} examType={examType} />
 
         <div className="flex items-center gap-2.5 mb-3">
           <div className="flex-1 h-px bg-da-navy/20" />

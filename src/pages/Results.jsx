@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import CrosshairMarks from '../components/CrosshairMarks'
 import LeadCapture from '../components/LeadCapture'
@@ -301,7 +301,19 @@ export default function Results() {
           <LeadCapture source="quiz_results" />
 
           {/* Upsell to full access — only for logged-in free users */}
-          <UpgradePrompt requireUser />
+          <UpgradePrompt requireUser examType={examType} />
+
+          {/* Frivillig innlogging (Frode 06.10.2026): A1/A3 er gratis uten
+              innlogging, men innlogging lagrer resultatet og gir feilbank og
+              «er du klar?». Aldri en sperre, ingen popup. Bare anonyme på A1/A3. */}
+          {examType === 'A1_A3' && user?.is_anonymous && (
+            <p className="text-[13px] text-da-text-body text-center mb-4">
+              <Link to="/login" className="text-da-navy underline underline-offset-2 hover:text-da-navy-mid">
+                Logg inn gratis
+              </Link>{' '}
+              for å lagre resultatet og se hvilke kategorier du er svakest i.
+            </p>
+          )}
 
           {/* Encouraging line for failed Eksamen — kept below the card so
               it doesn't compete with the score. */}

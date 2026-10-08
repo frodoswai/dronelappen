@@ -28,7 +28,7 @@ DroneLappen er bygget for å trene deg på nøyaktig de spørsmålstypene du mø
 - **Eksamensmodus** med ekte tidsfrist og bestå-grense, akkurat som den offisielle prøven
 - **Feilgjennomgang** med forklaring på hvert svar, så du lærer reglene og ikke bare pugger
 - **Rapid-modus** for rask repetisjon når du har dårlig tid
-- Prøv **25 spørsmål gratis**, uten innlogging
+- Prøv **25 A2-spørsmål gratis**, uten innlogging (A1/A3 er gratis i sin helhet)
 
 <figure class="sitat">
 <blockquote>«DroneLappen er veldig fin å øve på, spesielt den tempoknappen. Hadde fleire gonger 28 rette på fire–fem minutt.»</blockquote>
@@ -39,7 +39,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 
 <div class="cta-box">
 <h2>Klar til å øve til A2?</h2>
-<p>Test deg med 25 spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
+<p>Test deg med 25 A2-spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
 <a class="btn" href="/">Prøv 25 gratis →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
@@ -47,7 +47,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 ## Ofte stilte spørsmål
 
 ### Hva koster A2 drone sertifikat?
-Selve A2-eksamen koster 970 kr og tas på en trafikkstasjon. Øvingsappen DroneLappen er et engangskjøp med 12 måneders full tilgang, og 25 spørsmål er gratis.
+Selve A2-eksamen koster 970 kr og tas på en trafikkstasjon. Øvingsappen DroneLappen er et engangskjøp med 12 måneders full tilgang, og 25 A2-spørsmål er gratis. A1/A3 er gratis i sin helhet.
 
 ### Hvor lenge varer A2-beviset?
 Kompetansebeviset varer i 5 år. Det gjelder både A1/A3, A2 og STS. For å fornye A2 må du ta A2-kurset på flydrone.no på nytt og avlegge eksamen på en trafikkstasjon igjen. Luftfartstilsynet sender en påminnelse på e-post 28 dager før beviset går ut.

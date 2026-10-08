@@ -19,7 +19,13 @@ const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'ut
 function isExternalReferrer(ref) {
   if (!ref) return false
   try {
-    return new URL(ref).hostname !== window.location.hostname
+    const host = new URL(ref).hostname
+    // Retur fra Stripe Checkout er ikke en ny kilde (08.10.2026). Første salg
+    // etter STS-lanseringen kom fra mailen, men returen fra checkout.stripe.com
+    // ble lagret som ny last touch, så quiz-starten etter kjøpet mistet
+    // kampanjen. Attribusjonen til Stripe sendes før redirect og påvirkes ikke.
+    if (host === 'stripe.com' || host.endsWith('.stripe.com')) return false
+    return host !== window.location.hostname
   } catch {
     return false
   }

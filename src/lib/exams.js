@@ -46,7 +46,7 @@ export const EXAMS = {
     tag: 'online, gratis',
     examDescription: {
       paid: 'Realistisk simulering. 40 spørsmål, 30 riktige for å bestå — som den offisielle prøven.',
-      free: 'Simulering med 25 gratis spørsmål, 75 % for å bestå. Den offisielle prøven har 40 spørsmål.',
+      free: 'Realistisk simulering. 40 spørsmål, 30 riktige for å bestå. Gratis for alle.',
     },
   },
   A2: {

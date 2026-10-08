@@ -14,6 +14,7 @@ import HarTilgangLoggInn from './HarTilgangLoggInn'
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
  * 25-question free pool (the server-side FREE_LIMIT in get-questions).
+ * A1/A3 kommer ikke hit fra 08.10.2026: hele A1/A3 er gratis (A2 og STS har mur).
  *
  * This is the highest-intent conversion moment: the user has just worked
  * through all 25 free questions and wants more. Buy is the primary action;

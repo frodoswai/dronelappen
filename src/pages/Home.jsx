@@ -78,7 +78,8 @@ export default function Home() {
   // Direktekjøp fra e-post: ?kjop=1 starter checkout med én gang.
   //
   // Bakgrunnen (05.08.2026): nyhetsbrevet varsler prisøkningen 15.08, og
-  // mottakerne er folk som allerede har brukt opp de 25 gratisspørsmålene.
+  // mottakerne er folk som allerede har brukt opp de 25 gratisspørsmålene
+  // (på A2; A1/A3 er gratis i sin helhet fra 08.10.2026).
   // Uten dette måtte de lande på forsiden, finne kjøpskortet og klikke igjen —
   // tre steg for noen som allerede hadde bestemt seg.
   //
@@ -449,7 +450,7 @@ export default function Home() {
             </span>
           </div>
           <p className="text-[11.5px] text-da-text-dim leading-[1.5] mb-2.5">
-            Den offisielle nettprøven: 40 spørsmål, 30 riktige for å bestå. Alle må ta denne først.
+            Den offisielle nettprøven: 40 spørsmål, 30 riktige for å bestå. Alle må ta denne først. Alle {ANTALL.A1_A3} spørsmålene er gratis.
           </p>
           <div className="relative z-20">
             <ModePillRow variant="muted" examType="A1_A3" />
@@ -504,7 +505,7 @@ export default function Home() {
             </div>
             <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-2">
               Alle {stats.questions ?? '200+'} spørsmål{antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og alle tre
-              treningsmoduser. Engangsbeløp, ingen abonnement. Gratis gir deg 25 spørsmål.
+              treningsmoduser. Engangsbeløp, ingen abonnement. A1/A3 er gratis. Full tilgang gir A2 og STS.
             </p>
             {/* Sosialt bevis — statisk tall, oppdateres manuelt.
                 GRUNNLAGET MÅ VÆRE user_progress, IKKE auth.users. Tallet «305»

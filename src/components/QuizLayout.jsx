@@ -47,6 +47,9 @@ export default function QuizLayout({
   // Gate on loading so paid users never flash the "Gratis"/upgrade UI
   // before their entitlement resolves (mirrors UpgradePrompt).
   const isFree = !loading && tier !== 'paid'
+  // A1/A3 er gratis i sin helhet fra 08.10.2026. Baren står fortsatt (den er
+  // oppsalget til A2 og STS), men den skal ikke antyde en gratis-pool.
+  const a1a3Free = isFree && examType === 'A1_A3'
 
   const handleUpgrade = async () => {
     if (upgradeBusy) return
@@ -199,20 +202,22 @@ export default function QuizLayout({
       {/* ═══ Sticky free-quota bar ═══
           Visible under every question for free users: a persistent, low-
           friction buy button (Frode: "under hvert spørsmål en kjøp-knapp").
-          Shows how much of the 25-question free pool is used. Hidden for paid
+          Shows how much of the 25-question free pool is used (A2). On A1/A3,
+          which is free in full from 08.10.2026, it says so and sells A2 + STS
+          instead. Hidden for paid
           users and while the tier is still loading (isFree gates both). */}
       {isFree && progress && (
         <div className="fixed bottom-0 inset-x-0 z-40 bg-da-navy-dark/95 backdrop-blur border-t border-da-gold/30">
           <div className="max-w-xl mx-auto px-5 py-2.5 flex items-center justify-between gap-3">
             <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums">
-              Gratis · {progress.current}/{progress.total} spørsmål
+              {a1a3Free ? 'A1/A3 er gratis' : 'Gratis'} · {progress.current}/{progress.total}{a1a3Free ? '' : ' spørsmål'}
             </span>
             <button
               onClick={handleUpgrade}
               disabled={upgradeBusy}
               className="quiz-option font-mono text-[11px] font-medium tracking-[0.04em] bg-da-gold text-da-navy-dark px-3 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity shrink-0 disabled:opacity-60"
             >
-              {upgradeBusy ? 'Sender …' : `Lås opp alt · ${PRICE} kr →`}
+              {upgradeBusy ? 'Sender …' : a1a3Free ? `A2 og STS · ${PRICE} kr →` : `Lås opp alt · ${PRICE} kr →`}
             </button>
           </div>
         </div>

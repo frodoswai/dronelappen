@@ -37,4 +37,4 @@ EU-kommisjonen la i februar 2026 frem forslag om å senke registreringsgrensen f
 
 ## Øv gratis, uansett vekt
 
-Reglene over er nettopp den typen spørsmål droneeksamen stiller. [Test deg på 25 gratis spørsmål](/droneeksamen-oving/), så vet du hvor du står den dagen du vil oppgradere.
+Reglene over er nettopp den typen spørsmål droneeksamen stiller. [Øv gratis på alle A1/A3-spørsmålene](/droneeksamen-oving/), så vet du hvor du står den dagen du vil oppgradere.

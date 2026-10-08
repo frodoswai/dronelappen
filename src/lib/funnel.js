@@ -43,6 +43,12 @@ export const HOME_BUY_CLICK = 'home_buy_click'
 // kan stille - hvor mange velger produktet fremfor muren? Blir andelen høy,
 // var muren en brems, ikke en filtrering.
 export const LEAD_SKIP = 'lead_skip'
+// Kjøpsknappen i UpgradePrompt (ExamSelect og Results), lagt til 08.10.2026.
+// Første salg etter STS-lanseringen (7/10) gikk trolig via denne knappen og
+// fikk null rader i funnel_events, så sale_attribution sa «unknown». Krever at
+// funnel_events_event_check tillater verdien (migrasjon 021); til da avvises
+// innsettingen og logFunnel svelger feilen, så kjøpet påvirkes ikke.
+export const UPGRADE_BUY_CLICK = 'upgrade_buy_click'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

@@ -41,11 +41,11 @@ Y = {
 # Prisen hører hjemme i annonseteksten, som kan endres via API på sekunder.
 PRISLINJE = sys.argv[1] if len(sys.argv) > 1 else "DroneLappen: 12 mnd øving, under halve prisen"
 # Kortets etikett og CTA-knappen er også parameterisert, slik at samme design
-# kan brukes til både salgsannonser («REGN PÅ DET» + «Prøv 25 spørsmål gratis»)
+# kan brukes til både salgsannonser («REGN PÅ DET» + «Øv gratis på A1/A3»)
 # og lead-annonser («GRATIS ØVINGSPLAN» + «Få planen på e-post»). Uten dette
 # ville en lead-annonse sagt én ting i teksten og noe annet i bildet.
 KORTETIKETT = sys.argv[3] if len(sys.argv) > 3 else "REGN PÅ DET:"
-CTA_TEKST   = sys.argv[4] if len(sys.argv) > 4 else "Prøv 25 spørsmål gratis  →"
+CTA_TEKST   = sys.argv[4] if len(sys.argv) > 4 else "Øv gratis på A1/A3  →"
 UT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "feed-1080-instrumentpanel.png")
 
 # Fonter fra canvas-design-skillen. Sett DL_FONTS hvis skillen ligger et annet sted.

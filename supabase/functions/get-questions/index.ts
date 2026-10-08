@@ -5,9 +5,11 @@
 // Deploy: Supabase MCP deploy_edge_function, verify_jwt=false (funksjonen
 // slår selv opp brukeren fra Authorization-headeren).
 //
-// Gratis-brukere får bare spørsmål med free_pool = true (maks 25 per
-// eksamenstype). STS (A2_STS) har ingen gratis-pool (Frode 30.09.2026), så
-// gratis-brukere får 0 STS-spørsmål, og appen viser betalingsmuren.
+// Gratis-brukere: A1/A3 er gratis i sin helhet fra 08.10.2026 (Frode 05.10),
+// men bare når exam_type er eksakt 'A1_A3'. A2 gir fortsatt bare spørsmål med
+// free_pool = true (maks 25). STS (A2_STS) har ingen gratis-pool (Frode
+// 30.09.2026), så gratis-brukere får 0 STS-spørsmål og appen viser muren.
+// free_pool-flagget på A1/A3 i databasen står urørt: det er veien tilbake.
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const FREE_LIMIT = 25
@@ -74,7 +76,10 @@ Deno.serve(async (req) => {
       query = query.eq('exam_type', exam_type)
     }
 
-    if (tier === 'free') {
+    // A1/A3 unntas (08.10.2026): hele banken er gratis. Unntaket krever
+    // eksakt 'A1_A3', så et manglende eller feilstavet exam_type begrenses
+    // som før.
+    if (tier === 'free' && exam_type !== 'A1_A3') {
       // Kuratert, FAST gratis-pool (free_pool-flagget i DB, 25 per
       // eksamenstype med kategorispredning). Deterministisk sett =
       // gjentatte anonyme kall lekker aldri mer enn disse.

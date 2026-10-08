@@ -63,8 +63,8 @@ export default function Vilkar() {
           <section>
             <h2 className="text-lg font-medium text-da-navy mb-2">3. Gratisversjon og full tilgang</h2>
             <p>
-              Gratisversjonen gir tilgang til et begrenset utvalg øvingsspørsmål
-              (for tiden 25 spørsmål). Full tilgang gir tilgang til hele
+              Gratisversjonen gir tilgang til alle A1/A3-spørsmålene og et begrenset
+              utvalg A2-spørsmål (for tiden 25). Full tilgang gir tilgang til hele
               spørsmålsbanken og koster {PRICE} kr som et engangsbeløp, og gir 12
               måneders tilgang. Priser oppgis inkludert merverdiavgift der det er aktuelt.
             </p>

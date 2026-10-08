@@ -113,6 +113,7 @@ export default function Quiz() {
   // Tier as reported by the get-questions Edge Function. When 'free', the
   // server capped the set at the 25-question free pool (FREE_LIMIT), so the
   // end of this quiz is the paywall moment rather than a plain results page.
+  // Unntak fra 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
   const [showPaywall, setShowPaywall] = useState(false)
 
@@ -187,7 +188,8 @@ export default function Quiz() {
         }
 
         // Shuffle question order, then shuffle each question's options.
-        // Free tier: serveren capper poolen på 25, så slice er no-op der.
+        // Free tier: serveren capper poolen på 25 (ikke A1/A3, som er gratis i
+        // sin helhet fra 08.10.2026), så slice er no-op der.
         // Eksamen trekker uten to spørsmål fra samme overlap_group, og med
         // høyst examMaxHard av grad 3. Læring bruker hele banken som før.
         const targetCount = isPracticeMode
@@ -423,7 +425,8 @@ export default function Quiz() {
   // nothing while that runs.
   if (quizComplete) return null
 
-  // Free users hit the paywall after the 25-question free pool. Buy is the
+  // Free users hit the paywall after the 25-question free pool (A2; A1/A3 er
+  // gratis i sin helhet fra 08.10.2026 og går rett til Results). Buy is the
   // primary action; onContinue still lets them see their results, so the wall
   // never traps their own session data.
   if (showPaywall) {
@@ -435,7 +438,8 @@ export default function Quiz() {
     )
   }
 
-  const freeCapped = fetchedTier === 'free'
+  // A1/A3 er gratis for alle fra 08.10.2026: ingen mur, rett til Results.
+  const freeCapped = fetchedTier === 'free' && examType !== 'A1_A3'
   const currentQuestion = questions[currentIndex]
   if (!currentQuestion) return null
   const isAnswered = selectedAnswer !== null
@@ -507,6 +511,7 @@ export default function Quiz() {
       window.scrollTo({ top: 0, behavior: 'auto' })
     } else if (freeCapped) {
       // End of the free 25-question pool → paywall instead of results.
+      // Bare A2 fra 08.10.2026, så FreePoolCompleted gjelder nå bare A2.
       // The InitiateCheckout intent event fires from the paywall's buy button.
       window.fbq?.('trackCustom', 'FreePoolCompleted')
       setShowPaywall(true)
