@@ -86,7 +86,7 @@ Spørsmålene er skrevet ut fra regelverket (EU 2019/947, 2020/639 og 2020/1058)
 
 <div class="cta-box">
 <h2>Klar til å øve til STS?</h2>
-<p><strong>Lanseringspris: {{PRIS_HTML}} kr for alt, også STS.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement.</p>
+<p><strong>Lanseringspris: {{PRIS_HTML}} kr for alt, også STS.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement. Senere i vinter kommer det et eget tillegg for STS. Kjøper du før det, får du STS med uten ekstra kostnad.</p>
 <a class="btn" href="/exam/A2_STS">Start STS-øvingen →</a>
 <a class="btn secondary" href="/">Se alle eksamenene →</a>
 </div>
@@ -109,7 +109,7 @@ Ikke helt. STS-spørsmålene er laget for påbygget og dekker de fem emnene som 
 Nei. STS er bare med i full tilgang. De tre eksemplene på denne siden viser hvordan spørsmålene er, og de gratis spørsmålene i appen er fra A1/A3 og A2.
 
 ### Hva koster STS i DroneLappen?
-Akkurat nå er det lanseringspris: {{PRIS}} kr for alt, også STS. Ett kjøp gir STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Det er et engangsbeløp, ikke et abonnement.
+Akkurat nå er det lanseringspris: {{PRIS}} kr for alt, også STS. Ett kjøp gir STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Det er et engangsbeløp, ikke et abonnement. Senere i vinter kommer det et eget tillegg for STS på toppen av prisen for A1/A3 og A2. Kjøper du før det, får du STS med uten ekstra kostnad.
 
 ### Hvor lenge gjelder STS-beviset?
 Kompetansebeviset for STS gjelder i 5 år, som de andre dronebevisene. Tilgangen til DroneLappen varer i 12 måneder fra kjøpet. De to henger ikke sammen.

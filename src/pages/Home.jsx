@@ -7,6 +7,7 @@ import CrosshairMarks from '../components/CrosshairMarks'
 import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
+import HomeFaq from '../components/HomeFaq'
 import ReadinessCard from '../components/ReadinessCard'
 import StsVoteCard from '../components/StsVoteCard'
 import StsExamCard from '../components/StsExamCard'
@@ -557,6 +558,9 @@ export default function Home() {
           </div>
           <NewsletterSignup />
         </div>
+
+        {/* Synlig FAQ, speiler FAQPage i index.html (08.10.2026) */}
+        <HomeFaq />
 
         {/* Footer stats — Round 3.5 wired live from Supabase. Dots on
             load so the layout doesn't shift when counts resolve. Errors
