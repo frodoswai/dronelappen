@@ -28,6 +28,9 @@ export default function Results() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const [showAllAnswers, setShowAllAnswers] = useState(false)
+  // Deling etter bestått A1/A3-eksamen (Del D i A1/A3-briefen, 08.10.2026).
+  // Gratis A1/A3 skal gi omtale, og den som nettopp besto er den beste ambassadøren.
+  const [delStatus, setDelStatus] = useState('')
   // Simple mount fade-in for the stats card. No confetti, no bounce.
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -296,6 +299,37 @@ export default function Results() {
               )}
             </div>
           </div>
+
+          {/* Del resultatet: bare bestått A1/A3 Eksamen. Web Share API på mobil,
+              ellers kopieres lenken. UTM share/results/a1a3 viser i visit_events
+              om delingene gir nye besøkende. */}
+          {variant === 'passed' && examType === 'A1_A3' && (
+            <div className="text-center mb-5">
+              <button
+                onClick={async () => {
+                  const url = 'https://dronelappen.app/?utm_source=share&utm_medium=results&utm_campaign=a1a3'
+                  const text = `Jeg besto A1/A3-simuleringen på DroneLappen med ${correctCount} av ${totalQuestions}. Alle A1/A3-spørsmålene er gratis:`
+                  try {
+                    if (navigator.share) {
+                      await navigator.share({ title: 'DroneLappen', text, url })
+                      setDelStatus('Takk for at du deler!')
+                    } else {
+                      await navigator.clipboard.writeText(`${text} ${url}`)
+                      setDelStatus('Lenken er kopiert.')
+                    }
+                  } catch {
+                    /* avbrutt deling er ikke en feil */
+                  }
+                }}
+                className="quiz-option bg-da-gold text-da-navy-dark font-medium py-2.5 px-5 rounded-lg text-[13px] hover:opacity-90 transition-opacity"
+              >
+                Del at du besto
+              </button>
+              {delStatus && (
+                <p className="text-[12px] text-da-text-muted mt-2" role="status">{delStatus}</p>
+              )}
+            </div>
+          )}
 
           {/* Email capture — shown only for anonymous users. Lower-friction
               than account creation and feeds the DroneLappen leads nurture;

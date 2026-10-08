@@ -110,7 +110,11 @@ function extractFaq(body) {
   // strip enkel markdown fra svarene
   return faqs
     .filter((f) => f.q && f.a)
-    .map((f) => ({ q: f.q, a: f.a.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '').trim() }))
+    // Plassholderne erstattes FØR markdown-strippingen (08.10.2026): strippingen
+    // fjerner understreker, så {{ANTALL_A1A3}} ble til {{ANTALLA1A3}} og sto
+    // uerstattet i FAQ-skjemaet på /pris/ og /droneeksamen-oving/. {{PRIS_HTML}}
+    // blir rent tall her, siden JSON-LD skal være ren tekst.
+    .map((f) => ({ q: pris(f.q), a: pris(f.a.replaceAll('{{PRIS_HTML}}', '{{PRIS}}')).replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '').trim() }))
 }
 
 const CSS = `
