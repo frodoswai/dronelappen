@@ -64,7 +64,22 @@ function waitForUserId(timeoutMs = 8000) {
   })
 }
 
+// Roboter teller ikke som besøk (08.10.2026). Google gjennomgår landingssidene
+// etter at en annonse er godkjent, og hvert slikt besøk fikk en anonym bruker
+// og en landingsrad: lead-gruppa hadde 10 landinger på 3 klikk. Gjelder også
+// våre egne headless-tester. navigator.webdriver fanger automatiserte nettlesere.
+const BOT_UA = /bot|crawl|spider|slurp|adsbot|mediapartners|google-inspectiontool|lighthouse|headlesschrome|bingpreview|facebookexternalhit/i
+
+function erRobot() {
+  try {
+    return navigator.webdriver === true || BOT_UA.test(navigator.userAgent || '')
+  } catch {
+    return false
+  }
+}
+
 async function insertVisit(row) {
+  if (erRobot()) return
   try {
     const uid = await waitForUserId()
     if (!uid) return
