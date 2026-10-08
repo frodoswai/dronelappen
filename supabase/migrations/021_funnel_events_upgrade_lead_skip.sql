@@ -1,6 +1,6 @@
 -- 021: funnel_events tillater 'upgrade_buy_click' og 'lead_skip' (08.10.2026).
 --
--- IKKE KJØRT. Krever Frodes ja (skjema endres ikke uten).
+-- KJØRT 08.10.2026 etter Frodes ja (apply_migration 021_funnel_events_upgrade_lead_skip).
 --
 -- Funnet 08.10.2026 da kjøpsknappen i UpgradePrompt skulle få egen hendelse:
 -- funnel_events_event_check tillater bare de fem første hendelsene. 'lead_skip'
