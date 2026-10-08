@@ -32,7 +32,7 @@ slug: droneeksamen-oving
 <figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
 </figure>
 
-Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått eksamen — slik at formen på spørsmålene ligner den ekte prøven mest mulig.
+Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått eksamen, slik at formen på spørsmålene ligner den ekte prøven mest mulig.
 
 <div class="cta-box">
 <h2>Start øvingen</h2>
@@ -53,7 +53,7 @@ Ja. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og du kan teste 25 A2-sp
 DroneLappen har {{ANTALL}} norske spørsmål. Øv til du stabilt består prøveeksamen med god margin over 75 %.
 
 ### Dekker øvingen både A1/A3 og A2?
-Ja, spørsmålsbanken dekker pensum for både A1/A3 og A2.
+Ja, og STS-påbygget også. Spørsmålsbanken har {{ANTALL}} spørsmål: {{ANTALL_A1A3}} til A1/A3, {{ANTALL_A2}} til A2 og {{ANTALL_STS}} til STS.
 
 ## Les også
 

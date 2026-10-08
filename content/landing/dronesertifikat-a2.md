@@ -35,7 +35,7 @@ DroneLappen er bygget for å trene deg på nøyaktig de spørsmålstypene du mø
 <figcaption>Knut Vidar T., bestod A2-eksamen i juli 2026</figcaption>
 </figure>
 
-Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått A2-eksamen — slik at formen på spørsmålene ligner den ekte prøven mest mulig.
+Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilbakemeldinger fra kandidater som nettopp har bestått A2-eksamen, slik at formen på spørsmålene ligner den ekte prøven mest mulig.
 
 <div class="cta-box">
 <h2>Klar til å øve til A2?</h2>
@@ -50,10 +50,10 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 Selve A2-eksamen koster 970 kr og tas på en trafikkstasjon. Øvingsappen DroneLappen er et engangskjøp med 12 måneders full tilgang, og 25 A2-spørsmål er gratis. A1/A3 er gratis i sin helhet.
 
 ### Hvor lenge varer A2-beviset?
-Kompetansebeviset varer i 5 år. Det gjelder både A1/A3, A2 og STS. For å fornye A2 må du ta A2-kurset på flydrone.no på nytt og avlegge eksamen på en trafikkstasjon igjen. Luftfartstilsynet sender en påminnelse på e-post 28 dager før beviset går ut.
+Kompetansebeviset varer i 5 år. Det gjelder både A1/A3, A2 og STS. For å fornye A2 tar du ny eksamen på trafikkstasjonen. A2-kurset på flydrone.no er fint som forberedelse. Du kan ta prøven fra 28 dager før beviset går ut.
 
 ### Hvor lenge varer tilgangen til DroneLappen?
-12 måneder fra kjøpet. Det er øvingsappen som varer i 12 måneder — selve kompetansebeviset ditt varer i 5 år, uavhengig av oss. De to henger ikke sammen.
+12 måneder fra kjøpet. Det er øvingsappen som varer i 12 måneder. Selve kompetansebeviset ditt varer i 5 år, uavhengig av oss. De to henger ikke sammen.
 
 ### Hvor tar jeg A2-eksamen?
 A2-eksamen avlegges hos en trafikkstasjon (Statens vegvesen). Du må ha bestått A1/A3 først. Se [hvordan A2-eksamen hos Statens vegvesen foregår, steg for steg](/blogg/a2-eksamen-trafikkstasjonen/).
@@ -62,7 +62,7 @@ A2-eksamen avlegges hos en trafikkstasjon (Statens vegvesen). Du må ha bestått
 Du må ha minst 75 % riktig, altså 23 av 30 spørsmål.
 
 ### Trenger jeg A2 for å fly drone i Norge?
-For de fleste hobbyoppdrag holder A1/A3. A2 kreves når du vil fly tyngre droner nærmere uinvolverte personer.
+For de fleste hobbyflyginger holder A1/A3. A2 trenger du bare hvis du skal fly en C2-merket drone nærmere uinvolverte enn A3 tillater (ned til 30 meter, 5 meter i lavhastighetsmodus).
 
 ## Les også
 

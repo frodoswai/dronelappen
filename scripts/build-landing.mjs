@@ -50,6 +50,7 @@ function pris(str) {
     .replaceAll('{{PRIS}}', String(PRIS))
     .replaceAll('{{ANTALL_A1A3}}', String(ANTALL.A1_A3))
     .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
+    .replaceAll('{{ANTALL_STS}}', String(ANTALL.A2_STS))
     .replaceAll('{{ANTALL}}', String(ANTALL.total)) // totalen med STS fra lanseringen 6.10.2026, se vite.config.js
 }
 
