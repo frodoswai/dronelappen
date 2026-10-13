@@ -40,6 +40,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 <div class="cta-box">
 <h2>Klar til å øve til A2?</h2>
 <p>Test deg med 25 A2-spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
+{{PRIS_VARSEL}}
 <a class="btn" href="/">Prøv 25 gratis →</a>
 <a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>

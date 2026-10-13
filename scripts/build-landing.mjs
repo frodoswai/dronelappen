@@ -34,10 +34,19 @@ const PRICE_INCREASE_AT = '2026-08-15T00:00:00+02:00'
 const PRICE_BEFORE = 249
 const PRICE_AFTER = 349
 const PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? PRICE_AFTER : PRICE_BEFORE
+// Lanseringspris med STS til og med 30.11.2026, deretter full pakke 449 kr
+// (Frode 13.10.2026). Speiler STS_TIER_AT i src/lib/pricing.js. Prisen i dag
+// er fortsatt 349 kr; selve nivåbyttet bygges i november. PRIS_SCRIPT fjerner
+// varselet ved visning etter datoen, så statiske sider aldri lover en frist
+// som er passert.
+const STS_TIER_AT = '2026-12-01T00:00:00+01:00'
+const PRICE_FULL_AFTER = 449
 const PRIS_VARSEL_HTML =
   PRIS === PRICE_BEFORE
     ? `<p class="dl-prisvarsel"><strong>Prisen øker til ${PRICE_AFTER} kr 15. august 2026.</strong> Kjøper du før det, beholder du dagens pris i hele tilgangsperioden.</p>`
-    : ''
+    : Date.now() < Date.parse(STS_TIER_AT)
+      ? `<p class="dl-prisvarsel"><strong>Lanseringspris til 30. november 2026: ${PRIS} kr for alt, også STS.</strong> Fra 1. desember koster pakken med STS ${PRICE_FULL_AFTER} kr. Kjøper du før det, har du STS med i hele tilgangsperioden på 12 måneder.</p>`
+      : ''
 
 /** Erstatter {{PRIS}}, {{PRIS_HTML}} og {{PRIS_VARSEL}} i markdown/frontmatter. */
 function pris(str) {
@@ -64,7 +73,7 @@ function pris(str) {
 const ANTALL = JSON.parse(readFileSync(join(ROOT, 'src', 'lib', 'antall.json'), 'utf8'))
 writeFileSync(join(PUBLIC, 'antall.json'), JSON.stringify(ANTALL, null, 2) + '\n')
 
-const PRIS_SCRIPT = `<script>(function(){var T=Date.parse('${PRICE_INCREASE_AT}');if(Date.now()<T)return;var n=document.querySelectorAll('.dl-pris');for(var i=0;i<n.length;i++)n[i].textContent='${PRICE_AFTER}';var v=document.querySelectorAll('.dl-prisvarsel');for(var j=0;j<v.length;j++)v[j].parentNode.removeChild(v[j]);})();</script>`
+const PRIS_SCRIPT = `<script>(function(){var T=Date.parse('${PRICE_INCREASE_AT}');if(Date.now()>=T){var n=document.querySelectorAll('.dl-pris');for(var i=0;i<n.length;i++)n[i].textContent='${PRICE_AFTER}';}var S=Date.parse('${STS_TIER_AT}');if(Date.now()<S)return;var v=document.querySelectorAll('.dl-prisvarsel');for(var j=0;j<v.length;j++)v[j].parentNode.removeChild(v[j]);})();</script>`
 // --------------------------------------------------------------------------
 
 const esc = (s) =>

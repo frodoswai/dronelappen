@@ -42,3 +42,28 @@ export const PRICE = currentPrice()
 export function showIncreaseNotice(now = new Date()) {
   return !priceIncreaseDone(now)
 }
+
+/**
+ * Lanseringsprisen med STS inkludert gjelder til og med 30. november 2026
+ * (Frode 13.10.2026, etter salgsanalysen samme dag). Fra 1. desember blir det
+ * to nivåer for nye kunder: A2 med A1/A3 349 kr, full pakke med STS 449 kr
+ * (besluttet 4/10, se MacMiniHub/notes/briefs/2026-10-04-dronelappen-prisnivaer-sts.md).
+ *
+ * JURIDISK: datoen er nå annonsert, så nivåbyttet MÅ gjennomføres 1/12
+ * (mfl. § 7). Selve byttet (Stripe, create-checkout, entitlements) bygges i
+ * november etter prisnivå-briefen. Fristteksten slukker av seg selv ved
+ * STS_TIER_AT, så ingen må huske å deploye den bort.
+ */
+export const STS_TIER_AT = '2026-12-01T00:00:00+01:00'
+export const STS_TIER_LABEL = '30. november'
+export const STS_TIER_LABEL_FULL = '30. november 2026'
+export const PRICE_FULL_AFTER = 449
+
+export function stsTierDone(now = new Date()) {
+  return now.getTime() >= new Date(STS_TIER_AT).getTime()
+}
+
+/** Skal vi vise «lanseringspris til 30. november»-fristen? Kun før byttet. */
+export function showLaunchPriceNotice(now = new Date()) {
+  return !stsTierDone(now)
+}
