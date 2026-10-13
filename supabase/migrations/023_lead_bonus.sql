@@ -1,7 +1,7 @@
 -- 023: 10 ekstra A2-spørsmål til den som gir e-post på muren (Frode 05.10.2026,
 -- brief notes/briefs/2026-10-05-dronelappen-mur-10-ekstra-mot-epost.md).
--- UTKAST 13.10.2026, IKKE KJØRT. Krever Frodes ja (CLAUDE.md: skjema endres
--- ikke uten ja). Nummerert 023 fordi 021 og 022 kom etter at briefen ble skrevet.
+-- KJØRT 13.10.2026 23:11 via Supabase MCP apply_migration etter Frodes ja i chat
+-- (verifisert: 10 bonus, 0 i free_pool, RLS på, 0 policyer). Nummerert 023 fordi 021 og 022 kom etter briefen.
 
 -- 1. Hvem som har fått bonusen. Bare service role (edge-funksjonene) leser og
 --    skriver. RLS på, ingen policyer.
