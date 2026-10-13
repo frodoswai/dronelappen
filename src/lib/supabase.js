@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { askCheckoutEmail, CheckoutCancelled } from './checkoutEmail'
 import { getAttribution, getGoogleClick, getMetaIds } from './attribution.js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
@@ -45,6 +46,16 @@ export async function createCheckout() {
     throw new Error('Du må være innlogget for å kjøpe full tilgang.')
   }
 
+  // 13.10.2026: anonyme kjøpere (user.email er '') spørres om e-post før
+  // Stripe, med frivillig ja til én påminnelse ved forlatt kjøp. Se
+  // lib/checkoutEmail.js. Avbryt kaster CheckoutCancelled (e.cancelled).
+  let checkoutEmail = { email: '', remind: false }
+  if (!session.user?.email) {
+    const svar = await askCheckoutEmail()
+    if (!svar) throw new CheckoutCancelled()
+    checkoutEmail = svar
+  }
+
   const res = await fetch(
     `${supabaseUrl}/functions/v1/create-checkout`,
     {
@@ -64,6 +75,8 @@ export async function createCheckout() {
       body: JSON.stringify({
         attribution: { ...getAttribution(), ...getMetaIds() },
         google_click: getGoogleClick(),
+        email: checkoutEmail.email || undefined,
+        remind: checkoutEmail.remind ? 1 : 0,
       }),
     }
   )

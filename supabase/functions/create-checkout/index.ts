@@ -92,8 +92,21 @@ Deno.serve(async (req) => {
     // separat fra attribution fordi den bare gjelder her og nå. Se
     // src/lib/attribution.js for hvorfor den ikke lagres på enheten.
     let googleClick: { name: string; value: string } | null = null
+    // 13.10.2026: e-post fra dialogen før Stripe (anonyme kjøpere) og et
+    // frivillig ja til én påminnelse ved forlatt kjøp. Påminnelsen sendes av
+    // MacMiniHub/scripts/dronelappen_checkout_recovery.py, som leser
+    // metadata.remind og customer_details.email på utløpte økter.
+    let bodyEmail = ''
+    let remind = false
     try {
       const body = await req.json().catch(() => null)
+      if (body && typeof body === 'object') {
+        const e = (body as Record<string, unknown>).email
+        if (typeof e === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.trim()) && e.length <= 254) {
+          bodyEmail = e.trim().toLowerCase()
+        }
+        remind = (body as Record<string, unknown>).remind === 1 || (body as Record<string, unknown>).remind === '1'
+      }
       const attr = body && typeof body === 'object' ? (body as Record<string, unknown>).attribution : null
       if (attr && typeof attr === 'object') {
         for (const [k, v] of Object.entries(attr as Record<string, unknown>)) {
@@ -127,6 +140,7 @@ Deno.serve(async (req) => {
     const sessionMeta: Record<string, string> = { ...meta }
     if (clientIp) sessionMeta.capi_ip = clientIp
     if (clientUa) sessionMeta.capi_ua = clientUa
+    if (remind && (user.email || bodyEmail)) sessionMeta.remind = '1'
 
     const price = currentPrice()
 
@@ -153,8 +167,11 @@ Deno.serve(async (req) => {
       client_reference_id: user.id,
       // Anonymous users have email "" (not null), so use || not ?? — otherwise
       // Stripe rejects the empty string. Stripe then collects the email itself.
-      customer_email: user.email || undefined,
+      customer_email: user.email || bodyEmail || undefined,
       metadata: sessionMeta,
+      // Forlatt kjøp: Stripe lager en gjenopprettings-URL (gyldig 30 dager
+      // etter utløp) som påminnelsen lenker til. Økta utløper som før (24 t).
+      after_expiration: { recovery: { enabled: true } },
       payment_intent_data: { metadata: meta },
       locale: 'nb',
       allow_promotion_codes: true,

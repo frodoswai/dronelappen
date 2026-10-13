@@ -16,6 +16,7 @@ import MinSide from './pages/MinSide'
 import SettPassord from './pages/SettPassord'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
+import CheckoutEmailDialog from './components/CheckoutEmailDialog'
 import { enabledExamTypes } from './lib/exams'
 import './App.css'
 
@@ -49,6 +50,7 @@ function App() {
     <AuthProvider>
       <div className="min-h-screen bg-da-bg flex flex-col">
         <PaymentReturn />
+        <CheckoutEmailDialog />
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Home />} />

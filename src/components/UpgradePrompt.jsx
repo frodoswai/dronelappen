@@ -38,6 +38,10 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
+      if (err?.cancelled) {
+        setBusy(false)
+        return
+      }
       window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })
       setError(err.message || 'Noe gikk galt. Prøv igjen.')
       setBusy(false)

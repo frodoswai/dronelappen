@@ -64,9 +64,10 @@ export default function QuizLayout({
     setUpgradeBusy(true)
     try {
       await createCheckout() // redirects to Stripe on success
-    } catch {
+    } catch (e) {
       setUpgradeBusy(false)
-      navigate('/')
+      // Avbrutt e-postdialog: bli i quizen. Andre feil: forsiden som før.
+      if (!e?.cancelled) navigate('/')
     }
   }
 

@@ -131,6 +131,11 @@ export default function Home() {
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
+      if (err?.cancelled) {
+        // Brukeren avbrøt e-postdialogen. Ingen feil, ingen melding.
+        setBuyBusy(false)
+        return
+      }
       // Gjør checkout-feil synlige i Meta -> brutt betalingssti fanges på
       // timer, ikke dager (jf. anon-email-bug 2026-07-01).
       window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })

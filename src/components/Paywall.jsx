@@ -61,6 +61,10 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null }
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (e) {
+      if (e?.cancelled) {
+        setBusy(false)
+        return
+      }
       window.fbq?.('trackCustom', 'CheckoutError', {
         message: String(e?.message || e).slice(0, 200),
       })
