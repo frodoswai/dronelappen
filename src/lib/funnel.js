@@ -49,6 +49,11 @@ export const LEAD_SKIP = 'lead_skip'
 // funnel_events_event_check tillater verdien (migrasjon 021); til da avvises
 // innsettingen og logFunnel svelger feilen, så kjøpet påvirkes ikke.
 export const UPGRADE_BUY_CLICK = 'upgrade_buy_click'
+// Muren ga 10 ekstra A2-spørsmål mot e-post (14.10.2026, Frode 05.10). Logges
+// én gang når newsletter-signup svarer bonus: true. Verdien er tillatt i
+// funnel_events_event_check fra migrasjon 023. Teller sammen med paywall_view:
+// hvor mange av dem som så muren tok tilbudet.
+export const LEAD_BONUS_GRANTED = 'lead_bonus_granted'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

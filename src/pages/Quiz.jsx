@@ -22,6 +22,9 @@ const LOW_TIME_MS = 5 * 60 * 1000
 // Bestå-terskelen (75 %) regnes dynamisk i Results: 30/40 og 23/30.
 // Læring (practice) holder seg på 30 uansett type.
 const PRACTICE_QUESTION_COUNT = 30
+// Bonus på muren (14.10.2026, Frode 05.10): e-post gir 10 ekstra A2-spørsmål.
+// Speiler BONUS_LIMIT i get-questions; serveren er fasiten.
+const BONUS_LIMIT = 10
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -115,6 +118,12 @@ export default function Quiz() {
   // end of this quiz is the paywall moment rather than a plain results page.
   // Unntak fra 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
+  // Bonus fra get-questions (14.10.2026): `bonus` sier om brukeren alt har
+  // tatt tilbudet på muren (da vises ikke e-postskjemaet igjen), `free_limit`
+  // (25 eller 35) sier hvor muren står. Muren utløses når spørsmålene er
+  // brukt opp, og settet er alltid ≤ free_limit, så 25 er ikke hardkodet her.
+  const [fetchedBonus, setFetchedBonus] = useState(false)
+  const [freeLimit, setFreeLimit] = useState(null)
   const [showPaywall, setShowPaywall] = useState(false)
 
   // Fetch questions on mount
@@ -144,6 +153,10 @@ export default function Quiz() {
         // Læring: et besvart spørsmål er låst med forklaring — vis den igjen.
         if (isPracticeMode && restoredAnswers[idx]) setShowExplanation(true)
         setFetchedTier(saved.fetchedTier ?? null)
+        // Økter lagret før 14.10.2026 mangler feltene: da gjelder 25 og
+        // ingen bonus, og tilbudet på muren virker som for en ny økt.
+        setFetchedBonus(saved.bonus === true)
+        setFreeLimit(typeof saved.free_limit === 'number' ? saved.free_limit : null)
         if (needsTimer) setStartTime(saved.startTime ?? Date.now())
         setLoading(false)
         return
@@ -152,8 +165,10 @@ export default function Quiz() {
 
     const loadQuestions = async () => {
       try {
-        const { questions: data, tier } = await fetchQuestions({ examType })
+        const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
+        setFetchedBonus(bonus === true)
+        setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
 
         // Eksamenstype uten gratis-pool og gratis tilgang: ingenting å trekke
         // og ingen klokke å starte. Betalingsmuren vises i stedet (se under).
@@ -232,9 +247,11 @@ export default function Quiz() {
       answers,
       currentIndex,
       fetchedTier,
+      bonus: fetchedBonus,
+      free_limit: freeLimit,
       startTime,
     })
-  }, [loading, quizComplete, questions, answers, currentIndex, fetchedTier, startTime, storageKey])
+  }, [loading, quizComplete, questions, answers, currentIndex, fetchedTier, fetchedBonus, freeLimit, startTime, storageKey])
 
   // Skru av pull-to-refresh mens en økt pågår (se index.css .dl-no-ptr).
   // Forsiden beholder nedtrekking så installert app kan hente ny versjon.
@@ -429,10 +446,50 @@ export default function Quiz() {
   // gratis i sin helhet fra 08.10.2026 og går rett til Results). Buy is the
   // primary action; onContinue still lets them see their results, so the wall
   // never traps their own session data.
+  // «Fortsett å øve» etter e-post på muren (14.10.2026): hent settet på nytt
+  // (serveren gir nå free_pool + bonus_pool), legg de nye bak de besvarte og
+  // fortsett fra neste spørsmål. Svar, posisjon og eksamensklokke beholdes.
+  // Læring tar alle 10 (25 → 35). Eksamen fylles opp til examCount (25 → 30),
+  // så runden blir en hel A2-prøve; de siste bonusspørsmålene kommer i neste
+  // eksamensrunde, som nå trekker 30 av 35. Gir refetch-en ingenting nytt,
+  // går økta til resultatene som før.
+  const handleBonus = async () => {
+    try {
+      const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
+      setFetchedTier(tier ?? null)
+      setFetchedBonus(bonus === true)
+      setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
+      const seen = new Set(questions.map((q) => q.id))
+      const room = isPracticeMode ? BONUS_LIMIT : Math.max(0, examCount - questions.length)
+      const fresh = shuffleArray((data || []).filter((q) => !seen.has(q.id)))
+        .slice(0, room)
+        .map((q) => ({ ...q, options: shuffleArray(q.options) }))
+      if (fresh.length === 0) {
+        setShowPaywall(false)
+        setQuizComplete(true)
+        return
+      }
+      const nextIndex = questions.length
+      setQuestions([...questions, ...fresh])
+      setAnswers([...answers, ...new Array(fresh.length).fill(null)])
+      setCurrentIndex(nextIndex)
+      setSelectedAnswer(null)
+      setShowExplanation(false)
+      setShowPaywall(false)
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    } catch (err) {
+      console.error('Error fetching bonus questions:', err)
+      setShowPaywall(false)
+      setQuizComplete(true)
+    }
+  }
+
   if (showPaywall) {
     return (
       <Paywall
         answered={questions.length}
+        bonus={fetchedBonus}
+        onBonus={handleBonus}
         onContinue={() => { setShowPaywall(false); setQuizComplete(true) }}
       />
     )

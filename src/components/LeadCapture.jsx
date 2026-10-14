@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/supabase'
 import { CONV_EPOST, googleKonvertering } from '../lib/conversions'
 import { getLeadAttribution } from '../lib/attribution'
+import { logFunnel, LEAD_BONUS_GRANTED } from '../lib/funnel'
 
 // Lead-magnet email capture shown to anonymous users at the two highest-intent
 // moments: the Results screen (just finished a free round) and the Paywall exit
@@ -27,17 +29,37 @@ const DISMISS_DAYS = 7
 // derfor stå som et eget, synlig tilbud med innholdet listet FØR feltet, samme
 // prinsipp som /a2-ovingsplan. Punktene speiler MailerLite-automasjonen
 // «DroneLappen – velkomst (øvingsplan)» — endres e-postene, endres listen.
+//
+// Bonus (14.10.2026, Frode 05.10): fra 27/9 til 5/10 så 9 personer muren og
+// ingen la igjen e-post. Tilbudet kom akkurat når de var tomme for spørsmål,
+// og en plan er lite verdt da. Nå gir e-post på muren 10 nye A2-spørsmål med
+// en gang: paywall-varianten sender brukerens eget access_token (også anonyme
+// brukere har et), newsletter-signup skriver en rad i lead_bonus og svarer
+// bonus: true, og «Fortsett å øve» (onBonus) henter spørsmålene på nytt.
+// Serveren avgjør alt; appen kan ikke be om bonusen selv.
+// bonusOffer=false på den låste STS-muren: der finnes ingen gratis-pool å
+// utvide, så den beholder plan-teksten og anon-nøkkelen fra før.
 const PAYWALL_PUNKTER = [
   'Stegene fra A1/A3 til A2, med bestå-grensene for begge prøvene',
   'Når du er klar til å booke A2 (tommelfingerregel: 27 av 30)',
   '3 temaer folk oftest bommer på, i egne e-poster etterpå',
 ]
+const BONUS_PUNKTER = ['10 ekstra A2-spørsmål med en gang', ...PAYWALL_PUNKTER]
 
-export default function LeadCapture({ source = 'quiz', dismissible = true, variant = 'default' }) {
+export default function LeadCapture({
+  source = 'quiz',
+  dismissible = true,
+  variant = 'default',
+  bonusOffer = false,
+  onBonus = null,
+}) {
   const isPaywall = variant === 'paywall'
+  const offersBonus = isPaywall && bonusOffer
   const { user, loading } = useAuth()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
+  // Serveren svarte bonus: true — 10 nye spørsmål ligger klare.
+  const [bonusGranted, setBonusGranted] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [manuallyDismissed, setManuallyDismissed] = useState(() => {
     try {
@@ -71,11 +93,18 @@ export default function LeadCapture({ source = 'quiz', dismissible = true, varia
     setStatus('sending')
     setErrorMsg('')
     try {
+      // Muren sender brukerens eget access_token, så serveren vet hvem som
+      // skal ha bonusen. De andre variantene sender anon-nøkkelen som før.
+      let bearer = ANON
+      if (offersBonus) {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session?.access_token) bearer = session.access_token
+      }
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         headers: {
           apikey: ANON,
-          Authorization: `Bearer ${ANON}`,
+          Authorization: `Bearer ${bearer}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email: value, source, attribution: getLeadAttribution() }),
@@ -90,6 +119,12 @@ export default function LeadCapture({ source = 'quiz', dismissible = true, varia
         if (!data.duplicate) {
           window.fbq?.('track', 'Lead', { content_name: source })
           googleKonvertering(CONV_EPOST)
+        }
+        // Bonusen finnes bare for A2 (serveren håndhever det), så
+        // eksamenstypen er gitt. Logges én gang per innsending.
+        if (offersBonus && data.bonus === true) {
+          logFunnel(LEAD_BONUS_GRANTED, { examType: 'A2' })
+          setBonusGranted(true)
         }
         setStatus(data.duplicate ? 'duplicate' : 'success')
         if (!data.duplicate) setEmail('')
@@ -135,7 +170,26 @@ export default function LeadCapture({ source = 'quiz', dismissible = true, varia
         {isPaywall ? 'ikke klar til å kjøpe? · gratis' : 'gratis øvingsplan'}
       </div>
 
-      {status === 'success' ? (
+      {bonusGranted ? (
+        <>
+          <h2 role="status" className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+            10 nye spørsmål er låst opp
+          </h2>
+          <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
+            Øvingsplanen er på vei til innboksen din. Spørsmålene er klare nå.
+          </p>
+          {onBonus && (
+            <button
+              type="button"
+              onClick={onBonus}
+              className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-5 rounded-lg transition-colors text-[14px] inline-flex items-center justify-center gap-2"
+            >
+              <span>Fortsett å øve</span>
+              <span className="font-mono text-[12px] text-da-gold">→</span>
+            </button>
+          )}
+        </>
+      ) : status === 'success' ? (
         <p role="status" className="text-[13px] font-medium text-green-700 leading-[1.5]">
           Takk! Øvingsplanen er på vei — sjekk innboksen din om et par minutter.
         </p>
@@ -147,11 +201,23 @@ export default function LeadCapture({ source = 'quiz', dismissible = true, varia
         <>
           {isPaywall ? (
             <>
-              <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-2">
-                Få øvingsplanen til dronesertifikatet gratis
-              </h2>
+              {offersBonus ? (
+                <>
+                  <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+                    Få 10 spørsmål til, gratis
+                  </h2>
+                  <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
+                    Legg igjen e-posten din, så låser du opp 10 nye A2-spørsmål med en
+                    gang. Du får også øvingsplanen til dronesertifikatet på e-post.
+                  </p>
+                </>
+              ) : (
+                <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-2">
+                  Få øvingsplanen til dronesertifikatet gratis
+                </h2>
+              )}
               <ul className="text-[13px] text-da-text-body leading-[1.6] mb-3 list-none space-y-1">
-                {PAYWALL_PUNKTER.map((p) => (
+                {(offersBonus ? BONUS_PUNKTER : PAYWALL_PUNKTER).map((p) => (
                   <li key={p} className="flex gap-1.5">
                     <span className="font-mono text-da-gold shrink-0">+</span>
                     <span>{p}</span>
@@ -186,7 +252,7 @@ export default function LeadCapture({ source = 'quiz', dismissible = true, varia
               disabled={sending}
               className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] flex items-center justify-center gap-2 disabled:opacity-60"
             >
-              <span>{sending ? 'Sender…' : 'Send meg planen'}</span>
+              <span>{sending ? 'Sender…' : offersBonus ? 'Lås opp 10 spørsmål' : 'Send meg planen'}</span>
               {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
             </button>
           </form>

@@ -12,6 +12,9 @@
 //   skal ikke gjenoppstå dager senere eller lekke mellom faner.
 // - Alle operasjoner er try/catch-et: privat modus / full lagring skal
 //   aldri blokkere quizen.
+// - Fra 14.10.2026 lagrer Quiz og Rapid også `bonus` og `free_limit` fra
+//   get-questions (10 ekstra A2-spørsmål mot e-post på muren). Eldre lagrede
+//   økter mangler feltene og behandles som 25 uten bonus.
 const VERSION = 1
 const DEFAULT_MAX_AGE_MS = 12 * 60 * 60 * 1000 // 12 t — zombievern
 

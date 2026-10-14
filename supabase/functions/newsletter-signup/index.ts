@@ -14,6 +14,15 @@
 // group: quiz-taker email captures (Results / Paywall screens) go to the
 // "DroneLappen leads" group so they can get an exam-focused nurture, while the
 // home-page newsletter form (no/unknown source) stays on "Droneavisa subscribers".
+//
+// Bonus på muren (v13, 14.10.2026, Frode 05.10): source 'quiz_paywall' med en
+// gyldig bruker-JWT i Authorization (også anonym bruker) gir en rad i
+// lead_bonus etter at MailerLite-kallet har lyktes (også ved duplicate), og
+// svaret får `bonus: true`. get-questions leser raden og gir 10 A2-spørsmål
+// til. Uten JWT, eller med anon-nøkkelen som før: som i dag, `bonus: false`.
+// Feil ved upsert skal aldri ødelegge selve påmeldingen.
+
+import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const ML_API = 'https://connect.mailerlite.com/api'
 const GROUP_DRONEAVISA = '184178221435061694' // "Droneavisa subscribers" (home newsletter)
@@ -53,6 +62,20 @@ function groupForSource(source: string): string {
 // (MailerLites grense for tekstfelt). Feltene må finnes i MailerLite-kontoen
 // på forhånd; de ble opprettet 04.08.2026.
 const ATTRIBUTION_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'landing_path']
+
+// Hvilket skjema som faktisk fanget adressen (22.09.2026. Feltet `lead_source`
+// ble opprettet i MailerLite samme dag). Alle tre inngangene — resultatskjermen,
+// betalingsmuren og /a2-ovingsplan — skriver til samme gruppe, så gruppa kunne
+// bare svare på HVOR MANGE leads vi fikk, ikke hvilket skjema som skaffet dem.
+// Uten det kan man ikke si om mur-skjemaet leverer i det hele tatt: 29 brukere
+// forlot muren siden 13.08, og gruppa har 29 abonnenter totalt, men de to
+// tallene har ingen påvist sammenheng.
+//
+// Samme regel som attribusjonen: settes BARE ved opprettelse. Den som først
+// ga adressen på muren og siden melder seg på fra resultatskjermen skal
+// fortsatt telle som et mur-lead — ellers måler vi siste berøring.
+// `groupForSource` er fasiten på hvilke verdier som er gyldige; er kilden
+// ukjent havner leadet uansett i Droneavisa-gruppa og feltet settes ikke.
 
 function cleanAttribution(raw: unknown): Record<string, string> {
   if (!raw || typeof raw !== 'object') return {}
@@ -123,6 +146,49 @@ async function rateLimitOk(req: Request): Promise<boolean> {
   }
 }
 
+// Hvem som skal ha bonusen: bruker-id fra JWT-en i Authorization, men bare
+// for source 'quiz_paywall'. Anon-nøkkelen (som de andre skjemaene sender)
+// har ingen bruker, så getUser gir null og ingen bonus. Null ved feil.
+async function bonusUserId(req: Request, source: string): Promise<string | null> {
+  if (source !== 'quiz_paywall') return null
+  const authHeader = req.headers.get('Authorization')
+  if (!authHeader) return null
+  try {
+    const admin = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    )
+    const { data: { user } } = await admin.auth.getUser(authHeader.replace('Bearer ', ''))
+    return user?.id ?? null
+  } catch (err) {
+    console.error('lead_bonus getUser feilet', (err as Error).message)
+    return null
+  }
+}
+
+// Skriv raden i lead_bonus. Idempotent (upsert på user_id), og en feil her
+// skal ikke velte påmeldingen: logg og svar false.
+async function grantBonus(userId: string | null): Promise<boolean> {
+  if (!userId) return false
+  try {
+    const admin = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    )
+    const { error } = await admin
+      .from('lead_bonus')
+      .upsert({ user_id: userId, source: 'quiz_paywall' }, { onConflict: 'user_id', ignoreDuplicates: true })
+    if (error) {
+      console.error('lead_bonus upsert feilet', error.message)
+      return false
+    }
+    return true
+  } catch (err) {
+    console.error('lead_bonus upsert error', (err as Error).message)
+    return false
+  }
+}
+
 Deno.serve(async (req) => {
   const cors = getCorsHeaders(req)
 
@@ -159,6 +225,9 @@ Deno.serve(async (req) => {
     Accept: 'application/json',
   }
 
+  // Slås opp før MailerLite-kallene, skrives først etter at de har lyktes.
+  const bonusUid = await bonusUserId(req, source)
+
   try {
     // 1) Idempotent lookup by email.
     const lookup = await fetch(`${ML_API}/subscribers/${encodeURIComponent(email)}`, {
@@ -186,7 +255,9 @@ Deno.serve(async (req) => {
           headers: mlHeaders,
         }).catch(() => {})
       }
-      return json({ status: 'ok', duplicate: true }, 200, cors)
+      // Bonusen gis også ved duplicate: samme person på ny enhet skal ikke
+      // straffes (briefen 05.10, edge case).
+      return json({ status: 'ok', duplicate: true, bonus: await grantBonus(bonusUid) }, 200, cors)
     }
 
     if (lookup.status !== 404) {
@@ -205,7 +276,9 @@ Deno.serve(async (req) => {
     //    hvem som kom tilbake sist.
     const createBody: Record<string, unknown> = { email, groups: [groupId] }
     if (isQuizLead) createBody.status = 'active'
-    if (Object.keys(attribution).length) createBody.fields = attribution
+    const fields: Record<string, string> = { ...attribution }
+    if (isQuizLead && source) fields.lead_source = source.slice(0, 255)
+    if (Object.keys(fields).length) createBody.fields = fields
 
     const create = await fetch(`${ML_API}/subscribers`, {
       method: 'POST',
@@ -214,7 +287,7 @@ Deno.serve(async (req) => {
     })
 
     if (create.ok) {
-      return json({ status: 'ok', duplicate: false }, 200, cors)
+      return json({ status: 'ok', duplicate: false, bonus: await grantBonus(bonusUid) }, 200, cors)
     }
 
     const detail = await create.text().catch(() => '')

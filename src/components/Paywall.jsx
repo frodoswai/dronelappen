@@ -30,8 +30,15 @@ import HarTilgangLoggInn from './HarTilgangLoggInn'
  * lib/exams.js (paywallTitle), eksamenstypen følger med i trakt-loggingen,
  * og utveien er en lenke til forsiden i stedet for resultatene. Uten
  * lockedExam er muren som før.
+ *
+ * bonus / onBonus (14.10.2026, Frode 05.10): e-post på muren gir 10 ekstra
+ * A2-spørsmål. `bonus` er serverens svar fra get-questions (brukeren har
+ * allerede tatt tilbudet): da vises ikke skjemaet igjen, bare at planen er på
+ * vei. `onBonus` kalles fra LeadCapture når newsletter-signup svarer
+ * bonus: true, og siden henter de nye spørsmålene og fortsetter økta.
+ * Kjøpsboksen over er uendret; de to flatene skal ikke blandes.
  */
-export default function Paywall({ answered = 25, onContinue, lockedExam = null }) {
+export default function Paywall({ answered = 25, onContinue, lockedExam = null, bonus = false, onBonus = null }) {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [busy, setBusy] = useState(false)
@@ -173,7 +180,27 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null }
               won't convert now still becomes a reachable lead. Self-hides for
               logged-in users (they already have an email on file). Always shown
               here (non-dismissible) so it stays a real alternative to the wall. */}
-          <LeadCapture source="quiz_paywall" dismissible={false} variant="paywall" />
+          {bonus ? (
+            // Bonusen er brukt (35 spørsmål): ingen nytt skjema, brukeren har
+            // allerede gitt e-post. Kjøp er veien videre.
+            <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4">
+              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
+                øvingsplan
+              </div>
+              <p className="text-[13px] text-da-text-body leading-[1.5]">
+                Øvingsplanen er på vei til innboksen din. De 10 ekstra spørsmålene
+                er brukt opp, og resten av banken ligger bak kjøpet over.
+              </p>
+            </div>
+          ) : (
+            <LeadCapture
+              source="quiz_paywall"
+              dismissible={false}
+              variant="paywall"
+              bonusOffer={!locked}
+              onBonus={onBonus}
+            />
+          )}
 
           {onContinue && (
             <button

@@ -13,6 +13,9 @@ import { logQuizStart } from '../lib/visits'
 const CORRECT_FLASH_MS = 400
 const WRONG_PAUSE_MS = 2500
 const RAPID_SESSION_SIZE = 30
+// Bonus på muren (14.10.2026, Frode 05.10): e-post gir 10 ekstra A2-spørsmål.
+// Speiler BONUS_LIMIT i get-questions; serveren er fasiten.
+const BONUS_LIMIT = 10
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -46,6 +49,11 @@ export default function Rapid() {
   // so the natural end of a Tempo run is the paywall moment. Unntak fra
   // 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
+  // Bonus fra get-questions (14.10.2026): `bonus` sier om brukeren alt har
+  // tatt tilbudet på muren (da vises ikke e-postskjemaet igjen), `free_limit`
+  // (25 eller 35) hvor muren står. Settet er alltid ≤ free_limit.
+  const [fetchedBonus, setFetchedBonus] = useState(false)
+  const [freeLimit, setFreeLimit] = useState(null)
   const [showPaywall, setShowPaywall] = useState(false)
 
   // Count-up timer — Rapid is about speed, not time pressure, so we show
@@ -89,6 +97,9 @@ export default function Rapid() {
       setCorrectCount(saved.correctCount ?? 0)
       setAnsweredCount(saved.answeredCount ?? 0)
       setFetchedTier(saved.fetchedTier ?? null)
+      // Økter lagret før 14.10.2026 mangler feltene: 25 og ingen bonus.
+      setFetchedBonus(saved.bonus === true)
+      setFreeLimit(typeof saved.free_limit === 'number' ? saved.free_limit : null)
       setStartTime(saved.startTime ?? Date.now())
       setLoading(false)
       return
@@ -96,8 +107,10 @@ export default function Rapid() {
 
     const loadQuestions = async () => {
       try {
-        const { questions: data, tier } = await fetchQuestions({ examType })
+        const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
+        setFetchedBonus(bonus === true)
+        setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
 
         // Eksamenstype uten gratis-pool og gratis tilgang: ingen spørsmål og
         // ingen stoppeklokke. Betalingsmuren vises i stedet (se under).
@@ -137,7 +150,7 @@ export default function Rapid() {
   // rent, ubesvart spørsmål: en refresh midt i svar-pausen ruller tilbake
   // til før svaret, så teller og visning aldri kommer i utakt.
   useEffect(() => {
-    if (loading || finished || questions.length === 0 || startTime === null) return
+    if (loading || finished || showPaywall || questions.length === 0 || startTime === null) return
     if (selectedAnswer !== null) return
     saveQuizSession(storageKey, {
       questions,
@@ -145,9 +158,11 @@ export default function Rapid() {
       correctCount,
       answeredCount,
       fetchedTier,
+      bonus: fetchedBonus,
+      free_limit: freeLimit,
       startTime,
     })
-  }, [loading, finished, questions, currentIndex, correctCount, answeredCount, fetchedTier, startTime, selectedAnswer, storageKey])
+  }, [loading, finished, showPaywall, questions, currentIndex, correctCount, answeredCount, fetchedTier, fetchedBonus, freeLimit, startTime, selectedAnswer, storageKey])
 
   // Clear timer on unmount
   useEffect(() => {
@@ -181,9 +196,9 @@ export default function Rapid() {
     // Capture the stopwatch at the exact moment the session ends so the
     // finish screen shows a stable number instead of whatever the interval
     // last rendered.
-    if (startTime !== null) {
-      setFinalElapsedMs(Date.now() - startTime)
-    }
+    // Sto løpet på muren først (freeCapped), ble klokka stoppet der, og den
+    // tiden beholdes: muren skal ikke telle med i løpstiden.
+    setFinalElapsedMs((prev) => prev ?? (startTime !== null ? Date.now() - startTime : null))
     setFinished(true)
 
     // Save quiz session for logged-in users (fire-and-forget).
@@ -215,14 +230,20 @@ export default function Rapid() {
     setCurrentIndex((idx) => {
       const next = idx + 1
       if (next >= questions.length) {
-        finishWithFinalTime()
         // End of the free 25-question pool → paywall interstitial before the
         // tempo finish screen. Only on natural completion, not handleStop.
         // Bare A2 fra 08.10.2026 (A1/A3 er gratis), så FreePoolCompleted er A2.
+        // Løpet avsluttes ikke her lenger (14.10.2026): e-post på muren kan gi
+        // 10 spørsmål til, så klokka fryses, den lagrede økta ryddes, og
+        // finishWithFinalTime kjøres først når brukeren går videre fra muren.
         if (freeCapped) {
           window.fbq?.('trackCustom', 'FreePoolCompleted')
+          if (startTime !== null) setFinalElapsedMs(Date.now() - startTime)
+          clearQuizSession(storageKey)
           setShowPaywall(true)
+          return idx
         }
+        finishWithFinalTime()
         return idx
       }
       return next
@@ -336,11 +357,48 @@ export default function Rapid() {
   // A1/A3 er gratis i sin helhet fra 08.10.2026).
   // Interstitial before the tempo finish screen; onContinue reveals the
   // score/time achievement so the wall never hides the user's own result.
+  // «Fortsett å øve» etter e-post på muren (14.10.2026): hent settet på nytt
+  // (serveren gir nå free_pool + bonus_pool), legg de nye bak de besvarte og
+  // fortsett fra neste spørsmål. Teller og stoppeklokke beholdes; klokka
+  // slippes løs igjen (finalElapsedMs tilbake til null) så sluttiden regnes
+  // ved den ekte slutten. Gir refetch-en ingenting nytt, avsluttes løpet.
+  const handleBonus = async () => {
+    try {
+      const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
+      setFetchedTier(tier ?? null)
+      setFetchedBonus(bonus === true)
+      setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
+      const seen = new Set(questions.map((q) => q.id))
+      const fresh = shuffleArray((data || []).filter((q) => !seen.has(q.id)))
+        .slice(0, BONUS_LIMIT)
+        .map((q) => ({ ...q, options: shuffleArray(q.options) }))
+      if (fresh.length === 0) {
+        setShowPaywall(false)
+        finishWithFinalTime()
+        return
+      }
+      const nextIndex = questions.length
+      setQuestions([...questions, ...fresh])
+      setCurrentIndex(nextIndex)
+      setSelectedAnswer(null)
+      setFeedback(null)
+      setFinalElapsedMs(null)
+      setShowPaywall(false)
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    } catch (err) {
+      console.error('Error fetching bonus questions:', err)
+      setShowPaywall(false)
+      finishWithFinalTime()
+    }
+  }
+
   if (showPaywall) {
     return (
       <Paywall
         answered={questions.length}
-        onContinue={() => setShowPaywall(false)}
+        bonus={fetchedBonus}
+        onBonus={handleBonus}
+        onContinue={() => { setShowPaywall(false); finishWithFinalTime() }}
       />
     )
   }
