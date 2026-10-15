@@ -11,6 +11,10 @@ import ANTALL from '../lib/antall.json'
 import { examConfig, antallParentes } from '../lib/exams'
 import HarTilgangLoggInn from './HarTilgangLoggInn'
 
+// Vises som tekstmerker under kjøpsknappen. Må speile det som faktisk er på i
+// Stripe → Betalingsmetoder (kort, Apple Pay, Google Pay, Link per 15.10.2026).
+const BETALINGSMAATER = ['Kort', 'Apple Pay', 'Google Pay']
+
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
  * 25-question free pool (the server-side FREE_LIMIT in get-questions).
@@ -197,7 +201,23 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
               </p>
             )}
 
-            <p className="font-mono text-[11px] text-da-text-muted mt-3 tracking-[0.04em] text-center">
+            {/* Betalingsmåter synlig FØR klikk. Bakgrunn 15.10.2026: 10-20 % av dem
+                som ser muren trykker kjøp; muren sa bare «via Stripe», så ingen så
+                at Apple Pay / Google Pay finnes (de er på i Stripe-kontoen og vises
+                automatisk i Checkout). Tekstmerker, ikke logoer: offisielle merker
+                krever Apples/Googles egne filer og retningslinjer. Legg til 'PayPal'
+                i lista når den er aktivert i Stripe-dashbordet. */}
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5" aria-label="Betalingsmåter">
+              {BETALINGSMAATER.map((navn) => (
+                <span
+                  key={navn}
+                  className="font-mono text-[10.5px] text-da-navy/80 border-[0.5px] border-da-navy/25 rounded px-1.5 py-0.5 tracking-[0.02em]"
+                >
+                  {navn}
+                </span>
+              ))}
+            </div>
+            <p className="font-mono text-[11px] text-da-text-muted mt-2 tracking-[0.04em] text-center">
               Engangsbeløp · sikker betaling via Stripe · over 240 piloter øver her
             </p>
 
