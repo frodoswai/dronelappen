@@ -84,6 +84,28 @@ Deno.serve(async (req) => {
       })
     }
 
+    // 15.10.2026: betalt kunde skal aldri få en ny Stripe-økt. 14/10 traff en
+    // kunde muren igjen 72 min etter kjøpet (fanen hadde aldri fått
+    // ?betalt=ok) og klikket kjøp på nytt; bare flaks hindret dobbelttrekk.
+    // Klienten sjekker også, men dette er sperren som holder uansett hva
+    // fanen tror. 409 + already_paid: klienten leser tilgangen på nytt.
+    {
+      const { data: ent } = await admin
+        .from('entitlements')
+        .select('tier, expires_at')
+        .eq('user_id', user.id)
+        .maybeSingle()
+      const paid =
+        ent?.tier === 'paid' &&
+        (!ent.expires_at || new Date(ent.expires_at) > new Date())
+      if (paid) {
+        return new Response(
+          JSON.stringify({ error: 'already_paid', message: 'Du har allerede full tilgang.' }),
+          { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        )
+      }
+    }
+
     // Acquisition attribution (UTM/referrer) sent from the client. Attach it to
     // both the session and the PaymentIntent so each sale's source is queryable
     // in Stripe (which channel: feed / reels / retargeting / organic).

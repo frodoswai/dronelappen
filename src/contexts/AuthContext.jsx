@@ -75,6 +75,20 @@ export function AuthProvider({ children }) {
     return () => { cancelled = true }
   }, [user])
 
+  // 15.10.2026: en fane som sto åpen mens kunden betalte i en annen fane (eller
+  // lukket Stripe uten å komme tilbake til ?betalt=ok) husket «free» til neste
+  // sideoppfrisk, og viste muren på nytt til en betalt kunde (14/10). Les
+  // tilgangen på nytt når fanen blir synlig igjen, men bare så lenge den
+  // står på free: betalte brukere trenger ingen ekstra spørring.
+  useEffect(() => {
+    if (!user || tier === 'paid') return
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') refreshTier()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => document.removeEventListener('visibilitychange', onVisible)
+  }, [user, tier, refreshTier])
+
   useEffect(() => {
     let active = true
 

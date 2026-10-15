@@ -491,6 +491,7 @@ export default function Quiz() {
         bonus={fetchedBonus}
         onBonus={handleBonus}
         onContinue={() => { setShowPaywall(false); setQuizComplete(true) }}
+        onPaid={() => { setShowPaywall(false); setQuizComplete(true) }}
       />
     )
   }

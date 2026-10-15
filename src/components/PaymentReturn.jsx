@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { PRICE } from '../lib/pricing'
 import { CONV_KJOP, googleKonvertering } from '../lib/conversions'
+import { logFunnel, PAYMENT_RETURN } from '../lib/funnel'
 
 /**
  * Handles the redirect back from Stripe Checkout.
@@ -71,6 +72,10 @@ export default function PaymentReturn() {
         currency: 'NOK',
         ...(sessionId ? { transaction_id: sessionId } : {}),
       })
+
+      // Logg at kunden faktisk kom tilbake fra Stripe (15.10.2026). Fire-and-
+      // forget: ingen navigering her, så inserten rekker fram.
+      logFunnel(PAYMENT_RETURN)
 
       if (!cancelled) setStatus('pending')
       // Poll a few times: the webhook writes the entitlement out-of-band.

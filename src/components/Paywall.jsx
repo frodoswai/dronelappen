@@ -38,23 +38,44 @@ import HarTilgangLoggInn from './HarTilgangLoggInn'
  * bonus: true, og siden henter de nye spørsmålene og fortsetter økta.
  * Kjøpsboksen over er uendret; de to flatene skal ikke blandes.
  */
-export default function Paywall({ answered = 25, onContinue, lockedExam = null, bonus = false, onBonus = null }) {
-  const { user } = useAuth()
+export default function Paywall({ answered = 25, onContinue, lockedExam = null, bonus = false, onBonus = null, onPaid = null }) {
+  const { user, refreshTier } = useAuth()
   const navigate = useNavigate()
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
   const locked = examConfig(lockedExam)
 
+  // 15.10.2026: betalt kunde skal ikke se muren. Fanen (eller en lagret
+  // quiz-økt med fetchedTier 'free') kan være eldre enn kjøpet, så les
+  // tilgangen på nytt før muren telles som vist. Er den betalt, går vi
+  // videre uten paywall_view: ellers teller en betalt kunde som «anonym som
+  // så muren» i mur-målingen. Uten onPaid: last siden på nytt, så
+  // get-questions gir hele banken.
+  const handlePaid = () => {
+    if (onPaid) onPaid()
+    else window.location.reload()
+  }
+
   // Serverside visning av muren. Pikselen er samtykke-gatet, denne er ikke —
   // og bare denne kan spørres per bruker. Tom dependency: én gang per visning.
   useEffect(() => {
-    logFunnel(PAYWALL_VIEW, { answered, examType: lockedExam })
+    let cancelled = false
+    ;(async () => {
+      const fersk = await refreshTier()
+      if (cancelled) return
+      if (fersk === 'paid') { handlePaid(); return }
+      logFunnel(PAYWALL_VIEW, { answered, examType: lockedExam })
+    })()
+    return () => { cancelled = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleBuy = async () => {
     if (busy) return
     setErr('')
+    // Fersk tilgang før kjøpsklikket telles: en betalt kunde skal verken
+    // logges som kjøpsklikk eller sendes til Stripe (15.10.2026).
+    if ((await refreshTier()) === 'paid') { handlePaid(); return }
     // Ventes på: rett etter dette redirecter vi til Stripe, og en
     // fire-and-forget-insert rekker ikke å sende før siden lastes ut.
     // logFunnel gir uansett kontrollen tilbake innen 800 ms.
@@ -70,6 +91,13 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
     } catch (e) {
       if (e?.cancelled) {
         setBusy(false)
+        return
+      }
+      if (e?.alreadyPaid) {
+        // Serveren nektet: tilgangen finnes alt. Les den inn og gå videre.
+        await refreshTier()
+        setBusy(false)
+        handlePaid()
         return
       }
       window.fbq?.('trackCustom', 'CheckoutError', {

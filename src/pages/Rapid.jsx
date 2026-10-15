@@ -399,6 +399,7 @@ export default function Rapid() {
         bonus={fetchedBonus}
         onBonus={handleBonus}
         onContinue={() => { setShowPaywall(false); finishWithFinalTime() }}
+        onPaid={() => { setShowPaywall(false); finishWithFinalTime() }}
       />
     )
   }

@@ -121,6 +121,10 @@ export default function Home() {
   const handleBuy = async () => {
     setBuyBusy(true)
     setBuyErr('')
+    // 15.10.2026: samme vern som ?kjop=1-stien, for alle kjøpsknapper.
+    // `tier` i minnet kan være eldre enn kjøpet; refreshTier() setter den
+    // ferske verdien, og en betalt kunde får da kjøpskortet uten kjøp.
+    if ((await refreshTier()) === 'paid') { setBuyBusy(false); return }
     // Ventes på — createCheckout redirecter til Stripe. Se lib/funnel.js.
     await logFunnel(HOME_BUY_CLICK)
     // Funnel-instrumentering: registrer buy-klikk som InitiateCheckout så
@@ -133,6 +137,12 @@ export default function Home() {
     } catch (err) {
       if (err?.cancelled) {
         // Brukeren avbrøt e-postdialogen. Ingen feil, ingen melding.
+        setBuyBusy(false)
+        return
+      }
+      if (err?.alreadyPaid) {
+        // Serveren nektet ny Stripe-økt: tilgangen finnes alt.
+        await refreshTier()
         setBuyBusy(false)
         return
       }

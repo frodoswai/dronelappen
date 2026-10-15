@@ -54,6 +54,11 @@ export const UPGRADE_BUY_CLICK = 'upgrade_buy_click'
 // funnel_events_event_check fra migrasjon 023. Teller sammen med paywall_view:
 // hvor mange av dem som så muren tok tilbudet.
 export const LEAD_BONUS_GRANTED = 'lead_bonus_granted'
+// 15.10.2026: ?betalt=ok traff appen, dvs. kunden kom tilbake fra Stripe.
+// Mangler denne etter et salg, kom kunden aldri tilbake (fanen husker da
+// «free» til neste oppfrisk; derfor leser muren tilgangen på nytt). Krever
+// migrasjon 024 i funnel_events-constrainten før den kan logges.
+export const PAYMENT_RETURN = 'payment_return'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.

@@ -41,7 +41,7 @@ export default function QuizLayout({
   flashBg,
   children,
 }) {
-  const { user, tier, loading } = useAuth()
+  const { user, tier, loading, refreshTier } = useAuth()
   const navigate = useNavigate()
   const [upgradeBusy, setUpgradeBusy] = useState(false)
   // Gate on loading so paid users never flash the "Gratis"/upgrade UI
@@ -53,6 +53,9 @@ export default function QuizLayout({
 
   const handleUpgrade = async () => {
     if (upgradeBusy) return
+    // 15.10.2026: fersk tilgang før Stripe. Er den betalt, forsvinner
+    // oppsalget av seg selv (isFree leser tier fra AuthContext).
+    if ((await refreshTier()) === 'paid') return
     // Ventes på: createCheckout redirecter til Stripe, og en fire-and-forget-
     // insert rekker ikke å sende før siden lastes ut. Samme felle som gjorde
     // paywall_buy_click ubrukelig i to døgn (se lib/funnel.js). Taket er 800 ms.
@@ -66,6 +69,7 @@ export default function QuizLayout({
       await createCheckout() // redirects to Stripe on success
     } catch (e) {
       setUpgradeBusy(false)
+      if (e?.alreadyPaid) { await refreshTier(); return }
       // Avbrutt e-postdialog: bli i quizen. Andre feil: forsiden som før.
       if (!e?.cancelled) navigate('/')
     }

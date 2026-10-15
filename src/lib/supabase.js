@@ -83,6 +83,13 @@ export async function createCheckout() {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
+    // 15.10.2026: serveren nekter ny Stripe-økt for en som alt har betalt.
+    // Kallerne leser tilgangen på nytt (refreshTier) i stedet for å vise feil.
+    if (res.status === 409 && err.error === 'already_paid') {
+      const e = new Error(err.message || 'Du har allerede full tilgang.')
+      e.alreadyPaid = true
+      throw e
+    }
     throw new Error(err.error || `Checkout-feil: ${res.status}`)
   }
 
