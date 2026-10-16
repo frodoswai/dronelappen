@@ -36,3 +36,17 @@ Begge nivåene gjelder i 5 år. Deretter er det ny eksamen, og flydrone.no varsl
 ## Klar for teoriprøven?
 
 Uansett hva du kaller beviset, er veien dit den samme: pensum og øving. DroneLappen gir deg {{ANTALL}} norske spørsmål i eksamensformat, de første 25 helt gratis. [Start her](/droneeksamen-oving/).
+
+## Ofte stilte spørsmål
+
+### Hva er det offisielle navnet på dronelappen?
+
+Kompetansebevis. Dronelappen og dronesertifikat er folkelige navn, og «drone-førerkort» og «droneførerbevis» brukes ikke av myndighetene.
+
+### Hvem må ha dronelappen?
+
+Alle som flyr en drone på 250 gram eller mer, og alle som flyr en C1-merket drone, må ha A1/A3. Med en drone under 250 gram med kamera holder det å registrere seg som operatør.
+
+### Hvor lenge gjelder dronelappen?
+
+I 5 år. Etter det tar du ny prøve, og du kan ta den fra 28 dager før beviset går ut. For A2 betyr det ny eksamen på trafikkstasjonen.

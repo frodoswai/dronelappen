@@ -38,3 +38,17 @@ EU-kommisjonen la i februar 2026 frem forslag om å senke registreringsgrensen f
 ## Øv gratis, uansett vekt
 
 Reglene over er nettopp den typen spørsmål droneeksamen stiller. [Øv gratis på alle A1/A3-spørsmålene](/droneeksamen-oving/), så vet du hvor du står den dagen du vil oppgradere.
+
+## Ofte stilte spørsmål
+
+### Må jeg registrere en drone under 250 gram?
+
+Ja, hvis den har kamera. Det er du som operatør som registreres, ikke dronen. Registreringen koster 230 kr i året på flydrone.no, og operatørnummeret skal merkes på dronen.
+
+### Trenger jeg forsikring for en drone under 250 gram?
+
+Nei. Ifølge Luftfartstilsynet er droner under 250 gram i åpen kategori og leketøydroner unntatt forsikringskravet.
+
+### Blir 250-gramsgrensen senket til 100 gram?
+
+Det er foreslått, men ikke vedtatt. EASA foreslo i Opinion 06/2026 (18. september 2026) å senke grensen for registrering og direkte fjernidentifikasjon til 100 gram. Det finnes ingen dato, og i Norge gjelder 250-gramsgrensen.

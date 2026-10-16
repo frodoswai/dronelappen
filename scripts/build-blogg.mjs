@@ -12,6 +12,11 @@
 //   slug:        (valgfri, ellers filnavn uten .md)
 //   image:       assets/<fil>.png (valgfri — hero + og:image, 1200x630)
 //   imageAlt:    alt-tekst (påkrevd hvis image er satt)
+//
+// FAQ (16.10.2026): en seksjon "## Ofte stilte spørsmål" med "### spørsmål"
+// + svar gir FAQPage i JSON-LD, ved siden av Article (@graph). Samme
+// konvensjon som build-landing.mjs. Schema bygges fra den synlige teksten,
+// så synlig FAQ og schema er alltid like.
 
 import { marked } from 'marked'
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, cpSync, existsSync } from 'node:fs'
@@ -64,6 +69,40 @@ function parseFrontmatter(raw, file) {
     if (!meta[k]) throw new Error(`Mangler "${k}" i ${file}`)
   meta.slug = meta.slug || basename(file, '.md')
   return { meta, body: m[2] }
+}
+
+// Trekk ut FAQ (### spørsmål + svar) fra seksjonen under "## Ofte stilte spørsmål".
+// Kalles på markdown der plassholderne allerede er erstattet, så strippingen
+// av understreker kan ikke ødelegge {{ANTALL_A1A3}} (jf. 08.10.2026-feilen).
+function extractFaq(body, file) {
+  const faqs = []
+  let inFaq = false
+  let sawHeading = false
+  let cur = null
+  for (const line of body.split('\n')) {
+    const h2 = line.match(/^##\s+(.*)$/)
+    if (h2) {
+      const t = h2[1].toLowerCase()
+      inFaq = t.includes('ofte stilte') || t === 'faq'
+      if (inFaq) sawHeading = true
+      if (cur) { faqs.push(cur); cur = null }
+      continue
+    }
+    if (!inFaq) continue
+    const h3 = line.match(/^###\s+(.*)$/)
+    if (h3) {
+      if (cur) faqs.push(cur)
+      cur = { q: h3[1].trim(), a: '' }
+    } else if (cur && line.trim()) {
+      cur.a += (cur.a ? ' ' : '') + line.trim()
+    }
+  }
+  if (cur) faqs.push(cur)
+  const clean = (x) => x.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*`]/g, '').trim()
+  const out = faqs.filter((f) => f.q && f.a).map((f) => ({ q: clean(f.q), a: clean(f.a) }))
+  if (sawHeading && !out.length) throw new Error(`FAQ-overskrift uten spørsmål i ${file}`)
+  if (out.some((f) => /\{\{/.test(f.q + f.a))) throw new Error(`Uerstattet plassholder i FAQ i ${file}`)
+  return out
 }
 
 const CSS = `
@@ -203,7 +242,7 @@ const posts = readdirSync(CONTENT)
       .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
       .replaceAll('{{ANTALL}}', String(ANTALL.total)) // totalen med STS fra lanseringen 6.10.2026, se vite.config.js
     const { meta, body } = parseFrontmatter(raw, f)
-    return { ...meta, html: marked.parse(body) }
+    return { ...meta, faqs: extractFaq(body, f), html: marked.parse(body) }
   })
   .sort((a, b) => b.date.localeCompare(a.date))
 
@@ -223,6 +262,23 @@ for (const p of posts) {
   }
   const ogImage = p.image ? `${SITE}/blogg/${p.image}` : undefined
   if (ogImage) jsonld.image = ogImage
+  // Med FAQ: Article + FAQPage i én @graph. Uten FAQ: uendret Article.
+  const ld = p.faqs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@graph': [
+          (({ '@context': _c, ...rest }) => rest)(jsonld),
+          {
+            '@type': 'FAQPage',
+            mainEntity: p.faqs.map((q) => ({
+              '@type': 'Question',
+              name: q.q,
+              acceptedAnswer: { '@type': 'Answer', text: q.a },
+            })),
+          },
+        ],
+      }
+    : jsonld
   if (p.image && !p.imageAlt) throw new Error(`Mangler "imageAlt" for ${p.slug}`)
   const bodyHtml = `<nav class="crumb"><a href="/blogg/">Blogg</a> / ${esc(p.title)}</nav>
 <article>
@@ -237,7 +293,7 @@ ${ctaBox(p.slug)}
   mkdirSync(join(OUT, p.slug), { recursive: true })
   writeFileSync(
     join(OUT, p.slug, 'index.html'),
-    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld, bodyHtml, ogImage, campaign: p.slug })
+    page({ title: `${p.title} – DroneLappen`, description: p.description, canonical: url, ogType: 'article', jsonld: ld, bodyHtml, ogImage, campaign: p.slug })
   )
 }
 
@@ -284,4 +340,4 @@ writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
 )
 
-console.log(`Bygget ${posts.length} artikkel/artikler + indeks + sitemap → public/blogg/`)
+console.log(`Bygget ${posts.length} artikkel/artikler (${posts.filter((p) => p.faqs.length).length} med FAQ, ${posts.reduce((n, p) => n + p.faqs.length, 0)} spørsmål) + indeks + sitemap → public/blogg/`)

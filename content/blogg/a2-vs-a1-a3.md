@@ -53,3 +53,17 @@ A2-eksamen bestilles hos Statens vegvesen, og populære trafikkstasjoner fylles 
 Er du i tvil, still deg selv to spørsmål: Veier dronen min over 250 gram? Og kommer jeg til å fly nær folk? Svarer du ja på begge, trenger du A2. Svarer du nei på minst ett, holder A1/A3 – og den er gratis, så start der.
 
 Begge eksamenene dekker bredere pensum enn folk venter: regelverk, meteorologi, flyteori og menneskelige faktorer. Les også [de 7 vanligste feilene på droneeksamen](/blogg/vanligste-feil-droneeksamen/) før du setter i gang.
+
+## Ofte stilte spørsmål
+
+### Hvilke droner kan jeg fly med A2?
+
+A2 gjelder bare droner med klassemerket C2, som veier under 4 kg. Med A2 kan du fly ned til 30 meter horisontalt fra uinvolverte, og ned til 5 meter med lavhastighetsmodus på. En drone uten C-merke som veier 250 gram eller mer, flys i A3, også om du har A2.
+
+### Må jeg ta A1/A3 før A2?
+
+Ja. A1/A3 er grunnivået, og du må ha det før du kan ta A2-prøven.
+
+### Hvor lenge gjelder kompetansebeviset?
+
+Både A1/A3 og A2 gjelder i 5 år. A2 fornyer du med ny eksamen på trafikkstasjonen, og du kan ta den fra 28 dager før beviset går ut.

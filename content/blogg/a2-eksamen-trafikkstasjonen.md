@@ -32,3 +32,17 @@ Da er det nye 970 kr og ny booking. Det er ingen karantenetid å vente på, men 
 ## Den beste forsikringen: øv i samme format
 
 DroneLappens eksamensmodus er bygget for å ligne prøven du faktisk skal ta: 30 spørsmål, tidsfrist og bestå-grense, pluss forklaring på alt du bommer på. [Test deg gratis](/droneeksamen-oving/) før du bruker 970 kr på ekte forsøk.
+
+## Ofte stilte spørsmål
+
+### Hva må jeg ha før jeg kan ta A2-eksamen?
+
+Du må ha bestått A1/A3 på flydrone.no. Uten A1/A3-beviset får du ikke ta A2-prøven.
+
+### Hvor mange riktige må jeg ha på A2-eksamen?
+
+Du får 30 spørsmål og 60 minutter, og du må ha minst 23 riktige.
+
+### Hva skjer etter at jeg har bestått A2?
+
+Etter bestått prøve gjør du praktisk egentrening og sender en egenerklæring på flydrone.no, under pilotkompetanse. Beviset gjelder i 5 år.

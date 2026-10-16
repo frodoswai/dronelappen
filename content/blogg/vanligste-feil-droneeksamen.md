@@ -55,3 +55,17 @@ A2-eksamen tas fysisk på trafikkstasjon, og populære stasjoner fylles raskt op
 De fleste som stryker, gjør det ikke fordi pensum er for vanskelig, men fordi de øver for smalt, forveksler kategorier og tall, eller møter tidspresset uforberedt. Alt dette kan trenes bort. Skal du opp til A2, se også [hva A2-eksamen krever og hvordan du forbereder deg](/dronesertifikat-a2/), og [hva øvingen koster](/pris/) om du vil ha alle {{ANTALL}} spørsmålene.
 
 Vil du ha hele løpet fra registrering til bestått prøve, les den komplette guiden hos Droneavisa: [Slik tar du droneeksamen i Norge](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/).
+
+## Ofte stilte spørsmål
+
+### Hvor mange feil kan jeg ha på A2-eksamen?
+
+A2-eksamen har 30 spørsmål, og du må ha minst 23 riktige, altså 75 prosent. Du kan med andre ord ha maks sju feil.
+
+### Hva er bestå-kravet på A1/A3-prøven?
+
+A1/A3-prøven tar du gratis på flydrone.no etter et nettkurs. Den har 40 spørsmål, og du må ha minst 75 prosent riktige.
+
+### Kan jeg ta A2 uten A1/A3?
+
+Nei. Du må ha bestått A1/A3 før du kan ta A2-prøven på trafikkstasjonen.

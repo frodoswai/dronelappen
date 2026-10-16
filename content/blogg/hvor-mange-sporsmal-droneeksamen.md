@@ -40,3 +40,17 @@ Erfaringen fra trafikkstasjonen er at det sjelden er regelverket folk stryker p�
 ## Slik bruker du formatet til din fordel
 
 Siden du vet det er 30 spørsmål og 75 prosent-krav, kan du øve mot nøyaktig det: DroneLappens eksamensmodus gir deg 30 tilfeldige spørsmål på tid med samme bestå-grense, så du vet om du er klar før du betaler 970 kr. [Prøv 25 A2-spørsmål gratis](/droneeksamen-oving/), ingen innlogging.
+
+## Ofte stilte spørsmål
+
+### Hvor mange spørsmål er det på A1/A3-prøven?
+
+A1/A3-prøven har 40 spørsmål, og du må ha minst 75 prosent riktige. Du tar den gratis på flydrone.no etter nettkurset.
+
+### Hvor mange spørsmål er det på STS-prøven?
+
+Den fulle STS-prøven har 40 spørsmål, og du må ha 30 riktige. Har du A2, kan du i stedet ta utvidelsen fra A2 til STS, som har 30 spørsmål med krav om 23 riktige. Begge tas på trafikkstasjon.
+
+### Kan jeg øve på eksamensformatet gratis?
+
+Ja. I DroneLappen er alle {{ANTALL_A1A3}} A1/A3-spørsmålene gratis, og du kan prøve 25 A2-spørsmål gratis, uten innlogging. Prøveeksamenen har tidsfrist og samme bestå-grense som den ekte prøven.

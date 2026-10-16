@@ -40,3 +40,17 @@ Begge bevisene er gyldige i 5 år. Etter det må du ta ny eksamen, og for A2 bet
 ## Øv før du betaler 970 kr
 
 DroneLappen har {{ANTALL}} norske øvingsspørsmål i samme format som eksamen, med eksamensmodus på tid og forklaring på alt du svarer feil. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og 25 A2-spørsmål er gratis, uten innlogging. [Start øvingen](/droneeksamen-oving/), og se [hva full tilgang koster](/pris/).
+
+## Ofte stilte spørsmål
+
+### Hva koster A2-eksamen?
+
+A2-eksamen koster 970 kr per forsøk hos Statens vegvesen. Stryker du, betaler du på nytt for neste forsøk.
+
+### Må jeg betale operatørgebyret for en drone under 250 gram?
+
+Ja, hvis dronen har kamera. Da må du registrere deg som operatør for 230 kr i året, men du trenger ikke kurs og eksamen. Under 250 gram uten kamera, eller med en CE-merket leketøydrone, slipper du både registrering og eksamen.
+
+### Må jeg ta et betalt kurs?
+
+Ikke for A1/A3 eller A2. Det gratis nettkurset på flydrone.no og egen øving holder til teoriprøvene. For A2 gjør du praktisk egentrening og sender en egenerklæring etter bestått prøve. For STS kreves praktisk opplæring hos en droneskole.

@@ -46,3 +46,17 @@ Merk formuleringen på 120-metersregelen: det er høyden over terrenget rett und
 ## Test om tallene faktisk sitter
 
 Å lese en tabell er ikke det samme som å huske den under tidspress. DroneLappen har egne spørsmål på nettopp disse tallene, i samme flervalgsformat som eksamen. [Øv gratis her](/droneeksamen-oving/), og se [de vanligste feilene](/blogg/vanligste-feil-droneeksamen/), der slurv med tall er en gjenganger.
+
+## Ofte stilte spørsmål
+
+### Hvor høyt kan jeg fly drone i Norge?
+
+I åpen kategori er grensen 120 meter, målt fra nærmeste punkt på bakken.
+
+### Hvor nær en flyplass kan jeg fly drone?
+
+Innenfor 5 kilometer fra en lufthavn må du ha tillatelse fra tårnet. Ved 17 lufthavner søker du i Avinors app NinoxDrone2. Ved de andre kontakter du tårnet direkte.
+
+### Hvor langt fra folk og bebyggelse må jeg holde meg i A3?
+
+I A3 skal ingen uinvolverte settes i fare, og du må holde minst 150 meter fra bolig-, nærings-, industri- og rekreasjonsområder.
