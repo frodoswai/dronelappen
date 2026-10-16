@@ -169,7 +169,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
                 format, med tid og bestå-grense
               </li>
               <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Forklaring på hvert svar —
+                <span className="font-mono text-da-gold mr-1.5">+</span>Forklaring på hvert svar -
                 lær reglene, ikke bare fasit
               </li>
               <li>
