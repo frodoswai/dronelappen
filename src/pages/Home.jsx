@@ -135,11 +135,6 @@ export default function Home() {
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (err) {
-      if (err?.cancelled) {
-        // Brukeren avbrøt e-postdialogen. Ingen feil, ingen melding.
-        setBuyBusy(false)
-        return
-      }
       if (err?.alreadyPaid) {
         // Serveren nektet ny Stripe-økt: tilgangen finnes alt.
         await refreshTier()

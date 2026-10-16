@@ -93,10 +93,6 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (e) {
-      if (e?.cancelled) {
-        setBusy(false)
-        return
-      }
       if (e?.alreadyPaid) {
         // Serveren nektet: tilgangen finnes alt. Les den inn og gå videre.
         await refreshTier()

@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { PRICE } from '../lib/pricing'
 import { CONV_KJOP, googleKonvertering } from '../lib/conversions'
-import { logFunnel, PAYMENT_RETURN } from '../lib/funnel'
+import { logFunnel, PAYMENT_RETURN, CHECKOUT_CANCEL_RETURN } from '../lib/funnel'
+import CheckoutRemindDialog from './CheckoutRemindDialog'
 
 /**
  * Handles the redirect back from Stripe Checkout.
  *   ?betalt=ok      → confirm + poll refreshTier (webhook may lag a few seconds)
- *   ?betalt=avbrutt → subtle "cancelled" notice
+ *   ?betalt=avbrutt → subtle "cancelled" notice + (16.10.2026) spørsmål om
+ *                      én påminnelse på e-post, for alle som ikke alt har betalt
  * Cleans the query param from the URL once handled.
  */
 export default function PaymentReturn() {
-  const { refreshTier, user } = useAuth()
+  const { refreshTier, user, tier } = useAuth()
   const [status, setStatus] = useState(null) // 'ok' | 'pending' | 'avbrutt' | null
+  const [askRemind, setAskRemind] = useState(false)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -39,7 +42,13 @@ export default function PaymentReturn() {
     let cancelled = false
     async function handle() {
       if (betalt === 'avbrutt') {
-        if (!cancelled) setStatus('avbrutt')
+        // Kunden kom tilbake fra Stripe uten å betale. Tell det, og spør om
+        // én påminnelse (CheckoutRemindDialog). Betalte kunder spørres ikke.
+        logFunnel(CHECKOUT_CANCEL_RETURN)
+        if (!cancelled) {
+          setStatus('avbrutt')
+          setAskRemind(true)
+        }
         return
       }
       if (betalt !== 'ok') return
@@ -102,9 +111,17 @@ export default function PaymentReturn() {
 
   if (status === 'avbrutt') {
     return (
-      <Banner tone="muted" onDismiss={dismiss}>
-        Betalingen ble avbrutt. Du kan pr&oslash;ve igjen n&aring;r du vil.
-      </Banner>
+      <>
+        <Banner tone="muted" onDismiss={dismiss}>
+          Betalingen ble avbrutt. Du kan pr&oslash;ve igjen n&aring;r du vil.
+        </Banner>
+        {askRemind && tier !== 'paid' && (
+          <CheckoutRemindDialog
+            defaultEmail={user?.email || ''}
+            onClose={() => setAskRemind(false)}
+          />
+        )}
+      </>
     )
   }
 
