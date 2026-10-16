@@ -2,6 +2,7 @@
 title: Drone under 250 gram: trenger du dronelappen?
 description: Under 250 gram slipper du eksamen, men ikke alt. Her er hva som faktisk gjelder for lette droner, og når kameraet endrer regnestykket.
 date: 2026-09-08
+updated: 2026-10-16
 image: assets/drone-under-250-gram.png
 imageAlt: Drone under 250 gram og dronelappen – DroneLappen-bloggen
 ---
@@ -33,7 +34,7 @@ Tre grunner til å ta den gratis netteksamen selv om du ikke må:
 
 ## Det som kan endre seg: 100-gramsgrensen
 
-EU-kommisjonen la i februar 2026 frem forslag om å senke registreringsgrensen fra 250 til 100 gram og utvide kravene til fjernidentifikasjon. Det er ikke vedtatt, og gjelder ikke i Norge i dag, men retningen er tydelig: lettdronene får mindre særbehandling over tid. Droneavisa følger prosessen i [dronereglene for Norge](https://droneavisa.no/droneregler/).
+EASA foreslo i Opinion 06/2026 (18. september 2026) å senke grensen for registrering og direkte fjernidentifikasjon fra 250 til 100 gram. Forslaget er ikke vedtatt, det finnes ingen dato, og det gjelder ikke i Norge i dag, men retningen er tydelig: lettdronene får mindre særbehandling over tid. Droneavisa følger prosessen i [dronereglene for Norge](https://droneavisa.no/droneregler/).
 
 ## Øv gratis, uansett vekt
 

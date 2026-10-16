@@ -2,6 +2,7 @@
 title: Tallene du må kunne til droneeksamen
 description: 120 meter, 30 meter, 150 meter, 250 gram, 5 kilometer. Droneeksamen er full av tall, og de ligner på hverandre. Her er alle samlet, med huskeregler.
 date: 2026-09-04
+updated: 2026-10-16
 image: assets/tallene-du-ma-kunne-droneeksamen.png
 imageAlt: Tallene du må kunne til droneeksamen – DroneLappen-bloggen
 ---

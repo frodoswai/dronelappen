@@ -2,6 +2,7 @@
 title: De 7 vanligste feilene på droneeksamen
 description: Stryker folk på droneeksamen? Ja, og som regel på det samme. Her er de vanligste feilene på A1/A3- og A2-eksamen, og hvordan du unngår dem.
 date: 2026-06-11
+updated: 2026-10-16
 image: assets/vanligste-feil-droneeksamen.png
 imageAlt: De 7 vanligste feilene på droneeksamen – DroneLappen-bloggen
 ---

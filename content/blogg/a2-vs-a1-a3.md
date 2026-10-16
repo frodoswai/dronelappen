@@ -2,11 +2,12 @@
 title: A2 vs A1/A3 – hvilken dronelapp trenger du?
 description: A1/A3 er gratis og tas på nett, A2 koster 970 kr på trafikkstasjon. Her er forskjellen på de to dronelappene, og hvordan du finner ut hvilken du trenger.
 date: 2026-06-16
+updated: 2026-10-16
 image: assets/a2-vs-a1-a3.png
 imageAlt: A2 vs A1/A3 – hvilken dronelapp trenger du? DroneLappen-bloggen
 ---
 
-Skal du fly drone i Norge, må du ha kompetansebevis – [også kalt dronelappen eller drone-førerkort](/blogg/drone-forerkort/). Men det finnes to nivåer, og mange er usikre på hvilket de faktisk trenger. Kort fortalt: A1/A3 er gratis, tas på nett og holder for de fleste hobbypiloter. A2 koster 970 kr, tas på trafikkstasjon og trengs først når du skal fly tyngre droner nær folk.
+Skal du fly drone i Norge, må du ha kompetansebevis – [også kalt dronelappen eller drone-førerkort](/blogg/drone-forerkort/). Men det finnes to nivåer, og mange er usikre på hvilket de faktisk trenger. Kort fortalt: A1/A3 er gratis, tas på nett og holder for de fleste hobbypiloter. A2 koster 970 kr, tas på trafikkstasjon og trengs først når du skal fly en C2-merket drone nær folk.
 
 ## Forskjellen i én tabell
 
@@ -15,7 +16,7 @@ Skal du fly drone i Norge, må du ha kompetansebevis – [også kalt dronelappen
 | Hvor | På nett, flydrone.no | Trafikkstasjon (Statens vegvesen) |
 | Pris | Gratis | 970 kr |
 | Format | Netteksamen | 30 spørsmål, 60 min, 75 % krav |
-| Gir deg | Fly langt unna folk (A3), eller over folk med drone under 250 g (A1) | Fly nærmere folk med tyngre droner, med sikker avstand |
+| Gir deg | Fly langt unna folk (A3), eller over folk med drone under 250 g (A1) | Fly nærmere folk med C2-merket drone, med sikker avstand |
 | Gyldighet | 5 år | 5 år |
 
 Uansett hvilken du velger må du betale 230 kr i årlig operatørgebyr på flydrone.no før du lovlig kan fly (unntak: drone under 250 gram uten kamera).
@@ -31,7 +32,7 @@ Eksamen er gratis og tas hjemmefra på flydrone.no, så det er ingen grunn til �
 
 ## Når trenger du A2?
 
-A2 er for deg som vil fly droner over 250 gram nærmere mennesker enn A3 tillater. Typiske situasjoner:
+A2 er for deg som vil fly en drone med klassemerket C2 (under 4 kg) nærmere mennesker enn A3 tillater. A2 gjelder bare C2-droner: en drone uten C-merke som veier 250 gram eller mer, flys i A3 uansett. Typiske situasjoner:
 
 - Eiendomsfoto og inspeksjon i boligområder
 - Filming på arrangementer og i bynære strøk
@@ -50,7 +51,7 @@ A2-eksamen bestilles hos Statens vegvesen, og populære trafikkstasjoner fylles 
 
 ## Tommelfingerregel
 
-Er du i tvil, still deg selv to spørsmål: Veier dronen min over 250 gram? Og kommer jeg til å fly nær folk? Svarer du ja på begge, trenger du A2. Svarer du nei på minst ett, holder A1/A3 – og den er gratis, så start der.
+Er du i tvil, still deg selv to spørsmål: Har dronen min klassemerket C2? Og kommer jeg til å fly nær folk? Svarer du ja på begge, trenger du A2. Svarer du nei på minst ett, holder A1/A3 – og den er gratis, så start der.
 
 Begge eksamenene dekker bredere pensum enn folk venter: regelverk, meteorologi, flyteori og menneskelige faktorer. Les også [de 7 vanligste feilene på droneeksamen](/blogg/vanligste-feil-droneeksamen/) før du setter i gang.
 

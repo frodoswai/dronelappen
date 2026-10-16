@@ -2,6 +2,7 @@
 title: Drone-førerkort: hva heter det egentlig?
 description: Mange søker etter drone-førerkort. Det offisielle navnet er kompetansebevis, og folk flest sier dronelappen. Her er hva som kreves og hva det koster.
 date: 2026-08-28
+updated: 2026-10-16
 image: assets/drone-forerkort.png
 imageAlt: Drone-førerkort, kompetansebevis og dronelappen – DroneLappen-bloggen
 ---
@@ -31,11 +32,11 @@ I tillegg til beviset må du registrere deg som droneoperatør for 230 kr i åre
 
 ## Gyldighet og fornyelse
 
-Begge nivåene gjelder i 5 år. Deretter er det ny eksamen, og flydrone.no varsler deg på e-post 28 dager før utløp. A2-fornyelsen betyr ny tur til trafikkstasjonen og nye 970 kr, så det lønner seg å holde kunnskapen ved like.
+Begge nivåene gjelder i 5 år. Deretter er det ny eksamen, og den kan du ta fra 28 dager før beviset går ut. A2-fornyelsen betyr ny tur til trafikkstasjonen og nye 970 kr, så det lønner seg å holde kunnskapen ved like.
 
 ## Klar for teoriprøven?
 
-Uansett hva du kaller beviset, er veien dit den samme: pensum og øving. DroneLappen gir deg {{ANTALL}} norske spørsmål i eksamensformat, de første 25 helt gratis. [Start her](/droneeksamen-oving/).
+Uansett hva du kaller beviset, er veien dit den samme: pensum og øving. DroneLappen gir deg {{ANTALL}} norske spørsmål i eksamensformat. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og du kan prøve 25 A2-spørsmål gratis, uten innlogging. [Start her](/droneeksamen-oving/).
 
 ## Ofte stilte spørsmål
 

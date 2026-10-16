@@ -2,6 +2,7 @@
 title: Drone A2-eksamen hos Statens vegvesen: slik foregår den
 description: Drone A2-eksamen tas hos Statens vegvesen: booking, legitimasjon, 30 spørsmål på skjerm og svar med en gang. Hele løpet på trafikkstasjonen, steg for steg.
 date: 2026-09-01
+updated: 2026-10-16
 image: assets/a2-eksamen-trafikkstasjonen.png
 imageAlt: Drone A2-eksamen hos Statens vegvesen steg for steg – DroneLappen-bloggen
 ---
@@ -23,7 +24,7 @@ Eksamen bestilles på vegvesen.no, samme sted som teoriprøve for førerkort. Ve
 - Du får [30 flervalgsspørsmål og 60 minutter](/blogg/hvor-mange-sporsmal-droneeksamen/). Kravet er 23 riktige.
 - Mobil og notater legges igjen utenfor. Alt du trenger er hodet ditt.
 
-Resultatet får du med en gang. Består du, registreres A2-kompetansen på operatørprofilen din, og beviset er gyldig i 5 år.
+Resultatet får du med en gang. Etter bestått prøve gjør du praktisk egentrening og sender en egenerklæring på flydrone.no, under pilotkompetanse. Beviset er gyldig i 5 år.
 
 ## Hvis du stryker
 
