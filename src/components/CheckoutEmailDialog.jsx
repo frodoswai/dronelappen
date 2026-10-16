@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { registerCheckoutEmailDialog, EMAIL_RE } from '../lib/checkoutEmail'
 import { PRICE } from '../lib/pricing'
+import { logFunnel, CHECKOUT_EMAIL_CANCEL } from '../lib/funnel'
 
 // Ett steg før Stripe for anonyme kjøpere: e-post (forhåndsutfylles hos
 // Stripe) og et frivillig ja til én påminnelse hvis kjøpet ikke fullføres.
@@ -29,6 +30,8 @@ export default function CheckoutEmailDialog() {
   }, [open])
 
   const finish = (value) => {
+    // Avbrudd telles, så vi kan måle om dialogen koster kjøp (16.10.2026).
+    if (value === null) logFunnel(CHECKOUT_EMAIL_CANCEL)
     setOpen(false)
     const r = resolver.current
     resolver.current = null

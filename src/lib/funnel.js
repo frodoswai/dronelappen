@@ -59,6 +59,9 @@ export const LEAD_BONUS_GRANTED = 'lead_bonus_granted'
 // «free» til neste oppfrisk; derfor leser muren tilgangen på nytt). Krever
 // migrasjon 024 i funnel_events-constrainten før den kan logges.
 export const PAYMENT_RETURN = 'payment_return'
+// Anonym kjøper lukket e-postdialogen («steg 1 av 2») uten å gå til Stripe.
+// Lagt til 16.10.2026 for å måle om dialogen koster kjøp; vurderes 1.11.2026.
+export const CHECKOUT_EMAIL_CANCEL = 'checkout_email_cancel'
 
 // Hvor lenge en kaller maks skal vente før den navigerer bort. En tapt
 // logglinje er billigere enn et tapt kjøp, så taket er lavt med vilje.
