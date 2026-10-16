@@ -22,7 +22,7 @@ Til forskjell fra førerkortet er dronelappen digital: den henger på operatørp
 Sammenligningen med førerkort er faktisk nyttig, for det finnes to «klasser»:
 
 - **A1/A3** er grunnivået: gratis nettkurs og netteksamen på flydrone.no. Dette er inngangsbilletten alle må ha for droner på 250 gram eller mer.
-- **A2** er utvidelsen for å fly tyngre droner nærmere folk: 30 spørsmål på trafikkstasjonen, 970 kr, 75 prosent-krav.
+- **A2** er utvidelsen for å fly C2-merkede droner nærmere folk: 30 spørsmål på trafikkstasjonen, 970 kr, 75 prosent-krav.
 
 Hvilken du trenger avhenger av dronen og hvor du skal fly. Ta [A2 mot A1/A3-sammenligningen](/blogg/a2-vs-a1-a3/) hvis du er usikker.
 

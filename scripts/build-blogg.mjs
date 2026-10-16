@@ -219,7 +219,7 @@ ${bodyHtml}
 
 const ctaBox = (campaign) => `<div class="cta-box">
 <h2>Øv gratis til droneeksamen</h2>
-<p>200+ norske spørsmål for A1/A3 og A2. Eksamensmodus med ekte tidsfrist og bestå-grense. Ingen innlogging, ingen reklame.</p>
+<p>${ANTALL.total} norske spørsmål for A1/A3, A2 og STS, og hele A1/A3 er gratis. Eksamensmodus med ekte tidsfrist og bestå-grense. Ingen innlogging, ingen reklame.</p>
 <a class="btn" href="${appLink('/', campaign, 'cta_bunn')}">Start øvingen →</a>
 </div>`
 

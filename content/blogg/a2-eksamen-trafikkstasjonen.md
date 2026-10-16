@@ -28,7 +28,7 @@ Resultatet får du med en gang. Etter bestått prøve gjør du praktisk egentren
 
 ## Hvis du stryker
 
-Da er det nye 970 kr og ny booking. Det er ingen karantenetid å vente på, men hvert forsøk koster fullt. De som stryker, gjør det som regel på bredden i pensum og på tallspørsmålene, ikke på de åpenbare reglene. Se [de 7 vanligste feilene](/blogg/vanligste-feil-droneeksamen/) før du booker.
+Da er det nye 970 kr og ny booking. Hvert forsøk koster fullt. De som stryker, gjør det som regel på bredden i pensum og på tallspørsmålene, ikke på de åpenbare reglene. Se [de 7 vanligste feilene](/blogg/vanligste-feil-droneeksamen/) før du booker.
 
 ## Den beste forsikringen: øv i samme format
 

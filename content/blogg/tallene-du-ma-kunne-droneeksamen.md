@@ -14,7 +14,7 @@ Tallspørsmålene er der marginene forsvinner på droneeksamen. Ikke fordi talle
 | Tall | Hva det gjelder |
 | --- | --- |
 | 120 meter | Maks flyhøyde i åpen kategori, målt fra nærmeste punkt på bakken |
-| 150 meter | A3: minsteavstand til bolig-, nærings- og industriområder |
+| 150 meter | A3: minsteavstand til bolig-, nærings-, industri- og rekreasjonsområder |
 | 30 meter | A2: minsteavstand horisontalt til utenforstående |
 | 5 meter | A2: minsteavstand i lavhastighetsmodus |
 | 5 kilometer | Minsteavstand til lufthavn uten tillatelse |
@@ -26,7 +26,6 @@ Merk formuleringen på 120-metersregelen: det er høyden over terrenget rett und
 | Tall | Hva det gjelder |
 | --- | --- |
 | 250 gram | Grensen for A1-flyging over enkeltpersoner, og for eksamensfritak (les mer i [egen artikkel](/blogg/drone-under-250-gram/)) |
-| 500 gram | Historisk grense i eldre regelverk, dukker opp som feilsvar på eksamen |
 | 25 kilo | Maksvekt i åpen kategori |
 
 ## Tid, alder og gyldighet

@@ -16,7 +16,7 @@ Skal du fly drone i Norge, må du ha kompetansebevis – [også kalt dronelappen
 | Hvor | På nett, flydrone.no | Trafikkstasjon (Statens vegvesen) |
 | Pris | Gratis | 970 kr |
 | Format | Netteksamen | 30 spørsmål, 60 min, 75 % krav |
-| Gir deg | Fly langt unna folk (A3), eller over folk med drone under 250 g (A1) | Fly nærmere folk med C2-merket drone, med sikker avstand |
+| Gir deg | Fly langt unna folk (A3), eller over enkeltpersoner med drone under 250 g (A1) | Fly nærmere folk med C2-merket drone, med sikker avstand |
 | Gyldighet | 5 år | 5 år |
 
 Uansett hvilken du velger må du betale 230 kr i årlig operatørgebyr på flydrone.no før du lovlig kan fly (unntak: drone under 250 gram uten kamera).
