@@ -12,8 +12,9 @@ import { examConfig, antallParentes } from '../lib/exams'
 import HarTilgangLoggInn from './HarTilgangLoggInn'
 
 // Vises som tekstmerker under kjøpsknappen. Må speile det som faktisk er på i
-// Stripe → Betalingsmetoder (kort, Apple Pay, Google Pay, Link per 15.10.2026).
-const BETALINGSMAATER = ['Kort', 'Apple Pay', 'Google Pay']
+// Stripe → Betalingsmetoder (kort, Apple Pay, Google Pay, Link per 15.10.2026;
+// PayPal aktiv i Checkout fra 16.10.2026, verifisert på betalingssiden).
+const BETALINGSMAATER = ['Kort', 'Apple Pay', 'Google Pay', 'PayPal']
 
 /**
  * Full-screen paywall shown when a FREE user reaches the end of the
