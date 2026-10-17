@@ -33,7 +33,7 @@ export default function Personvern() {
         <div className="max-w-2xl mx-auto space-y-6 text-[14px] leading-[1.7] text-da-text-body">
 
           <p className="font-mono text-[11px] text-da-text-muted tracking-[0.1em]">
-            Sist oppdatert: juni 2026
+            Sist oppdatert: 18. oktober 2026
           </p>
 
           <section>
@@ -147,8 +147,24 @@ export default function Personvern() {
             </p>
           </section>
 
+          <section id="chrome-utvidelse">
+            <h2 className="text-lg font-medium text-da-navy mb-2">8. Chrome-utvidelsen «DroneLappen: dagens dronespørsmål»</h2>
+            <p>
+              Utvidelsen samler ikke inn personopplysninger og sender ingen data til
+              oss eller andre. Den henter ingenting fra nettet og leser ingen
+              nettsider du besøker. Det eneste den lagrer, er hvilket svar du ga på
+              dagens spørsmål og hvor mange dager på rad du har svart, og det ligger
+              lokalt i nettleseren din. Fjerner du utvidelsen, slettes dette.
+            </p>
+            <p className="mt-2">
+              Klikker du på lenken til dronelappen.app, gjelder denne
+              personvernerklæringen for besøket der. Lenken inneholder bare en
+              merking av at du kom fra utvidelsen (utm_source=chrome-extension).
+            </p>
+          </section>
+
           <section>
-            <h2 className="text-lg font-medium text-da-navy mb-2">8. Klagerett</h2>
+            <h2 className="text-lg font-medium text-da-navy mb-2">9. Klagerett</h2>
             <p>
               Hvis du mener vi behandler personopplysningene dine i strid med
               personvernregelverket, kan du klage til Datatilsynet:{' '}
