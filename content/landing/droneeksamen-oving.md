@@ -1,5 +1,5 @@
 ---
-title: Droneeksamen øving: øv til A1/A3 og A2 | DroneLappen
+title: Droneeksamen øving: øv til A1/A3, A2 og STS | DroneLappen
 description: Øv til droneeksamen med {{ANTALL}} norske spørsmål, prøveeksamen med ekte tidsfrist og feilgjennomgang. A1/A3 er gratis i sin helhet, og du kan teste 25 A2-spørsmål gratis, uten innlogging.
 h1: Øv til droneeksamen
 slug: droneeksamen-oving
