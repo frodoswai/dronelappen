@@ -16,6 +16,7 @@ import MinSide from './pages/MinSide'
 import SettPassord from './pages/SettPassord'
 import Footer from './components/Footer'
 import PaymentReturn from './components/PaymentReturn'
+import PageTitle from './components/PageTitle'
 import { enabledExamTypes } from './lib/exams'
 import './App.css'
 
@@ -48,6 +49,7 @@ function App() {
   return (
     <AuthProvider>
       <div className="min-h-screen bg-da-bg flex flex-col">
+        <PageTitle />
         <PaymentReturn />
         <div className="flex-1">
           <Routes>
