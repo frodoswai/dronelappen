@@ -27,6 +27,7 @@ Før du bruker penger på noe, sjekk om A2 i det hele tatt er relevant for deg. 
 | A2-prøven på trafikkstasjonen | 970 kr per forsøk | Ja |
 | A2-kurs på flydrone.no | Gratis | Nei |
 | Kommersielt A2-kurs | Rundt 2 200 kr | Nei |
+| DroneLappen, alle {{ANTALL_A2}} A2-spørsmålene | {{PRIS}} kr, engangskjøp | Nei |
 
 970 kr er det redaktøren betalte for sin egen prøve på Hamar i april 2026. Du betaler ved oppmøte, ikke når du booker, og stryker du, betaler du fullt for neste forsøk.
 
@@ -51,7 +52,7 @@ Etter kurset er det spørsmålstrening som gjenstår. Prøven er [30 spørsmål 
 
 ## Øv før du betaler 970 kr
 
-DroneLappen har øvingsspørsmål i samme format som prøven, med eksamensmodus på tid og forklaring på alt du svarer feil. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og du kan prøve 25 A2-spørsmål gratis uten innlogging. Full tilgang til alle {{ANTALL_A2}} A2-spørsmålene er et engangskjøp. [Start øvingen](/droneeksamen-oving/).
+DroneLappen har øvingsspørsmål i samme format som prøven, med eksamensmodus på tid og forklaring på alt du svarer feil. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og du kan prøve 25 A2-spørsmål gratis uten innlogging. Full tilgang til alle {{ANTALL_A2}} A2-spørsmålene koster {{PRIS}} kr som engangskjøp, altså mindre enn ett strykeforsøk på trafikkstasjonen. Sammen med gratiskurset på flydrone.no er det hele forberedelsen, mot rundt 2 200 kr for et kommersielt kurs. [Start øvingen](/droneeksamen-oving/).
 
 ## Når beviset skal fornyes
 
@@ -65,7 +66,7 @@ Nei. Det eneste kravet er bestått A1/A3 før du tar prøven på trafikkstasjone
 
 ### Hva koster et A2-kurs?
 
-Kommersielle kurs ligger rundt 2 200 kr, mens kurset på flydrone.no er gratis. Prøven på trafikkstasjonen er en egen kostnad på 970 kr per forsøk.
+Kommersielle kurs ligger rundt 2 200 kr, mens kurset på flydrone.no er gratis. Øving på alle A2-spørsmålene i DroneLappen koster {{PRIS}} kr. Prøven på trafikkstasjonen er en egen kostnad på 970 kr per forsøk.
 
 ### Hva gjør jeg etter bestått A2-prøve?
 

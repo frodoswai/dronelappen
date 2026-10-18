@@ -230,6 +230,10 @@ mkdirSync(OUT, { recursive: true })
 // Kopier bilder (content/blogg/assets → public/blogg/assets)
 // Antall spørsmål: se kommentar i build-landing.mjs (kilde: src/lib/antall.json).
 const ANTALL = JSON.parse(readFileSync(join(ROOT, 'src', 'lib', 'antall.json'), 'utf8'))
+// Pris for A2-tilgang, {{PRIS}} i bloggen. Speiler PRICE_AFTER i src/lib/pricing.js
+// og build-landing.mjs. A2-nivået blir stående på 349 også etter nivåbyttet 1.12.2026
+// (full pakke med STS blir 449), så blogginnlegg om A2 kan trygt bruke {{PRIS}}.
+const PRIS = 349
 
 const ASSETS = join(CONTENT, 'assets')
 if (existsSync(ASSETS)) cpSync(ASSETS, join(OUT, 'assets'), { recursive: true })
@@ -240,6 +244,7 @@ const posts = readdirSync(CONTENT)
     const raw = readFileSync(join(CONTENT, f), 'utf8')
       .replaceAll('{{ANTALL_A1A3}}', String(ANTALL.A1_A3))
       .replaceAll('{{ANTALL_A2}}', String(ANTALL.A2))
+      .replaceAll('{{PRIS}}', String(PRIS))
       .replaceAll('{{ANTALL}}', String(ANTALL.total)) // totalen med STS fra lanseringen 6.10.2026, se vite.config.js
     const { meta, body } = parseFrontmatter(raw, f)
     return { ...meta, faqs: extractFaq(body, f), html: marked.parse(body) }
