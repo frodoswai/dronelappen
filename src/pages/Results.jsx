@@ -300,6 +300,18 @@ export default function Results() {
             </div>
           </div>
 
+          {/* 22.10.2026: en leser trodde prøveeksamen her var den ekte A1/A3-
+              eksamen og lette etter beviset på flydrone.no. Si det rett ut på
+              resultatsiden i eksamensmodus. */}
+          {!isPracticeMode && (
+            <p className="text-center text-[13px] text-da-text-muted mb-5">
+              Dette er en øvingsprøve.{' '}
+              {examType === 'A1_A3'
+                ? 'Den ekte A1/A3-eksamen tar du gratis på flydrone.no.'
+                : 'Den ekte prøven tar du på en trafikkstasjon hos Statens vegvesen.'}
+            </p>
+          )}
+
           {/* Del resultatet: bare bestått A1/A3 Eksamen. Web Share API på mobil,
               ellers kopieres lenken. UTM share/results/a1a3 viser i visit_events
               om delingene gir nye besøkende. */}
