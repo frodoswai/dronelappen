@@ -152,6 +152,40 @@ Deno.serve(async (req) => {
       /* no/invalid body - proceed with user_id only */
     }
 
+    // 26.10.2026: klienten sendte ingen klikk-ID? Slå opp nyeste fra
+    // visit_events (migrasjon 028). iPad-salget 25/10 kjøpte i en ny fane
+    // 1 t 51 min etter annonseklikket; fanens minne var tomt, og Google
+    // talte aldri salget. Klienten vinner når den sender noe. 30 dager er
+    // Googles vanlige klikkvindu. Samme allowlist og regex som over, fordi
+    // verdien går rett inn i success_url. Oppslaget er best-effort: en feil
+    // her skal aldri stoppe betalingen.
+    let clickIdSource = googleClick ? 'body' : 'none'
+    if (!googleClick) {
+      try {
+        const since = new Date(Date.now() - 30 * 24 * 3600 * 1000).toISOString()
+        const { data: row } = await admin
+          .from('visit_events')
+          .select('click_id_name, click_id')
+          .eq('user_id', user.id)
+          .not('click_id', 'is', null)
+          .gt('created_at', since)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle()
+        const name = String(row?.click_id_name || '')
+        const value = String(row?.click_id || '')
+        if (GOOGLE_CLICK_PARAMS.has(name) && /^[A-Za-z0-9_.-]{1,200}$/.test(value)) {
+          googleClick = { name, value }
+          meta[name] = value
+          clickIdSource = 'visit_events'
+        }
+      } catch (err) {
+        console.error('click_id lookup failed:', (err as Error).message)
+      }
+    }
+    // Én linje i Supabase-loggen: hvor ofte trengs oppslaget?
+    console.log(`click_id_source=${clickIdSource}`)
+
     // [2026-07-17 EMQ] Ekte klient-IP og User-Agent fanges HER (kallet kommer
     // fra kjøperens browser) og lagres i session-metadata, slik at
     // stripe-webhookens CAPI Purchase (som kommer fra Stripes servere) kan

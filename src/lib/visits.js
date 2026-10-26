@@ -13,7 +13,7 @@
 // og ingen persondata utover user_id.
 
 import { supabase } from './supabase'
-import { getCurrentVisitTouch, getLastTouch } from './attribution.js'
+import { getCurrentVisitTouch, getGoogleClick, getLastTouch } from './attribution.js'
 
 export const LANDING = 'landing'
 export const QUIZ_START = 'quiz_start'
@@ -97,7 +97,24 @@ export function logLanding() {
   landingLogged = true
   const touch = getCurrentVisitTouch()
   if (!touch) return
-  insertVisit({ event: LANDING, ...channelFields(touch) })
+  insertVisit({ event: LANDING, ...channelFields(touch), ...clickIdFields() })
+}
+
+// Google klikk-ID for landingsraden (26.10.2026, migrasjon 028).
+//
+// HVORFOR: IDen lever ellers bare i fanens minne (attribution.js). iPad-salget
+// 25/10 kom 1 t 51 min etter annonseklikket, i en ny fane, og Google fikk
+// aldri vite om det. Lagret her, server-side, kan create-checkout slå den opp
+// på user_id. Ingenting lagres på enheten, så samtykkeløftet holdes.
+// Egen kolonne, ikke referrer: referrer kappes ved 300 tegn midt i gbraid.
+// Samme allowlist og tegnklasse som create-checkout, så en rar verdi aldri
+// velter innsettingen (CHECK) og dermed hele landingsraden.
+const CLICK_ID_NAMES = new Set(['gclid', 'gbraid', 'wbraid'])
+function clickIdFields() {
+  const gc = getGoogleClick()
+  if (!gc || !CLICK_ID_NAMES.has(gc.name)) return {}
+  if (typeof gc.value !== 'string' || !/^[A-Za-z0-9_.-]{1,200}$/.test(gc.value)) return {}
+  return { click_id_name: gc.name, click_id: gc.value }
 }
 
 // Kalles når en NY økt har fått spørsmålene sine (ikke ved gjenopptak etter
