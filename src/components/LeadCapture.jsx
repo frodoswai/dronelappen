@@ -39,6 +39,13 @@ const DISMISS_DAYS = 7
 // Serveren avgjør alt; appen kan ikke be om bonusen selv.
 // bonusOffer=false på den låste STS-muren: der finnes ingen gratis-pool å
 // utvide, så den beholder plan-teksten og anon-nøkkelen fra før.
+//
+// Ettklikk for innloggede gratisbrukere (28.10.2026, Frode 28.10): de ga
+// e-posten da de laget konto, så muren viser ingen felt, bare én knapp.
+// Klikket sender source 'quiz_paywall_login' uten e-post; serveren henter
+// adressen fra JWT-en, melder dem på øvingsplanen og gir de samme 10
+// spørsmålene som de anonyme får. Knappeteksten sier at planen kommer på
+// e-post. Resultatskjermen (variant default) skjules fortsatt for innloggede.
 const PAYWALL_PUNKTER = [
   'Stegene fra A1/A3 til A2, med bestå-grensene for begge prøvene',
   'Når du er klar til å booke A2 (tommelfingerregel: 27 av 30)',
@@ -56,6 +63,10 @@ export default function LeadCapture({
   const isPaywall = variant === 'paywall'
   const offersBonus = isPaywall && bonusOffer
   const { user, loading } = useAuth()
+  const loggedIn = !!user && !user.is_anonymous
+  // Innlogget gratisbruker på A2-muren: ett klikk, ingen e-postfelt.
+  const oneClick = offersBonus && loggedIn
+  const effectiveSource = oneClick ? 'quiz_paywall_login' : source
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle')
   // Serveren svarte bonus: true — 10 nye spørsmål ligger klare.
@@ -84,7 +95,7 @@ export default function LeadCapture({
   const handleSubmit = async (e) => {
     e.preventDefault()
     const value = email.trim().toLowerCase()
-    if (!EMAIL_RE.test(value)) {
+    if (!oneClick && !EMAIL_RE.test(value)) {
       setErrorMsg('Skriv inn en gyldig e-postadresse.')
       setStatus('error')
       return
@@ -107,7 +118,11 @@ export default function LeadCapture({
           Authorization: `Bearer ${bearer}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: value, source, attribution: getLeadAttribution() }),
+        body: JSON.stringify(
+          oneClick
+            ? { source: effectiveSource, attribution: getLeadAttribution() }
+            : { email: value, source: effectiveSource, attribution: getLeadAttribution() }
+        ),
       })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.status === 'ok') {
@@ -117,7 +132,7 @@ export default function LeadCapture({
         // skjer 1-3 ganger i uka. Begge hoppes over ved duplikat: en som
         // melder seg på to ganger er ikke to leads.
         if (!data.duplicate) {
-          window.fbq?.('track', 'Lead', { content_name: source })
+          window.fbq?.('track', 'Lead', { content_name: effectiveSource })
           googleKonvertering(CONV_EPOST)
         }
         // Bonusen finnes bare for A2 (serveren håndhever det), så
@@ -148,7 +163,7 @@ export default function LeadCapture({
   // bare `user`. Med bare `user` returnerte komponenten null for absolutt
   // alle, og fanget null e-poster fra 13.07 til 25.07.2026.
   // Samme mønster som AuthHeader.jsx og Login.jsx bruker.
-  if (loading || (user && !user.is_anonymous) || (dismissible && manuallyDismissed)) return null
+  if (loading || (loggedIn && !oneClick) || (dismissible && manuallyDismissed)) return null
 
   const sending = status === 'sending'
 
@@ -201,7 +216,17 @@ export default function LeadCapture({
         <>
           {isPaywall ? (
             <>
-              {offersBonus ? (
+              {oneClick ? (
+                <>
+                  <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+                    Få 10 spørsmål til, gratis
+                  </h2>
+                  <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
+                    Ett klikk, så låser du opp 10 nye A2-spørsmål med en gang.
+                    Øvingsplanen til dronesertifikatet sendes til {user.email}.
+                  </p>
+                </>
+              ) : offersBonus ? (
                 <>
                   <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
                     Få 10 spørsmål til, gratis
@@ -236,6 +261,7 @@ export default function LeadCapture({
             </p>
           )}
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+            {!oneClick && (
             <input
               type="email"
               inputMode="email"
@@ -247,10 +273,11 @@ export default function LeadCapture({
               disabled={sending}
               className="flex-1 bg-white border-[0.5px] border-da-navy/30 focus:border-da-navy/60 outline-none rounded-lg px-4 py-2.5 text-[14px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
             />
+            )}
             <button
               type="submit"
               disabled={sending}
-              className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] flex items-center justify-center gap-2 disabled:opacity-60"
+              className={`quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] flex items-center justify-center gap-2 disabled:opacity-60${oneClick ? ' w-full' : ''}`}
             >
               <span>{sending ? 'Sender…' : offersBonus ? 'Lås opp 10 spørsmål' : 'Send meg planen'}</span>
               {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
@@ -264,11 +291,16 @@ export default function LeadCapture({
           )}
 
           <p className="mt-2.5 text-[11px] text-da-text-muted leading-[1.45]">
-            Vil du også lagre fremgangen din?{' '}
-            <Link to="/login" className="underline hover:text-da-navy transition-colors">
-              Opprett gratis konto
-            </Link>
-            . Meld deg av når som helst · se{' '}
+            {!oneClick && (
+              <>
+                Vil du også lagre fremgangen din?{' '}
+                <Link to="/login" className="underline hover:text-da-navy transition-colors">
+                  Opprett gratis konto
+                </Link>
+                .{' '}
+              </>
+            )}
+            Meld deg av når som helst · se{' '}
             <Link to="/personvern" className="underline hover:text-da-navy transition-colors">
               personvern
             </Link>

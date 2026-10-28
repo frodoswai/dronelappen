@@ -21,6 +21,13 @@
 // svaret får `bonus: true`. get-questions leser raden og gir 10 A2-spørsmål
 // til. Uten JWT, eller med anon-nøkkelen som før: som i dag, `bonus: false`.
 // Feil ved upsert skal aldri ødelegge selve påmeldingen.
+//
+// Ettklikk for innloggede gratisbrukere (v14, 28.10.2026, Frode 28.10): source
+// 'quiz_paywall_login' uten e-post i body. E-posten hentes fra JWT-ens bruker
+// (må være en ekte, ikke-anonym bruker med e-post), resten er som
+// quiz_paywall: MailerLite-gruppa «DroneLappen leads» med lead_source, rad i
+// lead_bonus (source = 'quiz_paywall_login') og `bonus: true`. Anonym bruker
+// eller bruker uten e-post får 400. Appen kan ikke velge e-post selv.
 
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
@@ -35,6 +42,7 @@ function groupForSource(source: string): string {
     case 'quiz':
     case 'quiz_results':
     case 'quiz_paywall':
+    case 'quiz_paywall_login':
     // Lead-annonsens landingsside (/a2-ovingsplan) — e-post før quiz.
     case 'quiz_landing':
       return GROUP_LEADS
@@ -146,11 +154,13 @@ async function rateLimitOk(req: Request): Promise<boolean> {
   }
 }
 
-// Hvem som skal ha bonusen: bruker-id fra JWT-en i Authorization, men bare
-// for source 'quiz_paywall'. Anon-nøkkelen (som de andre skjemaene sender)
-// har ingen bruker, så getUser gir null og ingen bonus. Null ved feil.
-async function bonusUserId(req: Request, source: string): Promise<string | null> {
-  if (source !== 'quiz_paywall') return null
+// Hvem som skal ha bonusen: brukeren bak JWT-en i Authorization, men bare
+// for mur-kildene. Anon-nøkkelen (som de andre skjemaene sender) har ingen
+// bruker, så getUser gir null og ingen bonus. Null ved feil.
+const BONUS_SOURCES = new Set(['quiz_paywall', 'quiz_paywall_login'])
+type BonusUser = { id: string; email: string | null; anonymous: boolean }
+async function bonusUser(req: Request, source: string): Promise<BonusUser | null> {
+  if (!BONUS_SOURCES.has(source)) return null
   const authHeader = req.headers.get('Authorization')
   if (!authHeader) return null
   try {
@@ -159,7 +169,8 @@ async function bonusUserId(req: Request, source: string): Promise<string | null>
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     )
     const { data: { user } } = await admin.auth.getUser(authHeader.replace('Bearer ', ''))
-    return user?.id ?? null
+    if (!user?.id) return null
+    return { id: user.id, email: user.email ?? null, anonymous: user.is_anonymous === true }
   } catch (err) {
     console.error('lead_bonus getUser feilet', (err as Error).message)
     return null
@@ -168,7 +179,7 @@ async function bonusUserId(req: Request, source: string): Promise<string | null>
 
 // Skriv raden i lead_bonus. Idempotent (upsert på user_id), og en feil her
 // skal ikke velte påmeldingen: logg og svar false.
-async function grantBonus(userId: string | null): Promise<boolean> {
+async function grantBonus(userId: string | null, source: string): Promise<boolean> {
   if (!userId) return false
   try {
     const admin = createClient(
@@ -177,7 +188,7 @@ async function grantBonus(userId: string | null): Promise<boolean> {
     )
     const { error } = await admin
       .from('lead_bonus')
-      .upsert({ user_id: userId, source: 'quiz_paywall' }, { onConflict: 'user_id', ignoreDuplicates: true })
+      .upsert({ user_id: userId, source }, { onConflict: 'user_id', ignoreDuplicates: true })
     if (error) {
       console.error('lead_bonus upsert feilet', error.message)
       return false
@@ -209,11 +220,24 @@ Deno.serve(async (req) => {
   }
 
   const body = await req.json().catch(() => ({}))
-  const email = String(body?.email ?? '').trim().toLowerCase()
+  let email = String(body?.email ?? '').trim().toLowerCase()
   const source = String(body?.source ?? '').trim().toLowerCase()
   const groupId = groupForSource(source)
   const isQuizLead = groupId === GROUP_LEADS
   const attribution = cleanAttribution(body?.attribution)
+
+  // Slås opp før MailerLite-kallene, skrives først etter at de har lyktes.
+  const bUser = await bonusUser(req, source)
+
+  // Ettklikk (v14): innlogget gratisbruker sender ingen e-post, serveren
+  // bruker kontoens. Body-e-post ignoreres for denne kilden, så appen kan
+  // ikke melde på en annen adresse enn brukerens egen.
+  if (source === 'quiz_paywall_login') {
+    if (!bUser || bUser.anonymous || !bUser.email) {
+      return json({ status: 'error', message: 'Logg inn med en konto som har e-post for å få bonusen.' }, 400, cors)
+    }
+    email = bUser.email.trim().toLowerCase()
+  }
 
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
     return json({ status: 'error', message: 'Ugyldig e-postadresse' }, 400, cors)
@@ -224,9 +248,6 @@ Deno.serve(async (req) => {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   }
-
-  // Slås opp før MailerLite-kallene, skrives først etter at de har lyktes.
-  const bonusUid = await bonusUserId(req, source)
 
   try {
     // 1) Idempotent lookup by email.
@@ -257,7 +278,7 @@ Deno.serve(async (req) => {
       }
       // Bonusen gis også ved duplicate: samme person på ny enhet skal ikke
       // straffes (briefen 05.10, edge case).
-      return json({ status: 'ok', duplicate: true, bonus: await grantBonus(bonusUid) }, 200, cors)
+      return json({ status: 'ok', duplicate: true, bonus: await grantBonus(bUser?.id ?? null, source) }, 200, cors)
     }
 
     if (lookup.status !== 404) {
@@ -287,7 +308,7 @@ Deno.serve(async (req) => {
     })
 
     if (create.ok) {
-      return json({ status: 'ok', duplicate: false, bonus: await grantBonus(bonusUid) }, 200, cors)
+      return json({ status: 'ok', duplicate: false, bonus: await grantBonus(bUser?.id ?? null, source) }, 200, cors)
     }
 
     const detail = await create.text().catch(() => '')
