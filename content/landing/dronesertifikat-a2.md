@@ -7,6 +7,12 @@ slug: dronesertifikat-a2
 
 <p class="lede">A2-sertifikatet lar deg fly tyngre droner nærmere uinvolverte personer enn i A1/A3. Du tar A2-eksamen på en trafikkstasjon, den koster 970 kr, og med minst 75 % riktig får du et kompetansebevis som gjelder i hele EØS. DroneLappen forbereder deg med {{ANTALL}} norske øvingsspørsmål og full prøveeksamen.</p>
 
+<div class="cta-topp">
+<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/">Prøv 25 gratis →</a>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+</div>
+
 ## Hva A2-eksamen krever
 
 <div class="faktaboks">
@@ -42,7 +48,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 <p>Test deg med 25 A2-spørsmål gratis. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
 {{PRIS_VARSEL}}
 <a class="btn" href="/">Prøv 25 gratis →</a>
-<a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
 
 ## Ofte stilte spørsmål

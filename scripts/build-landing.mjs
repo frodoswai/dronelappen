@@ -157,6 +157,11 @@ const CSS = `
   .sitat figcaption{margin-top:.55rem;font-size:.9rem;color:var(--muted)}
   .faktaboks h3{margin:.1rem 0 .5rem}
   .faktaboks ul{margin:.25rem 0;padding-left:1.15rem}
+  .cta-topp{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:0 0 1.75rem}
+  .cta-topp a.btn{display:inline-block;background:var(--gold);color:var(--navy-dark);font-weight:700;
+    text-decoration:none;padding:.65rem 1.2rem;border-radius:.5rem}
+  .cta-topp a.btn.secondary{background:#fff;color:var(--navy);border:1px solid #cfd8e1}
+  .cta-topp small{flex-basis:100%;color:var(--muted);font-size:.88rem}
   .cta-box{background:var(--navy);border-radius:.75rem;padding:1.5rem;margin:2rem 0;color:#e8eef4}
   .cta-box h2{color:#fff;margin:0 0 .35rem;font-size:1.25rem}
   .cta-box p{margin:.25rem 0 .75rem}
