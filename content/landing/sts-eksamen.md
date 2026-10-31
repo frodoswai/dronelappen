@@ -7,6 +7,12 @@ slug: sts-eksamen
 
 <p class="lede">Har du A2 og skal fly i et standardscenario? Da tar du påbygget «Utvidelse av A2 til STS» på en trafikkstasjon. Prøven har 30 spørsmål, og du må ha minst 23 riktige for å bestå. DroneLappen har over 90 norske øvingsspørsmål til denne prøven, med forklaring på hvert svar.</p>
 
+<div class="cta-topp">
+<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/exam/A2_STS">Se STS-øvingen →</a>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+</div>
+
 ## STS-eksamen kort fortalt
 
 <div class="faktaboks">
@@ -87,8 +93,8 @@ Spørsmålene er skrevet ut fra regelverket (EU 2019/947, 2020/639 og 2020/1058)
 <div class="cta-box">
 <h2>Klar til å øve til STS?</h2>
 <p><strong>Lanseringspris: {{PRIS_HTML}} kr for alt, også STS.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement. Lanseringsprisen gjelder til 30. november 2026. Fra 1. desember koster pakken med STS 449 kr. Kjøper du før det, har du STS med i hele perioden.</p>
-<a class="btn" href="/exam/A2_STS">Start STS-øvingen →</a>
-<a class="btn secondary" href="/">Se alle eksamenene →</a>
+<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/exam/A2_STS">Start STS-øvingen →</a>
 </div>
 
 ## Ofte stilte spørsmål

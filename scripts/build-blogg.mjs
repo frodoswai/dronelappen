@@ -135,7 +135,8 @@ const CSS = `
   .cta-box{background:var(--navy);border-radius:.75rem;padding:1.5rem;margin:2.5rem 0;color:#e8eef4}
   .cta-box h2{color:#fff;margin:0 0 .5rem;font-size:1.25rem}
   .cta-box a.btn{display:inline-block;background:var(--gold);color:var(--navy-dark);
-    font-weight:700;text-decoration:none;padding:.6rem 1.2rem;border-radius:.5rem;margin-top:.75rem}
+    font-weight:700;text-decoration:none;padding:.6rem 1.2rem;border-radius:.5rem;margin-top:.75rem;margin-right:.5rem}
+  .cta-box a.btn.secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
   ul.artikler{list-style:none;padding:0}
   ul.artikler li{background:#fff;border:1px solid #e3e9ef;border-radius:.75rem;
     padding:1.1rem 1.3rem;margin-bottom:1rem}
@@ -221,6 +222,7 @@ const ctaBox = (campaign) => `<div class="cta-box">
 <h2>Øv gratis til droneeksamen</h2>
 <p>${ANTALL.total} norske spørsmål for A1/A3, A2 og STS, og hele A1/A3 er gratis. Eksamensmodus med ekte tidsfrist og bestå-grense. Ingen innlogging, ingen reklame.</p>
 <a class="btn" href="${appLink('/', campaign, 'cta_bunn')}">Start øvingen →</a>
+<a class="btn secondary" href="${appLink('/?kjop=1', campaign, 'cta_kjop')}">Full tilgang ${PRIS} kr →</a>
 </div>`
 
 // ── Bygg ──────────────────────────────────────────────────────────

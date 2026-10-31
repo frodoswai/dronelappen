@@ -7,6 +7,12 @@ slug: droneeksamen-oving
 
 <p class="lede">Den sikreste måten å bestå droneeksamen på er å øve på ekte spørsmålstyper under realistiske forhold. DroneLappen gir deg {{ANTALL}} norske øvingsspørsmål for A1/A3, A2 og STS, en prøveeksamen med ekte tidsfrist og bestå-grense, og forklaring på hvert svar. Alle {{ANTALL_A1A3}} A1/A3-spørsmålene er gratis, og du kan teste 25 A2-spørsmål gratis, uten innlogging.</p>
 
+<div class="cta-topp">
+<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/">Prøv 25 gratis →</a>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+</div>
+
 ## Hva droneeksamen krever
 
 <div class="faktaboks">
@@ -38,7 +44,7 @@ Spørsmålsbanken revideres løpende og ble sist kalibrert i juli 2026 mot tilba
 <h2>Start øvingen</h2>
 <p>Øv gratis på hele A1/A3 og 25 A2-spørsmål nå. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder. Engangsbeløp, ikke abonnement.</p>
 <a class="btn" href="/">Øv gratis nå →</a>
-<a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
 
 ## Ofte stilte spørsmål

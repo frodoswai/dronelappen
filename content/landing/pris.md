@@ -7,6 +7,12 @@ slug: pris
 
 <p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder. A1/A3 er gratis i sin helhet, og du kan teste 25 A2-spørsmål gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
 
+<div class="cta-topp">
+<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/">Prøv 25 gratis →</a>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+</div>
+
 {{PRIS_VARSEL}}
 
 ## Hva du får
@@ -45,7 +51,7 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 <h2>Prøv gratis, kjøp når du er klar</h2>
 <p>Øv gratis på hele A1/A3 og test 25 A2-spørsmål. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
 <a class="btn" href="/">Øv gratis nå →</a>
-<a class="btn secondary" href="/">Full tilgang {{PRIS_HTML}} kr →</a>
+<a class="btn secondary" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
 </div>
 
 ## Ofte stilte spørsmål
