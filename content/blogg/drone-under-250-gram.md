@@ -1,8 +1,8 @@
 ---
 title: Drone under 250 gram: trenger du dronelappen?
-description: Under 250 gram slipper du eksamen, men ikke alt. Her er hva som faktisk gjelder for lette droner, og når kameraet endrer regnestykket.
+description: Under 250 gram slipper du eksamen i dag, men ikke alt. Her er hva som gjelder for lette droner, når kameraet endrer regnestykket, og hva 100-gramsforslaget betyr.
 date: 2026-09-08
-updated: 2026-10-16
+updated: 2026-10-31
 image: assets/drone-under-250-gram.png
 imageAlt: Drone under 250 gram og dronelappen – DroneLappen-bloggen
 ---
@@ -31,10 +31,19 @@ Tre grunner til å ta den gratis netteksamen selv om du ikke må:
 - Du lærer restriksjonssoner, NOTAM og regelverket du uansett er bundet av. Bøtene skiller ikke på om dronen var lett.
 - Planlegger du noen gang en tyngre drone, må du ha A1/A3 i bunn uansett, også før A2. Se [forskjellen på nivåene](/blogg/a2-vs-a1-a3/).
 - Den er gratis og tas hjemmefra. Terskelen er så lav som den blir.
+- Blir 100-gramsforslaget vedtatt, må du ha bestått prøven uansett, også med en Mini eller Neo. Se under.
 
 ## Det som kan endre seg: 100-gramsgrensen
 
-EASA foreslo i Opinion 06/2026 (18. september 2026) å senke grensen for registrering og direkte fjernidentifikasjon fra 250 til 100 gram. Forslaget er ikke vedtatt, det finnes ingen dato, og det gjelder ikke i Norge i dag, men retningen er tydelig: lettdronene får mindre særbehandling over tid. Droneavisa følger prosessen i [dronereglene for Norge](https://droneavisa.no/droneregler/).
+EASA har foreslått å senke grensen fra 250 til 100 gram (Opinion 06/2026), og Luftfartstilsynet har sendt forslaget på høring i Norge. Blir det vedtatt, flyttes tre krav ned til 100 gram:
+
+- **Registrering:** én grense på 100 gram. Kamerakriteriet og unntaket for leketøysdroner faller bort.
+- **Nettkurs og eksamen:** alle som flyr en drone på 100 gram eller mer i A1, må ha bestått den nettbaserte teoriprøven. Det gjelder også DJI Mini og Neo.
+- **Fjernidentifikasjon:** droner fra 100 gram skal sende ut direkte Remote ID med operatørnummeret ditt.
+
+Forslaget er ikke vedtatt. Luftfartstilsynet venter at EU vedtar det i løpet av 2027. Deretter må det inn i EØS-avtalen og den norske droneforskriften før det gjelder her, og eksamenskravet kommer først 12 måneder etter at forordningen trer i kraft. Til da gjelder 250 gram i Norge.
+
+Høringen er åpen for alle. Send innspill til Luftfartstilsynet på postmottak@caa.no innen 30. november 2026, merket med saksnummer 26/10745. Overgangsreglene for droner du allerede har, står i [Droneavisas sak om høringen](https://droneavisa.no/100-gramsgrensen-horing/).
 
 ## Øv gratis, uansett vekt
 
@@ -52,4 +61,4 @@ Nei. Ifølge Luftfartstilsynet er droner under 250 gram i åpen kategori og leke
 
 ### Blir 250-gramsgrensen senket til 100 gram?
 
-Det er foreslått, men ikke vedtatt. EASA foreslo i Opinion 06/2026 (18. september 2026) å senke grensen for registrering og direkte fjernidentifikasjon til 100 gram. Det finnes ingen dato, og i Norge gjelder 250-gramsgrensen.
+Det er foreslått, men ikke vedtatt. Forslaget (EASA Opinion 06/2026) gjør 100 gram til ny grense for registrering, fjernidentifikasjon og nettprøven i A1. Høringsfristen i Norge er 30. november 2026, og Luftfartstilsynet venter et EU-vedtak i løpet av 2027. Til da gjelder 250-gramsgrensen.
