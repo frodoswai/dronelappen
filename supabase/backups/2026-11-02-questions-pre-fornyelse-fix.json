@@ -1,0 +1,52 @@
+[
+  {
+    "id": "4b9a513b-3cfd-4ee8-9483-706ef9206563",
+    "exam_type": "A2",
+    "question_text": "Hvor lenge er kompetansebeviset for fjernpilot i åpen kategori gyldig?",
+    "options": [
+      {
+        "id": "a",
+        "text": "1 år"
+      },
+      {
+        "id": "b",
+        "text": "Det er gyldig på ubestemt tid"
+      },
+      {
+        "id": "c",
+        "text": "10 år"
+      },
+      {
+        "id": "d",
+        "text": "5 år"
+      }
+    ],
+    "correct_option_id": "d",
+    "explanation": "Et kompetansebevis for fjernpilot i åpen kategori er gyldig i 5 år. Fornyes det før utløp, kan piloten delta på et seminar hos Luftfartstilsynet eller en anerkjent aktør; ellers må kompetansen demonstreres på nytt."
+  },
+  {
+    "id": "abe234b2-7262-5e97-a603-4aecfff064a9",
+    "exam_type": "A2_STS",
+    "question_text": "Et STS-kompetansebevis er fire år gammelt. Hvordan kan det etter EU-regelverket fornyes før det går ut, utenom ny eksamen?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Det går ikke, det kan bare fornyes når det er utløpt"
+      },
+      {
+        "id": "b",
+        "text": "Levere logg med minst 20 timer STS-flyging siste år"
+      },
+      {
+        "id": "c",
+        "text": "Ta oppfriskningskurs i teoriemnene før beviset utløper"
+      },
+      {
+        "id": "d",
+        "text": "Søke forlengelse med operatørens deklarasjon som grunnlag"
+      }
+    ],
+    "correct_option_id": "c",
+    "explanation": "Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. Luftfartstilsynet skriver (desember 2025) at fornyelse av A2- og STS-bevis i Norge skjer ved eksamen på trafikkstasjon."
+  }
+]

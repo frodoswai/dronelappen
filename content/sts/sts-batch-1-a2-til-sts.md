@@ -74,16 +74,16 @@ Hvor stor andel riktige svar krever EU-regelverket på STS-teoriprøven, og hva 
 
 ### 5. Regelverk og kategorier · vanskegrad 2
 
-Et STS-kompetansebevis er fire år gammelt. Hvordan kan det etter EU-regelverket fornyes før det går ut, utenom ny eksamen?
+Et STS-kompetansebevis nærmer seg fem år. Hva må du gjøre for å fornye det i Norge?
 
-- a) Det går ikke, det kan bare fornyes når det er utløpt
+- a) Ingenting, det fornyes automatisk med årsgebyret
 - b) Levere logg med minst 20 timer STS-flyging siste år
-- c) Ta oppfriskningskurs i teoriemnene før beviset utløper ✅
+- c) Ta ny STS-eksamen på en trafikkstasjon ✅
 - d) Søke forlengelse med operatørens deklarasjon som grunnlag
 
-*Forklaring:* Beviset gjelder i fem år. Etter EU-regelverket kan det fornyes innenfor gyldighetsperioden enten ved å vise kompetansen på nytt (eksamen) eller ved oppfriskningskurs i teoriemnene, gitt av myndigheten eller en utpekt aktør. Lar man beviset utløpe, må eksamen tas på nytt. Flygetimer eller operatørens deklarasjon gir ingen forlengelse. Luftfartstilsynet skriver (desember 2025) at fornyelse av A2- og STS-bevis i Norge skjer ved eksamen på trafikkstasjon.
+*Forklaring:* Kompetansebeviset gjelder i fem år. Luftfartstilsynet skriver at STS-beviset fornyes ved ny eksamen på en trafikkstasjon, og registrerte brukere får påminnelse på e-post 28 dager før utløp. EU-regelverket åpner også for oppfriskningskurs, men det tilbys ikke i Norge.
 
-*Kilde:* EU 2020/639 UAS.STS-01.020 (3)-(4); luftfartstilsynet.no, «Flydrone fyller 5 år - det gjør også de første kompetansebevisene» (04.12.2025)
+*Kilde:* luftfartstilsynet.no, Droneregler (lest 02.11.2026); EU 2020/639 UAS.STS-01.020 (3)-(4)
 
 ---
 
