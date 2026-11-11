@@ -33,7 +33,7 @@ export default function Personvern() {
         <div className="max-w-2xl mx-auto space-y-6 text-[14px] leading-[1.7] text-da-text-body">
 
           <p className="font-mono text-[11px] text-da-text-muted tracking-[0.1em]">
-            Sist oppdatert: 18. oktober 2026
+            Sist oppdatert: 11. november 2026
           </p>
 
           <section>
@@ -56,6 +56,8 @@ export default function Personvern() {
               <li><strong>Fremgangsdata:</strong> hvilke spørsmål du har besvart, resultater og tidsstempler</li>
               <li><strong>Betalingsinformasjon:</strong> håndteres av Stripe — vi lagrer ikke kortnummer eller bankdetaljer</li>
               <li><strong>Tekniske data:</strong> IP-adresse, nettlesertype og enhetsinfo (via serverlogger)</li>
+              <li><strong>Besøkskilde:</strong> hvilken lenke, kampanje eller nettside du kom fra, hvilken side du landet på, og klikk-ID hvis du kom fra en annonse hos Google eller Meta. Dette knyttes til en anonym bruker-ID, og til kontoen din hvis du oppretter en.</li>
+              <li><strong>Sidevisninger på annonsesider:</strong> tidspunkt, side og kampanjemerking, uten bruker-ID</li>
             </ul>
           </section>
 
@@ -67,7 +69,8 @@ export default function Personvern() {
               <li>Behandle betalinger (avtale, GDPR art. 6(1)(b))</li>
               <li>Sende viktige tjenestevarsler (berettiget interesse, GDPR art. 6(1)(f))</li>
               <li>Forbedre tjenesten gjennom anonymisert statistikk (berettiget interesse, GDPR art. 6(1)(f))</li>
-              <li>Måle og forbedre markedsføring via Meta-pixel og Google Ads, kun ved ditt samtykke (GDPR art. 6(1)(a))</li>
+              <li>Se hvilke kanaler og annonser som fører til besøk og kjøp, og melde kjøp etter et annonseklikk til Google Ads (berettiget interesse, GDPR art. 6(1)(f)). Punkt 7 forklarer hva som sendes.</li>
+              <li>Måle og forbedre markedsføring med informasjonskapsler fra Google og med Meta-pixel og kjøpsmeldinger til Meta, kun ved ditt samtykke (GDPR art. 6(1)(a))</li>
             </ul>
             <p className="mt-2">
               Vi sender aldri markedsføring uten ditt samtykke (GDPR art. 6(1)(a)).
@@ -80,10 +83,10 @@ export default function Personvern() {
             <ul className="list-disc pl-5 mt-2 space-y-1">
               <li><strong>Supabase</strong> (database og autentisering) — EU-region (eu-west-1)</li>
               <li><strong>Vercel</strong> (hosting) — edge-servere globalt, konfigurert for EU</li>
-              <li><strong>Stripe</strong> (betaling) — PCI DSS-sertifisert</li>
+              <li><strong>Stripe</strong> (betaling) – PCI DSS-sertifisert. Besøkskilden følger med betalingen som referanse.</li>
               <li><strong>Cloudflare</strong> (DNS og e-postruting)</li>
-              <li><strong>Meta Platforms Ireland</strong> (Meta-pixel for markedsføring og statistikk) — kun hvis du samtykker</li>
-              <li><strong>Google Ireland Limited</strong> (Google Ads, måling av annonser) — informasjonskapsler og identifikatorer kun hvis du samtykker</li>
+              <li><strong>Meta Platforms Ireland</strong> (Meta-pixel og kjøpsmeldinger for markedsføring og statistikk) – kun hvis du samtykker</li>
+              <li><strong>Google Ireland Limited</strong> (Google Ads, måling av annonser) – informasjonskapsler kun hvis du samtykker. Kjøp etter et annonseklikk meldes fra serveren vår, se punkt 7.</li>
               <li><strong>MailerLite</strong> (utsending av nyhetsbrev) — kun hvis du melder deg på</li>
             </ul>
             <p className="mt-2">
@@ -137,9 +140,27 @@ export default function Personvern() {
               <strong>Google Ads</strong> bruker Googles samtykkemodus. Taggen lastes
               på siden, men før du samtykker er den satt til å ikke lagre noe:
               den setter ingen informasjonskapsler og lagrer ingen identifikatorer på
-              enheten din. Google mottar da bare en anonymisert melding om at et besøk
-              skjedde, uten kjennetegn som kan knyttes til deg. Samtykker du, settes
+              enheten din. Fra nettleseren din mottar Google da bare en anonymisert
+              melding om at et besøk skjedde, uten kjennetegn som kan knyttes til deg. Samtykker du, settes
               informasjonskapsler fra Google og målingen blir nøyaktig.
+            </p>
+            <p className="mt-2">
+              <strong>Lokal lagring.</strong> Vi lagrer besøkskilden
+              (kampanjemerking, henvisende side, landingsside og klikk-ID fra
+              Meta-annonser) i nettleserens lokale lagring, slik at vi ser hvilken
+              kanal som førte til et kjøp også når du kommer tilbake senere.
+              Klikk-ID fra Google-annonser lagres ikke på enheten din.
+            </p>
+            <p className="mt-2">
+              <strong>Kjøpsmeldinger fra serveren.</strong> Kom du fra en
+              Google-annonse og fullfører et kjøp, sender vi Google annonsens
+              klikk-ID sammen med beløp og tidspunkt, slik at vi ser hvilke
+              annonser som fører til salg. Dette skjer uavhengig av valget ditt i
+              samtykkebanneren. Du kan protestere ved å kontakte oss, se punkt 6.
+              Til Meta sender vi bare når du har samtykket: da får Meta beskjed
+              når du starter og fullfører et kjøp, med beløp, tidspunkt, en hashet
+              versjon av e-postadressen og bruker-ID-en din, IP-adresse og
+              nettlesertype.
             </p>
             <p className="mt-2">
               Du kan trekke tilbake samtykket ved å avslå i banneren eller slette

@@ -39,6 +39,15 @@ export async function fetchQuestions({ examType } = {}) {
  * Start a Stripe Checkout for full access (pris: se src/lib/pricing.js).
  * Requires the user to be logged in. Redirects the browser to Stripe on success.
  */
+// Samme nøkkel som samtykkebanneren og getMetaIds() i attribution.js.
+function hasMarketingConsent() {
+  try {
+    return localStorage.getItem('dl-cookie-consent') === 'accepted'
+  } catch {
+    return false
+  }
+}
+
 export async function createCheckout() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) {
@@ -64,6 +73,8 @@ export async function createCheckout() {
       body: JSON.stringify({
         attribution: { ...getAttribution(), ...getMetaIds() },
         google_click: getGoogleClick(),
+        // Meta får bare kjøpsmeldinger når kjøperen har godtatt banneret.
+        meta_consent: hasMarketingConsent(),
       }),
     }
   )

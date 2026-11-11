@@ -199,7 +199,9 @@ Deno.serve(async (req) => {
         // can never block or fail the access that was just granted.
         try {
           const capiToken = Deno.env.get('META_CAPI_TOKEN')
-          if (capiToken) {
+          // [2026-11-11] Bare når kjøperen samtykket til markedsføring ved
+          // checkout (create-checkout setter metadata.meta_consent).
+          if (capiToken && session.metadata?.meta_consent === '1') {
             const userData: Record<string, unknown> = {
               external_id: [await sha256Hex(userId.trim())],
             }
@@ -252,7 +254,7 @@ Deno.serve(async (req) => {
               console.error('CAPI Purchase failed:', resp.status, await resp.text())
             }
           } else {
-            console.error('CAPI: META_CAPI_TOKEN not set — skipping Purchase event')
+            console.log(capiToken ? 'CAPI: no marketing consent, Purchase not sent to Meta' : 'CAPI: META_CAPI_TOKEN not set, skipping Purchase event')
           }
         } catch (err) {
           // CAPI is analytics only; never affect the entitlement grant.

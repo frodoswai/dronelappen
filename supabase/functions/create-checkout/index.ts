@@ -120,6 +120,11 @@ Deno.serve(async (req) => {
     // metadata.remind og customer_details.email på utløpte økter.
     let bodyEmail = ''
     let remind = false
+    // [2026-11-11] Samtykke til markedsføring (samtykkebanneren). Uten det
+    // sendes ingenting til Meta, verken herfra eller fra stripe-webhook, og
+    // IP/User-Agent legges ikke i Stripe-metadata. Personvernerklæringen lover
+    // at Meta bare brukes ved samtykke.
+    let metaConsent = false
     try {
       const body = await req.json().catch(() => null)
       if (body && typeof body === 'object') {
@@ -128,6 +133,8 @@ Deno.serve(async (req) => {
           bodyEmail = e.trim().toLowerCase()
         }
         remind = (body as Record<string, unknown>).remind === 1 || (body as Record<string, unknown>).remind === '1'
+        const mc = (body as Record<string, unknown>).meta_consent
+        metaConsent = mc === true || mc === 1 || mc === '1'
       }
       const attr = body && typeof body === 'object' ? (body as Record<string, unknown>).attribution : null
       if (attr && typeof attr === 'object') {
@@ -194,8 +201,16 @@ Deno.serve(async (req) => {
     const clientIp = (req.headers.get('x-forwarded-for') || '').split(',')[0].trim()
     const clientUa = (req.headers.get('user-agent') || '').slice(0, 450)
     const sessionMeta: Record<string, string> = { ...meta }
-    if (clientIp) sessionMeta.capi_ip = clientIp
-    if (clientUa) sessionMeta.capi_ua = clientUa
+    // Flagget settes bare her, aldri fra attribution-feltene klienten sender.
+    delete sessionMeta.meta_consent
+    if (metaConsent) {
+      sessionMeta.meta_consent = '1'
+      if (clientIp) sessionMeta.capi_ip = clientIp
+      if (clientUa) sessionMeta.capi_ua = clientUa
+    } else {
+      delete sessionMeta.fbp
+      delete sessionMeta.fbc
+    }
     if (remind && (user.email || bodyEmail)) sessionMeta.remind = '1'
 
     const price = currentPrice()
@@ -253,7 +268,7 @@ Deno.serve(async (req) => {
     // must never block or delay returning the checkout URL.
     try {
       const capiToken = Deno.env.get('META_CAPI_TOKEN')
-      if (capiToken) {
+      if (capiToken && metaConsent) {
         const userData: Record<string, unknown> = {
           external_id: [await sha256Hex(user.id.trim())],
         }
