@@ -216,8 +216,12 @@ function lesEnv(navn) {
     return m ? m[1] : ''
   } catch { return '' }
 }
-const SB_URL = lesEnv('VITE_SUPABASE_URL').replace(/\/$/, '')
-const SB_ANON = lesEnv('VITE_SUPABASE_ANON_KEY')
+// Vercel-variablene har linjeskift til slutt (sett 11.11.2026): uten trim ble
+// nøkkelen brutt over to linjer og skriptet en syntaksfeil. Verdier med andre
+// tegn enn de ventede gir heller ingen logglinje enn et ødelagt skript.
+const ren = (v) => (/^[A-Za-z0-9._:\/-]+$/.test(v) ? v : '')
+const SB_URL = ren(lesEnv('VITE_SUPABASE_URL').trim().replace(/\/$/, ''))
+const SB_ANON = ren(lesEnv('VITE_SUPABASE_ANON_KEY').trim())
 function sideLastScript(slug) {
   if (!SIDE_LAST_SLUGS.has(slug)) return ''
   if (!SB_URL || !SB_ANON) {
