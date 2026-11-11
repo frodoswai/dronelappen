@@ -202,7 +202,54 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 })();
 </script>`
 
-function page({ title, description, canonical, h1, bodyHtml, jsonld }) {
+// side_last (migrasjon 029–031, 11.11.2026): én rad i visit_events når en
+// annonselandingsside lastes med utm_source. Uten dette ser vi bare dem som
+// klikker seg videre inn i appen (Ads viste 69 klikk, visit_events 23 brukere).
+// Organiske besøk logges ikke. Ingen bruker-ID, ingen klikk-ID, ingenting
+// lagres på enheten. Nøkkelen er den åpne anon-nøkkelen appen allerede bruker.
+// Stiene må også stå i hvitelista i public.log_side_last.
+const SIDE_LAST_SLUGS = new Set(['dronesertifikat-a2', 'droneeksamen-oving'])
+function lesEnv(navn) {
+  if (process.env[navn]) return process.env[navn]
+  try {
+    const m = readFileSync(join(ROOT, '.env'), 'utf8').match(new RegExp('^' + navn + '=["\']?([^"\'\\s]+)', 'm'))
+    return m ? m[1] : ''
+  } catch { return '' }
+}
+const SB_URL = lesEnv('VITE_SUPABASE_URL').replace(/\/$/, '')
+const SB_ANON = lesEnv('VITE_SUPABASE_ANON_KEY')
+function sideLastScript(slug) {
+  if (!SIDE_LAST_SLUGS.has(slug)) return ''
+  if (!SB_URL || !SB_ANON) {
+    console.warn(`side_last: mangler VITE_SUPABASE_URL/ANON_KEY, /${slug}/ bygges uten logglinje`)
+    return ''
+  }
+  return `<script>
+(function(){
+  try {
+    var sp = new URLSearchParams(window.location.search);
+    if (!sp.get('utm_source')) return;
+    if (navigator.webdriver === true) return;
+    if (/bot|crawl|spider|slurp|adsbot|mediapartners|google-inspectiontool|lighthouse|headlesschrome|bingpreview|facebookexternalhit/i.test(navigator.userAgent || '')) return;
+    var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
+    if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) return;
+    var rad = { p_path: '/${slug}/' };
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+      var v = sp.get(k); if (v) rad['p_' + k] = v;
+    });
+    var K = '${SB_ANON}';
+    fetch('${SB_URL}/rest/v1/rpc/log_side_last', {
+      method: 'POST', keepalive: true,
+      headers: { 'Content-Type': 'application/json', 'apikey': K, 'Authorization': 'Bearer ' + K },
+      body: JSON.stringify(rad)
+    }).catch(function(){});
+  } catch (e) {}
+})();
+</script>
+`
+}
+
+function page({ title, description, canonical, h1, bodyHtml, jsonld, slug }) {
   return `<!doctype html>
 <html lang="nb">
 <head>
@@ -240,7 +287,7 @@ ${bodyHtml}
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
 </footer>
 ${PRIS_SCRIPT}
-</body>
+${sideLastScript(slug)}</body>
 </html>`
 }
 
@@ -278,7 +325,7 @@ for (const f of files) {
   mkdirSync(join(PUBLIC, meta.slug), { recursive: true })
   writeFileSync(join(PUBLIC, meta.slug, 'index.html'), page({
     title: pris(meta.title), description: pris(meta.description), canonical: url,
-    h1: pris(meta.h1), bodyHtml, jsonld,
+    h1: pris(meta.h1), bodyHtml, jsonld, slug: meta.slug,
   }))
   built.push({ slug: meta.slug, faqs: faqs.length })
 }
