@@ -114,5 +114,31 @@
   if (Date.now() >= S) { var v = document.querySelectorAll('.dl-prisvarsel'); for (var j = 0; j < v.length; j++) v[j].parentNode.removeChild(v[j]); }
 })();
 </script>
+<script>
+(function(){
+  // side_last (migrasjon 029, 11.11.2026): én rad i visit_events per sidelast,
+  // så vi ser hvor mange annonseklikk som faktisk laster kjøpssiden. Ingen
+  // bruker-ID, ingen klikk-ID, ingenting lagres på enheten. Nøkkelen er den
+  // åpne anon-nøkkelen appen allerede bruker. Feil svelges: logging skal
+  // aldri velte siden.
+  try {
+    if (navigator.webdriver === true) return;
+    if (/bot|crawl|spider|slurp|adsbot|mediapartners|google-inspectiontool|lighthouse|headlesschrome|bingpreview|facebookexternalhit/i.test(navigator.userAgent || '')) return;
+    var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
+    if (nav && (nav.type === 'reload' || nav.type === 'back_forward')) return;
+    var sp = new URLSearchParams(window.location.search);
+    var rad = { p_path: '/sts/' };
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+      var v = sp.get(k); if (v) rad['p_' + k] = v;
+    });
+    var K = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlbmp1Z3ZueGptdmJ2bGdubmhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MDM4MzYsImV4cCI6MjA5MDk3OTgzNn0.WNT3SI_QKsfuL9QJzUt7NA8V1xKGvT2Jkds7Pm4SxDQ';
+    fetch('https://wenjugvnxjmvbvlgnnhh.supabase.co/rest/v1/rpc/log_side_last', {
+      method: 'POST', keepalive: true,
+      headers: { 'Content-Type': 'application/json', 'apikey': K, 'Authorization': 'Bearer ' + K },
+      body: JSON.stringify(rad)
+    }).catch(function(){});
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
