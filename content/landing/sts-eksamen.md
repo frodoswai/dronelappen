@@ -21,7 +21,7 @@ slug: sts-eksamen
 <li><strong>Har du A2:</strong> «Utvidelse av A2 til STS» (kode DRONEA2STS). 30 spørsmål, minst 23 riktige.</li>
 <li><strong>Uten A2:</strong> hele STS-prøven, «Drone standard scenario» (kode DRONESTS). 40 spørsmål, minst 30 riktige.</li>
 <li><strong>Hvor:</strong> trafikkstasjon (Statens vegvesen), akkurat som A2-eksamen.</li>
-<li><strong>Tid:</strong> ingen tidsgrense er publisert. I appen øver du med 60 minutter, som på A2-prøven.</li>
+<li><strong>Tid:</strong> 60 minutter, ifølge Luftfartstilsynet (skriftlig svar til Droneavisa 4.11.2026). Den fulle STS-prøven har 80 minutter.</li>
 <li><strong>I tillegg:</strong> praktisk opplæring for scenarioet du skal fly (STS-01 eller STS-02).</li>
 <li><strong>Gyldighet:</strong> kompetansebeviset gjelder i 5 år.</li>
 </ul>
@@ -103,7 +103,7 @@ Spørsmålene er skrevet ut fra regelverket (EU 2019/947, 2020/639 og 2020/1058)
 Påbygget for deg som har A2, «Utvidelse av A2 til STS», har 30 spørsmål, og du må ha minst 23 riktige. Den fulle STS-prøven har 40 spørsmål, og der må du ha minst 30 riktige.
 
 ### Hvor lang tid har jeg på STS-prøven?
-Luftfartstilsynet har ikke publisert noen tidsgrense for STS-prøvene. I eksamensmodus i DroneLappen øver du med 60 minutter, som på A2-prøven.
+Kortprøven «Utvidelse av A2 til STS» har 60 minutter, og den fulle STS-prøven har 80 minutter. Det opplyser Luftfartstilsynet i et skriftlig svar til Droneavisa 4.11.2026. I eksamensmodus i DroneLappen øver du med 60 minutter.
 
 ### Hvilke emner er med på påbygget fra A2 til STS?
 Fem emner: regelverk, menneskelige faktorer, operasjonelle prosedyrer, tekniske og operasjonelle tiltak mot bakkerisiko, og generell kunnskap om dronen (UAS). Meteorologi, flygeytelse og tiltak mot luftrisiko er bare med på den fulle STS-prøven.

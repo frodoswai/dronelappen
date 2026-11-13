@@ -66,8 +66,9 @@ export const EXAMS = {
     short: 'STS',
     display: 'STS-påbygg',
     // «Utvidelse av A2 til STS» (DRONEA2STS): 30 spørsmål, 23 riktige.
-    // Luftfartstilsynet oppgir ingen tidsgrense, så Frode satte 60 min som
-    // på A2 (30.09.2026). Ingen gratis-pool: STS er med i full tilgang.
+    // 60 minutter er bekreftet skriftlig av Luftfartstilsynet 04.11.2026
+    // (fasit.md). Før det sto 60 min som Frodes anslag, som på A2
+    // (30.09.2026). Ingen gratis-pool: STS er med i full tilgang.
     examCount: 30,
     // Høyst 5 av grad 3 per eksamen (Frode 04.10.2026). Resten fordeles på
     // grad 1 og 2. Læring og tempo bruker hele banken.
@@ -77,7 +78,7 @@ export const EXAMS = {
     paywallTitle: 'STS-påbygget er med i full tilgang.',
     tag: 'trafikkstasjonen',
     intro:
-      'Prøven «Utvidelse av A2 til STS» (kode DRONEA2STS) har 30 spørsmål, og du må ha minst 23 riktige. Luftfartstilsynet oppgir ikke tidsgrensen, så eksamensmodusen gir deg 60 minutter, som på A2.',
+      'Prøven «Utvidelse av A2 til STS» (kode DRONEA2STS) har 30 spørsmål, og du må ha minst 23 riktige. Du har 60 minutter, som på A2 (bekreftet av Luftfartstilsynet 4.11.2026).',
     examDescription: {
       paid: 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.',
       free: 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå. Med i full tilgang.',
