@@ -12,7 +12,8 @@ import { enabledExamTypes, examLabel, STS_LIVE, stsPreviewOn, setStsPreview } fr
 //
 // Fargetrapp (Frodes spec):
 //   grå   → for lite data (under 15 svar for eksamenstype, under 3 for kategori)
-//   gul   → under 75 % (bestått-grensen)
+//   rosa  → under 75 % (bestått-grensen). Var gul (amber-400) til 14.11.2026,
+//           men den lå for nær gullfargen og 100 % så ut som en advarsel.
 //   grønn → ≥ 75 %
 //   GULL  → ≥ 90 % treff OG ≥ 80 % dekning — man skal ikke nå gull ved å
 //           bare svare på det man allerede kan.
@@ -48,9 +49,9 @@ function levelFor(pct, coveragePct, answered, minAnswered) {
   return {
     key: 'amber',
     label: 'under bestått-grensen',
-    dot: 'bg-amber-400',
-    bar: 'bg-amber-400',
-    text: 'text-amber-700',
+    dot: 'bg-rose-400',
+    bar: 'bg-rose-400',
+    text: 'text-rose-700',
   }
 }
 

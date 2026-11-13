@@ -160,7 +160,7 @@ export default function ReadinessCard({ resume = null, onData }) {
           </div>
           <p className="text-[12px] text-da-text-muted leading-[1.5] mb-3">
             Basert på siste svar på {d.answered} av {d.total} spørsmål
-            {weakest ? (
+            {weakest && weakest.pct < 100 ? (
               <>
                 {' '}· svakest: <span className="text-da-navy font-medium">{weakest.name}</span> ({weakest.pct} %)
               </>

@@ -158,7 +158,7 @@ export default function Results() {
           >
             {item.isCorrect ? '✓ ditt svar' : '✗ ditt svar'}
           </p>
-          <p className="text-[13px] text-da-navy leading-[1.45]">
+          <p className="text-[14.5px] text-da-navy leading-[1.45]">
             {getOptionText(item.question, item.userAnswer)}
           </p>
         </div>
@@ -168,7 +168,7 @@ export default function Results() {
             <p className="font-mono text-[10px] font-semibold tracking-[0.1em] text-green-700 mb-1">
               riktig svar
             </p>
-            <p className="text-[13px] text-da-navy leading-[1.45]">
+            <p className="text-[14.5px] text-da-navy leading-[1.45]">
               {getOptionText(item.question, item.question.correct_option_id)}
             </p>
           </div>
@@ -179,7 +179,7 @@ export default function Results() {
         <p className="font-mono text-[10px] font-semibold tracking-[0.1em] text-da-gold-text mb-1 uppercase">
           forklaring
         </p>
-        <p className="text-[12.5px] text-da-text-body leading-[1.5]">
+        <p className="text-[14px] text-da-text-body leading-[1.5]">
           {item.question.explanation}
         </p>
       </div>

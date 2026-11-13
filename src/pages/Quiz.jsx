@@ -630,7 +630,7 @@ export default function Quiz() {
           Round 3: white surface, 0.5px navy hairline border, no shadow.
           Matches the quiet-but-precise HUD aesthetic from Home/ExamSelect. */}
       <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-4 mb-3">
-        <h2 className="text-[15px] font-medium text-da-navy mb-3 leading-[1.45]">
+        <h2 className="text-[17px] font-medium text-da-navy mb-3 leading-[1.45]">
           {currentQuestion.question_text}
         </h2>
 
@@ -685,7 +685,7 @@ export default function Quiz() {
                 <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
                   {optLabel}
                 </span>
-                <span className="text-[14px] leading-[1.45]">{option.text}</span>
+                <span className="text-[16px] leading-[1.45]">{option.text}</span>
               </button>
             )
           })}
@@ -705,12 +705,12 @@ export default function Quiz() {
               {isCorrect ? '✓ riktig' : '✗ feil'}
             </p>
             {!isCorrect && (
-              <p className="text-[12.5px] text-da-text-body mb-1.5 leading-[1.5]">
+              <p className="text-[14.5px] text-da-text-body mb-1.5 leading-[1.5]">
                 <span className="font-medium text-da-navy">Riktig svar:</span>{' '}
                 {getOptionText(currentQuestion, currentQuestion.correct_option_id)}
               </p>
             )}
-            <p className="text-[12.5px] text-da-text-body leading-[1.5]">
+            <p className="text-[14.5px] text-da-text-body leading-[1.5]">
               {currentQuestion.explanation}
             </p>
           </div>
