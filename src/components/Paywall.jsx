@@ -10,6 +10,7 @@ import { PRICE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
 import { examConfig, antallParentes } from '../lib/exams'
 import HarTilgangLoggInn from './HarTilgangLoggInn'
+import DroneMark from './DroneMark'
 
 // Vises som tekstmerker under kjøpsknappen. Må speile det som faktisk er på i
 // Stripe → Betalingsmetoder (kort, Apple Pay, Google Pay, Link per 15.10.2026;
@@ -109,117 +110,112 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
     }
   }
 
+  // B2-drakt (Frode 14.11.2026). Innhold og kjøpsflyt er som før; nytt er
+  // fremdriftslinja i toppen, som viser hvor mye av A2-banken som er brukt.
+  const pst = Math.min(100, Math.round((answered / ANTALL.A2) * 100))
+  const hake = (
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17603C" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-[1px]">
+      <path d="M5 12l5 5 9-10" />
+    </svg>
+  )
+  const punkter = [
+    <>Alle {ANTALL.total} spørsmål{antallParentes(ANTALL.total, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier</>,
+    'Prøveeksamen i offisielt format, med tid og bestå-grense',
+    'Forklaring på hvert svar, så du lærer reglene og ikke bare fasit',
+    'Læring, Eksamen og Tempo',
+  ]
+
   return (
     <div className="min-h-screen bg-da-navy-dark flex flex-col">
-      {/* Dark hero band — matches the app's navy/gold language */}
-      <div className="px-6 pt-16 pb-8">
-        <div className="max-w-xl mx-auto">
-          <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.14em] mb-3">
-            full tilgang
-          </div>
-          <h1 className="text-[26px] font-semibold text-da-bg leading-tight mb-3">
-            {locked?.paywallTitle || <>Du har fullført de {answered} gratis spørsmålene.</>}
+      {/* ═══ Mørk topp ═══ */}
+      <div className="px-5 pt-3 pb-6">
+        <div className="pt-2 max-w-xl mx-auto">
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-5" aria-label="DroneLappen forside">
+            <DroneMark />
+            <span className="text-[20px] font-bold text-white leading-none">
+              DroneLappen<span className="text-da-gold">.app</span>
+            </span>
+          </Link>
+          <p className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-2">
+            Full tilgang
+          </p>
+          <h1 className="text-[30px] font-bold text-white leading-[1.12] tracking-tight mb-4">
+            {locked?.paywallTitle || <>Du har fullført de {answered} gratis spørsmålene</>}
           </h1>
-          <p className="text-[14px] text-da-dark-slogan leading-[1.55] max-w-md">
-            Lås opp <strong className="text-da-bg">hele spørsmålsbanken</strong> og alle
-            treningsmoduser i 12 måneder. Engangsbeløp på {PRICE} kr, ingen abonnement.
+          {!locked && (
+            <div className="mb-4">
+              <div aria-hidden="true" className="h-2 rounded-full bg-[#1E3A57] mb-2">
+                <div className="h-2 rounded-full bg-da-gold" style={{ width: `${pst}%` }} />
+              </div>
+              <p className="text-[15px] text-[#C9D6E2] leading-[1.4]">
+                Det er {answered} av {ANTALL.A2} A2-spørsmål. Resten ligger i full tilgang,
+                sammen med STS.
+              </p>
+            </div>
+          )}
+          {/* Pris-anker: eksamensgebyret er den reelle sammenligningen. */}
+          <p className="text-[15px] text-[#C9D6E2] leading-[1.45]">
+            Til sammenligning koster A2-eksamen{' '}
+            <strong className="text-white">970 kr per forsøk</strong> på trafikkstasjonen.
           </p>
-          {/* Pris-anker: eksamensgebyret er den reelle sammenligningen.
-              Ærlig og sterkt — stryk på trafikkstasjonen koster nytt gebyr. */}
-          <p className="text-[13px] text-da-dark-slogan leading-[1.55] max-w-md mt-2.5">
-            Til sammenligning: A2-eksamen koster{' '}
-            <strong className="text-da-bg">970 kr per forsøk</strong> på trafikkstasjonen.
-            God forberedelse er billig.
-          </p>
-          <PriceIncreaseNotice className="mt-3" compact />
         </div>
       </div>
 
-      {/* Fade into the light action zone */}
-      <div
-        className="h-7 shrink-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      <div className="flex-1 bg-da-bg px-6 pt-4 pb-10">
+      {/* ═══ Hvitt felt ═══ */}
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-[22px] pb-8">
         <div className="max-w-xl mx-auto">
-          <div className="bg-white border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-5 mb-4">
-            <div className="flex items-start justify-between gap-3 mb-3">
-              <div className="text-[17px] font-medium text-da-navy leading-tight">
-                Lås opp hele banken
-              </div>
-              <div className="text-right whitespace-nowrap">
-                <span className="text-[22px] font-semibold text-da-navy">{PRICE} kr</span>
-                <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
-                  én gang · 12 mnd
-                </span>
-              </div>
+          <div className="flex items-end justify-between gap-3 mb-4">
+            <h2 className="text-[22px] font-bold text-da-navy leading-tight">Lås opp hele banken</h2>
+            <div className="text-right whitespace-nowrap">
+              <div className="font-cond text-[36px] font-bold text-da-navy leading-none">{PRICE} kr</div>
+              <div className="text-[13px] text-da-text-muted">én gang · 12 måneder</div>
             </div>
-            <Lanseringspris className="mb-2.5" />
-            <ul className="text-[13px] text-da-text-body leading-[1.7] mb-4 list-none space-y-0.5">
-              <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Alle {ANTALL.total} spørsmål{antallParentes(ANTALL.total, ANTALL.A1_A3 + ANTALL.A2)}, alle
-                kategorier
-              </li>
-              <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Prøveeksamen i offisielt
-                format, med tid og bestå-grense
-              </li>
-              <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Forklaring på hvert svar -
-                lær reglene, ikke bare fasit
-              </li>
-              <li>
-                <span className="font-mono text-da-gold mr-1.5">+</span>Læring, Eksamen og Tempo
-              </li>
-            </ul>
-
-            <button
-              onClick={handleBuy}
-              disabled={busy}
-              className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-5 rounded-lg transition-colors text-[14px] inline-flex items-center justify-center gap-2 disabled:opacity-60"
-            >
-              <span>
-                {busy
-                  ? 'Sender deg til betaling …'
-                  : user
-                  ? 'Kjøp full tilgang'
-                  : 'Logg inn for å kjøpe'}
-              </span>
-              {!busy && <span className="font-mono text-[12px] text-da-gold">{PRICE} kr →</span>}
-            </button>
-
-            {err && (
-              <p role="alert" className="mt-2 text-[12px] text-amber-700">
-                {err}
-              </p>
-            )}
-
-            {/* Betalingsmåter synlig FØR klikk. Bakgrunn 15.10.2026: 10-20 % av dem
-                som ser muren trykker kjøp; muren sa bare «via Stripe», så ingen så
-                at Apple Pay / Google Pay finnes (de er på i Stripe-kontoen og vises
-                automatisk i Checkout). Tekstmerker, ikke logoer: offisielle merker
-                krever Apples/Googles egne filer og retningslinjer. Legg til 'PayPal'
-                i lista når den er aktivert i Stripe-dashbordet. */}
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5" aria-label="Betalingsmåter">
-              {BETALINGSMAATER.map((navn) => (
-                <span
-                  key={navn}
-                  className="font-mono text-[10.5px] text-da-navy/80 border-[0.5px] border-da-navy/25 rounded px-1.5 py-0.5 tracking-[0.02em]"
-                >
-                  {navn}
-                </span>
-              ))}
-            </div>
-            <p className="font-mono text-[11px] text-da-text-muted mt-2 tracking-[0.04em] text-center">
-              Engangsbeløp · sikker betaling via Stripe · over 240 piloter øver her
-            </p>
-
-            <HarTilgangLoggInn className="text-center mt-3" />
           </div>
+          <ul className="list-none space-y-2.5 mb-4 text-[16px] text-da-text-body leading-[1.35]">
+            {punkter.map((p, i) => (
+              <li key={i} className="flex items-start gap-2.5">
+                {hake}
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="bg-[#EEF3F7] rounded-xl px-3 py-2.5 mb-4 empty:hidden">
+            <Lanseringspris />
+            <PriceIncreaseNotice />
+          </div>
+          <button
+            onClick={handleBuy}
+            disabled={busy}
+            className="w-full h-[60px] rounded-[14px] bg-da-gold text-da-navy-dark text-[18px] font-bold inline-flex items-center justify-center text-center px-3 transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-60"
+          >
+            {busy
+              ? 'Sender deg til betaling …'
+              : user
+              ? `Kjøp full tilgang · ${PRICE} kr`
+              : `Logg inn for å kjøpe · ${PRICE} kr`}
+          </button>
+          {err && (
+            <p role="alert" className="mt-2 text-[14px] text-amber-700">
+              {err}
+            </p>
+          )}
+          {/* Betalingsmåter synlig FØR klikk (15.10.2026). Tekstmerker, ikke
+              logoer: offisielle merker krever Apples/Googles egne filer. */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5" aria-label="Betalingsmåter">
+            {BETALINGSMAATER.map((navn) => (
+              <span
+                key={navn}
+                className="text-[13px] font-medium text-da-navy border border-[#C9D3DC] rounded-lg px-2.5 py-1"
+              >
+                {navn}
+              </span>
+            ))}
+          </div>
+          <p className="text-[13px] text-da-text-muted mt-2.5 leading-[1.4] text-center">
+            Engangsbeløp, ingen abonnement. Sikker betaling via Stripe. Over 240 piloter øver her.
+          </p>
+          <HarTilgangLoggInn className="text-center mt-2 mb-5" />
+          {!user || user.is_anonymous ? null : <div className="mb-5" />}
 
           {/* Not-ready-to-buy path: capture the email so an anonymous user who
               won't convert now still becomes a reachable lead. Self-hides for
@@ -228,11 +224,11 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
           {bonus ? (
             // Bonusen er brukt (35 spørsmål): ingen nytt skjema, brukeren har
             // allerede gitt e-post. Kjøp er veien videre.
-            <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4">
-              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
+            <div className="bg-[#EEF3F7] rounded-2xl p-4 mb-4">
+              <div className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-1.5">
                 øvingsplan
               </div>
-              <p className="text-[13px] text-da-text-body leading-[1.5]">
+              <p className="text-[15px] text-da-text-body leading-[1.45]">
                 Øvingsplanen er på vei til innboksen din. De 10 ekstra spørsmålene
                 er brukt opp, og resten av banken ligger bak kjøpet over.
               </p>
@@ -250,9 +246,9 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
           {onContinue && (
             <button
               onClick={() => { logFunnel(PAYWALL_EXIT, { answered }); onContinue() }}
-              className="quiz-option w-full text-center text-[13px] text-da-text-muted hover:text-da-navy py-2 transition-colors"
+              className="w-full min-h-11 text-center text-[15px] font-semibold text-da-navy hover:underline"
             >
-              Se resultatene mine først →
+              Se resultatene mine først
             </button>
           )}
 
@@ -262,7 +258,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
             <Link
               to="/"
               onClick={() => logFunnel(PAYWALL_EXIT, { answered, examType: lockedExam })}
-              className="quiz-option block w-full text-center text-[13px] text-da-text-muted hover:text-da-navy py-2 transition-colors"
+              className="block w-full py-3 text-center text-[15px] font-semibold text-da-navy hover:underline"
             >
               Tilbake til forsiden
             </Link>

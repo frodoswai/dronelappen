@@ -193,7 +193,7 @@ export default function QuizLayout({
           )}
 
           {/* Modus, eksamen og eventuell stats */}
-          <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan truncate mb-2">
+          <p className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan truncate mb-2">
             {modeLabel}
             {displayExam && <span> · {displayExam}</span>}
             {stats && <span> · {stats}</span>}

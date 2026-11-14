@@ -23,22 +23,28 @@ const FAQ = [
 
 export default function HomeFaq() {
   return (
-    <section aria-label="Ofte stilte spørsmål" className="rise-in rise-d4 mb-6">
-      <div className="flex items-center gap-2.5 mb-3">
-        <div className="flex-1 h-px bg-da-navy/20" />
-        <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-          ofte stilte spørsmål
-        </span>
-        <div className="flex-1 h-px bg-da-navy/20" />
-      </div>
-      <div className="divide-y divide-da-navy/10 border-y border-da-navy/10">
+    <section aria-label="Ofte stilte spørsmål" className="rise-in rise-d4 mt-5 mb-6">
+      <h2 className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-1">Ofte stilte spørsmål</h2>
+      <div className="divide-y divide-[#DCE4EA] border-b border-[#DCE4EA]">
         {FAQ.map(([q, a]) => (
-          <details key={q} className="group py-2.5">
-            <summary className="cursor-pointer list-none flex items-start justify-between gap-3 text-[14px] font-medium text-da-navy">
+          <details key={q} className="group py-3.5">
+            <summary className="cursor-pointer list-none flex items-start justify-between gap-3 text-[16px] font-medium text-da-navy-dark">
               <span>{q}</span>
-              <span aria-hidden="true" className="font-mono text-da-navy/50 group-open:rotate-45 transition-transform">+</span>
+              <svg
+                aria-hidden="true"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#083554"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                className="shrink-0 mt-0.5 group-open:rotate-45 transition-transform"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
             </summary>
-            <p className="mt-1.5 text-[13px] leading-relaxed text-da-text-muted">{a}</p>
+            <p className="mt-2 text-[15px] leading-[1.5] text-da-text-body">{a}</p>
           </details>
         ))}
       </div>

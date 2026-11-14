@@ -12,7 +12,7 @@ export default function HarTilgangLoggInn({ className = '' }) {
   const { user, loading } = useAuth()
   if (loading || (user && !user.is_anonymous)) return null
   return (
-    <p className={`text-[12.5px] text-da-text-body ${className}`}>
+    <p className={`text-[14px] text-da-text-body ${className}`}>
       Har du allerede full tilgang?{' '}
       <Link to="/login" className="text-da-navy font-medium underline underline-offset-2">
         Logg inn

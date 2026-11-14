@@ -33,12 +33,12 @@ export default function InstallAppButton() {
     <div>
       <button
         onClick={handleClick}
-        className="font-mono text-[11px] tracking-[0.05em] text-da-gold-text hover:text-da-navy transition-colors"
+        className="text-[14px] font-medium text-da-navy hover:underline transition-colors"
       >
         📲 Installer DroneLappen som app
       </button>
       {showIosHint && (
-        <p className="mt-1 text-[11px] text-gray-400 leading-snug">
+        <p className="mt-1 text-[13px] text-da-text-muted leading-snug">
           Trykk på Del-knappen{' '}
           <span aria-hidden="true">(firkanten med pil opp)</span> i Safari og
           velg «Legg til på Hjem-skjerm».

@@ -150,7 +150,7 @@ export default function ReadinessCard({ resume = null, onData }) {
           </span>
         </div>
         <div className="min-w-0">
-          <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
+          <p className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
             Er du klar? · {label}
           </p>
           <h1 className="font-cond text-[30px] font-bold leading-[1.05] mb-1.5" style={{ color: farge }}>

@@ -56,11 +56,11 @@ export default function NewsletterSignup() {
   const sending = status === 'sending'
 
   return (
-    <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-4 py-3.5 mb-3">
-      <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
+    <div className="bg-[#EEF3F7] rounded-2xl p-4 mb-3">
+      <div className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-1.5">
         nyhetsbrev
       </div>
-      <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
+      <p className="text-[15px] text-da-text-body leading-[1.5] mb-2.5">
         Få de siste dronenyhetene fra{' '}
         <span className="font-medium text-da-navy">Droneavisa.no</span>: regelendringer,
         nye droner, tips og guider rett i innboksen.
@@ -69,12 +69,12 @@ export default function NewsletterSignup() {
       {status === 'success' ? (
         <p
           role="status"
-          className="text-[13px] font-medium text-green-700 leading-[1.5]"
+          className="text-[15px] font-medium text-green-700 leading-[1.5]"
         >
           Takk! Sjekk innboksen din og bekreft påmeldingen.
         </p>
       ) : status === 'duplicate' ? (
-        <p role="status" className="text-[13px] font-medium text-da-navy leading-[1.5]">
+        <p role="status" className="text-[15px] font-medium text-da-navy leading-[1.5]">
           Du er allerede påmeldt — takk!
         </p>
       ) : (
@@ -89,25 +89,24 @@ export default function NewsletterSignup() {
               placeholder="din@epost.no"
               aria-label="E-postadresse"
               disabled={sending}
-              className="flex-1 bg-white border-[0.5px] border-da-navy/30 focus:border-da-navy/60 outline-none rounded-lg px-4 py-2.5 text-[14px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
+              className="flex-1 bg-white border border-[#8A9AA8] focus:border-da-navy outline-none rounded-xl px-3.5 h-12 text-[16px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
             />
             <button
               type="submit"
               disabled={sending}
-              className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] flex items-center justify-center gap-2 disabled:opacity-60"
+              className="bg-da-navy hover:bg-da-navy-mid text-white font-semibold h-12 px-4 rounded-xl transition-colors text-[15px] flex items-center justify-center gap-2 disabled:opacity-60"
             >
               <span>{sending ? 'Sender…' : 'Meld meg på'}</span>
-              {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
             </button>
           </form>
 
           {status === 'error' && (
-            <p role="alert" className="mt-2 text-[12px] text-amber-700 leading-[1.4]">
+            <p role="alert" className="mt-2 text-[14px] text-amber-700 leading-[1.4]">
               {errorMsg}
             </p>
           )}
 
-          <p className="mt-2.5 text-[11px] text-da-text-muted leading-[1.45]">
+          <p className="mt-2.5 text-[15px] text-da-text-muted leading-[1.45]">
             Du kan melde deg av når som helst. Se{' '}
             <Link to="/personvern" className="underline hover:text-da-navy transition-colors">
               personvern

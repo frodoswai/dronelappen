@@ -249,7 +249,7 @@ export default function Results() {
             </div>
           </div>
           <div className="min-w-0">
-            <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
+            <p className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
               {heroConfig.modeLabel}
               {displayExam && <span> · {displayExam}</span>}
             </p>

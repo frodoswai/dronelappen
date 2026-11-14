@@ -83,7 +83,7 @@ export default function TextSizeToggle({ compact = false }) {
 
   return (
     <div className="flex items-center justify-center gap-2">
-      <span className="font-mono text-[10px] text-gray-400 tracking-[0.1em]">
+      <span className="text-[14px] text-da-text-muted">
         tekststørrelse
       </span>
       <div className="flex items-center gap-1" role="group" aria-label="Tekststørrelse">

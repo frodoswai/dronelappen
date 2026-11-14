@@ -11,7 +11,7 @@ export default function Lanseringspris({ className = '' }) {
   if (!isExamEnabled('A2_STS')) return null
   if (!showLaunchPriceNotice()) return null
   return (
-    <p className={`text-[12.5px] text-da-navy leading-[1.5] ${className}`}>
+    <p className={`text-[14px] text-da-navy leading-[1.45] ${className}`}>
       <strong className="font-semibold">Lanseringspris til {STS_TIER_LABEL}:</strong> {PRICE} kr for 12 måneder med
       alt, også STS. Fra 1. desember koster pakken med STS {PRICE_FULL_AFTER} kr. Kjøper du før det, har du STS
       med i hele perioden.

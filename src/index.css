@@ -31,7 +31,9 @@
   --font-sans: "Barlow", system-ui, -apple-system, sans-serif;
   --font-serif: "Lora", Georgia, serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;
-  /* B2 «Cockpit lys» (14.11.2026): smal Barlow til tall og etiketter. */
+  /* B2 «Cockpit lys» (14.11.2026): smal Barlow til tall og korte titler.
+     IKKE til tekst som kan inneholde Ø: bokstaven har ekstra bredde i
+     Barlow Condensed og gir et synlig hull («KJØ PE», «Ø v»). */
   --font-cond: "Barlow Condensed", "Barlow", system-ui, sans-serif;
 }
 

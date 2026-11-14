@@ -21,7 +21,7 @@ export default function PriceIncreaseNotice({ className = '', compact = false })
   }
 
   return (
-    <p className={`text-[13px] leading-relaxed text-da-navy/75 ${className}`}>
+    <p className={`text-[14px] leading-[1.45] text-da-text-body ${className}`}>
       <span className="font-semibold text-da-navy">
         Prisen øker til {PRICE_AFTER} kr {PRICE_INCREASE_LABEL}.
       </span>{' '}

@@ -168,7 +168,7 @@ export default function LeadCapture({
   const sending = status === 'sending'
 
   return (
-    <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4 relative">
+    <div className="bg-[#EEF3F7] rounded-2xl p-4 mb-4 relative">
       {dismissible && status !== 'success' && status !== 'duplicate' && (
         <button
           onClick={handleDismiss}
@@ -181,35 +181,35 @@ export default function LeadCapture({
         </button>
       )}
 
-      <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
+      <div className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-1.5">
         {isPaywall ? 'ikke klar til å kjøpe? · gratis' : 'gratis øvingsplan'}
       </div>
 
       {bonusGranted ? (
         <>
-          <h2 role="status" className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+          <h2 role="status" className="text-[18px] font-bold text-da-navy leading-snug mb-1.5">
             10 nye spørsmål er låst opp
           </h2>
-          <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
+          <p className="text-[15px] text-da-text-body leading-[1.5] mb-3">
             Øvingsplanen er på vei til innboksen din. Spørsmålene er klare nå.
           </p>
           {onBonus && (
             <button
               type="button"
               onClick={onBonus}
-              className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-5 rounded-lg transition-colors text-[14px] inline-flex items-center justify-center gap-2"
+              className="w-full bg-da-navy hover:bg-da-navy-mid text-white font-semibold h-12 px-4 rounded-xl transition-colors text-[15px] inline-flex items-center justify-center gap-2"
             >
               <span>Fortsett å øve</span>
-              <span className="font-mono text-[12px] text-da-gold">→</span>
+              <span className="font-mono text-[14px] text-da-gold">→</span>
             </button>
           )}
         </>
       ) : status === 'success' ? (
-        <p role="status" className="text-[13px] font-medium text-green-700 leading-[1.5]">
+        <p role="status" className="text-[15px] font-medium text-green-700 leading-[1.5]">
           Takk! Øvingsplanen er på vei — sjekk innboksen din om et par minutter.
         </p>
       ) : status === 'duplicate' ? (
-        <p role="status" className="text-[13px] font-medium text-da-navy leading-[1.5]">
+        <p role="status" className="text-[15px] font-medium text-da-navy leading-[1.5]">
           Du er allerede på lista — planen ligger i innboksen din. Takk!
         </p>
       ) : (
@@ -218,30 +218,30 @@ export default function LeadCapture({
             <>
               {oneClick ? (
                 <>
-                  <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+                  <h2 className="text-[18px] font-bold text-da-navy leading-snug mb-1.5">
                     Få 10 spørsmål til, gratis
                   </h2>
-                  <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
+                  <p className="text-[15px] text-da-text-body leading-[1.5] mb-2.5">
                     Ett klikk, så låser du opp 10 nye A2-spørsmål med en gang.
                     Øvingsplanen til dronesertifikatet sendes til {user.email}.
                   </p>
                 </>
               ) : offersBonus ? (
                 <>
-                  <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-1.5">
+                  <h2 className="text-[18px] font-bold text-da-navy leading-snug mb-1.5">
                     Få 10 spørsmål til, gratis
                   </h2>
-                  <p className="text-[13px] text-da-text-body leading-[1.5] mb-2.5">
+                  <p className="text-[15px] text-da-text-body leading-[1.5] mb-2.5">
                     Legg igjen e-posten din, så låser du opp 10 nye A2-spørsmål med en
                     gang. Du får også øvingsplanen til dronesertifikatet på e-post.
                   </p>
                 </>
               ) : (
-                <h2 className="text-[17px] font-medium text-da-navy leading-snug mb-2">
+                <h2 className="text-[18px] font-bold text-da-navy leading-snug mb-2">
                   Få øvingsplanen til dronesertifikatet gratis
                 </h2>
               )}
-              <ul className="text-[13px] text-da-text-body leading-[1.6] mb-3 list-none space-y-1">
+              <ul className="text-[15px] text-da-text-body leading-[1.6] mb-3 list-none space-y-1">
                 {(offersBonus ? BONUS_PUNKTER : PAYWALL_PUNKTER).map((p) => (
                   <li key={p} className="flex gap-1.5">
                     <span className="font-mono text-da-gold shrink-0">+</span>
@@ -249,13 +249,13 @@ export default function LeadCapture({
                   </li>
                 ))}
               </ul>
-              <p className="text-[12.5px] text-da-text-muted leading-[1.5] mb-3">
+              <p className="text-[14px] text-da-text-muted leading-[1.5] mb-3">
                 A2-eksamen koster 970 kr per forsøk hos Statens vegvesen. Det
                 lønner seg å møte forberedt.
               </p>
             </>
           ) : (
-            <p className="text-[13px] text-da-text-body leading-[1.5] mb-3 pr-6">
+            <p className="text-[15px] text-da-text-body leading-[1.5] mb-3 pr-6">
               Få en gratis øvingsplan og de viktigste eksamenstipsene rett i
               innboksen — så du stiller forberedt til prøven.
             </p>
@@ -271,26 +271,25 @@ export default function LeadCapture({
               placeholder="din@epost.no"
               aria-label="E-postadresse"
               disabled={sending}
-              className="flex-1 bg-white border-[0.5px] border-da-navy/30 focus:border-da-navy/60 outline-none rounded-lg px-4 py-2.5 text-[14px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
+              className="flex-1 bg-white border border-[#8A9AA8] focus:border-da-navy outline-none rounded-xl px-3.5 h-12 text-[16px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
             />
             )}
             <button
               type="submit"
               disabled={sending}
-              className={`quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] flex items-center justify-center gap-2 disabled:opacity-60${oneClick ? ' w-full' : ''}`}
+              className={`bg-da-navy hover:bg-da-navy-mid text-white font-semibold h-12 px-4 rounded-xl transition-colors text-[15px] flex items-center justify-center gap-2 disabled:opacity-60${oneClick ? ' w-full' : ''}`}
             >
               <span>{sending ? 'Sender…' : offersBonus ? 'Lås opp 10 spørsmål' : 'Send meg planen'}</span>
-              {!sending && <span className="font-mono text-[12px] text-da-gold">→</span>}
             </button>
           </form>
 
           {status === 'error' && (
-            <p role="alert" className="mt-2 text-[12px] text-amber-700 leading-[1.4]">
+            <p role="alert" className="mt-2 text-[14px] text-amber-700 leading-[1.4]">
               {errorMsg}
             </p>
           )}
 
-          <p className="mt-2.5 text-[11px] text-da-text-muted leading-[1.45]">
+          <p className="mt-2.5 text-[15px] text-da-text-muted leading-[1.45]">
             {!oneClick && (
               <>
                 Vil du også lagre fremgangen din?{' '}

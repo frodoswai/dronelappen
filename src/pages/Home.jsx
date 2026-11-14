@@ -208,7 +208,7 @@ export default function Home() {
   const loggedIn = !!user && !user.is_anonymous
   const totalt = stats.questions ?? ANTALL.total
   const label =
-    'font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-2.5'
+    'text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-2.5'
   const tag =
     'px-2.5 py-1 rounded-lg bg-[#EEF3F7] text-da-navy text-[13px] font-semibold whitespace-nowrap'
   const besvart = (k) =>
