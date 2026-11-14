@@ -89,7 +89,7 @@ export default function NewsletterSignup() {
               placeholder="din@epost.no"
               aria-label="E-postadresse"
               disabled={sending}
-              className="flex-1 bg-white border border-[#8A9AA8] focus:border-da-navy outline-none rounded-xl px-3.5 h-12 text-[16px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
+              className="flex-none sm:flex-1 w-full sm:w-auto bg-white border border-[#8A9AA8] focus:border-da-navy outline-none rounded-xl px-3.5 h-12 text-[16px] text-da-navy placeholder:text-da-text-muted transition-colors disabled:opacity-60"
             />
             <button
               type="submit"
