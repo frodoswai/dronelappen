@@ -87,10 +87,6 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
     // logFunnel gir uansett kontrollen tilbake innen 800 ms.
     await logFunnel(PAYWALL_BUY_CLICK, { answered, examType: lockedExam })
     window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
-    if (!user) {
-      navigate('/login')
-      return
-    }
     setBusy(true)
     try {
       await createCheckout() // redirects to Stripe on success
@@ -100,6 +96,12 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
         await refreshTier()
         setBusy(false)
         handlePaid()
+        return
+      }
+      // Ingen økt og anonym økt lot seg ikke opprette: innlogging er siste utvei.
+      if (e?.needsLogin) {
+        setBusy(false)
+        navigate('/login')
         return
       }
       window.fbq?.('trackCustom', 'CheckoutError', {
@@ -190,9 +192,7 @@ export default function Paywall({ answered = 25, onContinue, lockedExam = null, 
           >
             {busy
               ? 'Sender deg til betaling …'
-              : user
-              ? `Kjøp full tilgang · ${PRICE} kr`
-              : `Logg inn for å kjøpe · ${PRICE} kr`}
+              : `Kjøp full tilgang · ${PRICE} kr`}
           </button>
           {err && (
             <p role="alert" className="mt-2 text-[14px] text-amber-700">

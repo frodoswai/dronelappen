@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import DroneMark from '../components/DroneMark'
+import { hasPurchaseIntent } from '../lib/purchaseIntent'
 
 export default function Login() {
   const { user } = useAuth()
@@ -180,44 +182,53 @@ export default function Login() {
       : handlePasswordSignup
 
   const inputClass =
-    'w-full bg-white border-[0.5px] border-da-navy/30 focus:border-da-navy focus:ring-1 focus:ring-da-navy/20 rounded-lg px-4 py-3 text-[14px] text-da-navy placeholder:text-da-text-muted outline-none transition-colors'
+    'w-full h-[52px] bg-white border border-[#8A9AA8] focus:border-da-navy focus:ring-1 focus:ring-da-navy/20 rounded-xl px-3.5 text-[16px] text-da-navy placeholder:text-da-text-muted outline-none transition-colors'
+
+  // B2-drakt (Frode 14.11.2026). Skjemalogikken er urørt.
+  // Kom brukeren hit fra en kjøpsknapp, sier vi hva som skjer etterpå:
+  // forsiden viser «Fullfør kjøpet der du slapp» når innloggingen er gjort.
+  const paaVeiTilKjop = hasPurchaseIntent()
 
   return (
-    <div className="min-h-screen bg-da-bg flex flex-col">
-      {/* Dark hero — compact */}
-      <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8 max-w-sm mx-auto">
-          <h1 className="text-[28px] font-medium text-da-bg leading-none tracking-tight mb-1">
+    <div className="min-h-screen bg-da-navy-dark flex flex-col">
+      {/* Mørk topp */}
+      <div className="px-5 pt-3 pb-6">
+        <div className="pt-2 max-w-sm mx-auto">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="inline-flex items-center gap-2.5 mb-5"
+            aria-label="DroneLappen forside"
+          >
+            <DroneMark />
+            <span className="text-[20px] font-bold text-white leading-none">
+              DroneLappen<span className="text-da-gold">.app</span>
+            </span>
+          </button>
+          <h1 className="text-[30px] font-bold text-white leading-[1.12] tracking-tight mb-2">
             {mode === 'magic_link'
               ? 'Logg inn eller opprett konto'
               : mode === 'password_signup'
               ? 'Opprett konto'
               : 'Logg inn'}
           </h1>
-          <p className="font-serif italic text-sm text-da-dark-slogan">
-            Lagre fremgangen din og f&aring; tilgang til alle sp&oslash;rsm&aring;l
+          <p className="text-[16px] text-[#C9D6E2] leading-[1.4]">
+            {paaVeiTilKjop
+              ? 'Logg inn først, så fullfører du kjøpet med ett trykk etterpå.'
+              : 'Lagre fremgangen din og få tilgang til alle spørsmål.'}
           </p>
         </div>
       </div>
 
-      {/* Fade */}
-      <div
-        className="h-7 shrink-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      {/* Form */}
-      <div className="px-6 pt-2 pb-6 bg-da-bg">
+      {/* Hvitt felt med skjemaet */}
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-[22px] pb-8">
         <div className="max-w-sm mx-auto">
           {/* Method toggle — both options selectable up front */}
-          <div className="flex gap-1 p-1 mb-4 bg-da-cream/40 border-[0.5px] border-da-navy/15 rounded-lg">
+          <div className="flex gap-1 p-1 mb-5 bg-[#EEF3F7] rounded-[14px]">
             <button
               type="button"
               onClick={() => { setMode('magic_link'); resetCodeFlow() }}
-              className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
+              className={`flex-1 h-11 rounded-[10px] text-[15px] font-semibold transition-colors ${
                 mode === 'magic_link'
                   ? 'bg-white text-da-navy shadow-sm'
                   : 'text-da-text-muted hover:text-da-navy'
@@ -228,7 +239,7 @@ export default function Login() {
             <button
               type="button"
               onClick={() => { setMode('password_login'); resetCodeFlow() }}
-              className={`flex-1 py-2 rounded-md text-[13px] font-medium transition-colors ${
+              className={`flex-1 h-11 rounded-[10px] text-[15px] font-semibold transition-colors ${
                 mode !== 'magic_link'
                   ? 'bg-white text-da-navy shadow-sm'
                   : 'text-da-text-muted hover:text-da-navy'
@@ -240,7 +251,7 @@ export default function Login() {
 
           <form onSubmit={onSubmit} className="space-y-3">
             <div>
-              <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+              <label className="block text-[14px] font-medium text-da-text-body mb-1.5">
                 E-post
               </label>
               <input
@@ -256,7 +267,7 @@ export default function Login() {
 
             {mode === 'magic_link' && codeSent && (
               <div>
-                <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+                <label className="block text-[14px] font-medium text-da-text-body mb-1.5">
                   Engangskode
                 </label>
                 <input
@@ -276,7 +287,7 @@ export default function Login() {
 
             {mode === 'password_login' && recoveryCodeSent && (
               <div>
-                <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+                <label className="block text-[14px] font-medium text-da-text-body mb-1.5">
                   Kode fra e-posten
                 </label>
                 <input
@@ -296,7 +307,7 @@ export default function Login() {
 
             {mode !== 'magic_link' && !recoveryCodeSent && (
               <div>
-                <label className="block font-mono text-[11px] text-da-text-muted tracking-[0.1em] mb-1.5">
+                <label className="block text-[14px] font-medium text-da-text-body mb-1.5">
                   Passord
                 </label>
                 <input
@@ -317,7 +328,7 @@ export default function Login() {
             {/* Status message */}
             {message && (
               <div
-                className={`rounded-lg px-4 py-3 text-[13px] leading-[1.45] ${
+                className={`rounded-xl px-4 py-3 text-[15px] leading-[1.45] ${
                   message.type === 'success'
                     ? 'bg-green-50 border-[0.5px] border-green-200 text-green-800'
                     : 'bg-amber-50 border-[0.5px] border-amber-200 text-amber-800'
@@ -330,7 +341,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid disabled:opacity-60 text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-[14px]"
+              className="w-full h-14 bg-da-navy hover:bg-da-navy-mid disabled:opacity-60 text-white font-bold px-4 rounded-[14px] transition-colors flex items-center justify-center gap-2 text-[16px]"
             >
               <span>
                 {loading
@@ -345,12 +356,11 @@ export default function Login() {
                     : 'Logg inn'
                   : 'Opprett konto'}
               </span>
-              {!loading && <span className="font-mono text-[12px] text-da-gold">&rarr;</span>}
             </button>
           </form>
 
           {mode === 'magic_link' && !codeSent && (
-            <p className="mt-3 text-[12px] text-da-text-muted leading-[1.45] text-center">
+            <p className="mt-3 text-[14px] text-da-text-muted leading-[1.45] text-center">
               Vi sender deg en 6-sifret kode på e-post. Første gang oppretter den
               kontoen din, ingen passord å huske.
             </p>
@@ -358,13 +368,13 @@ export default function Login() {
 
           {mode === 'magic_link' && codeSent && (
             <div className="mt-3 text-center space-y-2">
-              <p className="text-[12px] text-da-text-muted leading-[1.45]">
+              <p className="text-[14px] text-da-text-muted leading-[1.45]">
                 Koden er gyldig i en time. Finner du den ikke, sjekk søppelpost.
               </p>
               <button
                 type="button"
                 onClick={resetCodeFlow}
-                className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
               >
                 Send ny kode
               </button>
@@ -373,14 +383,14 @@ export default function Login() {
 
           {/* «Hans-tilfellet» (supportsak 9/7): kjøpere som kommer tilbake
               vet ikke alltid at tilgangen følger e-posten. Si det her. */}
-          <p className="mt-3 text-[12px] text-da-text-body leading-[1.45] text-center bg-da-cream/40 border-[0.5px] border-da-gold/40 rounded-lg px-4 py-2.5">
+          <p className="mt-4 text-[14px] text-da-text-body leading-[1.45] text-center bg-[#EEF3F7] rounded-xl px-4 py-3">
             <span className="font-medium text-da-navy">Kjøpt full tilgang?</span>{' '}
             Logg inn med samme e-postadresse som ved kjøpet, så er alt på plass.
           </p>
 
           {/* Within password mode: swap between login and signup */}
           {mode !== 'magic_link' && (
-            <div className="mt-5 pt-4 border-t-[0.5px] border-da-navy/15 text-center space-y-2.5">
+            <div className="mt-5 pt-4 border-t border-[#DCE4EA] text-center space-y-1">
               {/* Denne står FØRST og tydeligst av en grunn: 19 av 24 betalende
                   kunder har ikke passord (kontoen ble laget av Stripe-
                   webhooken), og for dem er «Opprett konto» en blindvei —
@@ -392,29 +402,29 @@ export default function Login() {
                   type="button"
                   onClick={handleGlemtPassord}
                   disabled={loading}
-                  className="block w-full text-[13px] font-medium text-da-navy hover:text-da-gold transition-colors disabled:opacity-60"
+                  className="block w-full min-h-11 text-[15px] font-semibold text-da-navy hover:underline disabled:opacity-60"
                 >
-                  Glemt passord — eller aldri laget et? Få en lenke →
+                  Glemt passord, eller aldri laget et? Få en lenke
                 </button>
               )}
               {recoveryCodeSent ? (
                 <button
                   onClick={resetCodeFlow}
-                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                  className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
                 >
                   Send ny kode
                 </button>
               ) : mode === 'password_login' ? (
                 <button
                   onClick={() => { setMode('password_signup'); setMessage(null) }}
-                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                  className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
                 >
                   Helt ny her? Opprett konto
                 </button>
               ) : (
                 <button
                   onClick={() => { setMode('password_login'); setMessage(null) }}
-                  className="font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] transition-colors"
+                  className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
                 >
                   Har du allerede konto? Logg inn
                 </button>
@@ -424,9 +434,9 @@ export default function Login() {
 
           <button
             onClick={() => navigate('/')}
-            className="quiz-option w-full mt-5 bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3 px-4 rounded-lg transition-colors text-[14px]"
+            className="w-full mt-5 h-12 bg-white border border-[#C9D3DC] hover:border-da-navy text-da-navy font-semibold px-4 rounded-xl transition-colors text-[15px]"
           >
-            Tilbake til hjem
+            Tilbake til forsiden
           </button>
         </div>
       </div>

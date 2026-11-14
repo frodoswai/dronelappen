@@ -49,9 +49,24 @@ function hasMarketingConsent() {
 }
 
 export async function createCheckout() {
-  const { data: { session } } = await supabase.auth.getSession()
+  let { data: { session } } = await supabase.auth.getSession()
+  // Kjøp uten innlogging (Frode 14.11.2026): færrest mulig steg før betaling.
+  // Alle besøkende får normalt en anonym økt av AuthContext. Mangler den
+  // likevel, prøver vi å opprette den én gang til her i stedet for å sende
+  // kunden til innloggingssiden. Bare hvis også det feiler, kastes en feil
+  // merket needsLogin, og kalleren sender kunden til /login.
   if (!session) {
-    throw new Error('Du må være innlogget for å kjøpe full tilgang.')
+    try {
+      const { data } = await supabase.auth.signInAnonymously()
+      session = data?.session ?? null
+    } catch {
+      session = null
+    }
+  }
+  if (!session) {
+    const e = new Error('Vi fikk ikke startet betalingen. Logg inn og prøv igjen.')
+    e.needsLogin = true
+    throw e
   }
 
   const res = await fetch(

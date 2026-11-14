@@ -44,7 +44,7 @@ export default function QuizLayout({
   question,
   children,
 }) {
-  const { user, tier, loading, refreshTier } = useAuth()
+  const { tier, loading, refreshTier } = useAuth()
   const navigate = useNavigate()
   const [upgradeBusy, setUpgradeBusy] = useState(false)
   // Gate on loading so paid users never flash the "Gratis"/upgrade UI
@@ -63,16 +63,14 @@ export default function QuizLayout({
     // insert rekker ikke å sende før siden lastes ut. Samme felle som gjorde
     // paywall_buy_click ubrukelig i to døgn (se lib/funnel.js). Taket er 800 ms.
     await logFunnel(QUIZ_BUY_CLICK, { examType })
-    if (!user) {
-      navigate('/login')
-      return
-    }
     setUpgradeBusy(true)
     try {
       await createCheckout() // redirects to Stripe on success
     } catch (e) {
       setUpgradeBusy(false)
       if (e?.alreadyPaid) { await refreshTier(); return }
+      // Ingen økt og anonym økt lot seg ikke opprette: innlogging er siste utvei.
+      if (e?.needsLogin) { navigate('/login'); return }
       // Avbrutt e-postdialog: bli i quizen. Andre feil: forsiden som før.
       if (!e?.cancelled) navigate('/')
     }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import PriceIncreaseNotice from './PriceIncreaseNotice'
@@ -22,6 +22,7 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
   const { user, tier, loading } = useAuth()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   if (loading || tier === 'paid') return null
   // When requireUser is set, defer to other prompts (e.g. account signup) for
@@ -42,6 +43,12 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
         setBusy(false)
         return
       }
+      // Ingen økt og anonym økt lot seg ikke opprette: innlogging er siste utvei.
+      if (err?.needsLogin) {
+        setBusy(false)
+        navigate('/login')
+        return
+      }
       window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })
       setError(err.message || 'Noe gikk galt. Prøv igjen.')
       setBusy(false)
@@ -49,11 +56,11 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
   }
 
   return (
-    <div className="bg-da-cream/40 border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-5 py-4 mb-4">
-      <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-1.5">
+    <div className="bg-[#EEF3F7] rounded-2xl p-4 mb-4">
+      <div className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-1.5">
         full tilgang
       </div>
-      <p className="text-[13px] text-da-text-body leading-[1.5] mb-3">
+      <p className="text-[15px] text-da-text-body leading-[1.45] mb-3">
         {examType === 'A1_A3' && !paidOnlyTitle ? (
           <>
             A1/A3 er gratis for alle. Skal du videre til A2? Betal <strong>{PRICE} kr én gang</strong> og
@@ -68,33 +75,22 @@ export default function UpgradePrompt({ compact = false, requireUser = false, pa
       </p>
       <PriceIncreaseNotice className="mb-3 -mt-1" compact />
 
-      {user ? (
-        <button
-          onClick={handleBuy}
-          disabled={busy}
-          className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2 disabled:opacity-60"
-        >
-          <span>{busy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}</span>
-          {!busy && <span className="font-mono text-[11px] text-da-gold">{PRICE} kr &rarr;</span>}
-        </button>
-      ) : (
-        <Link
-          to="/login"
-          className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2"
-        >
-          <span>Logg inn for &aring; kj&oslash;pe</span>
-          <span className="font-mono text-[11px] text-da-gold">&rarr;</span>
-        </Link>
-      )}
+      <button
+        onClick={handleBuy}
+        disabled={busy}
+        className="w-full h-14 rounded-[14px] bg-da-gold text-da-navy-dark text-[16px] font-bold inline-flex items-center justify-center text-center px-3 transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-60"
+      >
+        {busy ? 'Sender deg til betaling …' : `Kjøp full tilgang · ${PRICE} kr`}
+      </button>
 
       {error && (
-        <p className="text-[12px] text-red-600 mt-2" role="alert">{error}</p>
+        <p className="text-[14px] text-red-700 mt-2" role="alert">{error}</p>
       )}
 
-      <HarTilgangLoggInn className="mt-3" />
+      <HarTilgangLoggInn className="mt-3 text-center" />
 
       {!compact && (
-        <p className="font-mono text-[11px] text-da-text-muted mt-3 tracking-[0.04em]">
+        <p className="text-[13px] text-da-text-muted mt-2 text-center">
           Engangsbel&oslash;p. Sikker betaling via Stripe.
         </p>
       )}

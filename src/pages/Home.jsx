@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import DroneMark from '../components/DroneMark'
@@ -49,6 +49,7 @@ import {
 //     instead of stretching to viewport
 export default function Home() {
   const { tier, user, refreshTier } = useAuth()
+  const navigate = useNavigate()
   const [lastSession, setLastSession] = useState(null)
   // Sammenslåing (18/7): når ReadinessCard har data tok den over
   // fortsett-rollen, og det separate fortsett-kortet ble skjult.
@@ -144,6 +145,13 @@ export default function Home() {
       }
       // Gjør checkout-feil synlige i Meta -> brutt betalingssti fanges på
       // timer, ikke dager (jf. anon-email-bug 2026-07-01).
+      // Ingen økt og anonym økt lot seg ikke opprette: innlogging er siste utvei.
+      if (err?.needsLogin) {
+        setPurchaseIntent()
+        setBuyBusy(false)
+        navigate('/login')
+        return
+      }
       window.fbq?.('trackCustom', 'CheckoutError', { message: String(err?.message || err).slice(0, 200) })
       setBuyErr(err.message || 'Noe gikk galt. Prøv igjen.')
       setBuyBusy(false)
@@ -322,15 +330,9 @@ export default function Home() {
                     Prøv 25 gratis
                   </Link>
                 )}
-                {user ? (
-                  <button onClick={handleBuy} disabled={buyBusy} className={`flex-1 ${gullKnapp}`}>
-                    {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
-                  </button>
-                ) : (
-                  <Link to="/login" onClick={setPurchaseIntent} className={`flex-1 ${gullKnapp}`}>
-                    Full tilgang · {PRICE} kr
-                  </Link>
-                )}
+                <button onClick={handleBuy} disabled={buyBusy} className={`flex-1 ${gullKnapp}`}>
+                  {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
+                </button>
               </div>
               {/* Sosialt bevis — statisk tall, oppdateres manuelt. Grunnlaget
                   MÅ være user_progress, ikke auth.users (rettet 04.08.2026):
@@ -428,15 +430,9 @@ export default function Home() {
               </p>
               <Lanseringspris className="mb-2" />
               <PriceIncreaseNotice className="mb-2.5" />
-              {user ? (
-                <button onClick={handleBuy} disabled={buyBusy} className={`w-full ${gullKnapp}`}>
-                  {buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}
-                </button>
-              ) : (
-                <Link to="/login" onClick={setPurchaseIntent} className={`w-full ${gullKnapp}`}>
-                  Logg inn for å kjøpe
-                </Link>
-              )}
+              <button onClick={handleBuy} disabled={buyBusy} className={`w-full ${gullKnapp}`}>
+                {buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}
+              </button>
               {buyErr && (
                 <p role="alert" className="mt-2 text-[14px] text-amber-700">{buyErr}</p>
               )}
