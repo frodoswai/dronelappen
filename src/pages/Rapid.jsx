@@ -4,6 +4,7 @@ import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
+import KeyShortcuts from '../components/KeyShortcuts'
 import CrosshairMarks from '../components/CrosshairMarks'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 import { examConfig, examLabel } from '../lib/exams'
@@ -557,6 +558,13 @@ export default function Rapid() {
 
   const headerStats = `${correctCount}/${answeredCount} riktige`
 
+  // Tastatur (14.11.2026): 1–4 eller A–D velger svar i rekkefølgen på
+  // skjermen. Tempo går videre av seg selv, så Enter og piltaster brukes ikke.
+  const handleKey = (key) => {
+    const i = '1234'.includes(key) ? '1234'.indexOf(key) : 'abcd'.indexOf(key)
+    if (i >= 0 && currentQuestion.options[i]) handleSelectAnswer(currentQuestion.options[i].id)
+  }
+
   return (
     <QuizLayout
       mode="tempo"
@@ -567,6 +575,7 @@ export default function Rapid() {
       onStop={handleStop}
       flashBg={bgFlash}
     >
+      <KeyShortcuts onKey={handleKey} />
       {/* ═══ Question card ═══ */}
       <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5">
         <h2 className="text-[17px] font-medium text-da-navy mb-4 leading-[1.45]">
