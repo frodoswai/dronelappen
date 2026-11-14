@@ -766,6 +766,13 @@ export default function Quiz() {
             <p className="text-[14.5px] text-da-text-body leading-[1.5]">
               {currentQuestion.explanation}
             </p>
+            {/* Kilde (14.11.2026): source_public fra get-questions v13. Mangler
+                for spørsmål uten etterprøvd kilde og i økter lagret før v13. */}
+            {currentQuestion.source_public && (
+              <p className="mt-1.5 text-[12.5px] text-da-text-muted leading-[1.45]">
+                Kilde: {currentQuestion.source_public}
+              </p>
+            )}
             <ReportQuestion key={currentQuestion.id} questionId={currentQuestion.id} />
           </div>
         )}

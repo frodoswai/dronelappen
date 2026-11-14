@@ -183,6 +183,11 @@ export default function Results() {
         <p className="text-[14px] text-da-text-body leading-[1.5]">
           {item.question.explanation}
         </p>
+        {item.question.source_public && (
+          <p className="mt-1.5 text-[12.5px] text-da-text-muted leading-[1.45]">
+            Kilde: {item.question.source_public}
+          </p>
+        )}
         <ReportQuestion key={item.question.id} questionId={item.question.id} />
       </div>
     </div>

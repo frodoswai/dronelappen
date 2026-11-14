@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs'
-import { defineConfig } from 'vite'
+import { cwd } from 'node:process'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -33,6 +34,32 @@ function prisPlugin() {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss(), prisPlugin()],
+// Lokaltest (14.11.2026): edge-funksjonene godtar bare kall fra
+// dronelappen.app (ALLOWED_ORIGINS), så en lokal server blir avvist. Med
+// DL_PROXY_TARGET satt i .env.development.local sender utviklingsserveren
+// alt under /sb videre til Supabase og oppgir dronelappen.app som avsender.
+// Samme fil setter VITE_SUPABASE_URL=http://localhost:5173/sb, så appen
+// bruker mellomleddet. Gjelder bare `npm run dev`: bygget og produksjon
+// leser .env som før. Oppskrift: notes/reference/dronelappen-lokaltest.md.
+export default defineConfig(({ mode }) => {
+  const target = loadEnv(mode, cwd(), '').DL_PROXY_TARGET
+  return {
+    plugins: [react(), tailwindcss(), prisPlugin()],
+    server: target
+      ? {
+          proxy: {
+            '/sb': {
+              target,
+              changeOrigin: true,
+              rewrite: (p) => p.replace(/^\/sb/, ''),
+              configure: (proxy) => {
+                proxy.on('proxyReq', (proxyReq) => {
+                  proxyReq.setHeader('origin', 'https://dronelappen.app')
+                })
+              },
+            },
+          },
+        }
+      : undefined,
+  }
 })

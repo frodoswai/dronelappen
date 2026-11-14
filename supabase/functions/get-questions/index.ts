@@ -17,6 +17,9 @@
 // Appen kan aldri be om bonusen selv: alt avgjøres av JWT-ens bruker.
 // Svaret bærer `bonus` og `free_limit` (25 eller 35) så appen vet hvor muren
 // står og om e-postskjemaet skal vises igjen.
+//
+// Kilde (v13, 14.11.2026): source_public er med i select og vises under
+// forklaringen i appen. Det interne source-feltet sendes aldri ut.
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const FREE_LIMIT = 25
@@ -95,7 +98,7 @@ Deno.serve(async (req) => {
     // Build query using actual column names
     let query = admin
       .from('questions')
-      .select('id, category_id, question_text, options, correct_option_id, explanation, difficulty, exam_type, overlap_group')
+      .select('id, category_id, question_text, options, correct_option_id, explanation, difficulty, exam_type, overlap_group, source_public')
       .order('id')
 
     if (exam_type) {
