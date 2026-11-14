@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import AuthHeader from '../components/AuthHeader'
+import DroneMark from '../components/DroneMark'
 import { enabledExamTypes, examLabel, STS_LIVE, stsPreviewOn, setStsPreview } from '../lib/exams'
 
 // «Min side» — personlig scoreboard (Frode 31/7; tempo-rekorder bevisst
@@ -115,7 +117,19 @@ export default function MinSide() {
     <div className="min-h-screen bg-da-navy-dark flex flex-col">
       {/* ═══ Dark hero ═══ */}
       <div className="px-5 pt-3 pb-6">
-        <div className="pt-4 max-w-xl mx-auto">
+        <div className="pt-2 max-w-xl mx-auto">
+          {/* Vei hjem øverst (Frode 14.11.2026): før måtte man rulle helt ned. */}
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2.5 mb-4 min-h-11"
+            aria-label="Til forsiden"
+          >
+            <DroneMark />
+            <span className="text-[20px] font-bold text-white leading-none">
+              DroneLappen<span className="text-da-gold">.app</span>
+            </span>
+          </button>
           <span className="text-[17px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan">
             min side
           </span>
@@ -334,6 +348,13 @@ export default function MinSide() {
           >
             Tilbake til hjem
           </button>
+
+          {/* Utlogging (Frode 14.11.2026): fantes bare nederst på forsiden. */}
+          {user && !user.is_anonymous && (
+            <div className="flex justify-center pt-1">
+              <AuthHeader variant="light" />
+            </div>
+          )}
 
           {/* STS-test før lansering (03.10.2026): i den installerte appen kan
               man ikke legge ?sts-test=1 i adressen, så bryteren står her.
