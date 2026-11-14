@@ -182,6 +182,15 @@ export default function ReadinessCard({ resume = null, onData }) {
               <span>{pct >= PASS ? 'Hold formen ved like' : 'Øv der du er svakest'}</span>
               <span className="font-mono text-[12px] text-da-gold">→</span>
             </Link>
+            {/* Dagens 10 (14.11.2026): kort økt som blander gamle feil med
+                usette spørsmål. Se drawDailyMix i pages/Quiz.jsx. */}
+            <Link
+              to={`/practice/${examType}?dagens=1`}
+              className="quiz-option inline-flex items-center gap-1 font-mono text-[11px] text-da-navy border-[0.5px] border-da-gold/70 hover:bg-da-cream/40 px-2.5 py-2 rounded-md transition-colors"
+            >
+              dagens 10
+              <span className="text-da-gold">→</span>
+            </Link>
             {d.answered - d.correct > 0 && (
               <Link
                 to={`/practice/${examType}?feil=1`}

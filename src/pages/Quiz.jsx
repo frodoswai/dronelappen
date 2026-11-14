@@ -4,6 +4,8 @@ import { supabase, fetchQuestions } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import QuizLayout from '../components/QuizLayout'
 import Paywall from '../components/Paywall'
+import ReportQuestion from '../components/ReportQuestion'
+import KeyShortcuts from '../components/KeyShortcuts'
 import { saveQuizSession, loadQuizSession, clearQuizSession } from '../lib/quizSession'
 import { examConfig } from '../lib/exams'
 // Eksamenstrekket (overlap_group og grensen for grad 3) står i lib/examDraw.js.
@@ -25,6 +27,11 @@ const PRACTICE_QUESTION_COUNT = 30
 // Bonus på muren (14.10.2026, Frode 05.10): e-post gir 10 ekstra A2-spørsmål.
 // Speiler BONUS_LIMIT i get-questions; serveren er fasiten.
 const BONUS_LIMIT = 10
+// «Dagens 10» (14.11.2026): kort læringsøkt som blander inntil 5 spørsmål der
+// siste svar var feil, med spørsmål brukeren ikke har sett. Er det for få av
+// noen av delene, fylles økta opp med tilfeldige spørsmål fra poolen.
+const DAILY_COUNT = 10
+const DAILY_MISTAKES = 5
 
 // Fisher-Yates shuffle
 function shuffleArray(array) {
@@ -34,6 +41,33 @@ function shuffleArray(array) {
     [arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
+}
+
+// Trekket for «Dagens 10». Poolen kommer ferdig stokket fra get-questions-
+// settet, så gratisbrukere holder seg innenfor sin pool. RPC-feil gir bare
+// et tilfeldig trekk, aldri en lastefeil.
+async function drawDailyMix(shuffled) {
+  let wrong = new Set()
+  let answered = new Set()
+  try {
+    const [m, a] = await Promise.all([
+      supabase.rpc('get_mistake_question_ids'),
+      supabase.rpc('get_answered_question_ids'),
+    ])
+    if (!m.error) wrong = new Set(m.data || [])
+    if (!a.error) answered = new Set(a.data || [])
+  } catch (_) { /* tilfeldig trekk under */ }
+  const picked = shuffled.filter((q) => wrong.has(q.id)).slice(0, DAILY_MISTAKES)
+  const ids = new Set(picked.map((q) => q.id))
+  for (const q of shuffled) {
+    if (picked.length >= DAILY_COUNT) break
+    if (!ids.has(q.id) && !answered.has(q.id)) { picked.push(q); ids.add(q.id) }
+  }
+  for (const q of shuffled) {
+    if (picked.length >= DAILY_COUNT) break
+    if (!ids.has(q.id)) { picked.push(q); ids.add(q.id) }
+  }
+  return shuffleArray(picked)
 }
 
 // Round 3: this page handles both Eksamen (/quiz/:examType) and Læring
@@ -64,6 +98,8 @@ export default function Quiz() {
   const mistakesOnly = isPracticeMode && searchParams.get('feil') === '1'
   const categoryFilter = isPracticeMode ? searchParams.get('kategori') : null
   const hasFilter = mistakesOnly || !!categoryFilter
+  // ?dagens=1 → «Dagens 10». Viker for feilbank- og kategorifilteret.
+  const dailyMix = isPracticeMode && !hasFilter && searchParams.get('dagens') === '1'
   // Timer der eksamenstypen har tidsgrense (timerMinutes i lib/exams.js):
   // den ekte A2-eksamen på trafikkstasjonen har 60 min, og STS får det samme,
   // mens A1/A3-netteksamen på flydrone.no er selvgående uten dokumentert
@@ -83,7 +119,7 @@ export default function Quiz() {
   // refresh/crash gjenopptar samme spørsmål, svar og gjenværende tid.
   // Nøkkelen skiller modus og læringsfiltre, så en filtrert feilbank-økt
   // aldri gjenopptas som vanlig læring.
-  const storageKey = `dl-quiz-${isPracticeMode ? 'laering' : 'eksamen'}-${examType}${mistakesOnly ? '-feil' : ''}${categoryFilter ? `-kat-${categoryFilter}` : ''}`
+  const storageKey = `dl-quiz-${isPracticeMode ? 'laering' : 'eksamen'}-${examType}${mistakesOnly ? '-feil' : ''}${categoryFilter ? `-kat-${categoryFilter}` : ''}${dailyMix ? '-dagens' : ''}`
 
   const [questions, setQuestions] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -211,7 +247,9 @@ export default function Quiz() {
           ? PRACTICE_QUESTION_COUNT
           : examCount
         const shuffled = shuffleArray(pool)
-        const drawn = isPracticeMode
+        const drawn = dailyMix
+          ? await drawDailyMix(shuffled)
+          : isPracticeMode
           ? shuffled.slice(0, targetCount)
           : drawExamQuestions(shuffled, targetCount, examMaxHard)
         const selected = drawn.map(q => ({
@@ -235,7 +273,7 @@ export default function Quiz() {
       }
     }
     loadQuestions()
-  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, storageKey, examDurationMs, examCount, examMaxHard, paidOnly])
+  }, [examType, needsTimer, isPracticeMode, mistakesOnly, categoryFilter, dailyMix, storageKey, examDurationMs, examCount, examMaxHard, paidOnly])
 
   // Lagre økten fortløpende: spørsmålstrekk, svar, posisjon og klokkeanker.
   // Svarene ligger allerede i `answers`-arrayet i det de gis, så en
@@ -608,7 +646,7 @@ export default function Quiz() {
   const layoutMode = isPracticeMode ? 'laering' : 'eksamen'
   // Filtrert læring viser hva man øver på i header-statsen (truncate i
   // QuizLayout tar seg av lange kategorinavn på smale skjermer).
-  const filterLabel = mistakesOnly ? 'feilbank' : categoryFilter
+  const filterLabel = mistakesOnly ? 'feilbank' : dailyMix ? 'dagens 10' : categoryFilter
   const layoutStats = isPracticeMode
     ? [filterLabel, answeredSoFar > 0 ? `${correctCount}/${answeredSoFar} riktige` : null]
         .filter(Boolean)
@@ -616,6 +654,20 @@ export default function Quiz() {
     : null
   const layoutTimer = needsTimer && remainingMs !== null ? formatMs(remainingMs) : null
   const timerUrgent = needsTimer && remainingMs !== null && remainingMs <= LOW_TIME_MS
+
+  // Tastatur: 1–4 eller A–D velger svar i rekkefølgen på skjermen, Enter og
+  // pil høyre går videre når spørsmålet er besvart, pil venstre går tilbake
+  // i Eksamen. Se components/KeyShortcuts.jsx.
+  const handleKey = (key) => {
+    const i = '1234'.includes(key) ? '1234'.indexOf(key) : 'abcd'.indexOf(key)
+    if (i >= 0 && currentQuestion.options[i]) {
+      handleSelectAnswer(currentQuestion.options[i].id)
+    } else if ((key === 'Enter' || key === 'ArrowRight') && isAnswered) {
+      handleNext()
+    } else if (key === 'ArrowLeft' && !isPracticeMode) {
+      handlePrev()
+    }
+  }
 
   return (
     <QuizLayout
@@ -626,6 +678,7 @@ export default function Quiz() {
       timer={layoutTimer}
       timerUrgent={timerUrgent}
     >
+      <KeyShortcuts onKey={handleKey} />
       {/* ═══ Question card ═══
           Round 3: white surface, 0.5px navy hairline border, no shadow.
           Matches the quiet-but-precise HUD aesthetic from Home/ExamSelect. */}
@@ -713,6 +766,7 @@ export default function Quiz() {
             <p className="text-[14.5px] text-da-text-body leading-[1.5]">
               {currentQuestion.explanation}
             </p>
+            <ReportQuestion key={currentQuestion.id} questionId={currentQuestion.id} />
           </div>
         )}
       </div>

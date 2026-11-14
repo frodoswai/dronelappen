@@ -4,6 +4,7 @@ import CrosshairMarks from '../components/CrosshairMarks'
 import LeadCapture from '../components/LeadCapture'
 import UpgradePrompt from '../components/UpgradePrompt'
 import { useAuth } from '../contexts/AuthContext'
+import ReportQuestion from '../components/ReportQuestion'
 import { examDisplay } from '../lib/exams'
 
 // Pass threshold mirrors the real A2 exam: 23/30 = 76.6% ≥ 75%.
@@ -182,6 +183,7 @@ export default function Results() {
         <p className="text-[14px] text-da-text-body leading-[1.5]">
           {item.question.explanation}
         </p>
+        <ReportQuestion key={item.question.id} questionId={item.question.id} />
       </div>
     </div>
   )
