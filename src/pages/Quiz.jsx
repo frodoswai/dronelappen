@@ -677,15 +677,13 @@ export default function Quiz() {
       stats={layoutStats}
       timer={layoutTimer}
       timerUrgent={timerUrgent}
+      question={currentQuestion.question_text}
     >
       <KeyShortcuts onKey={handleKey} />
-      {/* ═══ Question card ═══
-          Round 3: white surface, 0.5px navy hairline border, no shadow.
-          Matches the quiet-but-precise HUD aesthetic from Home/ExamSelect. */}
-      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-4 mb-3">
-        <h2 className="text-[17px] font-medium text-da-navy mb-3 leading-[1.45]">
-          {currentQuestion.question_text}
-        </h2>
+      {/* ═══ Svaralternativer ═══
+          B2 (14.11.2026): spørsmålet står i den mørke toppen (QuizLayout),
+          alternativene ligger rett på det hvite feltet. */}
+      <div className="mb-4">
 
         {/* Options — rendered in shuffled order with positional labels */}
         <div className="space-y-2.5">
@@ -702,7 +700,7 @@ export default function Quiz() {
             // Eksamen never reveals correctness — selected gets a navy
             // fill, everything else stays idle and tappable.
             let btnClass =
-              'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
+              'quiz-option w-full text-left rounded-[14px] border px-4 py-3 min-h-[60px] transition-all flex items-center gap-3.5 '
 
             if (!isPracticeMode) {
               // quiz-option-selected: unntar valgt svar fra touch-regelen i
@@ -710,20 +708,20 @@ export default function Quiz() {
               // ble navy-fyllet overstyrt og lys tekst sto på hvit bunn
               // (Frode 18/7: «svaret forsvinner, bare C står igjen»).
               btnClass += isSelected
-                ? 'quiz-option-selected bg-da-navy border-da-navy text-da-bg cursor-pointer'
-                : 'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
+                ? 'quiz-option-selected bg-da-navy border-da-navy text-white font-semibold cursor-pointer'
+                : 'bg-white border-[#C9D3DC] hover:border-da-navy text-da-navy-dark cursor-pointer'
             } else if (!isAnswered) {
               btnClass +=
-                'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
+                'bg-white border-[#C9D3DC] hover:border-da-navy text-da-navy-dark cursor-pointer'
             } else if (isCorrectOpt) {
               btnClass +=
-                'bg-green-50 border-green-500 text-da-navy'
+                'bg-green-50 border-green-600 text-da-navy-dark'
             } else if (isSelected && !isCorrectOpt) {
               btnClass +=
-                'bg-amber-50 border-amber-500 text-da-navy'
+                'bg-amber-50 border-amber-500 text-da-navy-dark'
             } else {
               btnClass +=
-                'bg-white border-da-navy/15 text-da-text-dim opacity-50'
+                'bg-white border-[#C9D3DC] text-da-text-dim opacity-50'
             }
 
             // Composite key forces React to unmount/remount per question,
@@ -735,7 +733,11 @@ export default function Quiz() {
                 disabled={isPracticeMode && isAnswered}
                 className={btnClass}
               >
-                <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
+                <span
+                  className={`font-cond text-[22px] font-bold leading-none w-[18px] shrink-0 ${
+                    !isPracticeMode && isSelected ? 'text-da-gold' : 'text-da-navy'
+                  }`}
+                >
                   {optLabel}
                 </span>
                 <span className="text-[16px] leading-[1.45]">{option.text}</span>
@@ -749,7 +751,7 @@ export default function Quiz() {
             Cream tint + gold accent bar keeps it distinct from the
             correct/wrong answer buttons above. */}
         {showExplanation && (
-          <div className="mt-3 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-3">
+          <div className="mt-4 bg-[#EEF3F7] rounded-[14px] px-4 py-3.5">
             <p
               className={`font-mono text-[11px] font-semibold tracking-[0.1em] mb-1.5 ${
                 isCorrect ? 'text-green-700' : 'text-amber-700'
@@ -785,20 +787,20 @@ export default function Quiz() {
           {!isPracticeMode && currentIndex > 0 && (
             <button
               onClick={handlePrev}
-              className="quiz-option bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="quiz-option h-14 bg-white border border-[#C9D3DC] hover:border-da-navy text-da-navy font-medium px-5 rounded-[14px] transition-colors flex items-center justify-center gap-2"
             >
-              <span className="font-mono text-[12px] text-da-gold">←</span>
+              <span className="font-mono text-[12px] text-da-navy">←</span>
               <span>Forrige</span>
             </button>
           )}
           <button
             onClick={handleNext}
-            className="quiz-option flex-1 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="quiz-option flex-1 h-14 bg-da-gold hover:brightness-105 text-da-navy-dark text-[17px] font-bold px-4 rounded-[14px] transition-all flex items-center justify-center gap-2"
           >
             <span>
               {currentIndex < questions.length - 1 ? 'Neste' : 'Se resultater'}
             </span>
-            <span className="font-mono text-[12px] text-da-gold">→</span>
+            <span className="font-mono text-[12px] text-da-navy-dark">→</span>
           </button>
         </div>
       )}

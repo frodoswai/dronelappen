@@ -14,7 +14,8 @@
 //   timerUrgent — optional bool; paints the timer red when true (sub-5-min)
 //   onStop    — optional handler; renders a small "stopp" button next to timer
 //   flashBg   — optional Tailwind bg class for Rapid correct/wrong flashes
-//   children  — question card contents
+//   question  — spørsmålsteksten; vises i den mørke toppen (B2, 14.11.2026)
+//   children  — svaralternativer og forklaring, ligger på det hvite feltet
 //
 // Layout intent:
 //   1. Dark navy-dark zone with mode label / progress / timer
@@ -40,6 +41,7 @@ export default function QuizLayout({
   timerUrgent,
   onStop,
   flashBg,
+  question,
   children,
 }) {
   const { user, tier, loading, refreshTier } = useAuth()
@@ -93,9 +95,13 @@ export default function QuizLayout({
       : 0
 
   return (
-    <div className={`min-h-screen flex flex-col bg-da-bg transition-colors duration-150 ${flashBg || ''}`}>
-      {/* ═══ Compact dark header ═══ */}
-      <div className="bg-da-navy-dark px-6 pt-3 pb-3">
+    <div className="min-h-screen flex flex-col bg-da-navy-dark">
+      {/* ═══ Mørk topp ═══
+          B2 «Cockpit lys» (Frode 14.11.2026): teller, klokke og selve
+          spørsmålet står på mørk bunn. Svarene ligger på et hvitt felt
+          under, med mørkeblå tekst. Bare drakta er ny, oppførselen er
+          som før. */}
+      <div className="px-5 pt-3 pb-5">
         {/* pt-2 (ikke sidekonvensjonens pt-8): i quiz-flyten er stor
             topp-luft bare dødplass på mobil (Frode 18/7). */}
         <div className="pt-2 max-w-xl mx-auto">
@@ -131,28 +137,32 @@ export default function QuizLayout({
             )}
           </div>
 
-          {/* Top row — mono label cluster + timer */}
-          <div className="flex items-center justify-between gap-3 mb-2">
-            <div className="flex items-center gap-2 min-w-0">
-              <Link
-                to="/"
-                className="quiz-option text-da-gold text-xl leading-none hover:opacity-80 shrink-0"
-                aria-label="Tilbake"
-              >
-                ←
-              </Link>
-              <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.1em] truncate">
-                {modeLabel}
-                {displayExam && (
-                  <span className="text-da-dark-slogan"> · {displayExam}</span>
-                )}
-              </span>
-            </div>
-            {timer && (
-              <div className="flex items-center gap-2 shrink-0">
+          {/* Tilbake + teller + klokke */}
+          <div className="flex items-center justify-between gap-3 mb-3">
+            <Link
+              to="/"
+              className="quiz-option w-11 h-11 rounded-full border border-[#1E3A57] bg-[#10233A] flex items-center justify-center hover:border-da-dark-slogan transition-colors shrink-0"
+              aria-label="Tilbake"
+            >
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EAF1F7" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 5l-7 7 7 7" />
+              </svg>
+            </Link>
+            {progress && (
+              <div className="font-cond flex items-baseline gap-1.5 tabular-nums" aria-label={`Spørsmål ${progress.current} av ${progress.total}`}>
+                <span className="text-[30px] font-bold text-da-gold leading-none">
+                  {String(progress.current).padStart(2, '0')}
+                </span>
+                <span className="text-[18px] font-semibold text-da-dark-slogan leading-none">
+                  / {progress.total}
+                </span>
+              </div>
+            )}
+            {timer ? (
+              <div className="h-11 pl-3.5 pr-1.5 rounded-full border border-[#1E3A57] bg-[#10233A] flex items-center gap-2 shrink-0">
                 <span
-                  className={`font-mono text-[13px] font-semibold tabular-nums ${
-                    timerUrgent ? 'text-red-400' : 'text-da-gold'
+                  className={`font-cond text-[18px] font-semibold tabular-nums pr-2 ${
+                    timerUrgent ? 'text-red-400' : 'text-[#EAF1F7]'
                   }`}
                   aria-label="Tid"
                 >
@@ -161,52 +171,45 @@ export default function QuizLayout({
                 {onStop && (
                   <button
                     onClick={onStop}
-                    className="quiz-option font-mono text-[10px] tracking-[0.1em] text-da-dark-slogan hover:text-da-bg border-[0.5px] border-da-dark-slogan/40 hover:border-da-bg/60 px-2 py-0.5 rounded transition-colors"
+                    className="quiz-option h-8 px-3 rounded-full bg-da-navy-dark border border-[#1E3A57] text-[13px] font-medium text-da-dark-slogan hover:text-white transition-colors"
                   >
-                    stopp
+                    Stopp
                   </button>
                 )}
               </div>
+            ) : (
+              <div className="w-11 shrink-0" aria-hidden="true" />
             )}
           </div>
 
-          {/* Second row — progress counter + optional stats */}
+          {/* Fremdrift */}
           {progress && (
-            <div className="flex items-center justify-between gap-3 mb-2">
-              <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums">
-                {isFree ? 'Gratis · ' : 'spørsmål '}{progress.current}/{progress.total}
-              </span>
-              {stats && (
-                <span className="font-mono text-[11px] text-da-dark-slogan tracking-wide tabular-nums truncate">
-                  {stats}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Progress bar — hairline, gold on navy */}
-          {progress && (
-            <div className="w-full h-[2px] bg-da-bg/10 rounded-full overflow-hidden">
+            <div className="w-full h-1 bg-[#1E3A57] rounded-full overflow-hidden mb-5">
               <div
-                className="h-full bg-da-gold transition-all duration-300"
+                className="h-full bg-da-gold rounded-full transition-all duration-300"
                 style={{ width: `${pct}%` }}
               />
             </div>
           )}
+
+          {/* Modus, eksamen og eventuell stats */}
+          <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan truncate mb-2">
+            {modeLabel}
+            {displayExam && <span> · {displayExam}</span>}
+            {stats && <span> · {stats}</span>}
+          </p>
+          {question && (
+            <h2 className="text-[21px] font-semibold text-white leading-[1.3]">
+              {question}
+            </h2>
+          )}
         </div>
       </div>
 
-      {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
+      {/* ═══ Hvitt felt ═══ flashBg er Tempo sitt grønne/gule blink. */}
       <div
-        className="h-5 shrink-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      {/* ═══ Light content zone ═══ */}
-      <div className={`px-5 pt-2 ${isFree ? 'pb-24' : 'pb-6'} bg-da-bg`}>
+        className={`flex-1 rounded-t-3xl px-5 pt-5 ${isFree ? 'pb-24' : 'pb-6'} bg-white transition-colors duration-150 ${flashBg || ''}`}
+      >
         <div className="max-w-xl mx-auto">{children}</div>
       </div>
 

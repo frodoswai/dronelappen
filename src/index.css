@@ -31,6 +31,8 @@
   --font-sans: "Barlow", system-ui, -apple-system, sans-serif;
   --font-serif: "Lora", Georgia, serif;
   --font-mono: "JetBrains Mono", Consolas, monospace;
+  /* B2 «Cockpit lys» (14.11.2026): smal Barlow til tall og etiketter. */
+  --font-cond: "Barlow Condensed", "Barlow", system-ui, sans-serif;
 }
 
 body {

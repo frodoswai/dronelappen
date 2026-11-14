@@ -574,13 +574,11 @@ export default function Rapid() {
       timer={`⏱ ${formatMs(elapsedMs)}`}
       onStop={handleStop}
       flashBg={bgFlash}
+      question={currentQuestion.question_text}
     >
       <KeyShortcuts onKey={handleKey} />
       {/* ═══ Question card ═══ */}
-      <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5">
-        <h2 className="text-[17px] font-medium text-da-navy mb-4 leading-[1.45]">
-          {currentQuestion.question_text}
-        </h2>
+      <div>
 
         <div className="space-y-2.5">
           {currentQuestion.options.map((option, idx) => {
@@ -590,18 +588,18 @@ export default function Rapid() {
               option.id === currentQuestion.correct_option_id
 
             let btnClass =
-              'quiz-option w-full text-left rounded-lg border-[0.5px] px-4 py-3 transition-all flex items-start gap-3 '
+              'quiz-option w-full text-left rounded-[14px] border px-4 py-3 min-h-[60px] transition-all flex items-center gap-3.5 '
 
             if (!isAnswered) {
               btnClass +=
-                'bg-white border-da-navy/30 hover:border-da-navy/60 hover:bg-da-cream/20 text-da-navy cursor-pointer'
+                'bg-white border-[#C9D3DC] hover:border-da-navy text-da-navy-dark cursor-pointer'
             } else if (isCorrectOpt) {
-              btnClass += 'bg-green-50 border-green-500 text-da-navy'
+              btnClass += 'bg-green-100 border-green-600 text-da-navy-dark'
             } else if (isSelected && !isCorrectOpt) {
-              btnClass += 'bg-amber-50 border-amber-500 text-da-navy'
+              btnClass += 'bg-amber-100 border-amber-500 text-da-navy-dark'
             } else {
               btnClass +=
-                'bg-white border-da-navy/15 text-da-text-dim opacity-50'
+                'bg-white border-[#C9D3DC] text-da-text-dim opacity-50'
             }
 
             // Composite key forces React to unmount/remount the button
@@ -614,7 +612,7 @@ export default function Rapid() {
                 disabled={isAnswered}
                 className={btnClass}
               >
-                <span className="font-mono text-[13px] font-semibold text-da-gold tracking-wide shrink-0 pt-[1px]">
+                <span className="font-cond text-[22px] font-bold leading-none w-[18px] shrink-0 text-da-navy">
                   {optLabel}
                 </span>
                 <span className="text-[16px] leading-[1.45]">{option.text}</span>
@@ -626,7 +624,7 @@ export default function Rapid() {
         {/* Wrong-answer feedback line — shown during the 2.5s pause so
             the user has a chance to register what the right answer was. */}
         {feedback === 'wrong' && (
-          <div className="mt-4 bg-da-cream/40 border-[0.5px] border-da-gold/40 border-l-2 border-l-da-gold rounded px-4 py-2.5">
+          <div className="mt-4 bg-white border border-amber-500 rounded-[14px] px-4 py-3">
             <p className="font-mono text-[11px] font-semibold tracking-[0.1em] text-amber-700 mb-1">
               ✗ feil
             </p>

@@ -103,6 +103,8 @@ export default function Results() {
       crosshair: 'solid',
       scoreColor: 'text-da-navy',
       accentColor: 'text-da-navy',
+      ring: '#E89F1E',
+      headColor: 'text-white',
     },
     passed: {
       modeLabel: 'eksamen',
@@ -112,6 +114,8 @@ export default function Results() {
       crosshair: 'solid',
       scoreColor: 'text-green-700',
       accentColor: 'text-green-700',
+      ring: '#5BD69A',
+      headColor: 'text-[#5BD69A]',
     },
     failed: {
       modeLabel: 'eksamen',
@@ -121,6 +125,8 @@ export default function Results() {
       crosshair: 'gold',
       scoreColor: 'text-da-gold-text',
       accentColor: 'text-da-gold',
+      ring: '#E89F1E',
+      headColor: 'text-da-gold',
     },
   }[variant]
 
@@ -201,109 +207,86 @@ export default function Results() {
   }))
   const wrongAnswers = allResults.filter((item) => !item.isCorrect)
 
+  const RING = 2 * Math.PI * 59
+  const tidTekst =
+    timeUsedMs !== null && timeUsedMs !== undefined
+      ? `${formatMs(timeUsedMs)}${examDurationMs ? ` / ${formatMs(examDurationMs)}` : ''}`
+      : null
+
   return (
-    <div className="min-h-screen bg-da-bg flex flex-col">
-      {/* ═══ Dark hero ═══ */}
-      <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-2 max-w-xl mx-auto">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.12em]">
-              {heroConfig.modeLabel}
-              {displayExam && (
-                <span className="text-da-dark-slogan"> · {displayExam}</span>
+    <div className="min-h-screen bg-da-navy-dark flex flex-col">
+      {/* ═══ Mørk topp med ring ═══
+          B2 «Cockpit lys» (Frode 14.11.2026): resultatet står på mørk bunn,
+          tallene og svarene ligger på hvitt felt under. */}
+      <div className="px-5 pt-6 pb-6">
+        <div className="max-w-xl mx-auto flex items-center gap-5">
+          <div className="relative w-[136px] h-[136px] shrink-0 flex items-center justify-center">
+            <svg aria-hidden="true" width="136" height="136" viewBox="0 0 136 136" className="absolute inset-0">
+              <circle cx="68" cy="68" r="59" fill="none" stroke="#1E3A57" strokeWidth="10" />
+              {percentage > 0 && (
+                <circle
+                  cx="68"
+                  cy="68"
+                  r="59"
+                  fill="none"
+                  stroke={heroConfig.ring}
+                  strokeWidth="10"
+                  strokeLinecap="round"
+                  strokeDasharray={`${((mounted ? percentage : 0) / 100) * RING} ${RING}`}
+                  transform="rotate(-90 68 68)"
+                  style={{ transition: 'stroke-dasharray 700ms ease-out' }}
+                />
               )}
-            </span>
+            </svg>
+            <div className="flex flex-col items-center">
+              <span className="font-cond text-[46px] font-bold text-white leading-none tabular-nums">
+                {percentage}
+                <span className="text-[22px] text-da-dark-slogan"> %</span>
+              </span>
+              <span className="text-[13px] text-da-dark-slogan tabular-nums">
+                {correctCount} av {totalQuestions}
+              </span>
+            </div>
           </div>
-          <h1
-            role="status"
-            className="text-[32px] font-medium text-da-bg leading-none tracking-tight mb-1"
-          >
-            {heroConfig.headline}
-          </h1>
-          <p className="font-serif italic text-sm text-da-dark-slogan">
-            {heroConfig.slogan}
-          </p>
+          <div className="min-w-0">
+            <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
+              {heroConfig.modeLabel}
+              {displayExam && <span> · {displayExam}</span>}
+            </p>
+            <h1
+              role="status"
+              className={`font-cond text-[36px] font-bold leading-none mb-1.5 ${heroConfig.headColor}`}
+            >
+              {heroConfig.headline}
+            </h1>
+            <p className="text-[15px] text-[#C9D6E2] leading-[1.4]">
+              {heroConfig.slogan}
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* ═══ Fade transition ═══ */}
-      <div
-        className="h-5 shrink-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      {/* ═══ Light content zone ═══ */}
-      <div className="px-6 pt-2 pb-6 bg-da-bg">
+      {/* ═══ Hvitt felt ═══ */}
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-5 pb-6">
         <div className="max-w-xl mx-auto">
-          {/* Stats card — score as hero, then supporting stats. Crosshair
-              marks echo the Round 2 exam cards on Home. */}
-          <div
-            className={`relative bg-white border-[0.5px] ${heroConfig.cardBorder} rounded-lg px-6 pt-6 pb-5 mb-4 ${fadeClass}`}
-          >
-            <CrosshairMarks variant={heroConfig.crosshair} />
-
-            <div
-              className={`font-mono text-[11px] font-medium ${heroConfig.accentColor} tracking-[0.12em] text-center mb-2`}
-            >
-              score
-            </div>
-            <div
-              className={`text-[48px] font-medium font-mono tabular-nums ${heroConfig.scoreColor} leading-none text-center mb-3 tracking-tight`}
-            >
-              {percentage}%
-            </div>
-            <div className="text-center mb-4">
-              <span className="font-mono text-[12px] text-da-text-muted tracking-wide tabular-nums">
-                {correctCount}/{totalQuestions} riktige
-              </span>
-            </div>
-
-            {/* Divider */}
-            <div className="h-px bg-da-navy/15 mb-4" />
-
-            {/* Secondary stats row — pass threshold + time used (Eksamen
-                only) or question count (Læring) */}
-            <div className="flex items-baseline justify-between">
-              <div>
-                <div className="font-mono text-[10px] text-da-text-muted tracking-[0.1em] uppercase mb-0.5">
-                  {isPracticeMode ? 'spørsmål' : 'grense'}
-                </div>
-                <div className="font-mono text-[16px] font-semibold text-da-navy tabular-nums">
-                  {isPracticeMode
-                    ? `${totalQuestions}`
-                    : `${passThreshold}/${totalQuestions}`}
-                </div>
+          <div className={`grid grid-cols-2 gap-2.5 mb-4 ${fadeClass}`}>
+            <div className="bg-[#EEF3F7] rounded-[14px] px-3.5 py-3">
+              <div className="font-cond text-[26px] font-bold text-da-navy leading-tight tabular-nums">
+                {isPracticeMode ? totalQuestions : `${passThreshold} av ${totalQuestions}`}
               </div>
-              {timeUsedMs !== null && timeUsedMs !== undefined ? (
-                <div className="text-right">
-                  <div className="font-mono text-[10px] text-da-text-muted tracking-[0.1em] uppercase mb-0.5">
-                    tid
-                  </div>
-                  <div className="font-mono text-[16px] font-semibold text-da-navy tabular-nums">
-                    {formatMs(timeUsedMs)}
-                    {examDurationMs && (
-                      <span className="text-da-text-muted">
-                        {' '}
-                        / {formatMs(examDurationMs)}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-right">
-                  <div className="font-mono text-[10px] text-da-text-muted tracking-[0.1em] uppercase mb-0.5">
-                    modus
-                  </div>
-                  {/* 08.10.2026: A1/A3 Eksamen har ingen klokke og havnet her, og
-                      sto som «læring». Vis modusen som faktisk ble brukt. */}
-                  <div className="font-mono text-[16px] font-semibold text-da-navy">
-                    {isPracticeMode ? 'læring' : 'eksamen'}
-                  </div>
-                </div>
-              )}
+              <div className="text-[13px] text-da-text-muted">
+                {isPracticeMode ? 'spørsmål' : 'grense for bestått'}
+              </div>
+            </div>
+            <div className="bg-[#EEF3F7] rounded-[14px] px-3.5 py-3">
+              {/* 08.10.2026: A1/A3 Eksamen har ingen klokke. Vis da modusen
+                  som faktisk ble brukt. */}
+              <div className="font-cond text-[26px] font-bold text-da-navy leading-tight tabular-nums">
+                {tidTekst || (isPracticeMode ? 'Læring' : 'Eksamen')}
+              </div>
+              <div className="text-[13px] text-da-text-muted">
+                {tidTekst ? 'tid brukt' : 'modus'}
+              </div>
             </div>
           </div>
 
@@ -370,10 +353,10 @@ export default function Results() {
           <div className="space-y-2.5 mb-6">
             <button
               onClick={() => navigate(retryPath)}
-              className="quiz-option w-full bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="quiz-option w-full h-14 bg-da-gold hover:brightness-105 text-da-navy-dark text-[17px] font-bold px-4 rounded-[14px] transition-all flex items-center justify-center gap-2"
             >
               <span>{isPracticeMode ? 'Øv mer' : 'Start på nytt'}</span>
-              <span className="font-mono text-[12px] text-da-gold">→</span>
+              <span className="font-mono text-[12px] text-da-navy-dark">→</span>
             </button>
             {/* Feilbanken (18/7): kryss-økt-øving på alt brukeren har svart
                 feil på (siste svar teller). Kun innloggede — anonyme har
