@@ -56,7 +56,7 @@ export default function AuthHeader({ variant = 'dark' }) {
       <div className="flex justify-start mb-1">
         <Link
           to="/login"
-          className={`font-mono text-[11px] tracking-[0.1em] transition-colors ${linkClass}`}
+          className={`text-[14px] font-medium underline underline-offset-2 transition-colors ${linkClass}`}
         >
           Logg inn
         </Link>
@@ -65,13 +65,13 @@ export default function AuthHeader({ variant = 'dark' }) {
   }
 
   return (
-    <div className="flex items-center justify-start gap-2.5 mb-1">
-      <span className={`font-mono text-[10px] tracking-wide truncate max-w-[160px] ${emailClass}`}>
+    <div className="flex items-center justify-start gap-2.5">
+      <span className={`text-[13px] truncate max-w-[180px] ${emailClass}`}>
         {user.email}
       </span>
       <button
         onClick={handleLogout}
-        className={`font-mono text-[11px] tracking-[0.1em] transition-colors ${linkClass}`}
+        className={`text-[14px] font-medium underline underline-offset-2 transition-colors ${linkClass}`}
       >
         Logg ut
       </button>

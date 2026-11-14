@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
-import CrosshairMarks from '../components/CrosshairMarks'
 import { enabledExamTypes, examLabel, STS_LIVE, stsPreviewOn, setStsPreview } from '../lib/exams'
 
 // «Min side» — personlig scoreboard (Frode 31/7; tempo-rekorder bevisst
@@ -113,30 +112,23 @@ export default function MinSide() {
   )
 
   return (
-    <div className="min-h-screen bg-da-bg flex flex-col">
+    <div className="min-h-screen bg-da-navy-dark flex flex-col">
       {/* ═══ Dark hero ═══ */}
-      <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="pt-8 max-w-xl mx-auto">
-          <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.12em]">
+      <div className="px-5 pt-3 pb-6">
+        <div className="pt-4 max-w-xl mx-auto">
+          <span className="text-[17px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan">
             min side
           </span>
-          <h1 className="text-[32px] font-medium text-da-bg leading-none tracking-tight mb-1 mt-1">
+          <h1 className="text-[30px] font-bold text-white leading-[1.12] tracking-tight mb-2 mt-1.5">
             Fremgangen din
           </h1>
-          <p className="font-serif italic text-sm text-da-dark-slogan">
-            siste svar per spørsmål teller — gamle feil henger ikke ved
+          <p className="text-[16px] text-[#C9D6E2] leading-[1.4]">
+            Siste svar per spørsmål teller. Gamle feil henger ikke ved.
           </p>
         </div>
       </div>
-      <div
-        className="h-7 shrink-0"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
 
-      <div className="px-6 pt-2 pb-8 bg-da-bg flex-1">
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-5 pb-8">
         <div className="max-w-xl mx-auto space-y-4">
           {/* Tilgangen din. Lagt til 05.08.2026: expires_at har ligget i basen
               siden starten, men datoen ble aldri vist noe sted — en kunde som
@@ -145,17 +137,17 @@ export default function MinSide() {
               merket i forsidens hero, som bare bekreftet noe kunden allerede
               merket selv. */}
           {tier === 'paid' && (
-            <div className="bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-5 py-4 flex items-baseline justify-between gap-3 flex-wrap">
+            <div className="bg-[#EEF3F7] rounded-2xl p-4 flex items-baseline justify-between gap-3 flex-wrap">
               <div>
-                <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
+                <div className="text-[17px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-0.5">
                   din tilgang
                 </div>
-                <span className="text-[14px] font-medium text-da-navy">
+                <span className="text-[16px] font-medium text-da-navy">
                   Full tilgang til alle spørsmål
                 </span>
               </div>
               {expiresAt && (
-                <span className="font-mono text-[12px] text-da-text-muted tabular-nums">
+                <span className="text-[16px] text-da-text-muted tabular-nums">
                   gyldig til{' '}
                   {new Date(expiresAt).toLocaleDateString('nb-NO', {
                     day: 'numeric',
@@ -173,18 +165,18 @@ export default function MinSide() {
               kaller signUp, som feiler når e-posten allerede finnes.
               updateUser krever bare en sesjon, ikke et gammelt passord. */}
           {user && !user.is_anonymous && (
-            <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg px-5 py-4 flex items-center justify-between gap-3 flex-wrap">
+            <div className="border border-[#C9D3DC] rounded-2xl p-4 flex items-center justify-between gap-3 flex-wrap">
               <div>
-                <div className="font-mono text-[11px] font-medium text-da-text-muted tracking-[0.1em] mb-0.5">
+                <div className="text-[17px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-0.5">
                   innlogging
                 </div>
-                <span className="text-[13.5px] text-da-text-body">
+                <span className="text-[17px] text-da-text-body">
                   Vil du slippe å hente lenke i e-posten hver gang?
                 </span>
               </div>
               <button
                 onClick={() => navigate('/sett-passord')}
-                className="quiz-option bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px] shrink-0"
+                className="bg-white border border-[#C9D3DC] hover:border-da-navy text-da-navy font-semibold h-12 px-4 rounded-xl inline-flex items-center justify-center transition-colors text-[17px] shrink-0"
               >
                 Sett passord →
               </button>
@@ -192,14 +184,14 @@ export default function MinSide() {
           )}
 
           {!hasAnyData && (
-            <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5 text-center">
-              <p className="text-[14px] text-da-text-body mb-3">
-                Ingen fremgang registrert ennå — start en økt, så bygger
+            <div className="border border-[#C9D3DC] rounded-2xl p-4 text-center">
+              <p className="text-[16px] text-da-text-body mb-3">
+                Ingen fremgang registrert ennå. Start en økt, så bygger
                 oversikten seg opp her.
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-6 rounded-lg transition-colors"
+                className="bg-da-navy hover:bg-da-navy-mid text-white font-semibold h-12 px-6 rounded-xl inline-flex items-center justify-center transition-colors"
               >
                 Start øving →
               </button>
@@ -227,30 +219,29 @@ export default function MinSide() {
             return (
               <div
                 key={type}
-                className="relative bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5"
+                className="border border-[#C9D3DC] rounded-2xl p-4"
               >
-                <CrosshairMarks variant="gold" />
                 <div className="flex items-baseline justify-between mb-1">
                   <h2 className="text-[18px] font-medium text-da-navy">
                     {examLabel(type)}
                   </h2>
                   <span
-                    className={`font-mono text-[11px] font-semibold tracking-[0.08em] ${level.text}`}
+                    className={`text-[17px] font-semibold tracking-[0.08em] ${level.text}`}
                   >
                     {level.key === 'gold' ? '🏅 ' : ''}
                     {level.label}
                   </span>
                 </div>
                 <div className="flex items-baseline gap-3 mb-2">
-                  <span className="font-mono text-[28px] font-semibold text-da-navy tabular-nums leading-none">
+                  <span className="font-cond text-[36px] font-bold text-da-navy tabular-nums leading-none">
                     {answered >= 15 ? `${pct}%` : '—'}
                   </span>
-                  <span className="font-mono text-[11px] text-da-text-muted tracking-wide">
+                  <span className="text-[17px] text-da-text-muted tracking-wide">
                     {answered} svart · {coveragePct}% av banken dekket
                   </span>
                 </div>
                 {/* Fremdriftslinje med 75 %-merke (bestått-grensen) */}
-                <div className="relative h-2 bg-gray-100 rounded-full mb-4 overflow-hidden">
+                <div className="relative h-2 bg-[#E3E9EE] rounded-full mb-4 overflow-hidden">
                   <div
                     className={`absolute inset-y-0 left-0 rounded-full ${level.bar} transition-all`}
                     style={{ width: `${answered >= 15 ? Math.min(100, pct) : 0}%` }}
@@ -269,10 +260,10 @@ export default function MinSide() {
                       <div key={c.category} className="flex items-center gap-2.5 py-2">
                         <span className={`w-2 h-2 rounded-full shrink-0 ${cLevel.dot}`} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[13px] text-da-navy leading-tight truncate">
+                          <p className="text-[17px] text-da-navy leading-tight truncate">
                             {c.category}
                           </p>
-                          <p className="font-mono text-[10.5px] text-da-text-muted tabular-nums">
+                          <p className="text-[17px] text-da-text-muted tabular-nums">
                             {c.answered === 0
                               ? 'ikke øvd ennå'
                               : `${c.correct}/${c.answered} riktige · ${c.answered} av ${c.total_questions} prøvd`}
@@ -282,7 +273,7 @@ export default function MinSide() {
                           onClick={() =>
                             navigate(`/practice/${type}?kategori=${encodeURIComponent(c.category)}`)
                           }
-                          className="quiz-option font-mono text-[11px] font-semibold text-da-gold-text hover:text-da-navy transition-colors shrink-0"
+                          className="min-h-11 inline-flex items-center text-[16px] font-semibold text-da-navy hover:underline shrink-0"
                         >
                           øv →
                         </button>
@@ -297,8 +288,8 @@ export default function MinSide() {
           {/* Eksamenshistorikk — kun økter merket mode='eksamen' (fra 31/7);
               eldre økter mangler modus og holdes utenfor. */}
           {sessions.length > 0 && (
-            <div className="bg-white border-[0.5px] border-da-navy/30 rounded-lg p-5">
-              <h2 className="text-[15px] font-medium text-da-navy mb-3">
+            <div className="border border-[#C9D3DC] rounded-2xl p-4">
+              <h2 className="text-[17px] font-medium text-da-navy mb-3">
                 Siste eksamensforsøk
               </h2>
               <div className="divide-y divide-da-navy/10">
@@ -312,10 +303,10 @@ export default function MinSide() {
                   })
                   return (
                     <div key={i} className="flex items-center justify-between py-2">
-                      <span className="font-mono text-[11px] text-da-text-muted tabular-nums">
+                      <span className="text-[17px] text-da-text-muted tabular-nums">
                         {dateStr} · {examLabel(s.exam_type)}
                       </span>
-                      <span className="font-mono text-[12px] font-semibold tabular-nums text-da-navy">
+                      <span className="text-[16px] font-semibold tabular-nums text-da-navy">
                         {s.score}/{s.total_questions}{' '}
                         <span className={passed ? 'text-green-700' : 'text-amber-700'}>
                           {passed ? '· bestått' : '· ikke bestått'}
@@ -331,7 +322,7 @@ export default function MinSide() {
           {/* Anonyme sesjoner mister fremgangen hvis nettleserdata ryddes —
               mild dytt, aldri vegg. */}
           {user?.is_anonymous && hasAnyData && (
-            <p className="text-[12px] text-da-text-muted text-center leading-snug">
+            <p className="text-[16px] text-da-text-muted text-center leading-snug">
               Fremgangen lagres for denne nettleseren. Logg inn for å beholde
               den på tvers av enheter.
             </p>
@@ -339,7 +330,7 @@ export default function MinSide() {
 
           <button
             onClick={() => navigate('/')}
-            className="quiz-option w-full bg-white border-[0.5px] border-da-navy/30 hover:border-da-navy/60 text-da-navy font-medium py-3.5 px-4 rounded-lg transition-colors"
+            className="w-full bg-white border border-[#C9D3DC] hover:border-da-navy text-da-navy font-semibold h-12 px-4 rounded-xl transition-colors"
           >
             Tilbake til hjem
           </button>
@@ -353,7 +344,7 @@ export default function MinSide() {
                 setStsPreview(!stsPreviewOn())
                 window.location.assign('/')
               }}
-              className="block mx-auto font-mono text-[11px] text-da-text-muted hover:text-da-navy tracking-[0.05em] py-2 transition-colors"
+              className="block mx-auto text-[17px] text-da-text-muted hover:text-da-navy tracking-[0.05em] py-2 transition-colors"
             >
               {stsPreviewOn() ? 'STS-test er på · trykk for å slå av' : 'STS-test er av · trykk for å slå på'}
             </button>

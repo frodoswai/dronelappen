@@ -45,62 +45,41 @@ export default function ExamSelect() {
   const start = (mode) => () => recordSessionStart(examType, mode)
 
   return (
-    <div className="min-h-screen bg-da-bg flex flex-col">
-      {/* ═══ Compact dark hero ═══ */}
-      <div className="bg-da-navy-dark px-6 pt-3 pb-5">
-        {/* pt-2, ikke pt-8 — samme mobil-innstramming som QuizLayout (18/7). */}
+    <div className="min-h-screen bg-da-navy-dark flex flex-col">
+      {/* Mørk topp (B2-drakt 14.11.2026) */}
+      <div className="px-5 pt-3 pb-6">
         <div className="pt-2 max-w-xl mx-auto">
-          <div className="flex items-center gap-3 mb-1">
-            <button
-              onClick={() => navigate('/')}
-              className="quiz-option text-da-gold text-xl leading-none hover:opacity-80"
-              aria-label="Tilbake"
-            >
-              ←
-            </button>
-            <span className="font-mono text-[12px] font-medium text-da-gold tracking-[0.1em]">
-              {categoryLabel}
-            </span>
-          </div>
-          <h1 className="text-4xl font-medium text-da-bg leading-none tracking-tight">
+          <button
+            onClick={() => navigate('/')}
+            className="w-11 h-11 rounded-full border border-[#1E3A57] bg-[#10233A] flex items-center justify-center hover:border-da-dark-slogan transition-colors mb-4"
+            aria-label="Tilbake"
+          >
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EAF1F7" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+          </button>
+          <p className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1.5">{categoryLabel}</p>
+          <h1 className="font-cond text-[44px] font-bold text-white leading-none">
             {displayName}
           </h1>
-          {/* Innledning der eksamenstypen har en (STS-påbygget): format og
-              hvorfor eksamensmodusen har 60 minutter. */}
+          {/* Innledning der eksamenstypen har en (STS-påbygget). */}
           {exam.intro && (
-            <p className="text-[13px] text-da-dark-slogan leading-[1.55] mt-3 max-w-md">
+            <p className="text-[16px] text-[#C9D6E2] leading-[1.45] mt-3 max-w-md">
               {exam.intro}
             </p>
           )}
         </div>
       </div>
 
-      {/* ═══ Fade transition (28px) ═══ */}
-      <div
-        className="h-5"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      {/* ═══ Three mode cards ═══
-          Round 2.5: flex-1 removed so the content sizes naturally and
-          the global Footer sits right under the cards on tall screens. */}
-      <div className="px-6 pt-2 pb-6 bg-da-bg">
+      {/* Hvitt felt med moduskortene */}
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-5 pb-6">
         <div className="max-w-xl mx-auto">
 
         {/* Upsell to full access for free users (hidden for paid).
             Placed above the mode cards so it's visible without scrolling. */}
         <UpgradePrompt paidOnlyTitle={exam.paidOnly ? exam.paywallTitle : ''} examType={examType} />
 
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-            velg modus
-          </span>
-          <div className="flex-1 h-px bg-da-navy/20" />
-        </div>
+        <h2 className="text-[13px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-2.5">Velg modus</h2>
 
         <ModeCard
           to={`/quiz/${examType}`}
