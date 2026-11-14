@@ -29,6 +29,7 @@ import { createCheckout } from '../lib/supabase'
 import { logFunnel, QUIZ_BUY_CLICK } from '../lib/funnel'
 import { PRICE } from '../lib/pricing'
 import { examDisplay } from '../lib/exams'
+import TextSizeToggle from './TextSizeToggle'
 
 export default function QuizLayout({
   mode,
@@ -107,6 +108,11 @@ export default function QuizLayout({
             >
               DroneLappen<span className="text-da-gold">.app</span>
             </Link>
+            {/* Tekststørrelse i toppen (14.11.2026): bryteren lå bare i
+                bunnteksten, under alt innholdet, der få fant den. */}
+            <div className="ml-auto">
+              <TextSizeToggle compact />
+            </div>
             {isFree && (
               /* Variant B (05.08.2026): fylt gullpille i stedet for mono-tekst.
                  Knappen har ligget her hele tiden, men i 11 px gull på

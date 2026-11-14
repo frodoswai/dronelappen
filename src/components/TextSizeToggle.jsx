@@ -20,7 +20,13 @@ function applyScale(scale) {
   document.documentElement.style.zoom = scale === 1 ? '' : String(scale)
 }
 
-export default function TextSizeToggle() {
+// Flere bryterne kan stå på samme side (bunnteksten og quiz-toppen fra
+// 14.11.2026). Den som endres, sier fra til de andre med denne hendelsen.
+const SYNC_EVENT = 'dl-text-scale'
+
+// compact: liten utgave uten etikett til det mørke toppfeltet i quizen
+// (QuizLayout), slik at bryteren er synlig der teksten leses.
+export default function TextSizeToggle({ compact = false }) {
   const [active, setActive] = useState('normal')
 
   // Sync from whatever the index.html bootstrap (or a prior session)
@@ -35,6 +41,11 @@ export default function TextSizeToggle() {
     const match = LEVELS.find((l) => l.id === saved) || LEVELS[0]
     setActive(match.id)
     applyScale(match.scale)
+    const onSync = (e) => {
+      if (LEVELS.some((l) => l.id === e.detail)) setActive(e.detail)
+    }
+    window.addEventListener(SYNC_EVENT, onSync)
+    return () => window.removeEventListener(SYNC_EVENT, onSync)
   }, [])
 
   const choose = (level) => {
@@ -45,6 +56,29 @@ export default function TextSizeToggle() {
     } catch (_) {
       /* ignore — preference just won't persist */
     }
+    window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: level.id }))
+  }
+
+  if (compact) {
+    return (
+      <div className="flex items-center gap-1 shrink-0" role="group" aria-label="Tekststørrelse">
+        {LEVELS.map((level) => (
+          <button
+            key={level.id}
+            onClick={() => choose(level)}
+            aria-pressed={active === level.id}
+            aria-label={`${level.label} tekststørrelse`}
+            className={`quiz-option leading-none w-7 h-7 rounded border-[0.5px] transition-colors ${level.a} ${
+              active === level.id
+                ? 'bg-da-gold text-da-navy-dark border-da-gold'
+                : 'bg-transparent text-da-dark-slogan border-da-dark-slogan/40 hover:border-da-bg/60 hover:text-da-bg'
+            }`}
+          >
+            A
+          </button>
+        ))}
+      </div>
+    )
   }
 
   return (
