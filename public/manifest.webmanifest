@@ -1,7 +1,7 @@
 {
   "name": "DroneLappen — øv til droneeksamen",
   "short_name": "DroneLappen",
-  "description": "Øv til droneeksamen A1/A3 og A2 med 241 norske øvingsspørsmål, prøveeksamen og feilgjennomgang.",
+  "description": "Øv til droneeksamen A1/A3, A2 og STS med norske øvingsspørsmål, prøveeksamen og feilgjennomgang.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

@@ -71,7 +71,7 @@ export default function ReadinessCard({ resume = null, onData }) {
           // returnerer vi null under 15 svar, og uten denne sjekken ville
           // begge kortene forsvunnet: vi sa «skjul ditt», og viste ikke vårt.
           const mest = Math.max(...Object.values(withData).map((v) => v.answered))
-          if (mest >= MIN_ANSWERED) onData?.()
+          if (mest >= MIN_ANSWERED) onData?.(withData)
         }
       })
       .catch(() => {})
@@ -103,119 +103,95 @@ export default function ReadinessCard({ resume = null, onData }) {
     .filter((c) => c.answered >= 3)
     .sort((a, b) => a.pct - b.pct)[0]
 
-  const tone =
-    pct >= PASS ? 'text-green-700' : pct >= 60 ? 'text-da-gold' : 'text-amber-700'
-  const barTone =
-    pct >= PASS ? 'bg-green-600' : pct >= 60 ? 'bg-da-gold' : 'bg-amber-500'
+  // B2-drakt (14.11.2026): kortet står i den mørke toppen på forsiden, med
+  // ring som på resultatsiden. Logikken over er uendret.
+  const over = pct >= PASS
+  const farge = over ? '#5BD69A' : '#E89F1E'
+  const RING = 2 * Math.PI * 53
+  const feil = d.answered - d.correct
+  const dagens = { to: `/practice/${examType}?dagens=1`, tekst: 'Dagens 10' }
+  // Under bestått-grensen går hovedknappen rett til svakeste kategori (18/7).
+  const primaer =
+    !over && weakest
+      ? { to: `/practice/${examType}?kategori=${encodeURIComponent(weakest.name)}`, tekst: 'Øv på svakeste tema' }
+      : dagens
+  const sekundaer =
+    !over && weakest
+      ? dagens
+      : feil > 0
+      ? { to: `/practice/${examType}?feil=1`, tekst: `Øv på ${feil} feil` }
+      : resume?.path
+      ? { to: resume.path, tekst: 'Fortsett der du slapp' }
+      : null
 
   return (
-    <div className="rise-in bg-white border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 pt-3 pb-3.5 mb-3">
-      <div className="flex items-baseline justify-between mb-1">
-        <span className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em]">
-          er du klar?
-        </span>
-        <span className="font-mono text-[11px] text-da-text-muted">{label}</span>
+    <div className="rise-in mb-5">
+      <div className="flex items-center gap-[18px] mb-5">
+        <div className="relative w-[124px] h-[124px] shrink-0 flex items-center justify-center">
+          <svg aria-hidden="true" width="124" height="124" viewBox="0 0 124 124" className="absolute inset-0">
+            <circle cx="62" cy="62" r="53" fill="none" stroke="#1E3A57" strokeWidth="10" />
+            {pct > 0 && (
+              <circle
+                cx="62"
+                cy="62"
+                r="53"
+                fill="none"
+                stroke={farge}
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeDasharray={`${(Math.min(100, pct) / 100) * RING} ${RING}`}
+                transform="rotate(-90 62 62)"
+              />
+            )}
+          </svg>
+          <span className="font-cond text-[44px] font-bold text-white leading-none tabular-nums">
+            {pct}
+            <span className="text-[22px] text-da-dark-slogan"> %</span>
+          </span>
+        </div>
+        <div className="min-w-0">
+          <p className="font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-dark-slogan mb-1">
+            Er du klar? · {label}
+          </p>
+          <h1 className="font-cond text-[30px] font-bold leading-[1.05] mb-1.5" style={{ color: farge }}>
+            {over ? 'Over grensen' : pct >= 60 ? 'Nesten der' : 'Under grensen'}
+          </h1>
+          <p className="text-[15px] text-[#C9D6E2] leading-[1.4]">
+            Bestått krever {PASS} %.
+            {weakest && weakest.pct < 100 ? ` Svakest: ${weakest.name}, ${weakest.pct} %.` : ''}
+          </p>
+        </div>
       </div>
-
-      {tooEarly ? (
-        <>
-          <p className="text-[13px] text-da-text-body leading-[1.5] mb-2">
-            For tidlig å si — svar på {MIN_ANSWERED} spørsmål, så måler vi deg
-            mot bestått-grensen. Du har svart på {d.answered} så langt.
-          </p>
-          <div className="h-1.5 bg-da-navy/10 rounded-full overflow-hidden mb-3">
-            <div
-              className="h-full bg-da-navy/40 rounded-full"
-              style={{ width: `${Math.min(100, (d.answered / MIN_ANSWERED) * 100)}%` }}
-            />
-          </div>
+      <div className="flex gap-2.5">
+        <Link
+          to={primaer.to}
+          className={`flex-1 h-14 rounded-[14px] text-[16px] font-bold inline-flex items-center justify-center text-center px-3 transition-all hover:brightness-105 active:scale-[0.98] ${
+            tier === 'paid' ? 'bg-da-gold text-da-navy-dark' : 'bg-white text-da-navy'
+          }`}
+        >
+          {primaer.tekst}
+        </Link>
+        {sekundaer && (
           <Link
-            to={resume?.path || `/practice/${examType}`}
-            className="quiz-option inline-flex items-center gap-2 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px]"
+            to={sekundaer.to}
+            className="flex-1 h-14 rounded-[14px] border border-[#5C7691] hover:border-white text-white text-[16px] font-semibold inline-flex items-center justify-center text-center px-3 transition-colors active:scale-[0.98]"
           >
-            <span>Fortsett øvingen</span>
-            <span className="font-mono text-[12px] text-da-gold">→</span>
+            {sekundaer.tekst}
           </Link>
-        </>
-      ) : (
-        <>
-          <div className="flex items-baseline gap-2 mb-1.5">
-            <span className={`text-[34px] font-semibold leading-none tabular-nums ${tone}`}>
-              {pct} %
-            </span>
-            <span className="text-[12.5px] text-da-text-muted">
-              riktige — bestått krever {PASS} %
-            </span>
-          </div>
-          {/* Fremdriftslinje med bestått-merke på 75 % */}
-          <div className="relative h-1.5 bg-da-navy/10 rounded-full overflow-hidden mb-2">
-            <div
-              className={`h-full rounded-full ${barTone}`}
-              style={{ width: `${Math.min(100, pct)}%` }}
-            />
-            <div
-              className="absolute top-0 h-full w-[2px] bg-da-navy/50"
-              style={{ left: `${PASS}%` }}
-            />
-          </div>
-          <p className="text-[12px] text-da-text-muted leading-[1.5] mb-3">
-            Basert på siste svar på {d.answered} av {d.total} spørsmål
-            {weakest && weakest.pct < 100 ? (
-              <>
-                {' '}· svakest: <span className="text-da-navy font-medium">{weakest.name}</span> ({weakest.pct} %)
-              </>
-            ) : null}
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Målrettet læring (18/7): under bestått-grensen går CTA-en
-                rett til læring filtrert på svakeste kategori — kortet er
-                handlingsrettet, ikke bare informativt. Over grensen:
-                vedlikehold via siste økt (resume) som før. */}
-            <Link
-              to={
-                pct < PASS && weakest
-                  ? `/practice/${examType}?kategori=${encodeURIComponent(weakest.name)}`
-                  : resume?.path || `/practice/${examType}`
-              }
-              className="quiz-option inline-flex items-center gap-2 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px]"
-            >
-              <span>{pct >= PASS ? 'Hold formen ved like' : 'Øv der du er svakest'}</span>
-              <span className="font-mono text-[12px] text-da-gold">→</span>
+        )}
+      </div>
+      <p className="mt-2.5 text-[13px] text-da-dark-slogan leading-[1.45]">
+        Basert på siste svar på {d.answered} av {d.total} spørsmål
+        {!over && feil > 0 && (
+          <>
+            {' '}·{' '}
+            <Link to={`/practice/${examType}?feil=1`} className="underline underline-offset-2 text-[#EAF1F7]">
+              øv på {feil} feil
             </Link>
-            {/* Dagens 10 (14.11.2026): kort økt som blander gamle feil med
-                usette spørsmål. Se drawDailyMix i pages/Quiz.jsx. */}
-            <Link
-              to={`/practice/${examType}?dagens=1`}
-              className="quiz-option inline-flex items-center gap-1 font-mono text-[11px] text-da-navy border-[0.5px] border-da-gold/70 hover:bg-da-cream/40 px-2.5 py-2 rounded-md transition-colors"
-            >
-              dagens 10
-              <span className="text-da-gold">→</span>
-            </Link>
-            {d.answered - d.correct > 0 && (
-              <Link
-                to={`/practice/${examType}?feil=1`}
-                className="quiz-option inline-flex items-center gap-1 font-mono text-[11px] text-da-navy border-[0.5px] border-da-navy/30 hover:border-da-navy/60 px-2.5 py-2 rounded-md transition-colors"
-              >
-                øv på feilene dine ({d.answered - d.correct})
-                <span className="text-da-gold">→</span>
-              </Link>
-            )}
-            {resume?.stats && (
-              <span className="font-mono text-[11px] text-da-text-muted tabular-nums">
-                sist: {resume.stats}
-              </span>
-            )}
-            {tier !== 'paid' && (
-              <span className="inline-flex items-center text-[12px] text-da-text-muted">
-                Gratis-poolen er begrenset —{' '}
-                <span className="text-da-navy font-medium ml-1">
-                  hele banken gir presis måling
-                </span>
-              </span>
-            )}
-          </div>
-        </>
-      )}
+          </>
+        )}
+        {tier !== 'paid' && ' · hele banken gir presis måling'}
+      </p>
     </div>
   )
 }

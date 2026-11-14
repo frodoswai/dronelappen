@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
-import HeroPropeller from '../components/HeroPropeller'
-import CrosshairMarks from '../components/CrosshairMarks'
+import DroneMark from '../components/DroneMark'
 import ModePillRow from '../components/ModePillRow'
 import AuthHeader from '../components/AuthHeader'
 import NewsletterSignup from '../components/NewsletterSignup'
@@ -58,7 +57,9 @@ export default function Home() {
   // stå. Signalet beholdes — setteren fyrer som før, verdien leses bare
   // ikke — så skjulingen kan gjeninnføres 21.10 ved å sette
   // `&& !readinessActive` tilbake på fortsett-stripa.
-  const [, setReadinessActive] = useState(false)
+  const [readinessActive, setReadinessActive] = useState(false)
+  // { A2: { answered, total, … }, … } fra ReadinessCard, til «N av M besvart».
+  const [progress, setProgress] = useState(null)
   const [buyBusy, setBuyBusy] = useState(false)
   const [buyErr, setBuyErr] = useState('')
   // «Fullfør kjøpet»-banner: true når brukeren klikket kjøp før innlogging
@@ -198,391 +199,272 @@ export default function Home() {
     }
   }, [])
 
-  return (
-    <div className="min-h-screen bg-da-bg flex flex-col">
-      {/* Engangs fullskjerm-oppfordring om å installere som app — kun
-          innloggede ekte brukere, maks én gang per enhet. Rendrer null
-          i alle andre tilfeller (se komponentens vilkår). */}
-      <InstallAppInterstitial />
-      {/* ═══ Dark hero zone ═══ */}
-      <div className="relative overflow-hidden bg-da-navy-dark px-6 pt-3 pb-5">
-        <div className="relative max-w-xl mx-auto">
-        <HeroPropeller />
+  // ═══ B2 «Cockpit lys» på forsiden (Frode 14.11.2026) ═══
+  // Mørk topp med merke, overskrift og hovedvalgene. Hvitt felt under med
+  // eksamenskortene. A2 står øverst fordi det er A2 folk betaler for.
+  // «Er du klar?» står i toppen igjen når brukeren har nok svar; STS-målingen
+  // fra 21.09 er over. Kjøpsflyten (handleBuy, purchaseIntent, ?kjop=1) er urørt.
+  const paid = tier === 'paid'
+  const loggedIn = !!user && !user.is_anonymous
+  const totalt = stats.questions ?? ANTALL.total
+  const label =
+    'font-cond text-[15px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-2.5'
+  const tag =
+    'px-2.5 py-1 rounded-lg bg-[#EEF3F7] text-da-navy text-[13px] font-semibold whitespace-nowrap'
+  const besvart = (k) =>
+    progress?.[k] ? (
+      <span className="text-[14px] font-semibold text-da-text-muted tabular-nums whitespace-nowrap">
+        {progress[k].answered} av {progress[k].total} besvart
+      </span>
+    ) : null
+  const gullKnapp =
+    'h-14 rounded-[14px] bg-da-gold text-da-navy-dark text-[16px] font-bold inline-flex items-center justify-center text-center px-3 transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-60'
 
-        {/* All hero text pinned left (max-w so it never overlaps the
-            propeller on the right). z-10 above the SVG. */}
-        {/* pt-4 (var pt-8): forsiden trenger litt mer pust enn quiz-flyten,
-            men 32px var mye dødplass på mobil (Frode 18/7). */}
-        <div className="relative z-10 pt-4 max-w-[65%]">
-          {/* Statuslinja over ordmerket er FJERNET i sin helhet (05.08.2026).
-              Den hadde to varianter, og begge måtte gå:
-              - Gratisbrukere fikk «Full tilgang 249 kr · 12 mnd · test 25
-                spørsmål gratis» — ordrett det samme som de to knappene 150 px
-                lenger ned, plassert FORAN produktnavnet. Det første en ny
-                besøkende leste var en pris.
-              - Betalende fikk «Full tilgang · alle spørsmål», som forteller
-                kunden noe han allerede vet: han merker at han har tilgang ved
-                at betalingsmuren ikke dukker opp.
-              Det kunden IKKE visste er når tilgangen utløper. Den datoen står
-              nå på Min side, der kontoinformasjon hører hjemme. */}
+  const a2Card = (
+    <section className="rise-in rounded-2xl border-2 border-da-navy p-4 mb-3.5">
+      <div className="flex items-center justify-between gap-3 mb-2">
+        <h3 className="font-cond text-[38px] font-bold text-da-navy leading-none">A2</h3>
+        {besvart('A2') || (!paid && <span className={tag}>25 spørsmål gratis</span>)}
+      </div>
+      <p className="text-[15px] text-da-text-body leading-[1.4] mb-3">
+        Prøven på trafikkstasjonen. 30 spørsmål, 60 minutter, 23 riktige for å bestå.
+        Krever bestått A1/A3.
+      </p>
+      <ModePillRow examType="A2" primary={paid ? 'exam' : 'practice'} />
+    </section>
+  )
 
-          {/* Auth row — email + logout, left-aligned */}
-          <AuthHeader variant="dark" />
-
-          {/* Wordmark */}
-          <div className="flex items-baseline gap-0.5 mb-1.5">
-            <h1 className="text-3xl font-semibold text-da-bg tracking-tight leading-none">
-              DroneLappen
-            </h1>
-            <span className="font-mono text-sm text-da-gold tracking-wide font-medium">
-              .app
+  const a1a3Card = (
+    <section className="rise-in rise-d1 rounded-2xl border border-[#C9D3DC] p-4 mb-3.5">
+      <div className="flex items-center justify-between gap-3 mb-2">
+        <h3 className="font-cond text-[30px] font-bold text-da-navy leading-none">A1/A3</h3>
+        {besvart('A1_A3') ||
+          (!paid && (
+            <span className="px-2.5 py-1 rounded-lg bg-green-50 text-green-800 text-[13px] font-semibold whitespace-nowrap">
+              Helt gratis
             </span>
+          ))}
+      </div>
+      <p className="text-[15px] text-da-text-body leading-[1.4] mb-3">
+        Nettprøven alle må ta først. 40 spørsmål, 30 riktige for å bestå. Alle{' '}
+        {ANTALL.A1_A3} spørsmålene er gratis.
+      </p>
+      <ModePillRow examType="A1_A3" />
+    </section>
+  )
+
+  const stsCard = isExamEnabled('A2_STS') ? <StsExamCard /> : <StsVoteCard />
+
+  return (
+    <div className="min-h-screen bg-da-navy-dark flex flex-col">
+      {/* Engangs fullskjerm-oppfordring om å installere som app — kun
+          innloggede ekte brukere, maks én gang per enhet. */}
+      <InstallAppInterstitial />
+
+      {/* ═══ Mørk topp ═══ */}
+      <div className="px-5 pt-3 pb-6">
+        <div className="pt-2 max-w-xl mx-auto">
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <div className="flex items-center gap-2.5">
+              <DroneMark />
+              <span className="text-[20px] font-bold text-white leading-none">
+                DroneLappen<span className="text-da-gold">.app</span>
+              </span>
+            </div>
+            <Link
+              to={loggedIn ? '/min-side' : '/login'}
+              className="min-h-11 inline-flex items-center text-[15px] font-medium text-[#EAF1F7] hover:text-white transition-colors"
+            >
+              {loggedIn ? 'Min side' : 'Logg inn'}
+            </Link>
           </div>
-          {/* Slogan */}
-          <p className="font-serif italic text-sm text-da-dark-slogan">
-            Bli en bedre dronepilot
-          </p>
-        </div>
+
+          {/* «Er du klar?» — rendrer ingenting før brukeren har nok svar. */}
+          <ReadinessCard
+            resume={
+              lastSession
+                ? {
+                    path: sessionToPath(lastSession),
+                    stats: sessionDisplayStats(lastSession),
+                  }
+                : null
+            }
+            onData={(d) => {
+              setReadinessActive(true)
+              setProgress(d || null)
+            }}
+          />
+
+          {!readinessActive && (
+            <div className="rise-in mb-5">
+              {/* Vanlig Barlow, ikke Condensed: der får Ø et stort mellomrom foran v. */}
+              <h1 className="text-[36px] font-bold text-white leading-[1.05] tracking-tight mb-2.5">
+                Øv til dronelappen
+              </h1>
+              <p className="text-[17px] text-[#C9D6E2] leading-[1.4]">
+                {paid
+                  ? `Du har full tilgang til alle ${totalt} spørsmål, til A1/A3, A2 og STS.`
+                  : `${totalt} spørsmål med forklaring, til A1/A3, A2 og STS. A1/A3 er gratis.`}
+              </p>
+            </div>
+          )}
+
+          {/* Prøv gratis eller kjøp — det første annonsetrafikken ser.
+              Gull betyr kjøp over hele appen (05.08.2026). */}
+          {!paid && (
+            <>
+              <div className="rise-in flex gap-2.5">
+                {!readinessActive && (
+                  <Link
+                    to="/practice/A2"
+                    className="flex-1 h-14 rounded-[14px] bg-white text-da-navy text-[16px] font-bold inline-flex items-center justify-center text-center px-3 transition-all hover:brightness-95 active:scale-[0.98]"
+                  >
+                    Prøv 25 gratis
+                  </Link>
+                )}
+                {user ? (
+                  <button onClick={handleBuy} disabled={buyBusy} className={`flex-1 ${gullKnapp}`}>
+                    {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
+                  </button>
+                ) : (
+                  <Link to="/login" onClick={setPurchaseIntent} className={`flex-1 ${gullKnapp}`}>
+                    Full tilgang · {PRICE} kr
+                  </Link>
+                )}
+              </div>
+              {/* Sosialt bevis — statisk tall, oppdateres manuelt. Grunnlaget
+                  MÅ være user_progress, ikke auth.users (rettet 04.08.2026):
+                  select count(distinct user_id) from user_progress. */}
+              <p className="mt-2.5 text-[14px] text-da-dark-slogan">
+                Over 240 dronepiloter øver her allerede.
+              </p>
+            </>
+          )}
         </div>
       </div>
 
-      {/* ═══ Fade transition (28px, stepped gradient) ═══ */}
-      <div
-        className="h-5"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0a1628 0%, #2a3a50 25%, #7e8a9c 55%, #cfd6df 80%, #fafbfc 100%)',
-        }}
-      />
-
-      {/* ═══ Light content zone ═══ */}
-      <div className="px-6 pt-1 pb-6 bg-da-bg">
+      {/* ═══ Hvitt felt ═══ */}
+      <div className="flex-1 bg-white rounded-t-3xl px-5 pt-5 pb-6">
         <div className="max-w-xl mx-auto">
-        {/* ═══ Dual CTA — first thing ad traffic sees ═══
-            Two explicit choices above the fold: a free taste (Læring A2 with
-            the 25 free questions) and the direct buy. Ad campaigns land on
-            Home, so the "prøv gratis vs kjøp 249" decision shouldn't require
-            scrolling. Hidden once the user is paid. */}
-        {/* ═══ Fullfør kjøpet — vises når kjøpsintensjonen overlevde
-            login-runden (samme enhet, < 30 min). Én knapp rett til Stripe;
-            ✕ rydder intensjonen så banneret ikke maser. */}
-        {resumeBuy && tier !== 'paid' && user && (
-          <div className="rise-in bg-da-cream/50 border-[0.5px] border-da-gold/60 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-4 flex items-center justify-between gap-3">
-            <div>
-              <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
-                du er innlogget
+          {/* Fullfør kjøpet — vises når kjøpsintensjonen overlevde
+              login-runden (samme enhet, < 30 min). ✕ rydder intensjonen. */}
+          {resumeBuy && !paid && user && (
+            <div className="rise-in bg-[#EEF3F7] rounded-2xl p-4 mb-4">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div>
+                  <div className={label.replace('mb-2.5', 'mb-0.5')}>Du er innlogget</div>
+                  <div className="text-[17px] font-semibold text-da-navy">
+                    Fullfør kjøpet der du slapp
+                  </div>
+                </div>
+                <button
+                  onClick={() => { clearPurchaseIntent(); setResumeBuy(false) }}
+                  aria-label="Lukk"
+                  className="w-11 h-11 -mt-2 -mr-2 text-[18px] text-da-text-muted hover:text-da-navy transition-colors"
+                >
+                  ✕
+                </button>
               </div>
-              <span className="text-[13px] font-medium text-da-navy">
-                Fullfør kjøpet der du slapp
-              </span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
               <button
                 onClick={() => { clearPurchaseIntent(); handleBuy() }}
                 disabled={buyBusy}
-                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center gap-1.5 disabled:opacity-60"
+                className={`w-full ${gullKnapp}`}
               >
-                <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
-                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">{PRICE} kr →</span>}
-              </button>
-              <button
-                onClick={() => { clearPurchaseIntent(); setResumeBuy(false) }}
-                aria-label="Lukk"
-                className="font-mono text-[13px] text-da-text-muted hover:text-da-navy px-1 transition-colors"
-              >
-                ✕
+                {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
               </button>
             </div>
-          </div>
-        )}
+          )}
 
-        {tier !== 'paid' && (
-          <div className="rise-in flex gap-2.5 mb-3">
+          {/* Fortsett-stripe for den som har en økt, men ennå ikke nok svar
+              til «Er du klar?». Med ringen i toppen dekker den returveien. */}
+          {lastSession && !readinessActive && (
             <Link
-              to="/practice/A2"
-              className="quiz-option flex-1 bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-3 px-4 rounded-lg transition-colors text-[13px] inline-flex items-center justify-center gap-2 active:scale-[0.99]"
+              to={sessionToPath(lastSession)}
+              className="rise-in block bg-[#EEF3F7] hover:bg-[#E3EAF0] rounded-2xl px-4 py-3 mb-4 transition-colors"
             >
-              <span>Prøv 25 gratis</span>
-              <span className="font-mono text-[12px] text-da-gold">→</span>
-            </Link>
-            {user ? (
-              /* Fylt gull, ikke omriss (05.08.2026). Gull betyr nå KJØP over
-                 hele appen — samme språk som pillen i quiz-headeren. Teksten
-                 er med vilje uendret: «Full tilgang 249 kr» sier hva du får
-                 og hva det koster, mens et bart «Kjøp» bare sier at du skal
-                 betale. Vi endrer vekten, ikke ordene. */
-              <button
-                onClick={handleBuy}
-                disabled={buyBusy}
-                className="quiz-option flex-1 bg-da-gold hover:brightness-105 text-da-navy-dark font-semibold py-3 px-4 rounded-lg transition-all text-[13px] inline-flex items-center justify-center gap-1.5 active:scale-[0.99] disabled:opacity-60"
-              >
-                <span>{buyBusy ? 'Sender …' : 'Full tilgang'}</span>
-                <span className="font-mono text-[12px]">{PRICE} kr</span>
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                onClick={setPurchaseIntent}
-                className="quiz-option flex-1 bg-da-gold hover:brightness-105 text-da-navy-dark font-semibold py-3 px-4 rounded-lg transition-all text-[13px] inline-flex items-center justify-center gap-1.5 active:scale-[0.99]"
-              >
-                <span>Full tilgang</span>
-                <span className="font-mono text-[12px]">{PRICE} kr</span>
-              </Link>
-            )}
-          </div>
-        )}
-        {tier !== 'paid' && <HarTilgangLoggInn className="text-center -mt-1 mb-3" />}
-
-        {/* ═══ STS — låst flis med stemmeknapp ═══
-            MÅLEMODUS 21.09–21.10.2026 (Frodes valg). Flisa står høyt
-            fordi den måler etterspørsel og trenger volum, men BEVISST
-            under kjøpsknappene over: annonsetrafikk lander på forsiden,
-            og valget «prøv gratis vs. kjøp» skal ikke kreve scrolling
-            for en som aldri har hørt om STS. Betalende ser derfor flisa
-            først — de har ingen kjøpsknapper å bli dyttet ned av.
-            Visuelt dempet (stiplet ramme, hengelås, grå tittel) så den
-            aldri forveksles med noe man kan starte i dag. Rendrer null
-            til vi vet om brukeren har stemt.
-            NÅR MÅLINGEN ER OVER 21.10: flytt tilbake under A1/A3-kortet
-            og sett ReadinessCard tilbake øverst (se under). */}
-        {/* Når STS er skrudd på (STS_LIVE eller forhåndsvisning, se
-            lib/exams.js), står et ekte STS-kort på flisas plass. Resten av
-            rekkefølgen er uendret. */}
-        {isExamEnabled('A2_STS') ? <StsExamCard /> : <StsVoteCard />}
-
-        {/* Smart resume — slank fortsett-stripe.
-            OPPLØST SAMMENSLÅING 21.09.2026: fra 18/7 eide ReadinessCard
-            fortsett-rollen, og denne stripa var skjult når scoren rendret
-            (readinessActive). Grunnen var at to kort stablet seg rett
-            over hovedvalget. Når ReadinessCard nå står UNDER A1/A3 i
-            målemodus, forsvinner den grunnen — og uten stripa ville en
-            returbruker måtte scrolle forbi tre kort for å komme tilbake
-            til øvingen sin. Det er kjerneveien for de som allerede øver,
-            så den blir stående øverst. ReadinessCard får fortsatt
-            `resume`, så CTA-en der peker riktig.
-            NÅR MÅLINGEN ER OVER 21.10: vurder å gjeninnføre
-            readinessActive-skjulingen hvis kortene stabler seg igjen. */}
-        {lastSession && (
-          <Link
-            to={sessionToPath(lastSession)}
-            className="quiz-option rise-in block bg-da-cream/40 border-[0.5px] border-da-navy/30 border-l-2 border-l-da-gold rounded-lg px-4 py-3 mb-3 hover:bg-da-cream/60 transition-all active:scale-[0.99]"
-          >
-            <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.1em] mb-0.5">
-              fortsett
-            </div>
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[13px] font-medium text-da-navy">
-                {describeSession(lastSession)}
-              </span>
-              <span className="font-mono text-[11px] text-da-text-muted">
-                {sessionDisplayStats(lastSession)}
-              </span>
-            </div>
-          </Link>
-        )}
-
-        {/* Divider with mono label */}
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="flex-1 h-px bg-da-navy/20" />
-          <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-            velg eksamen
-          </span>
-          <div className="flex-1 h-px bg-da-navy/20" />
-        </div>
-
-        {/* ═══ A2 card — dominant, primary ═══
-            Round 4 affordance pass: stretched-link pattern. The card is
-            a div; an absolutely-positioned overlay Link (z-10) makes the
-            whole surface clickable, while the mode pills sit above it
-            (z-20) as real deep-links into each mode. Sibling links —
-            never nested — so the HTML stays valid. The "velg modus" text
-            became a filled navy chip: one solid element per card makes
-            "this is pressable" unmistakable on touch, where hover never
-            fires. */}
-        <div className="quiz-option group rise-in rise-d1 relative bg-white border-[0.5px] border-da-navy rounded-lg px-[18px] pt-4 pb-3.5 mb-3 transition-all shadow-[0_1px_2px_rgba(8,53,84,0.06),0_4px_14px_rgba(8,53,84,0.08)] hover:shadow-[0_2px_4px_rgba(8,53,84,0.08),0_10px_28px_rgba(8,53,84,0.14)] hover:-translate-y-[1px] active:scale-[0.99]">
-          <CrosshairMarks variant="solid" />
-          <Link
-            to="/exam/A2"
-            aria-label="A2 — velg modus"
-            className="absolute inset-0 z-10 rounded-lg"
-          />
-          <div className="font-mono text-[12px] text-da-gold tracking-[0.12em] font-medium mb-1.5">
-            trafikkstasjonen
-          </div>
-          <div className="text-[34px] font-medium text-da-navy leading-none mb-2.5 tracking-tight">
-            A2
-          </div>
-          {/* Tier-aware: the real exam is 30/60min/23, but the free tier
-              practices with a 25-question pool — say so instead of
-              promising 30 and delivering 25. */}
-          <p className="text-[12.5px] text-da-text-body leading-[1.55] mb-3">
-            {tier === 'paid'
-              ? 'Den offisielle prøven. 30 spørsmål, 60 min, 23 riktige for å bestå.'
-              : 'Den offisielle prøven: 30 spørsmål, 60 min, 23 riktige. Øv gratis med 25 spørsmål.'}
-            {' '}
-            <span className="text-da-text-muted">Krever bestått A1/A3 først.</span>
-          </p>
-          <div className="relative z-20">
-            <ModePillRow variant="primary" examType="A2" />
-          </div>
-          <div className="flex justify-end mt-2.5">
-            <span className="font-mono text-[11px] tracking-[0.1em] bg-da-navy text-da-bg px-3.5 py-2 rounded-[5px] shadow-sm group-hover:bg-da-navy-mid transition-colors">
-              Start A2 her{' '}
-              <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-            </span>
-          </div>
-        </div>
-
-        {/* ═══ A1/A3 card — quiet, secondary ═══
-            Round 4: dashed border replaced with a solid faint one —
-            dashed reads as "disabled/empty", not "quiet". Same
-            stretched-link structure as the A2 card. */}
-        <div className="quiz-option group rise-in rise-d2 relative bg-white border-[0.5px] border-da-navy/30 rounded-lg px-4 pt-3.5 pb-3 mb-3 transition-all shadow-[0_1px_3px_rgba(8,53,84,0.05)] hover:border-da-navy/50 hover:shadow-[0_2px_4px_rgba(8,53,84,0.06),0_6px_18px_rgba(8,53,84,0.10)] hover:-translate-y-[1px] active:scale-[0.99]">
-          <Link
-            to="/exam/A1_A3"
-            aria-label="A1/A3 — velg modus"
-            className="absolute inset-0 z-10 rounded-lg"
-          />
-          {/* Kontrast ($10K punkt 8): faded (#8a98a8 ≈ 2.9:1) strøk på
-              WCAG AA og fikk kortet til å se deaktivert ut. Bumpet til
-              muted/dim + navy tittel — fortsatt stille, men lesbart og
-              tydelig aktivt. */}
-          <div className="font-mono text-[12px] font-medium text-da-text-muted tracking-[0.12em] mb-1">
-            online, gratis
-          </div>
-          <div className="flex items-baseline justify-between mb-1.5">
-            <div className="text-xl font-medium text-da-navy leading-none tracking-tight">
-              A1 / A3
-            </div>
-            <span className="font-mono text-[11px] text-da-text-dim">
-              grunnleggende
-            </span>
-          </div>
-          <p className="text-[11.5px] text-da-text-dim leading-[1.5] mb-2.5">
-            Den offisielle nettprøven: 40 spørsmål, 30 riktige for å bestå. Alle må ta denne først. Alle {ANTALL.A1_A3} spørsmålene er gratis.
-          </p>
-          <div className="relative z-20">
-            <ModePillRow variant="muted" examType="A1_A3" />
-          </div>
-          <div className="flex justify-end mt-2.5">
-            <span className="font-mono text-[11px] tracking-[0.1em] bg-white border-[0.5px] border-da-navy/40 text-da-navy px-3.5 py-2 rounded-[5px] group-hover:border-da-navy/70 transition-colors">
-              Start A1/A3 her{' '}
-              <span className="text-da-gold inline-block transition-transform group-hover:translate-x-0.5">
-                →
-              </span>
-            </span>
-          </div>
-        </div>
-
-        {/* «Er du klar?» — beredskapsscore for brukere med øvingsdata.
-            Renderer ingenting for ferske besøkende (stille komponent).
-            FLYTTET HIT 21.09.2026, MIDLERTIDIG: kortet sto øverst fra
-            18/7 og dyttet STS-flisa langt ned for innloggede, som er
-            akkurat de brukerne målingen trenger svar fra. Det er et
-            kort man kommer tilbake TIL, ikke et man må møte før man har
-            valgt eksamen, så plassen under A1/A3 koster lite — og
-            fortsett-stripa øverst dekker returveien i mellomtiden.
-            SETT TILBAKE ØVERST 21.10 når målingen er over. */}
-        <ReadinessCard
-          resume={
-            lastSession
-              ? {
-                  path: sessionToPath(lastSession),
-                  stats: sessionDisplayStats(lastSession),
-                }
-              : null
-          }
-          onData={() => setReadinessActive(true)}
-        />
-
-        {/* ═══ Full tilgang — purchase card, hidden for paid users ═══ */}
-        {tier !== 'paid' && (
-          <div className="rise-in bg-white border-[0.5px] border-da-navy/20 border-l-2 border-l-da-gold rounded-lg px-[18px] py-3.5 mb-3">
-            <div className="font-mono text-[11px] font-medium text-da-gold tracking-[0.12em] mb-2">
-              full tilgang
-            </div>
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <div className="text-[17px] font-medium text-da-navy leading-tight">
-                Lås opp hele banken
-              </div>
-              <div className="text-right whitespace-nowrap">
-                <span className="text-[21px] font-semibold text-da-navy">{PRICE} kr</span>
-                <span className="block font-mono text-[10px] text-da-text-muted mt-[1px]">
-                  én gang · 12 mnd
+              <div className={label.replace('mb-2.5', 'mb-0.5')}>Fortsett</div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[16px] font-semibold text-da-navy">
+                  {describeSession(lastSession)}
+                </span>
+                <span className="text-[14px] text-da-text-muted tabular-nums whitespace-nowrap">
+                  {sessionDisplayStats(lastSession)}
                 </span>
               </div>
-            </div>
-            <p className="text-[12.5px] text-da-text-body leading-[1.5] mb-2">
-              Alle {stats.questions ?? '200+'} spørsmål{antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og alle tre
-              treningsmoduser. Engangsbeløp, ingen abonnement. A1/A3 er gratis. Full tilgang gir A2 og STS.
-            </p>
-            {/* Sosialt bevis — statisk tall, oppdateres manuelt.
-                GRUNNLAGET MÅ VÆRE user_progress, IKKE auth.users. Tallet «305»
-                fra 09.07.2026 var talt i auth.users, som er 97 % anonyme
-                skall opprettet ved besøk — ikke piloter som øver. Rettet
-                04.08.2026 til 240 (248 distinkte user_id har svart på minst
-                ett spørsmål). Samme feil sto i Meta-annonsen og ble fanget
-                der 01.08; den overlevde her i tre uker til.
-                Telling: select count(distinct user_id) from user_progress. */}
-            <Lanseringspris className="mb-2" />
-            <PriceIncreaseNotice className="mb-2.5" />
-            <p className="font-mono text-[11px] text-da-text-muted tracking-[0.05em] mb-3.5">
-              Over 240 dronepiloter øver her allerede.
-            </p>
-            {user ? (
-              <button
-                onClick={handleBuy}
-                disabled={buyBusy}
-                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2 disabled:opacity-60"
-              >
-                <span>{buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}</span>
-                {!buyBusy && <span className="font-mono text-[12px] text-da-gold">→</span>}
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                onClick={setPurchaseIntent}
-                className="quiz-option bg-da-navy hover:bg-da-navy-mid text-da-bg font-medium py-2.5 px-5 rounded-lg transition-colors text-[13px] inline-flex items-center gap-2"
-              >
-                <span>Logg inn for å kjøpe</span>
-                <span className="font-mono text-[12px] text-da-gold">→</span>
-              </Link>
-            )}
-            {buyErr && (
-              <p role="alert" className="mt-2 text-[12px] text-amber-700">{buyErr}</p>
-            )}
-            <HarTilgangLoggInn className="mt-3" />
-          </div>
-        )}
+            </Link>
+          )}
 
-        {/* ═══ Newsletter (Droneavisa list via MailerLite) ═══ */}
-        <div className="rise-in rise-d3">
-          <div className="flex items-center gap-2.5 mb-3">
-            <div className="flex-1 h-px bg-da-navy/20" />
-            <span className="font-mono text-[12px] font-medium text-da-navy/60 tracking-[0.1em]">
-              hold deg oppdatert
+          <h2 className={label}>Velg eksamen</h2>
+          {a2Card}
+          {paid ? (
+            <>
+              {stsCard}
+              {a1a3Card}
+            </>
+          ) : (
+            <>
+              {a1a3Card}
+              {stsCard}
+            </>
+          )}
+
+          {/* ═══ Full tilgang — kjøpskort, skjult for betalende ═══ */}
+          {!paid && (
+            <section className="rise-in rise-d2 bg-[#EEF3F7] rounded-2xl p-[18px] mt-1.5 mb-5">
+              <div className="flex items-end justify-between gap-3 mb-2.5">
+                <h2 className="text-[20px] font-bold text-da-navy leading-tight">Full tilgang</h2>
+                <div className="text-right whitespace-nowrap">
+                  <div className="font-cond text-[32px] font-bold text-da-navy leading-none">
+                    {PRICE} kr
+                  </div>
+                  <div className="text-[13px] text-da-text-muted">én gang · 12 måneder</div>
+                </div>
+              </div>
+              <p className="text-[15px] text-da-text-body leading-[1.45] mb-2.5">
+                Alle {stats.questions ?? '200+'} spørsmål
+                {antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og
+                alle tre treningsmåter. Engangsbeløp, ingen abonnement. A1/A3 er gratis. Full
+                tilgang gir A2 og STS.
+              </p>
+              <Lanseringspris className="mb-2" />
+              <PriceIncreaseNotice className="mb-2.5" />
+              {user ? (
+                <button onClick={handleBuy} disabled={buyBusy} className={`w-full ${gullKnapp}`}>
+                  {buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}
+                </button>
+              ) : (
+                <Link to="/login" onClick={setPurchaseIntent} className={`w-full ${gullKnapp}`}>
+                  Logg inn for å kjøpe
+                </Link>
+              )}
+              {buyErr && (
+                <p role="alert" className="mt-2 text-[14px] text-amber-700">{buyErr}</p>
+              )}
+              <p className="mt-2.5 text-[13px] text-da-text-muted text-center">
+                Sikker betaling via Stripe
+              </p>
+              <HarTilgangLoggInn className="mt-2 text-center" />
+            </section>
+          )}
+
+          {/* ═══ Nyhetsbrev (Droneavisa-lista via MailerLite) ═══ */}
+          <div className="rise-in rise-d3 mt-5">
+            <h2 className={label}>Hold deg oppdatert</h2>
+            <NewsletterSignup />
+          </div>
+
+          {/* Synlig FAQ, speiler FAQPage i index.html (08.10.2026) */}
+          <HomeFaq />
+
+          {/* Bunnlinje: tall hentet live fra Supabase, og utlogging. */}
+          <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#DCE4EA]">
+            <span className="text-[13px] text-da-text-muted tabular-nums">
+              {stats.questions !== null
+                ? `${stats.questions} spørsmål${antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)} · ${stats.categories} kategorier`
+                : '··· spørsmål · ··· kategorier'}
             </span>
-            <div className="flex-1 h-px bg-da-navy/20" />
+            {loggedIn && <AuthHeader variant="light" />}
           </div>
-          <NewsletterSignup />
-        </div>
-
-        {/* Synlig FAQ, speiler FAQPage i index.html (08.10.2026) */}
-        <HomeFaq />
-
-        {/* Footer stats — Round 3.5 wired live from Supabase. Dots on
-            load so the layout doesn't shift when counts resolve. Errors
-            are swallowed silently (dots stay). */}
-        <div className="flex items-center justify-between pt-3 border-t-[0.5px] border-da-navy/15">
-          <span className="font-mono text-[11px] text-da-text-muted tracking-wide tabular-nums">
-            {stats.questions !== null
-              ? `${stats.questions} spørsmål${antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)} · ${stats.categories} kategorier`
-              : '··· spørsmål · ··· kategorier'}
-          </span>
-          <span className="font-mono text-[11px] text-da-text-muted">v1.1</span>
-        </div>
         </div>
       </div>
     </div>
