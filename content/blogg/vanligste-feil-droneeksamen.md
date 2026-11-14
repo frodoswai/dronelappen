@@ -2,7 +2,7 @@
 title: De 7 vanligste feilene på droneeksamen
 description: Stryker folk på droneeksamen? Ja, og som regel på det samme. Her er de vanligste feilene på A1/A3- og A2-eksamen, og hvordan du unngår dem.
 date: 2026-06-11
-updated: 2026-10-16
+updated: 2026-11-14
 image: assets/vanligste-feil-droneeksamen.png
 imageAlt: De 7 vanligste feilene på droneeksamen – DroneLappen-bloggen
 ---
@@ -23,9 +23,9 @@ Klassikeren. Hvilken underkategori lar deg fly over enkeltpersoner? Hvor nær fo
 
 ## 3. Slurver med avstands- og høydetall
 
-30 meter horisontalt til utenforstående, 5 meter i lavhastighetsmodus, 120 meters maksimalhøyde – tallene florerer, og svaralternativene på eksamen er laget for å forveksle dem.
+30 meter horisontalt til utenforstående, 5 meter i saktemodus (også kalt lavhastighetsmodus), 120 meters maksimalhøyde – tallene florerer, og svaralternativene på eksamen er laget for å forveksle dem.
 
-**Slik unngår du det:** Skriv alle tall på ett ark og test deg selv til de sitter. På selve prøven: les spørsmålet to ganger før du svarer. Ofte er det ett ord (horisontalt, vertikalt, lavhastighetsmodus) som avgjør riktig svar.
+**Slik unngår du det:** Skriv alle tall på ett ark og test deg selv til de sitter. På selve prøven: les spørsmålet to ganger før du svarer. Ofte er det ett ord (horisontalt, vertikalt, saktemodus) som avgjør riktig svar.
 
 ## 4. Glemmer at gammel dronelapp ikke gjelder
 

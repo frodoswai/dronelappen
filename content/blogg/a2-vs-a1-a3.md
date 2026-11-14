@@ -2,7 +2,7 @@
 title: A2 vs A1/A3 – hvilken dronelapp trenger du?
 description: A1/A3 er gratis og tas på nett, A2 koster 970 kr på trafikkstasjon. Her er forskjellen på de to dronelappene, og hvordan du finner ut hvilken du trenger.
 date: 2026-06-16
-updated: 2026-10-16
+updated: 2026-11-14
 image: assets/a2-vs-a1-a3.png
 imageAlt: A2 vs A1/A3 – hvilken dronelapp trenger du? DroneLappen-bloggen
 ---
@@ -38,7 +38,7 @@ A2 er for deg som vil fly en drone med klassemerket C2 (under 4 kg) nærmere men
 - Filming på arrangementer og i bynære strøk
 - Oppdrag der du ikke kan garantere stor avstand til utenforstående
 
-Med A2 kan du fly ned til 30 meter horisontalt fra utenforstående, og ned til 5 meter i lavhastighetsmodus. Du må fortsatt holde deg under 120 meters høyde, som i alle åpen kategori-operasjoner.
+Med A2 kan du fly ned til 30 meter horisontalt fra utenforstående, og ned til 5 meter i saktemodus (også kalt lavhastighetsmodus). Du må fortsatt holde deg under 120 meters høyde, som i alle åpen kategori-operasjoner.
 
 Skal du ta A2? Se hvordan du [forbereder deg og består A2-eksamen](/dronesertifikat-a2/).
 
@@ -59,7 +59,7 @@ Begge eksamenene dekker bredere pensum enn folk venter: regelverk, meteorologi, 
 
 ### Hvilke droner kan jeg fly med A2?
 
-A2 gjelder bare droner med klassemerket C2, som veier under 4 kg. Med A2 kan du fly ned til 30 meter horisontalt fra uinvolverte, og ned til 5 meter med lavhastighetsmodus på. En drone uten C-merke som veier 250 gram eller mer, flys i A3, også om du har A2.
+A2 gjelder bare droner med klassemerket C2, som veier under 4 kg. Med A2 kan du fly ned til 30 meter horisontalt fra uinvolverte, og ned til 5 meter med saktemodus på. En drone uten C-merke som veier 250 gram eller mer, flys i A3, også om du har A2.
 
 ### Må jeg ta A1/A3 før A2?
 

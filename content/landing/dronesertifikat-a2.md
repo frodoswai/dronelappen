@@ -69,7 +69,7 @@ A2-eksamen avlegges hos en trafikkstasjon (Statens vegvesen). Du må ha bestått
 Du må ha minst 75 % riktig, altså 23 av 30 spørsmål.
 
 ### Trenger jeg A2 for å fly drone i Norge?
-For de fleste hobbyflyginger holder A1/A3. A2 trenger du bare hvis du skal fly en C2-merket drone nærmere uinvolverte enn A3 tillater (ned til 30 meter, 5 meter i lavhastighetsmodus).
+For de fleste hobbyflyginger holder A1/A3. A2 trenger du bare hvis du skal fly en C2-merket drone nærmere uinvolverte enn A3 tillater (ned til 30 meter, 5 meter i saktemodus (også kalt lavhastighetsmodus)).
 
 ## Les også
 

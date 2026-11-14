@@ -2,7 +2,7 @@
 title: Tallene du må kunne til droneeksamen
 description: 120 meter, 30 meter, 150 meter, 250 gram, 5 kilometer. Droneeksamen er full av tall, og de ligner på hverandre. Her er alle samlet, med huskeregler.
 date: 2026-09-04
-updated: 2026-10-16
+updated: 2026-11-14
 image: assets/tallene-du-ma-kunne-droneeksamen.png
 imageAlt: Tallene du må kunne til droneeksamen – DroneLappen-bloggen
 ---
@@ -16,7 +16,7 @@ Tallspørsmålene er der marginene forsvinner på droneeksamen. Ikke fordi talle
 | 120 meter | Maks flyhøyde i åpen kategori, målt fra nærmeste punkt på bakken |
 | 150 meter | A3: minsteavstand til bolig-, nærings-, industri- og rekreasjonsområder |
 | 30 meter | A2: minsteavstand horisontalt til utenforstående |
-| 5 meter | A2: minsteavstand i lavhastighetsmodus |
+| 5 meter | A2: minsteavstand i saktemodus (også kalt lavhastighetsmodus) |
 | 5 kilometer | Minsteavstand til lufthavn uten tillatelse |
 
 Merk formuleringen på 120-metersregelen: det er høyden over terrenget rett under dronen, ikke over punktet du står på. Flyr du ved en skråning, følger grensen terrenget.
@@ -40,7 +40,7 @@ Merk formuleringen på 120-metersregelen: det er høyden over terrenget rett und
 ## Tre huskeregler som sitter
 
 - **120 følger bakken:** høydegrensen er en radius fra terrenget, ikke et tak i himmelen.
-- **30 blir 5 i sakte fart:** A2-avstanden krymper bare når du aktivt flyr i lavhastighetsmodus.
+- **30 blir 5 i sakte fart:** A2-avstanden krymper bare når du aktivt flyr i saktemodus.
 - **150 er A3 sin livvakt:** klarer du ikke holde 150 meter fra bebyggelse, er du i feil underkategori.
 
 ## Test om tallene faktisk sitter

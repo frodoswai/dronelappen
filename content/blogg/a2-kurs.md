@@ -18,7 +18,7 @@ A2 er et tillegg til A1/A3, ikke et eget løp. Rekkefølgen ser slik ut:
 
 Ingen av stegene krever at du har gått på kurs. Egentreningen gjør du selv, og du bekrefter den med egenerklæringen etter bestått prøve. Her er [hvordan dagen på trafikkstasjonen foregår](/blogg/a2-eksamen-trafikkstasjonen/).
 
-Før du bruker penger på noe, sjekk om A2 i det hele tatt er relevant for deg. A2 gjelder bare droner med C2-merke. Med A2 kan du fly en C2-drone minst 30 meter fra uinvolverte, eller 5 meter når dronen er i lavhastighetsmodus. Har du ikke en C2-drone, gir A2 deg lite i praksis. Les mer om [hva A2 omfatter](/dronesertifikat-a2/).
+Før du bruker penger på noe, sjekk om A2 i det hele tatt er relevant for deg. A2 gjelder bare droner med C2-merke. Med A2 kan du fly en C2-drone minst 30 meter fra uinvolverte, eller 5 meter når dronen er i saktemodus (også kalt lavhastighetsmodus). Har du ikke en C2-drone, gir A2 deg lite i praksis. Les mer om [hva A2 omfatter](/dronesertifikat-a2/).
 
 ## Hva det koster
 

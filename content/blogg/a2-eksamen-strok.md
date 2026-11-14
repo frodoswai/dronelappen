@@ -26,7 +26,7 @@ Hvert forsøk koster det samme: 970 kr, betalt ved oppmøte på trafikkstasjonen
 
 ## Finn ut hva du bommet på
 
-A2-prøven er smalere enn A1/A3. Ifølge EU-forordningen dekker den tre temaer: meteorologi, dronens ytelse, og tiltak som reduserer risikoen for folk på bakken, som avstander og lavhastighetsmodus. Bruk oppsummeringen fra vegvesenet til å se hvilket av dem som trakk ned.
+A2-prøven er smalere enn A1/A3. Ifølge EU-forordningen dekker den tre temaer: meteorologi, dronens ytelse, og tiltak som reduserer risikoen for folk på bakken, som avstander og saktemodus (også kalt lavhastighetsmodus). Bruk oppsummeringen fra vegvesenet til å se hvilket av dem som trakk ned.
 
 De fleste som stryker, gjør det på tall og avstander, ikke på de opplagte reglene. Gå gjennom [tallene du må kunne til droneeksamen](/blogg/tallene-du-ma-kunne-droneeksamen/) og [de 7 vanligste feilene](/blogg/vanligste-feil-droneeksamen/) før du bestiller på nytt.
 
