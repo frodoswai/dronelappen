@@ -5,11 +5,51 @@ import { useAuth } from '../contexts/AuthContext'
 import DroneMark from '../components/DroneMark'
 import { hasPurchaseIntent } from '../lib/purchaseIntent'
 
+// «Åpne med koden» (Frode 14.11.2026). E-posten har en knapp til
+// /login#kode=123456. Koden ligger i fragmentet, så den sendes aldri til
+// serveren, og ingenting verifiseres før brukeren selv trykker på knappen.
+// Et e-postfilter som henter lenken, brenner derfor ikke koden.
+// E-postadressen står ikke i lenken. Den huskes i nettleseren som ba om
+// koden; åpnes lenken et annet sted, må brukeren skrive adressen selv.
+const EPOST_NOKKEL = 'dl_login_epost'
+function lesKodeFraLenke() {
+  try {
+    const kilde = window.location.hash + '&' + window.location.search.slice(1)
+    const m = kilde.match(/[#&]kode=(\d{6})(?!\d)/)
+    if (!m) return null
+    let epost = ''
+    try {
+      epost = localStorage.getItem(EPOST_NOKKEL) || ''
+    } catch {
+      // lagring er sperret: brukeren skriver adressen selv
+    }
+    return { kode: m[1], velgPassord: /[#&]velg=passord/.test(kilde), epost }
+  } catch {
+    return null
+  }
+}
+function huskEpost(epost) {
+  try {
+    localStorage.setItem(EPOST_NOKKEL, epost)
+  } catch {
+    // lagring er sperret: knappen i e-posten fyller da bare inn koden
+  }
+}
+function glemEpost() {
+  try {
+    localStorage.removeItem(EPOST_NOKKEL)
+  } catch {
+    // ingenting å rydde
+  }
+}
+
 export default function Login() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('')
+  // Leses én gang, før første tegning. null når brukeren ikke kom fra knappen.
+  const [lenke] = useState(lesKodeFraLenke)
+  const [email, setEmail] = useState(lenke?.epost || '')
   const [password, setPassword] = useState('')
   // Engangskode i stedet for klikkbar lenke. Bakgrunn: Microsoft 365 Safe
   // Links og liknende e-postfiltre HENTER lenken automatisk før brukeren
@@ -17,20 +57,35 @@ export default function Login() {
   // «logget inn», og kunden får 403 «Email link is invalid or has expired».
   // Bevist 31.08.2026 på en betalende kommune-kunde. En kode kan ikke
   // forhåndshentes — derfor sender vi kode, ikke lenke.
-  const [code, setCode] = useState('')
-  const [codeSent, setCodeSent] = useState(false)
+  const [code, setCode] = useState(lenke && !lenke.velgPassord ? lenke.kode : '')
+  const [codeSent, setCodeSent] = useState(!!lenke && !lenke.velgPassord)
   // Gjenoppretting bruker samme kodeprinsipp som innlogging: lenka i
   // gjenopprettings-e-posten hadde nøyaktig samme svakhet — et e-postfilter
   // kunne hente den og brenne tokenet. Rammet de ~19 betalende uten passord.
-  const [recoveryCode, setRecoveryCode] = useState('')
-  const [recoveryCodeSent, setRecoveryCodeSent] = useState(false)
+  const [recoveryCode, setRecoveryCode] = useState(lenke?.velgPassord ? lenke.kode : '')
+  const [recoveryCodeSent, setRecoveryCodeSent] = useState(!!lenke?.velgPassord)
   // Settes FØR verifyOtp slik at redirect-effekten under ikke rekker å sende
   // dem til forsiden i det sesjonen oppstår. Ref, ikke state: effekten leser
   // verdien når den kjører, uten å vente på en ny render.
   const paaVeiTilSettPassord = useRef(false)
-  const [mode, setMode] = useState('magic_link') // 'magic_link' (kode) | 'password_login' | 'password_signup'
+  const [mode, setMode] = useState(lenke?.velgPassord ? 'password_login' : 'magic_link') // 'magic_link' (kode) | 'password_login' | 'password_signup'
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState(null) // { type: 'success'|'error', text }
+  const [message, setMessage] = useState(
+    lenke
+      ? {
+          type: 'success',
+          text: lenke.epost
+            ? 'Koden fra e-posten er fylt inn. Trykk på knappen under.'
+            : 'Koden fra e-posten er fylt inn. Skriv e-postadressen din, og trykk på knappen under.',
+        }
+      : null
+  ) // { type: 'success'|'error', text }
+
+  // Fjern koden fra adresselinja med en gang, så den ikke blir liggende i
+  // historikken eller følger med i sidevisninger til statistikkverktøy.
+  useEffect(() => {
+    if (lenke) navigate('/login', { replace: true })
+  }, [lenke, navigate])
 
   // If already logged in, redirect home. NB: anonyme sesjoner (alle
   // besøkende har en, se AuthContext) teller IKKE som innlogget — uten
@@ -54,6 +109,7 @@ export default function Login() {
     if (error) {
       setMessage({ type: 'error', text: error.message })
     } else {
+      huskEpost(email)
       setCodeSent(true)
       setMessage({
         type: 'success',
@@ -77,6 +133,8 @@ export default function Login() {
         type: 'error',
         text: 'Koden stemmer ikke, eller den er mer enn en time gammel. Be om en ny.',
       })
+    } else {
+      glemEpost()
     }
     // onAuthStateChange i AuthContext håndterer redirect
   }
@@ -141,6 +199,7 @@ export default function Login() {
       setMessage({ type: 'error', text: error.message })
       return
     }
+    huskEpost(email)
     setRecoveryCodeSent(true)
     setMessage({
       type: 'success',
@@ -167,6 +226,7 @@ export default function Login() {
       })
       return
     }
+    glemEpost()
     navigate('/sett-passord', { replace: true })
   }
 
@@ -258,7 +318,8 @@ export default function Login() {
                 type="email"
                 required
                 value={email}
-                onChange={(e) => { setEmail(e.target.value); if (codeSent) resetCodeFlow() }}
+                onChange={(e) => { setEmail(e.target.value); if (codeSent && !lenke) resetCodeFlow() }}
+                autoFocus={!!lenke && !lenke.epost}
                 placeholder="din@epost.no"
                 className={inputClass}
                 autoComplete="email"
@@ -279,7 +340,7 @@ export default function Login() {
                   className={`${inputClass} font-mono tracking-[0.4em] text-center text-[18px]`}
                   inputMode="numeric"
                   autoComplete="one-time-code"
-                  autoFocus
+                  autoFocus={!lenke}
                   maxLength={6}
                 />
               </div>
@@ -299,7 +360,7 @@ export default function Login() {
                   className={`${inputClass} font-mono tracking-[0.4em] text-center text-[18px]`}
                   inputMode="numeric"
                   autoComplete="one-time-code"
-                  autoFocus
+                  autoFocus={!lenke}
                   maxLength={6}
                 />
               </div>
