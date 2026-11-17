@@ -1,0 +1,23 @@
+# DroneLappen
+
+> DroneLappen er en norsk øvingsapp til droneeksamen: A1/A3, A2 og utvidelsen fra A2 til STS. Den har prøveeksamen med ekte tidsfrist, øving per tema, tempomodus og forklaring på hvert svar. Antall spørsmål per eksamen står i https://dronelappen.app/antall.json.
+
+DroneLappen drives av Frode Friestad, droneflyger med A1/A3 og A2 og redaktør i Droneavisa (https://droneavisa.no/). Kontakt: kontakt@dronelappen.app
+
+## Fakta
+
+- A1/A3-delen er gratis i sin helhet, uten innlogging. Du kan også prøve 25 A2-spørsmål gratis.
+- Full tilgang koster 349 kr, et engangsbeløp for 12 måneder, uten abonnement.
+- A1/A3-eksamen tas gratis på nett hos Luftfartstilsynet (flydrone.no).
+- A2-eksamen tas hos Statens vegvesen og koster 970 kr. Den har 30 spørsmål på 60 minutter, og du må ha 23 riktige.
+- Spørsmålene er laget av DroneLappen og er ikke de offisielle eksamensspørsmålene.
+
+## Sider
+
+- [Forside](https://dronelappen.app/)
+- [A1/A3 gratis](https://dronelappen.app/a1-a3-gratis/): øv til A1/A3 uten innlogging
+- [Droneeksamen øving](https://dronelappen.app/droneeksamen-oving/): oversikt over A1/A3, A2 og STS
+- [Dronesertifikat A2](https://dronelappen.app/dronesertifikat-a2/): hva A2 krever og koster
+- [STS-eksamen](https://dronelappen.app/sts-eksamen/): påbygget fra A2 til STS
+- [Pris](https://dronelappen.app/pris/)
+- [Blogg](https://dronelappen.app/blogg/): guider om droneeksamen, regelverk og eksamensforberedelse. Alle innlegg: https://dronelappen.app/blogg/sitemap.xml
