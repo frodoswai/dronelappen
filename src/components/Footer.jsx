@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="w-full max-w-xl mx-auto py-5 px-5 text-center text-[14px] text-da-text-muted space-y-2.5">
       <InstallAppButton />
       <TextSizeToggle />
-      <div className="flex items-center justify-center gap-3 text-[14px]">
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[14px]">
         <Link to="/min-side" className="text-da-navy font-medium hover:underline transition-colors">
           Min side
         </Link>
@@ -23,6 +23,10 @@ export default function Footer() {
         <Link to="/kontakt" className="text-da-text-muted hover:text-da-navy transition-colors">
           Kontakt
         </Link>
+        <span className="text-[#B8C4CF]">·</span>
+        <button type="button" onClick={() => window.dlVisSamtykke?.()} className="text-da-text-muted hover:text-da-navy transition-colors">
+          Informasjonskapsler
+        </button>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[14px]">
         <a href="/dronesertifikat-a2/" className="text-da-text-muted hover:text-da-navy transition-colors">

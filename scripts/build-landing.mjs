@@ -193,6 +193,7 @@ const CONSENT = `<script>
 (function(){
 var KEY='dl-cookie-consent';var PIXEL_ID='1025209573360224';
 function loadPixel(){if(window.__dlPixel)return;window.__dlPixel=true;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',PIXEL_ID);fbq('track','PageView');}
+window.dlVisSamtykke=function(){if(!document.getElementById('dl-accept'))showBanner();};document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-samtykke]');if(a){e.preventDefault();window.dlVisSamtykke();}});
 var choice=null;try{choice=localStorage.getItem(KEY);}catch(e){}
 if(choice==='accepted'){loadPixel();return;}
 if(choice==='declined'){return;}
@@ -287,6 +288,7 @@ ${bodyHtml}
 </main>
 <footer class="site">
   ${SITENAV}
+  <p class="sitenav"><a href="/personvern">Personvern</a> · <a href="#" data-samtykke>Informasjonskapsler</a></p>
   <p>© ${new Date().getFullYear()} DroneLappen ·
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
 </footer>

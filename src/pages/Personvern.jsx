@@ -163,7 +163,8 @@ export default function Personvern() {
               nettlesertype.
             </p>
             <p className="mt-2">
-              Du kan trekke tilbake samtykket ved å avslå i banneren eller slette
+              Du kan endre eller trekke tilbake samtykket når som helst med lenken
+              «Informasjonskapsler» nederst på siden. Du kan også slette
               informasjonskapslene for dronelappen.app i nettleseren din.
             </p>
           </section>

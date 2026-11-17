@@ -118,6 +118,9 @@
           fbq('track', 'PageView');
         }
         window.dlLoadPixel = loadPixel;
+        // 17.11.2026: lenken «Informasjonskapsler» (data-samtykke) åpner banneret igjen,
+        // så samtykket kan trekkes like lett som det gis.
+        window.dlVisSamtykke=function(){if(!document.getElementById('dl-accept'))showBanner();};document.addEventListener('click',function(e){var a=e.target&&e.target.closest&&e.target.closest('[data-samtykke]');if(a){e.preventDefault();window.dlVisSamtykke();}});
         var choice = null;
         try { choice = localStorage.getItem(KEY); } catch (e) {}
         if (choice === 'accepted') { loadPixel(); grantGoogle(); return; }
@@ -136,7 +139,7 @@
             + '</span></div>';
           document.body.appendChild(bar);
           document.getElementById('dl-accept').onclick = function () { save('accepted'); loadPixel(); grantGoogle(); bar.remove(); };
-          document.getElementById('dl-decline').onclick = function () { save('declined'); bar.remove(); };
+          document.getElementById('dl-decline').onclick = function () { save('declined'); gtag('consent', 'update', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied' }); bar.remove(); };
         }
         if (document.readyState === 'loading') {
           document.addEventListener('DOMContentLoaded', showBanner);
