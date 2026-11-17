@@ -46,6 +46,20 @@ else
   echo "$(date '+%F %T') ingen i koe for $TODAY" >> "$LOG"
 fi
 
+# ---- Forsiden for crawlere uten JavaScript (17.11.2026) ----
+# Frisk opp prerender/home.html fra live-siden. Committes bare ved endring.
+# Feil her skal ikke velte bloggkøen, men logges.
+if node scripts/prerender-home.mjs >> "$LOG" 2>&1; then
+  if ! git diff --quiet -- prerender/home.html; then
+    git add prerender/home.html
+    git commit -m "Forside-snapshot oppdatert ($TODAY)" --quiet
+    git push origin main >> "$LOG" 2>&1
+    echo "$(date '+%F %T') forside-snapshot pushet" >> "$LOG"
+  fi
+else
+  echo "$(date '+%F %T') ADVARSEL: prerender-home feilet" >> "$LOG"
+fi
+
 # ---- Koestatus til Mission Control ----
 queued=(content/blogg-drafts/*.md)
 n=${#queued[@]}

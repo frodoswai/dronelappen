@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/build-blogg.mjs && node scripts/build-landing.mjs && vite build",
+    "prerender": "node scripts/prerender-home.mjs",
+    "build": "node scripts/build-blogg.mjs && node scripts/build-landing.mjs && vite build && node scripts/inject-prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "blogg": "node scripts/build-blogg.mjs",
@@ -28,6 +29,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.4.0",
     "marked": "^18.0.5",
+    "puppeteer-core": "^23.11.1",
     "tailwindcss": "^4.2.2",
     "vite": "^8.0.1"
   }

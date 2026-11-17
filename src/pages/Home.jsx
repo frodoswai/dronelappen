@@ -443,14 +443,16 @@ export default function Home() {
             </section>
           )}
 
-          {/* ═══ Nyhetsbrev (Droneavisa-lista via MailerLite) ═══ */}
-          <div className="rise-in rise-d3 mt-5">
+          {/* Synlig FAQ, speiler FAQPage i index.html (08.10.2026) */}
+          <HomeFaq />
+
+          {/* ═══ Nyhetsbrev (Droneavisa-lista via MailerLite) ═══
+              17.11.2026 (Frode: «kjøp er viktigst»): flyttet fra rett under
+              kjøpskortet til under FAQ, så det ikke konkurrerer med kjøpsknappen. */}
+          <div className="mt-5">
             <h2 className={label}>Hold deg oppdatert</h2>
             <NewsletterSignup />
           </div>
-
-          {/* Synlig FAQ, speiler FAQPage i index.html (08.10.2026) */}
-          <HomeFaq />
 
           {/* Bunnlinje: tall hentet live fra Supabase, og utlogging. */}
           <div className="flex items-center justify-between gap-3 pt-3 border-t border-[#DCE4EA]">
