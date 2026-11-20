@@ -74,6 +74,16 @@ export default function Footer() {
           Droneavisa.no
         </a>
       </div>
+      <div>
+        Skal du ta førerkort for bil? Øv til teoriprøven med{' '}
+        <a
+          href="https://teoripiloten.no/?utm_source=dronelappen&utm_medium=referral&utm_campaign=bunntekst"
+          rel="noopener"
+          className="text-da-navy font-medium hover:underline transition-colors"
+        >
+          Teoripiloten
+        </a>
+      </div>
     </footer>
   )
 }

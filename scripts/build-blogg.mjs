@@ -215,6 +215,7 @@ ${bodyHtml}
   <p class="sitenav"><a href="/personvern">Personvern</a> · <a href="#" data-samtykke>Informasjonskapsler</a></p>
   <p>© ${new Date().getFullYear()} DroneLappen ·
   Et søsterprosjekt av <a href="https://droneavisa.no" rel="noopener">Droneavisa.no</a></p>
+  <p class="sitenav">Skal du ta førerkort for bil? Øv til teoriprøven med <a href="https://teoripiloten.no/?utm_source=dronelappen&amp;utm_medium=referral&amp;utm_campaign=bunntekst" rel="noopener">Teoripiloten</a></p>
 </footer>
 </body>
 </html>`
