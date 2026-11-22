@@ -68,6 +68,13 @@ export default function Login() {
   // dem til forsiden i det sesjonen oppstår. Ref, ikke state: effekten leser
   // verdien når den kjører, uten å vente på en ny render.
   const paaVeiTilSettPassord = useRef(false)
+  // Sekunder til «Send ny kode» kan trykkes igjen.
+  const [resendWait, setResendWait] = useState(0)
+  useEffect(() => {
+    if (resendWait <= 0) return
+    const t = setTimeout(() => setResendWait((s) => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [resendWait])
   const [mode, setMode] = useState(lenke?.velgPassord ? 'password_login' : 'magic_link') // 'magic_link' (kode) | 'password_login' | 'password_signup'
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(
@@ -111,6 +118,7 @@ export default function Login() {
     } else {
       huskEpost(email)
       setCodeSent(true)
+      setResendWait(60)
       setMessage({
         type: 'success',
         text: 'Vi har sendt en 6-sifret kode til ' + email + '. Skriv den inn her.',
@@ -145,6 +153,38 @@ export default function Login() {
     setRecoveryCodeSent(false)
     setRecoveryCode('')
     setMessage(null)
+    setResendWait(0)
+  }
+
+  // «Send ny kode» sender med en gang (22.11.2026). Før tok knappen deg bare
+  // tilbake til e-postfeltet, og du måtte trykke «Send» en gang til.
+  // Supabase Auth slipper gjennom én e-post per adresse per 60 sekunder,
+  // derfor nedtellingen på knappen.
+  const handleResend = async () => {
+    if (loading || resendWait > 0 || !email) return
+    setLoading(true)
+    setMessage(null)
+    const recovery = recoveryCodeSent
+    const { error } = recovery
+      ? await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/sett-passord` })
+      : await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } })
+    setLoading(false)
+    if (error) {
+      const forTidlig = error.status === 429 || /security purposes|rate limit/i.test(error.message || '')
+      if (forTidlig) setResendWait(60)
+      setMessage({
+        type: 'error',
+        text: forTidlig ? 'Vent et minutt før du ber om en ny kode.' : error.message,
+      })
+      return
+    }
+    if (recovery) setRecoveryCode('')
+    else setCode('')
+    setResendWait(60)
+    setMessage({
+      type: 'success',
+      text: 'Ny kode er sendt til ' + email + '. Bruk den nyeste koden, den gamle virker ikke lenger.',
+    })
   }
 
   const handlePasswordLogin = async (e) => {
@@ -201,6 +241,7 @@ export default function Login() {
     }
     huskEpost(email)
     setRecoveryCodeSent(true)
+    setResendWait(60)
     setMessage({
       type: 'success',
       text: 'Vi har sendt en 6-sifret kode til ' + email + '. Skriv den inn her, så får du velge passord.',
@@ -434,10 +475,11 @@ export default function Login() {
               </p>
               <button
                 type="button"
-                onClick={resetCodeFlow}
-                className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
+                onClick={handleResend}
+                disabled={loading || resendWait > 0}
+                className="min-h-11 text-[15px] font-medium text-da-navy hover:underline disabled:opacity-60 disabled:no-underline"
               >
-                Send ny kode
+                {resendWait > 0 ? `Send ny kode (om ${resendWait} s)` : 'Send ny kode'}
               </button>
             </div>
           )}
@@ -465,15 +507,17 @@ export default function Login() {
                   disabled={loading}
                   className="block w-full min-h-11 text-[15px] font-semibold text-da-navy hover:underline disabled:opacity-60"
                 >
-                  Glemt passord, eller aldri laget et? Få en lenke
+                  Glemt passord, eller aldri laget et? Få en kode på e-post
                 </button>
               )}
               {recoveryCodeSent ? (
                 <button
-                  onClick={resetCodeFlow}
-                  className="min-h-11 text-[15px] font-medium text-da-navy hover:underline"
+                  type="button"
+                  onClick={handleResend}
+                  disabled={loading || resendWait > 0}
+                  className="min-h-11 text-[15px] font-medium text-da-navy hover:underline disabled:opacity-60 disabled:no-underline"
                 >
-                  Send ny kode
+                  {resendWait > 0 ? `Send ny kode (om ${resendWait} s)` : 'Send ny kode'}
                 </button>
               ) : mode === 'password_login' ? (
                 <button
