@@ -43,6 +43,15 @@ function glemEpost() {
   }
 }
 
+// Supabase Auth slipper gjennom én e-post per adresse per minutt og svarer på
+// engelsk når grensen nås. Vis det på norsk.
+function erForTidlig(error) {
+  return error?.status === 429 || /security purposes|rate limit/i.test(error?.message || '')
+}
+function norskFeil(error) {
+  return erForTidlig(error) ? 'Vent et minutt før du ber om en ny kode.' : error.message
+}
+
 export default function Login() {
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -114,7 +123,7 @@ export default function Login() {
     })
     setLoading(false)
     if (error) {
-      setMessage({ type: 'error', text: error.message })
+      setMessage({ type: 'error', text: norskFeil(error) })
     } else {
       huskEpost(email)
       setCodeSent(true)
@@ -170,12 +179,8 @@ export default function Login() {
       : await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } })
     setLoading(false)
     if (error) {
-      const forTidlig = error.status === 429 || /security purposes|rate limit/i.test(error.message || '')
-      if (forTidlig) setResendWait(60)
-      setMessage({
-        type: 'error',
-        text: forTidlig ? 'Vent et minutt før du ber om en ny kode.' : error.message,
-      })
+      if (erForTidlig(error)) setResendWait(60)
+      setMessage({ type: 'error', text: norskFeil(error) })
       return
     }
     if (recovery) setRecoveryCode('')
@@ -236,7 +241,7 @@ export default function Login() {
     })
     setLoading(false)
     if (error) {
-      setMessage({ type: 'error', text: error.message })
+      setMessage({ type: 'error', text: norskFeil(error) })
       return
     }
     huskEpost(email)
