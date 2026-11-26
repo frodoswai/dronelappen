@@ -34,12 +34,13 @@ const STS_TIER_AT = Date.parse('2026-12-01T00:00:00+01:00')
 type Plan = 'a2' | 'a2_sts' | 'sts_upgrade'
 type PriceRef = { id: string; amount: number }
 
-// Til og med 30.11: «Full tilgang (12 måneder)», STS med.
+// 349-prisen fra 15.08.2026. Til og med 30.11 er STS med i den. Fra 1.12 er
+// den A2-prisen: samme pris-ID videre (Frode 26.11.2026), for 349 kr for A2
+// er hovedtilbudet og skal ikke bytte pris-ID.
 const PRICE_LAUNCH: PriceRef = { id: 'price_1TwqHTK4vmLGBhyMR5jkABrl', amount: 349 }
-// Fra 1.12: egne Stripe-produkter per nivå, så kassa og kvitteringen sier
-// hva kunden faktisk kjøper (opprettet 26.11.2026).
+// Fra 1.12: pakken og påbygget har egne Stripe-produkter (opprettet 26.11.2026).
 const PRICES: Record<Plan, PriceRef> = {
-  a2: { id: 'price_1Ufy60K4vmLGBhyMA8vGOzKA', amount: 349 },
+  a2: PRICE_LAUNCH,
   a2_sts: { id: 'price_1Ufy60K4vmLGBhyMMYZYzh8w', amount: 449 },
   sts_upgrade: { id: 'price_1Ufy61K4vmLGBhyMYgbxrLSt', amount: 149 },
 }
