@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { PRICE, PRICE_AFTER, PRICE_INCREASE_LABEL_FULL, showIncreaseNotice } from '../lib/pricing'
+import { PRICE, PRICE_AFTER, PRICE_INCREASE_LABEL_FULL, showIncreaseNotice, TIERS, PRICE_A2, PRICE_A2_STS, PRICE_STS_UPGRADE } from '../lib/pricing'
 
 /**
  * /vilkar — Kjøpsvilkår og bruksvilkår.
@@ -61,13 +61,37 @@ export default function Vilkar() {
           </section>
 
           <section>
-            <h2 className="text-lg font-medium text-da-navy mb-2">3. Gratisversjon og full tilgang</h2>
-            <p>
-              Gratisversjonen gir tilgang til alle A1/A3-spørsmålene og et begrenset
-              utvalg A2-spørsmål (for tiden 25). Full tilgang gir tilgang til hele
-              spørsmålsbanken og koster {PRICE} kr som et engangsbeløp, og gir 12
-              måneders tilgang. Priser oppgis inkludert merverdiavgift der det er aktuelt.
-            </p>
+            <h2 className="text-lg font-medium text-da-navy mb-2">
+              {TIERS ? '3. Gratisversjon og betalt tilgang' : '3. Gratisversjon og full tilgang'}
+            </h2>
+            {TIERS ? (
+              <>
+                <p>
+                  Gratisversjonen gir tilgang til alle A1/A3-spørsmålene og et begrenset
+                  utvalg A2-spørsmål (for tiden 25). Betalt tilgang finnes i to nivåer:
+                  A2 (A2 og A1/A3) koster {PRICE_A2} kr, og A2 + STS (A2, A1/A3 og STS)
+                  koster {PRICE_A2_STS} kr. Begge er engangsbeløp og gir 12 måneders
+                  tilgang, uten abonnement. Priser oppgis inkludert merverdiavgift der det
+                  er aktuelt.
+                </p>
+                <p className="mt-2">
+                  Har du A2, kan du legge til STS som påbygg for {PRICE_STS_UPGRADE} kr.
+                  Påbygget gir ingen ny tilgangsperiode: det gjelder til samme dato som
+                  A2-tilgangen du allerede har.
+                </p>
+                <p className="mt-2">
+                  Kjøp gjennomført før 1. desember 2026 omfatter STS i hele
+                  tilgangsperioden.
+                </p>
+              </>
+            ) : (
+              <p>
+                Gratisversjonen gir tilgang til alle A1/A3-spørsmålene og et begrenset
+                utvalg A2-spørsmål (for tiden 25). Full tilgang gir tilgang til hele
+                spørsmålsbanken og koster {PRICE} kr som et engangsbeløp, og gir 12
+                måneders tilgang. Priser oppgis inkludert merverdiavgift der det er aktuelt.
+              </p>
+            )}
             {showIncreaseNotice() && (
               <p className="mt-2">
                 Prisen for full tilgang øker fra {PRICE} kr til {PRICE_AFTER} kr fra og med{' '}

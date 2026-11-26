@@ -28,7 +28,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { createCheckout } from '../lib/supabase'
 import { logFunnel, QUIZ_BUY_CLICK } from '../lib/funnel'
-import { PRICE } from '../lib/pricing'
+import { PRICE, TIERS, DEFAULT_PLAN } from '../lib/pricing'
 import { examDisplay } from '../lib/exams'
 import TextSizeToggle from './TextSizeToggle'
 
@@ -65,7 +65,7 @@ export default function QuizLayout({
     await logFunnel(QUIZ_BUY_CLICK, { examType })
     setUpgradeBusy(true)
     try {
-      await createCheckout() // redirects to Stripe on success
+      await createCheckout(DEFAULT_PLAN) // redirects to Stripe on success
     } catch (e) {
       setUpgradeBusy(false)
       if (e?.alreadyPaid) { await refreshTier(); return }
@@ -229,7 +229,9 @@ export default function QuizLayout({
               disabled={upgradeBusy}
               className="quiz-option font-mono text-[11px] font-medium tracking-[0.04em] bg-da-gold text-da-navy-dark px-3 py-1.5 rounded-[5px] hover:opacity-90 transition-opacity shrink-0 disabled:opacity-60"
             >
-              {upgradeBusy ? 'Sender …' : a1a3Free ? `A2 og STS · ${PRICE} kr →` : `Lås opp alt · ${PRICE} kr →`}
+              {upgradeBusy ? 'Sender …' : TIERS
+                ? a1a3Free ? `A2 · ${PRICE} kr →` : `Lås opp A2 · ${PRICE} kr →`
+                : a1a3Free ? `A2 og STS · ${PRICE} kr →` : `Lås opp alt · ${PRICE} kr →`}
             </button>
           </div>
         </div>

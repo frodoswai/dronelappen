@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { PRICE } from '../lib/pricing'
+import { paidPlanPrice } from '../lib/pricing'
 import { CONV_KJOP, googleKonvertering } from '../lib/conversions'
 import { logFunnel, PAYMENT_RETURN, CHECKOUT_CANCEL_RETURN } from '../lib/funnel'
 import CheckoutRemindDialog from './CheckoutRemindDialog'
@@ -13,8 +13,12 @@ import CheckoutRemindDialog from './CheckoutRemindDialog'
  * Cleans the query param from the URL once handled.
  */
 export default function PaymentReturn() {
-  const { refreshTier, user, tier } = useAuth()
+  const { refreshAccess, user, tier } = useAuth()
   const [status, setStatus] = useState(null) // 'ok' | 'pending' | 'avbrutt' | null
+  // Nivået kunden kjøpte (?plan= fra create-checkout, fra 1.12.2026). Bare
+  // til visning og riktig beløp i målingen. Mangler før byttet: da er det
+  // det ene kjøpet med alt.
+  const [plan, setPlan] = useState(null)
   const [askRemind, setAskRemind] = useState(false)
 
   useEffect(() => {
@@ -26,10 +30,14 @@ export default function PaymentReturn() {
     // the server-side CAPI event as the dedup event_id so Meta counts one
     // Purchase, not two (browser Pixel + server).
     const sessionId = params.get('s')
+    const p = params.get('plan')
+    const kjoptPlan = p === 'a2' || p === 'a2_sts' || p === 'sts_upgrade' ? p : null
+    const belop = paidPlanPrice(kjoptPlan)
 
     // Strip our params so a refresh doesn't re-trigger.
     params.delete('betalt')
     params.delete('s')
+    params.delete('plan')
     const qs = params.toString()
     window.history.replaceState(
       {},
@@ -61,7 +69,7 @@ export default function PaymentReturn() {
         window.fbq?.(
           'track',
           'Purchase',
-          { value: PRICE, currency: 'NOK' },
+          { value: belop, currency: 'NOK' },
           sessionId ? { eventID: sessionId } : undefined,
         )
       } catch {
@@ -77,7 +85,7 @@ export default function PaymentReturn() {
       // transaction_id = Stripe session id, så Google dedupliserer hvis
       // brukeren refresher suksess-siden.
       googleKonvertering(CONV_KJOP, {
-        value: PRICE,
+        value: belop,
         currency: 'NOK',
         ...(sessionId ? { transaction_id: sessionId } : {}),
       })
@@ -86,12 +94,13 @@ export default function PaymentReturn() {
       // forget: ingen navigering her, så inserten rekker fram.
       logFunnel(PAYMENT_RETURN)
 
-      if (!cancelled) setStatus('pending')
+      if (!cancelled) { setPlan(kjoptPlan); setStatus('pending') }
       // Poll a few times: the webhook writes the entitlement out-of-band.
+      // Påbygget er på plass først når sts er satt; kunden er alt 'paid'.
       for (let i = 0; i < 6; i++) {
-        const tier = await refreshTier()
+        const a = await refreshAccess()
         if (cancelled) return
-        if (tier === 'paid') {
+        if (kjoptPlan === 'sts_upgrade' ? a.sts : a.tier === 'paid') {
           setStatus('ok')
           return
         }
@@ -103,7 +112,7 @@ export default function PaymentReturn() {
     }
     handle()
     return () => { cancelled = true }
-  }, [refreshTier])
+  }, [refreshAccess])
 
   if (!status) return null
 
@@ -140,7 +149,13 @@ export default function PaymentReturn() {
   return (
     <Banner tone="gold" onDismiss={dismiss}>
       <span className="block font-medium">
-        Takk! Full tilgang er aktivert &mdash; hele sp&oslash;rsm&aring;lsbanken er n&aring; &aring;pen.
+        {plan === 'sts_upgrade' ? (
+          <>Takk! STS er lagt til i tilgangen din. Alle STS-sp&oslash;rsm&aring;lene er n&aring; &aring;pne.</>
+        ) : plan === 'a2' ? (
+          <>Takk! A2 er aktivert. Hele A2-banken er n&aring; &aring;pen.</>
+        ) : (
+          <>Takk! Full tilgang er aktivert &mdash; hele sp&oslash;rsm&aring;lsbanken er n&aring; &aring;pen.</>
+        )}
       </span>
       <span className="block mt-1 text-[12px] opacity-85">
         Neste gang du kommer tilbake: g&aring; til dronelappen.app og trykk

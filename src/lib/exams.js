@@ -1,3 +1,5 @@
+import { TIERS } from './pricing'
+
 // Eksamenstypene i appen, samlet på ett sted (30.09.2026, STS-påbygget).
 //
 // Alt som skiller eksamenstypene fra hverandre leses herfra: gyldige ruter
@@ -25,6 +27,10 @@
 // STS er åpent for alle fra lanseringen 6.10.2026 (Frode). Spørsmålene ble
 // lastet inn før (supabase/seed-sts.mjs --apply). Rollback: sett false og push.
 export const STS_LIVE = true
+
+// Fra 1.12.2026 selges STS i nivået «A2 + STS» (og som påbygg for A2-kunder),
+// ikke lenger i «full tilgang». Tekstene under følger datoen (lib/pricing.js).
+const STS_MED_I = TIERS ? 'Med i A2 + STS.' : 'Med i full tilgang.'
 
 // Forhåndsvisning for testere før lansering. I nettleserkonsollen:
 //   localStorage.setItem('dl-sts-forhandsvisning', '1')   skrur den på
@@ -75,13 +81,13 @@ export const EXAMS = {
     examMaxHard: 5,
     timerMinutes: 60,
     paidOnly: true,
-    paywallTitle: 'STS-påbygget er med i full tilgang.',
+    paywallTitle: TIERS ? 'STS får du med A2 + STS.' : 'STS-påbygget er med i full tilgang.',
     tag: 'trafikkstasjonen',
     intro:
       'Prøven «Utvidelse av A2 til STS» (kode DRONEA2STS) har 30 spørsmål, og du må ha minst 23 riktige. Du har 60 minutter, som på A2 (bekreftet av Luftfartstilsynet 4.11.2026).',
     examDescription: {
       paid: 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå.',
-      free: 'Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå. Med i full tilgang.',
+      free: `Realistisk simulering. 30 spørsmål, 60 min, 23 riktige for å bestå. ${STS_MED_I}`,
     },
   },
 }

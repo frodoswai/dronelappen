@@ -84,7 +84,7 @@ Innlogging er frivillig. Logger du inn, også det gratis, lagres resultatene din
 
 Med A1/A3 kan du fly i underkategori A1 og A3. Vil du fly nærmere folk med en C2-drone, trenger du A2, og skal du fly i standardscenario, trenger du STS. Begge prøvene tas på en trafikkstasjon.
 
-Du kan prøve 25 A2-spørsmål gratis. Full tilgang gir deg hele A2-banken og over 90 STS-spørsmål i 12 måneder, for {{PRIS_HTML}} kr som engangsbeløp. Se [hva full tilgang inneholder](/pris/), eller les [Droneavisas guide til droneeksamen](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/) og [Lær å fly drone](https://droneavisa.no/laer-a-fly-drone/), som går gjennom hele veien fra første tur til bestått prøve.
+Du kan prøve 25 A2-spørsmål gratis. @@NIVA:Full tilgang gir deg hele A2-banken og over 90 STS-spørsmål i 12 måneder, for {{PRIS_HTML}} kr som engangsbeløp. Se [hva full tilgang inneholder](/pris/),||Hele A2-banken koster {{PRIS_HTML}} kr for 12 måneder, og A2 + STS med over 90 STS-spørsmål koster 449 kr. Begge er engangsbeløp. Se [prisene](/pris/),@@ eller les [Droneavisas guide til droneeksamen](https://droneavisa.no/droneeksamen-norge-guide-a1-a3-a2/) og [Lær å fly drone](https://droneavisa.no/laer-a-fly-drone/), som går gjennom hele veien fra første tur til bestått prøve.
 
 <div class="cta-box">
 <h2>Klar til å øve?</h2>
@@ -109,4 +109,4 @@ Den offisielle prøven tas på flydrone.no, etter et gratis nettkurs. Den har 40
 
 ### Hva koster A2 og STS i DroneLappen?
 
-Du kan prøve 25 A2-spørsmål gratis. Full tilgang med hele A2-banken og STS koster {{PRIS}} kr som engangsbeløp og gjelder i 12 måneder.
+Du kan prøve 25 A2-spørsmål gratis. @@NIVA:Full tilgang med hele A2-banken og STS koster {{PRIS}} kr som engangsbeløp og gjelder i 12 måneder.||A2 koster {{PRIS}} kr og A2 + STS koster 449 kr. Begge er engangsbeløp og gjelder i 12 måneder.@@

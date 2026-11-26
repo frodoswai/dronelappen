@@ -15,7 +15,7 @@ import PriceIncreaseNotice from '../components/PriceIncreaseNotice'
 import Lanseringspris from '../components/Lanseringspris'
 import InstallAppInterstitial from '../components/InstallAppInterstitial'
 import { logFunnel, HOME_BUY_CLICK } from '../lib/funnel'
-import { PRICE } from '../lib/pricing'
+import { PRICE, TIERS, DEFAULT_PLAN, BUY_LABEL, PRICE_A2_STS, PRICE_STS_UPGRADE, PRICE_A2, planPrice } from '../lib/pricing'
 import { isExamEnabled, antallParentes } from '../lib/exams'
 import ANTALL from '../lib/antall.json'
 import {
@@ -48,7 +48,7 @@ import {
 //   - flex-1 removed from the light zone — content sizes naturally
 //     instead of stretching to viewport
 export default function Home() {
-  const { tier, user, refreshTier } = useAuth()
+  const { tier, sts, loading: authLoading, user, refreshTier } = useAuth()
   const navigate = useNavigate()
   const [lastSession, setLastSession] = useState(null)
   // Sammenslåing (18/7): når ReadinessCard har data tok den over
@@ -108,19 +108,31 @@ export default function Home() {
     if (direktekjopFyrt.current) return
     if (!user) return // AuthContext er ikke ferdig ennå
     direktekjopFyrt.current = true
-    // Rydd parameteren, så en refresh ikke starter kjøpet på nytt.
+    // 26.11.2026, to nivåer fra 1.12: lenken må si hvilket nivå (&plan=a2
+    // eller &plan=a2_sts). Lenker fra før byttet (landingssider som ikke er
+    // bygd på nytt, gamle e-poster) lovet «alt, også STS» for 349 kr. De skal
+    // ikke starte et A2-kjøp av seg selv: kunden lander på forsiden og velger
+    // i kjøpskortet. Før byttet finnes bare ett kjøp, så der er alt som før.
+    const lenkePlan = searchParams.get('plan')
+    const gyldigPlan = lenkePlan === 'a2' || lenkePlan === 'a2_sts' ? lenkePlan : null
+    // Rydd parameterne, så en refresh ikke starter kjøpet på nytt.
     const rest = new URLSearchParams(searchParams)
     rest.delete('kjop')
+    rest.delete('plan')
     setSearchParams(rest, { replace: true })
+    if (TIERS && !gyldigPlan) return
     ;(async () => {
       const ferskTier = await refreshTier()
       if (ferskTier === 'paid') return // eier den allerede
-      handleBuy()
+      handleBuy(gyldigPlan || undefined)
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, searchParams])
 
-  const handleBuy = async () => {
+  // plan (26.11.2026): knappene sender enten ingenting (onClick gir da et
+  // museklikk, ikke en plan) eller 'a2_sts' fra pakkeknappen i kjøpskortet.
+  const handleBuy = async (valgtPlan) => {
+    const plan = typeof valgtPlan === 'string' ? valgtPlan : DEFAULT_PLAN
     setBuyBusy(true)
     setBuyErr('')
     // 15.10.2026: samme vern som ?kjop=1-stien, for alle kjøpsknapper.
@@ -133,9 +145,9 @@ export default function Home() {
     // forsøk er tellbare i Meta. En stille create-checkout-feil viser seg da
     // som InitiateCheckout uten matchende Purchase. Fyrer kun etter cookie-
     // samtykke (window.fbq ellers undefined); ?. gjør den til no-op uten pixel.
-    window.fbq?.('track', 'InitiateCheckout', { value: PRICE, currency: 'NOK' })
+    window.fbq?.('track', 'InitiateCheckout', { value: planPrice(plan), currency: 'NOK' })
     try {
-      await createCheckout() // redirects to Stripe on success
+      await createCheckout(plan) // redirects to Stripe on success
     } catch (err) {
       if (err?.alreadyPaid) {
         // Serveren nektet ny Stripe-økt: tilgangen finnes alt.
@@ -213,6 +225,8 @@ export default function Home() {
   // «Er du klar?» står i toppen igjen når brukeren har nok svar; STS-målingen
   // fra 21.09 er over. Kjøpsflyten (handleBuy, purchaseIntent, ?kjop=1) er urørt.
   const paid = tier === 'paid'
+  // A2-kunde uten STS (nivået A2, selges fra 1.12.2026).
+  const a2UtenSts = paid && !authLoading && !sts
   const loggedIn = !!user && !user.is_anonymous
   const totalt = stats.questions ?? ANTALL.total
   const label =
@@ -310,7 +324,9 @@ export default function Home() {
                 Øv til dronelappen
               </h1>
               <p className="text-[17px] text-[#C9D6E2] leading-[1.4]">
-                {paid
+                {a2UtenSts
+                  ? `Du har A2 og A1/A3. STS legger du til for ${PRICE_STS_UPGRADE} kr når du vil.`
+                  : paid
                   ? `Du har full tilgang til alle ${totalt} spørsmål, til A1/A3, A2 og STS.`
                   : `${totalt} spørsmål med forklaring, til A1/A3, A2 og STS. A1/A3 er gratis.`}
               </p>
@@ -331,7 +347,7 @@ export default function Home() {
                   </Link>
                 )}
                 <button onClick={handleBuy} disabled={buyBusy} className={`flex-1 ${gullKnapp}`}>
-                  {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
+                  {buyBusy ? 'Sender …' : `${BUY_LABEL} · ${PRICE} kr`}
                 </button>
               </div>
               {/* Sosialt bevis — statisk tall, oppdateres manuelt. Grunnlaget
@@ -372,7 +388,7 @@ export default function Home() {
                 disabled={buyBusy}
                 className={`w-full ${gullKnapp}`}
               >
-                {buyBusy ? 'Sender …' : `Full tilgang · ${PRICE} kr`}
+                {buyBusy ? 'Sender …' : `${BUY_LABEL} · ${PRICE} kr`}
               </button>
             </div>
           )}
@@ -414,7 +430,7 @@ export default function Home() {
           {!paid && (
             <section className="rise-in rise-d2 bg-[#EEF3F7] rounded-2xl p-[18px] mt-1.5 mb-5">
               <div className="flex items-end justify-between gap-3 mb-2.5">
-                <h2 className="text-[20px] font-bold text-da-navy leading-tight">Full tilgang</h2>
+                <h2 className="text-[20px] font-bold text-da-navy leading-tight">{TIERS ? 'A2' : 'Full tilgang'}</h2>
                 <div className="text-right whitespace-nowrap">
                   <div className="font-cond text-[32px] font-bold text-da-navy leading-none">
                     {PRICE} kr
@@ -422,17 +438,41 @@ export default function Home() {
                   <div className="text-[13px] text-da-text-muted">én gang · 12 måneder</div>
                 </div>
               </div>
-              <p className="text-[15px] text-da-text-body leading-[1.45] mb-2.5">
-                Alle {stats.questions ?? '200+'} spørsmål
-                {antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og
-                alle tre treningsmåter. Engangsbeløp, ingen abonnement. A1/A3 er gratis. Full
-                tilgang gir A2 og STS.
-              </p>
+              {TIERS ? (
+                <p className="text-[15px] text-da-text-body leading-[1.45] mb-2.5">
+                  Alle {ANTALL.A2} A2-spørsmålene, alle kategorier og alle tre treningsmåter.
+                  Engangsbeløp, ingen abonnement. A1/A3 er gratis.
+                </p>
+              ) : (
+                <p className="text-[15px] text-da-text-body leading-[1.45] mb-2.5">
+                  Alle {stats.questions ?? '200+'} spørsmål
+                  {antallParentes(stats.questions, ANTALL.A1_A3 + ANTALL.A2)}, alle kategorier og
+                  alle tre treningsmåter. Engangsbeløp, ingen abonnement. A1/A3 er gratis. Full
+                  tilgang gir A2 og STS.
+                </p>
+              )}
               <Lanseringspris className="mb-2" />
               <PriceIncreaseNotice className="mb-2.5" />
               <button onClick={handleBuy} disabled={buyBusy} className={`w-full ${gullKnapp}`}>
-                {buyBusy ? 'Sender deg til betaling …' : 'Kjøp full tilgang'}
+                {buyBusy ? 'Sender deg til betaling …' : TIERS ? `Kjøp A2 · ${PRICE} kr` : 'Kjøp full tilgang'}
               </button>
+              {/* Fra 1.12.2026: pakken med STS som andrevalg under A2. */}
+              {TIERS && (
+                <div className="mt-3.5 pt-3.5 border-t border-[#C9D3DC]">
+                  <p className="text-[15px] text-da-text-body leading-[1.45] mb-2.5">
+                    Skal du også ta STS? <strong>A2 + STS koster {PRICE_A2_STS} kr</strong> og har alle{' '}
+                    {totalt} spørsmål. Du sparer {PRICE_A2 + PRICE_STS_UPGRADE - PRICE_A2_STS} kr mot å legge
+                    til STS senere ({PRICE_STS_UPGRADE} kr).
+                  </p>
+                  <button
+                    onClick={() => handleBuy('a2_sts')}
+                    disabled={buyBusy}
+                    className="w-full h-12 rounded-[14px] bg-white border border-da-navy text-da-navy text-[16px] font-bold inline-flex items-center justify-center text-center px-3 transition-colors hover:bg-[#F6F9FB] active:scale-[0.98] disabled:opacity-60"
+                  >
+                    {buyBusy ? 'Sender deg til betaling …' : `Kjøp A2 + STS · ${PRICE_A2_STS} kr`}
+                  </button>
+                </div>
+              )}
               {buyErr && (
                 <p role="alert" className="mt-2 text-[14px] text-amber-700">{buyErr}</p>
               )}

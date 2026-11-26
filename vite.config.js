@@ -13,6 +13,12 @@ import tailwindcss from '@tailwindcss/vite'
 // det en planlagt oppgave som trigger redeploy den dagen.
 const PRICE_INCREASE_AT = '2026-08-15T00:00:00+02:00'
 const DL_PRIS = Date.now() >= Date.parse(PRICE_INCREASE_AT) ? '349' : '249'
+// To nivåer fra 1.12.2026: @@NIVA:før||etter@@ i index.html velges ved bygg,
+// som i scripts/build-landing.mjs. Krever et bygg etter midnatt 1.12 (planlagt).
+const STS_TIER_AT = '2026-12-01T00:00:00+01:00'
+const TIERS_BYGG = Date.now() >= Date.parse(STS_TIER_AT)
+const niva = (html) =>
+  html.replace(/@@NIVA:([\s\S]*?)\|\|([\s\S]*?)@@/g, (_, for_, etter) => (TIERS_BYGG ? etter : for_))
 
 // Antall spørsmål i banken. Én kilde: src/lib/antall.json, som Max holder
 // oppdatert daglig fra Supabase (~/Projects/MacMiniHub/scripts/dronelappen-antall.py
@@ -28,7 +34,7 @@ function prisPlugin() {
   return {
     name: 'dl-pris',
     transformIndexHtml(html) {
-      return html.replaceAll('%DL_PRIS%', DL_PRIS).replaceAll('%DL_ANTALL%', DL_ANTALL)
+      return niva(html).replaceAll('%DL_PRIS%', DL_PRIS).replaceAll('%DL_ANTALL%', DL_ANTALL)
     },
   }
 }

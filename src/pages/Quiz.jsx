@@ -154,6 +154,10 @@ export default function Quiz() {
   // end of this quiz is the paywall moment rather than a plain results page.
   // Unntak fra 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
+  // 26.11.2026: betalt kunde uten STS (A2-nivået, selges fra 1.12.2026) som
+  // åpner STS. get-questions svarer tier 'paid', sts false og 0 spørsmål, og
+  // appen viser påbygg-muren (149 kr) i stedet for en tom runde.
+  const [trengerStsPabygg, setTrengerStsPabygg] = useState(false)
   // Bonus fra get-questions (14.10.2026): `bonus` sier om brukeren alt har
   // tatt tilbudet på muren (da vises ikke e-postskjemaet igjen), `free_limit`
   // (25 eller 35) sier hvor muren står. Muren utløses når spørsmålene er
@@ -201,8 +205,14 @@ export default function Quiz() {
 
     const loadQuestions = async () => {
       try {
-        const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
+        const { questions: data, tier, sts, bonus, free_limit } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
+        const pabygg = paidOnly && tier === 'paid' && sts === false
+        setTrengerStsPabygg(pabygg)
+        if (pabygg) {
+          setLoading(false)
+          return
+        }
         setFetchedBonus(bonus === true)
         setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
 
@@ -439,6 +449,9 @@ export default function Quiz() {
   // Eksamenstype uten gratis-pool (STS) og gratis tilgang: get-questions ga
   // 0 spørsmål, så muren vises med én gang. Står før tom-tilstanden under,
   // ellers ville et filter (?feil=1, ?kategori=) gitt «fant ingen spørsmål».
+  if (paidOnly && trengerStsPabygg) {
+    return <Paywall answered={0} lockedExam={examType} upgrade />
+  }
   if (paidOnly && fetchedTier === 'free') {
     return <Paywall answered={0} lockedExam={examType} />
   }

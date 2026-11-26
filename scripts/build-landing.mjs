@@ -48,9 +48,22 @@ const PRIS_VARSEL_HTML =
       ? `<p class="dl-prisvarsel"><strong>Lanseringspris til 30. november 2026: ${PRIS} kr for alt, også STS.</strong> Fra 1. desember koster pakken med STS ${PRICE_FULL_AFTER} kr. Kjøper du før det, har du STS med i hele tilgangsperioden på 12 måneder.</p>`
       : ''
 
-/** Erstatter {{PRIS}}, {{PRIS_HTML}} og {{PRIS_VARSEL}} i markdown/frontmatter. */
+// ---- To nivåer fra 1.12.2026 ------------------------------------------------
+// @@NIVA:tekst før byttet||tekst etter byttet@@ i markdown, frontmatter og
+// kjøpssidene (content/kjopssider/). Velges ved bygg. Sidene er statiske, så
+// byttet krever et bygg etter midnatt 1.12 (planlagt). I mellomtiden er
+// direktelenkene trygge: appen starter ikke kjøp fra ?kjop=1 uten &plan=
+// etter byttet (src/pages/Home.jsx), så en side fra før byttet kan ikke
+// selge A2 under teksten «alt, også STS».
+const TIERS_BYGG = Date.now() >= Date.parse(STS_TIER_AT)
+const PRICE_STS_UPGRADE = 149
+function niva(str) {
+  return String(str).replace(/@@NIVA:([\s\S]*?)\|\|([\s\S]*?)@@/g, (_, for_, etter) => (TIERS_BYGG ? etter : for_))
+}
+
+/** Erstatter @@NIVA@@, {{PRIS}}, {{PRIS_HTML}} og {{PRIS_VARSEL}} i markdown/frontmatter. */
 function pris(str) {
-  return String(str)
+  return niva(str)
     // marked pakker en placeholder på egen linje inn i <p>. Varselet er selv
     // et blokkelement, så vi spiser den wrapperen for å unngå nøstede <p>.
     .replaceAll('<p>{{PRIS_VARSEL}}</p>', PRIS_VARSEL_HTML)
@@ -302,7 +315,9 @@ ${sideLastScript(slug)}</body>
 const files = readdirSync(CONTENT).filter((f) => f.endsWith('.md'))
 const built = []
 for (const f of files) {
-  const { meta, body } = parseFrontmatter(readFileSync(join(CONTENT, f), 'utf8'), f)
+  const { meta, body: raaBody } = parseFrontmatter(readFileSync(join(CONTENT, f), 'utf8'), f)
+  // Nivåvalget tas før markdown-tolkingen, så den aldri ser selve plassholderen.
+  const body = niva(raaBody)
   const url = `${SITE}/${meta.slug}/`
   const faqs = extractFaq(body)
   const jsonld = {
@@ -310,7 +325,7 @@ for (const f of files) {
     '@graph': [
       {
         '@type': 'WebPage',
-        name: meta.title,
+        name: pris(meta.title),
         description: pris(meta.description),
         url,
         inLanguage: 'nb',
@@ -335,6 +350,26 @@ for (const f of files) {
     h1: pris(meta.h1), bodyHtml, jsonld, slug: meta.slug,
   }))
   built.push({ slug: meta.slug, faqs: faqs.length })
+}
+
+// Kjøpssidene /a2/ og /sts/ (annonsenes landingssider). Kilden ligger i
+// content/kjopssider/ fra 26.11.2026 og skrives til public/ her, så prisnivået
+// følger datoen som resten. Før det var public/a2 og public/sts håndskrevne.
+const KJOP = join(ROOT, 'content', 'kjopssider')
+for (const slug of ['a2', 'sts']) {
+  const html = pris(readFileSync(join(KJOP, `${slug}.html`), 'utf8'))
+  if (html.includes('{{') || html.includes('@@NIVA')) throw new Error(`Uerstattet plassholder i kjopssider/${slug}.html`)
+  mkdirSync(join(PUBLIC, slug), { recursive: true })
+  writeFileSync(join(PUBLIC, slug, 'index.html'), html)
+}
+
+// llms.txt: prislinja følger nivåene. Idempotent.
+{
+  const p = join(PUBLIC, 'llms.txt')
+  const gammel = '- Full tilgang koster 349 kr, et engangsbeløp for 12 måneder, uten abonnement.'
+  const ny = `- A2 koster ${PRIS} kr og A2 + STS koster ${PRICE_FULL_AFTER} kr. Begge er engangsbeløp for 12 måneder, uten abonnement. Har du A2, kan du legge til STS for ${PRICE_STS_UPGRADE} kr.`
+  const t = readFileSync(p, 'utf8')
+  if (TIERS_BYGG && t.includes(gammel)) writeFileSync(p, t.replace(gammel, ny))
 }
 
 // Root-sitemap: alltid "/" + landingssidene (deterministisk, ingen volatil lastmod)

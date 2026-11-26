@@ -50,6 +50,10 @@ export default function Rapid() {
   // so the natural end of a Tempo run is the paywall moment. Unntak fra
   // 08.10.2026: A1/A3 er gratis i sin helhet, ingen mur der.
   const [fetchedTier, setFetchedTier] = useState(null)
+  // 26.11.2026: betalt kunde uten STS (A2-nivået, selges fra 1.12.2026) som
+  // åpner STS. get-questions svarer tier 'paid', sts false og 0 spørsmål, og
+  // appen viser påbygg-muren (149 kr) i stedet for en tom runde.
+  const [trengerStsPabygg, setTrengerStsPabygg] = useState(false)
   // Bonus fra get-questions (14.10.2026): `bonus` sier om brukeren alt har
   // tatt tilbudet på muren (da vises ikke e-postskjemaet igjen), `free_limit`
   // (25 eller 35) hvor muren står. Settet er alltid ≤ free_limit.
@@ -108,8 +112,14 @@ export default function Rapid() {
 
     const loadQuestions = async () => {
       try {
-        const { questions: data, tier, bonus, free_limit } = await fetchQuestions({ examType })
+        const { questions: data, tier, sts, bonus, free_limit } = await fetchQuestions({ examType })
         setFetchedTier(tier ?? null)
+        const pabygg = paidOnly && tier === 'paid' && sts === false
+        setTrengerStsPabygg(pabygg)
+        if (pabygg) {
+          setLoading(false)
+          return
+        }
         setFetchedBonus(bonus === true)
         setFreeLimit(typeof free_limit === 'number' ? free_limit : null)
 
@@ -350,6 +360,9 @@ export default function Rapid() {
 
   // Eksamenstype uten gratis-pool (STS) og gratis tilgang: muren med én
   // gang, ikke et tomt løp med 0/0 på sluttskjermen.
+  if (paidOnly && trengerStsPabygg) {
+    return <Paywall answered={0} lockedExam={examType} upgrade />
+  }
   if (paidOnly && fetchedTier === 'free') {
     return <Paywall answered={0} lockedExam={examType} />
   }

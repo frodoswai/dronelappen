@@ -8,9 +8,9 @@ slug: sts-eksamen
 <p class="lede">Har du A2 og skal fly i et standardscenario? Da tar du påbygget «Utvidelse av A2 til STS» på en trafikkstasjon. Prøven har 30 spørsmål, og du må ha minst 23 riktige for å bestå. DroneLappen har over 90 norske øvingsspørsmål til denne prøven, med forklaring på hvert svar.</p>
 
 <div class="cta-topp">
-<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+@@NIVA:<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>||<a class="btn" href="/?kjop=1&amp;plan=a2_sts">A2 + STS 449 kr →</a>@@
 <a class="btn secondary" href="/exam/A2_STS">Se STS-øvingen →</a>
-<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement.@@NIVA: <span class="dl-prisvarsel">Lanseringspris til 30. november.</span>||@@</small>
 </div>
 
 ## STS-eksamen kort fortalt
@@ -36,7 +36,7 @@ STS står for standardscenario. Det er ferdig beskrevne operasjoner i spesifikk 
 
 ## Prøv deg: tre spørsmål fra STS-banken
 
-STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen er fra A1/A3 og A2. Derfor viser vi tre STS-spørsmål her. Svaret og forklaringen ligger under hvert spørsmål. Det siste er blant de vanskeligste i banken.
+@@NIVA:STS-spørsmålene ligger bare i full tilgang,||STS-spørsmålene ligger i A2 + STS,@@ og de gratis spørsmålene i appen er fra A1/A3 og A2. Derfor viser vi tre STS-spørsmål her. Svaret og forklaringen ligger under hvert spørsmål. Det siste er blant de vanskeligste i banken.
 
 <div class="faktaboks">
 <h3>1. Hva krever STS-02 om dronens posisjon under oppskyting og landing?</h3>
@@ -86,14 +86,14 @@ STS-spørsmålene ligger bare i full tilgang, og de gratis spørsmålene i appen
 - **Eksamensmodus** med 30 spørsmål og 60 minutter. Du består med 23 riktige.
 - **Læringsmodus** med forklaring etter hvert svar, så du forstår regelen og ikke bare husker svaret.
 - **Tempomodus** for rask repetisjon når du har dårlig tid.
-- **Samme kjøp som A1/A3 og A2:** full tilgang gir deg også alle {{ANTALL_A1A3}} A1/A3-spørsmålene og {{ANTALL_A2}} A2-spørsmålene.
+- **Samme kjøp som A1/A3 og A2:** @@NIVA:full tilgang gir deg også alle||A2 + STS gir deg også alle@@ {{ANTALL_A1A3}} A1/A3-spørsmålene og {{ANTALL_A2}} A2-spørsmålene.
 
 Spørsmålene er skrevet ut fra regelverket (EU 2019/947, 2020/639 og 2020/1058) og Luftfartstilsynets sider, og hele banken er lest gjennom på nytt mot kildene tre ganger.
 
 <div class="cta-box">
 <h2>Klar til å øve til STS?</h2>
-<p><strong>Lanseringspris: {{PRIS_HTML}} kr for alt, også STS.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement. Lanseringsprisen gjelder til 30. november 2026. Fra 1. desember koster pakken med STS 449 kr. Kjøper du før det, har du STS med i hele perioden.</p>
-<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+@@NIVA:<p><strong>Lanseringspris: {{PRIS_HTML}} kr for alt, også STS.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement. Lanseringsprisen gjelder til 30. november 2026. Fra 1. desember koster pakken med STS 449 kr. Kjøper du før det, har du STS med i hele perioden.</p>||<p><strong>A2 + STS koster 449 kr.</strong> Ett kjøp gir deg STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Engangsbeløp, ikke abonnement. Har du A2 i DroneLappen fra før, logger du inn og legger til STS for 149 kr.</p>@@
+@@NIVA:<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>||<a class="btn" href="/?kjop=1&amp;plan=a2_sts">A2 + STS 449 kr →</a>@@
 <a class="btn secondary" href="/exam/A2_STS">Start STS-øvingen →</a>
 </div>
 
@@ -112,10 +112,10 @@ Fem emner: regelverk, menneskelige faktorer, operasjonelle prosedyrer, tekniske 
 Ikke helt. STS-spørsmålene er laget for påbygget og dekker de fem emnene som påbygget og den fulle prøven har felles. Meteorologi, flygeytelse og tiltak mot luftrisiko har ikke egne STS-spørsmål ennå.
 
 ### Er det gratis STS-spørsmål i appen?
-Nei. STS er bare med i full tilgang. De tre eksemplene på denne siden viser hvordan spørsmålene er, og de gratis spørsmålene i appen er fra A1/A3 og A2.
+@@NIVA:Nei. STS er bare med i full tilgang.||Nei. STS er med i A2 + STS, eller som påbygg til A2.@@ De tre eksemplene på denne siden viser hvordan spørsmålene er, og de gratis spørsmålene i appen er fra A1/A3 og A2.
 
 ### Hva koster STS i DroneLappen?
-Akkurat nå er det lanseringspris: {{PRIS}} kr for alt, også STS. Ett kjøp gir STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Det er et engangsbeløp, ikke et abonnement. Lanseringsprisen gjelder til 30. november 2026. Fra 1. desember koster pakken med STS 449 kr, mens A2 med A1/A3 fortsatt koster {{PRIS}} kr. Kjøper du før det, har du STS med i hele perioden.
+@@NIVA:Akkurat nå er det lanseringspris: {{PRIS}} kr for alt, også STS. Ett kjøp gir STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Det er et engangsbeløp, ikke et abonnement. Lanseringsprisen gjelder til 30. november 2026. Fra 1. desember koster pakken med STS 449 kr, mens A2 med A1/A3 fortsatt koster {{PRIS}} kr. Kjøper du før det, har du STS med i hele perioden.||A2 + STS koster 449 kr. Ett kjøp gir STS-påbygget og alle spørsmålene til A1/A3 og A2 i 12 måneder. Det er et engangsbeløp, ikke et abonnement. Har du A2 i DroneLappen fra før, legger du til STS for 149 kr, og påbygget gjelder til samme dato som A2-tilgangen.@@
 
 ### Hvor lenge gjelder STS-beviset?
 Kompetansebeviset for STS gjelder i 5 år, som de andre dronebevisene. Tilgangen til DroneLappen varer i 12 måneder fra kjøpet. De to henger ikke sammen.

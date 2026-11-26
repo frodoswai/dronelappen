@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
+import { supabase, createCheckout } from '../lib/supabase'
+import { PRICE_STS_UPGRADE } from '../lib/pricing'
 import { useAuth } from '../contexts/AuthContext'
 import AuthHeader from '../components/AuthHeader'
 import DroneMark from '../components/DroneMark'
@@ -58,7 +59,24 @@ function levelFor(pct, coveragePct, answered, minAnswered) {
 
 export default function MinSide() {
   const navigate = useNavigate()
-  const { user, tier, expiresAt } = useAuth()
+  const { user, tier, expiresAt, sts, refreshAccess } = useAuth()
+  // STS-påbygg for A2-kunde (26.11.2026, selges fra 1.12.2026).
+  const [pabyggBusy, setPabyggBusy] = useState(false)
+  const [pabyggErr, setPabyggErr] = useState('')
+  const kjopPabygg = async () => {
+    if (pabyggBusy) return
+    setPabyggErr('')
+    setPabyggBusy(true)
+    try {
+      // Fersk tilgang først: påbygget kan være kjøpt i en annen fane.
+      if ((await refreshAccess()).sts) { setPabyggBusy(false); return }
+      await createCheckout('sts_upgrade') // sender til Stripe
+    } catch (e) {
+      if (e?.alreadyPaid) await refreshAccess()
+      else setPabyggErr(e?.message || 'Noe gikk galt. Prøv igjen.')
+      setPabyggBusy(false)
+    }
+  }
   const [rows, setRows] = useState(null)
   const [sessions, setSessions] = useState([])
   const [loading, setLoading] = useState(true)
@@ -157,7 +175,7 @@ export default function MinSide() {
                   din tilgang
                 </div>
                 <span className="text-[16px] font-medium text-da-navy">
-                  Full tilgang til alle spørsmål
+                  {sts ? 'Full tilgang til alle spørsmål' : 'A2 og A1/A3'}
                 </span>
               </div>
               {expiresAt && (
@@ -170,6 +188,34 @@ export default function MinSide() {
                   })}
                 </span>
               )}
+            </div>
+          )}
+
+          {/* STS-påbygg (26.11.2026): A2-kunde uten STS. Arver utløpsdatoen. */}
+          {tier === 'paid' && !sts && (
+            <div className="border border-[#C9D3DC] rounded-2xl p-4 flex items-center justify-between gap-3 flex-wrap">
+              <div>
+                <div className="text-[17px] font-semibold tracking-[0.08em] uppercase text-da-text-muted mb-0.5">
+                  sts-påbygg
+                </div>
+                <span className="text-[17px] text-da-text-body">
+                  Legg til STS i tilgangen din. Gjelder til samme dato som A2
+                  {expiresAt
+                    ? `, ${new Date(expiresAt).toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' })}`
+                    : ''}
+                  .
+                </span>
+                {pabyggErr && (
+                  <p role="alert" className="mt-1 text-[14px] text-amber-700">{pabyggErr}</p>
+                )}
+              </div>
+              <button
+                onClick={kjopPabygg}
+                disabled={pabyggBusy}
+                className="bg-da-gold text-da-navy-dark font-bold h-12 px-4 rounded-xl inline-flex items-center justify-center transition-all hover:brightness-105 text-[17px] disabled:opacity-60"
+              >
+                {pabyggBusy ? 'Sender …' : `Legg til STS · ${PRICE_STS_UPGRADE} kr`}
+              </button>
             </div>
           )}
 

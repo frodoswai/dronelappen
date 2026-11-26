@@ -1,16 +1,16 @@
 ---
 title: Hva koster DroneLappen? Engangsbeløp, ingen abonnement
-description: Full tilgang til {{ANTALL}} øvingsspørsmål i 12 måneder for et engangsbeløp. Ingen abonnement, ingen automatisk trekk. A1/A3 er gratis, og du kan prøve 25 A2-spørsmål gratis uten innlogging.
+description: @@NIVA:Full tilgang til {{ANTALL}} øvingsspørsmål i 12 måneder for et engangsbeløp.||A2 for 349 kr eller A2 + STS for 449 kr, engangsbeløp for 12 måneder.@@ Ingen abonnement, ingen automatisk trekk. A1/A3 er gratis, og du kan prøve 25 A2-spørsmål gratis uten innlogging.
 h1: Hva koster DroneLappen?
 slug: pris
 ---
 
-<p class="lede">DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder. A1/A3 er gratis i sin helhet, og du kan teste 25 A2-spørsmål gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
+<p class="lede">@@NIVA:DroneLappen koster {{PRIS_HTML}} kr som et engangskjøp og gir full tilgang til alle {{ANTALL}} øvingsspørsmål i 12 måneder.||DroneLappen koster {{PRIS_HTML}} kr for A2 og 449 kr for A2 + STS. Begge er engangskjøp og gir 12 måneders tilgang.@@ A1/A3 er gratis i sin helhet, og du kan teste 25 A2-spørsmål gratis først, uten innlogging. Ingen abonnement, ingen skjulte kostnader.</p>
 
 <div class="cta-topp">
-<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+@@NIVA:<a class="btn" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>||<a class="btn" href="/?kjop=1&amp;plan=a2">A2 {{PRIS_HTML}} kr →</a>@@
 <a class="btn secondary" href="/">Prøv 25 gratis →</a>
-<small>Ett kjøp, 12 måneders tilgang, ingen abonnement. <span class="dl-prisvarsel">Lanseringspris til 30. november.</span></small>
+<small>Ett kjøp, 12 måneders tilgang, ingen abonnement.@@NIVA: <span class="dl-prisvarsel">Lanseringspris til 30. november.</span>||@@</small>
 </div>
 
 {{PRIS_VARSEL}}
@@ -21,7 +21,9 @@ slug: pris
 <h3>Inkludert</h3>
 <ul>
 <li><strong>Gratis:</strong> 25 øvingsspørsmål, uten innlogging</li>
-<li><strong>Full tilgang:</strong> {{PRIS_HTML}} kr én gang gir alle {{ANTALL}} spørsmål i 12 måneder</li>
+@@NIVA:<li><strong>Full tilgang:</strong> {{PRIS_HTML}} kr én gang gir alle {{ANTALL}} spørsmål i 12 måneder</li>||<li><strong>A2:</strong> {{PRIS_HTML}} kr én gang gir alle {{ANTALL_A2}} A2-spørsmålene i 12 måneder</li>
+<li><strong>A2 + STS:</strong> 449 kr én gang gir alle {{ANTALL}} spørsmål i 12 måneder</li>
+<li><strong>STS-påbygg:</strong> 149 kr for deg som har A2. Gjelder til samme dato som A2-tilgangen</li>@@
 <li>Eksamensmodus, feilgjennomgang og rapid-modus</li>
 <li>Ingen abonnement, ingen reklame</li>
 </ul>
@@ -41,7 +43,7 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 <div class="faktaboks">
 <h3>Tre ulike beløp</h3>
 <ul>
-<li><strong>DroneLappen (øving):</strong> {{PRIS_HTML}} kr for 12 måneder</li>
+@@NIVA:<li><strong>DroneLappen (øving):</strong> {{PRIS_HTML}} kr for 12 måneder</li>||<li><strong>DroneLappen (øving):</strong> fra {{PRIS_HTML}} kr for 12 måneder</li>@@
 <li><strong>A1/A3-eksamen:</strong> gratis, nettbasert hos Luftfartstilsynet (flydrone.no), 40 spørsmål, minst 30 rette (75 %)</li>
 <li><strong>A2-eksamen:</strong> 970 kr, avlegges på trafikkstasjon</li>
 </ul>
@@ -49,15 +51,15 @@ Det er viktig å skille mellom hva øvingsappen koster og hva selve eksamen kost
 
 <div class="cta-box">
 <h2>Prøv gratis, kjøp når du er klar</h2>
-<p>Øv gratis på hele A1/A3 og test 25 A2-spørsmål. Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.</p>
+<p>Øv gratis på hele A1/A3 og test 25 A2-spørsmål. @@NIVA:Full tilgang til alle {{ANTALL}} spørsmål koster {{PRIS_HTML}} kr og varer i 12 måneder.||A2 koster {{PRIS_HTML}} kr, og A2 + STS med alle {{ANTALL}} spørsmål koster 449 kr. Begge varer i 12 måneder.@@</p>
 <a class="btn" href="/">Øv gratis nå →</a>
-<a class="btn secondary" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>
+@@NIVA:<a class="btn secondary" href="/?kjop=1">Full tilgang {{PRIS_HTML}} kr →</a>||<a class="btn secondary" href="/?kjop=1&amp;plan=a2">A2 {{PRIS_HTML}} kr →</a>@@
 </div>
 
 ## Ofte stilte spørsmål
 
 ### Hva koster DroneLappen?
-Et engangskjøp som gir full tilgang til alle {{ANTALL}} spørsmål i 12 måneder. A1/A3 er gratis, og 25 A2-spørsmål er gratis. Gjeldende pris står øverst på siden.
+@@NIVA:Et engangskjøp som gir full tilgang til alle {{ANTALL}} spørsmål i 12 måneder. A1/A3 er gratis, og 25 A2-spørsmål er gratis. Gjeldende pris står øverst på siden.||Et engangskjøp som gir 12 måneders tilgang: A2 for {{PRIS}} kr, eller A2 + STS for 449 kr. Har du A2, kan du legge til STS for 149 kr. A1/A3 er gratis, og 25 A2-spørsmål er gratis.@@
 
 ### Er det abonnement?
 Nei. Det er et engangsbeløp, ikke abonnement. Det trekkes aldri automatisk. Tilgangen varer i 12 måneder fra kjøpet.

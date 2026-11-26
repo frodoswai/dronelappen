@@ -32,7 +32,7 @@ export async function fetchQuestions({ examType } = {}) {
     throw new Error(err.error || `Edge Function error: ${res.status}`)
   }
 
-  return res.json() // { tier, count, questions }
+  return res.json() // { tier, sts, count, questions, bonus, free_limit }
 }
 
 /**
@@ -48,7 +48,10 @@ function hasMarketingConsent() {
   }
 }
 
-export async function createCheckout() {
+// plan (26.11.2026): 'a2' | 'a2_sts' | 'sts_upgrade'. Før 1.12.2026 ser
+// serveren bort fra den (ett kjøp, 349 kr med STS). Uten plan velger serveren
+// selv: pakken før byttet, A2 etter.
+export async function createCheckout(plan) {
   let { data: { session } } = await supabase.auth.getSession()
   // Kjøp uten innlogging (Frode 14.11.2026): færrest mulig steg før betaling.
   // Alle besøkende får normalt en anonym økt av AuthContext. Mangler den
@@ -86,6 +89,7 @@ export async function createCheckout() {
       // i success_url slik at Google kan knytte kjøpet til annonseklikket også
       // når brukeren har avslått cookies.
       body: JSON.stringify({
+        ...(typeof plan === 'string' ? { plan } : {}),
         attribution: { ...getAttribution(), ...getMetaIds() },
         google_click: getGoogleClick(),
         // Meta får bare kjøpsmeldinger når kjøperen har godtatt banneret.
@@ -101,6 +105,13 @@ export async function createCheckout() {
     if (res.status === 409 && err.error === 'already_paid') {
       const e = new Error(err.message || 'Du har allerede full tilgang.')
       e.alreadyPaid = true
+      throw e
+    }
+    // 26.11.2026: A2-kunde som prøver pakken (use_sts_upgrade) og påbygg uten
+    // aktiv A2 (upgrade_requires_a2) kommer med en norsk melding fra serveren.
+    if (res.status === 409 && err.message) {
+      const e = new Error(err.message)
+      e.code = err.error
       throw e
     }
     throw new Error(err.error || `Checkout-feil: ${res.status}`)

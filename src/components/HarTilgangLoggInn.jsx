@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { TIERS } from '../lib/pricing'
 
 // «Har du allerede full tilgang? Logg inn» ved kjøpsknappene (03.10.2026).
 //
@@ -13,7 +14,7 @@ export default function HarTilgangLoggInn({ className = '' }) {
   if (loading || (user && !user.is_anonymous)) return null
   return (
     <p className={`text-[14px] text-da-text-body ${className}`}>
-      Har du allerede full tilgang?{' '}
+      {TIERS ? 'Har du allerede tilgang?' : 'Har du allerede full tilgang?'}{' '}
       <Link to="/login" className="text-da-navy font-medium underline underline-offset-2">
         Logg inn
       </Link>

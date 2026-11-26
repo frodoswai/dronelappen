@@ -1,4 +1,4 @@
-import { PRICE } from '../lib/pricing'
+import { PRICE, TIERS, PRICE_A2_STS, PRICE_STS_UPGRADE } from '../lib/pricing'
 import ANTALL from '../lib/antall.json'
 
 // Synlig FAQ på forsiden (08.10.2026). Speiler FAQPage-skjemaet i
@@ -10,13 +10,22 @@ const FAQ = [
   ['Hvor mange spørsmål har DroneLappen?',
    `${ANTALL.total} øvingsspørsmål som dekker A1/A3, A2 og STS-påbygget, basert på det offisielle pensumet.`],
   ['Er det gratis å prøve DroneLappen?',
-   `Ja. Alle A1/A3-spørsmålene er gratis uten innlogging, og du kan prøve 25 A2-spørsmål gratis. Full tilgang til A2 og STS koster ${PRICE} kr.`],
-  ['Hva koster full tilgang?',
-   `Full tilgang koster ${PRICE} kr som engangsbetaling og gir 12 måneders tilgang til alle ${ANTALL.total} spørsmål og alle moduser.`],
+   TIERS
+     ? `Ja. Alle A1/A3-spørsmålene er gratis uten innlogging, og du kan prøve 25 A2-spørsmål gratis. A2 koster ${PRICE} kr, og A2 + STS koster ${PRICE_A2_STS} kr.`
+     : `Ja. Alle A1/A3-spørsmålene er gratis uten innlogging, og du kan prøve 25 A2-spørsmål gratis. Full tilgang til A2 og STS koster ${PRICE} kr.`],
+  TIERS
+    ? ['Hva koster DroneLappen?',
+       `A2 koster ${PRICE} kr og A2 + STS koster ${PRICE_A2_STS} kr. Begge er engangsbetaling for 12 måneders tilgang med alle moduser, uten abonnement. Har du A2, kan du legge til STS for ${PRICE_STS_UPGRADE} kr.`]
+    : ['Hva koster full tilgang?',
+       `Full tilgang koster ${PRICE} kr som engangsbetaling og gir 12 måneders tilgang til alle ${ANTALL.total} spørsmål og alle moduser.`],
   ['Dekker DroneLappen både A1/A3 og A2?',
-   'Ja. DroneLappen dekker A1/A3, A2 og STS-påbygget i samme app. A1/A3 er gratis, og A2 og STS følger med i full tilgang.'],
+   TIERS
+     ? 'Ja. DroneLappen dekker A1/A3, A2 og STS-påbygget i samme app. A1/A3 er gratis, A2 er eget kjøp, og STS får du i A2 + STS eller som påbygg.'
+     : 'Ja. DroneLappen dekker A1/A3, A2 og STS-påbygget i samme app. A1/A3 er gratis, og A2 og STS følger med i full tilgang.'],
   ['Har DroneLappen spørsmål til STS-eksamen?',
-   'Ja. Til påbygget «Utvidelse av A2 til STS» har DroneLappen over 90 egne spørsmål, med eksamensmodus på 30 spørsmål der 23 riktige gir bestått. STS er med i full tilgang.'],
+   TIERS
+     ? `Ja. Til påbygget «Utvidelse av A2 til STS» har DroneLappen over 90 egne spørsmål, med eksamensmodus på 30 spørsmål der 23 riktige gir bestått. STS er med i A2 + STS (${PRICE_A2_STS} kr), eller legges til A2 for ${PRICE_STS_UPGRADE} kr.`
+     : 'Ja. Til påbygget «Utvidelse av A2 til STS» har DroneLappen over 90 egne spørsmål, med eksamensmodus på 30 spørsmål der 23 riktige gir bestått. STS er med i full tilgang.'],
   ['Hvilke treningsmoduser har DroneLappen?',
    'Prøveeksamen i ekte format, en øvings-/læringsmodus og en tempomodus. Etter hver økt får du resultat med prosent og kan gå gjennom spørsmålene du svarte feil på.'],
 ]
