@@ -20,6 +20,11 @@
 //
 // Kilde (v13, 14.11.2026): source_public er med i select og vises under
 // forklaringen i appen. Det interne source-feltet sendes aldri ut.
+//
+// STS-nivå (v14, 26.11.2026, migrasjon 034): STS krever tier paid OG
+// entitlements.sts. Betalt kunde uten STS (A2-nivået, selges fra 1.12.2026)
+// behandles som gratis på A2_STS: 0 spørsmål, og appen viser påbygg-muren.
+// Alle som kjøpte før 1.12 har sts = true. Svaret bærer `sts`.
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 const FREE_LIMIT = 25
@@ -58,6 +63,7 @@ Deno.serve(async (req) => {
     // Check auth + entitlements
     const authHeader = req.headers.get('Authorization')
     let tier: 'free' | 'paid' = 'free'
+    let sts = false
     let userId: string | null = null
 
     if (authHeader) {
@@ -67,7 +73,7 @@ Deno.serve(async (req) => {
         userId = user.id
         const { data: ent } = await admin
           .from('entitlements')
-          .select('tier, expires_at')
+          .select('tier, expires_at, sts')
           .eq('user_id', user.id)
           .single()
         if (
@@ -75,6 +81,7 @@ Deno.serve(async (req) => {
           (!ent.expires_at || new Date(ent.expires_at) > new Date())
         ) {
           tier = 'paid'
+          sts = ent.sts === true
         }
       }
     }
@@ -108,7 +115,14 @@ Deno.serve(async (req) => {
     // A1/A3 unntas (08.10.2026): hele banken er gratis. Unntaket krever
     // eksakt 'A1_A3', så et manglende eller feilstavet exam_type begrenses
     // som før.
-    if (tier === 'free' && exam_type !== 'A1_A3') {
+    // Betalt uten STS: STS-banken er låst. Uten exam_type holdes STS ute av
+    // svaret, så nivået ikke kan omgås ved å utelate feltet.
+    const stsLocked = tier === 'paid' && !sts
+    if (stsLocked && exam_type !== 'A2_STS') {
+      query = query.neq('exam_type', 'A2_STS')
+    }
+
+    if ((tier === 'free' && exam_type !== 'A1_A3') || (stsLocked && exam_type === 'A2_STS')) {
       // Kuratert, FAST gratis-pool (free_pool-flagget i DB, 25 per
       // eksamenstype med kategorispredning). Deterministisk sett =
       // gjentatte anonyme kall lekker aldri mer enn disse.
@@ -124,7 +138,7 @@ Deno.serve(async (req) => {
     if (error) throw error
 
     return new Response(
-      JSON.stringify({ tier, count: data.length, questions: data, bonus, free_limit: freeLimit }),
+      JSON.stringify({ tier, sts, count: data.length, questions: data, bonus, free_limit: freeLimit }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (err) {

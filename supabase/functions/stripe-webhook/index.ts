@@ -12,6 +12,47 @@ const WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET')!
 const ACCESS_MONTHS = 12
 const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
 
+// To prisnivåer fra 1.12.2026 (bygd 26.11.2026). Samme tidspunkt som i
+// create-checkout og src/lib/pricing.js; endres ett sted, endres alle.
+// create-checkout legger nivået i session.metadata.plan:
+//   a2          -> tier paid, sts false, 12 mnd
+//   a2_sts      -> tier paid, sts true,  12 mnd
+//   sts_upgrade -> sts true, expires_at RØRES IKKE (arver A2-kjøpets utløp)
+// Alle økter OPPRETTET før STS_TIER_AT gir sts = true uansett plan: de ble
+// solgt med STS inkludert. Det er session.created (Stripes tidspunkt) som
+// teller, ikke når webhooken kommer, så et kjøp påbegynt 30.11 kl. 23:50 og
+// betalt 00:05 får det kunden ble lovet.
+const STS_TIER_AT = Date.parse('2026-12-01T00:00:00+01:00')
+
+// Gir 12 måneders tilgang. STS tas aldri fra en rad som har det og fortsatt
+// er aktiv: en kunde som kjøper A2 på nytt fra en annen enhet (gjenkjøper-
+// grenen) skal ikke miste STS han alt har betalt for, og en forsinket
+// Stripe-retry av et A2-kjøp skal ikke oppheve et påbygg kjøpt etterpå.
+// deno-lint-ignore no-explicit-any
+async function grantAccess(admin: any, uid: string, sts: boolean, expiresIso: string) {
+  let keepSts = sts
+  if (!keepSts) {
+    const { data: cur } = await admin
+      .from('entitlements')
+      .select('tier, sts, expires_at')
+      .eq('user_id', uid)
+      .maybeSingle()
+    if (
+      cur?.tier === 'paid' &&
+      cur.sts === true &&
+      (!cur.expires_at || new Date(cur.expires_at) > new Date())
+    ) {
+      keepSts = true
+    }
+  }
+  return await admin
+    .from('entitlements')
+    .upsert(
+      { user_id: uid, tier: 'paid', sts: keepSts, expires_at: expiresIso },
+      { onConflict: 'user_id' },
+    )
+}
+
 // SHA-256 hex. Meta CAPI requires PII hashed (email lowercased + trimmed first).
 async function sha256Hex(input: string): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input))
@@ -52,18 +93,42 @@ Deno.serve(async (req) => {
         const expires = new Date()
         expires.setMonth(expires.getMonth() + ACCESS_MONTHS)
 
-        const { error } = await admin
-          .from('entitlements')
-          .upsert(
-            { user_id: userId, tier: 'paid', expires_at: expires.toISOString() },
-            { onConflict: 'user_id' },
-          )
-        if (error) throw error
+        const plan = session.metadata?.plan
+        const createdMs = session.created ? session.created * 1000 : Date.now()
+        const beforeTier = createdMs < STS_TIER_AT
+        // Påbygg finnes bare etter byttet. Før det er alt et fullt kjøp.
+        const isUpgrade = !beforeTier && plan === 'sts_upgrade'
+        const sts = beforeTier || plan === 'a2_sts' || plan === 'sts_upgrade'
+
+        if (isUpgrade) {
+          // STS-påbygg: bare flagget. expires_at skal ALDRI skrives i denne
+          // grenen. Idempotent på Stripe-retry.
+          const { data: upd, error } = await admin
+            .from('entitlements')
+            .update({ sts: true })
+            .eq('user_id', userId)
+            .eq('tier', 'paid')
+            .select('user_id')
+          if (error) throw error
+          if (!upd || upd.length === 0) {
+            // Skal ikke skje (create-checkout krever aktiv A2). Kunden har
+            // betalt, så gi full tilgang heller enn ingenting, og logg det.
+            console.error(`sts_upgrade uten betalt rad for ${userId}: gir 12 mnd med STS`)
+            const { error: fbErr } = await grantAccess(admin, userId, true, expires.toISOString())
+            if (fbErr) throw fbErr
+          }
+        } else {
+          const { error } = await grantAccess(admin, userId, sts, expires.toISOString())
+          if (error) throw error
+        }
+        console.log(`plan=${plan ?? 'mangler'} before_tier=${beforeTier} sts=${sts} upgrade=${isUpgrade}`)
 
         // Upgrade the (anonymous) buyer to a permanent account by linking the
         // email Stripe collected, so they can log in later on any device.
         // Best-effort: never block the entitlement grant above.
-        try {
+        // Hoppes over for STS-påbygg: kunden er alt en fast konto, og
+        // gjenkjøper-grenen under skriver expires_at.
+        if (!isUpgrade) try {
           const email = session.customer_details?.email
           if (email) {
             const { error: linkErr } = await admin.auth.admin.updateUserById(userId, {
@@ -87,10 +152,7 @@ Deno.serve(async (req) => {
                 if (users.length < 1000) break
               }
               if (existing) {
-                await admin.from('entitlements').upsert(
-                  { user_id: existing.id, tier: 'paid', expires_at: expires.toISOString() },
-                  { onConflict: 'user_id' },
-                )
+                await grantAccess(admin, existing.id, sts, expires.toISOString())
               }
             }
           }
@@ -112,7 +174,10 @@ Deno.serve(async (req) => {
         // engelsk og ikke redigerbar, og dette er transaksjonell e-post til en
         // kunde som nettopp har betalt. De skal ikke måtte bekrefte noe for å
         // få vite hvordan de logger inn.
-        try {
+        //
+        // Hoppes over for STS-påbygg (26.11.2026): kunden står alt i gruppa,
+        // og velkomstløpet skal ikke kunne trigges på nytt av et påbygg.
+        if (!isUpgrade) try {
           const mlToken = Deno.env.get('MAILERLITE_API_KEY')
           const buyerEmail = session.customer_details?.email
           if (mlToken && buyerEmail) {

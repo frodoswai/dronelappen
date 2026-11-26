@@ -9,23 +9,43 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
   apiVersion: '2024-12-18.acacia',
 })
 
-// PRISSKIFTE 249 -> 349 kr, varslet 24.07.2026, trer i kraft 15.08.2026.
+// TO PRISNIVÅER fra 1. desember 2026 (bygd 26.11.2026, Frodes beslutninger
+// 4/10, 13/10 og 24/10, se MacMiniHub/notes/briefs/
+// 2026-10-24-dronelappen-to-nivaa-a2-sts-bygging.md).
 //
-// Byttet er datostyrt og ikke manuelt av en grunn: når vi først har
-// annonsert datoen er vi juridisk forpliktet til å gjennomføre den
-// (mfl. § 7 — en varslet prisøkning som ikke skjer er villedende).
-// Et manuelt bytte er avhengig av at noen husker å deploye på riktig dag.
+//   Til og med 30.11: ett kjøp, 349 kr, STS inkludert (lanseringspris).
+//   Fra 1.12:  a2          349 kr  A2 med A1/A3, uten STS
+//              a2_sts      449 kr  A2, A1/A3 og STS
+//              sts_upgrade 149 kr  STS-påbygg for kunde med aktiv A2.
+//                                  Arver utløpsdatoen, ingen ny periode.
+//
+// Byttet er datostyrt og ikke manuelt av en grunn: datoen er annonsert, så
+// vi er forpliktet til å gjennomføre den (mfl. § 7). Et manuelt bytte er
+// avhengig av at noen husker å deploye på riktig dag.
 //
 // DENNE FILEN ER KILDEN TIL SANNHET for hva kunden faktisk belastes.
-// src/lib/pricing.js speiler samme dato og samme to priser for UI-et —
-// endres den ene, MÅ den andre endres i samme commit, ellers viser vi én
-// pris og belaster en annen.
-const PRICE_INCREASE_AT = Date.parse('2026-08-15T00:00:00+02:00')
-const PRICE_BEFORE = { id: 'price_1Tl83aK4vmLGBhyM4NdiXYbf', amount: 249 } // 249 NOK
-const PRICE_AFTER = { id: 'price_1TwqHTK4vmLGBhyMR5jkABrl', amount: 349 } // 349 NOK, fra 15.08.2026
+// src/lib/pricing.js speiler dato og priser for UI-et, og stripe-webhook
+// har samme STS_TIER_AT. Endres én, MÅ de andre endres i samme commit.
+//
+// Prisskiftet 249 -> 349 (15.08.2026) er historie og ryddet bort herfra;
+// 249-prisen (price_1Tl83aK4vmLGBhyM4NdiXYbf) står urørt i Stripe.
+const STS_TIER_AT = Date.parse('2026-12-01T00:00:00+01:00')
 
-function currentPrice() {
-  return Date.now() >= PRICE_INCREASE_AT ? PRICE_AFTER : PRICE_BEFORE
+type Plan = 'a2' | 'a2_sts' | 'sts_upgrade'
+type PriceRef = { id: string; amount: number }
+
+// Til og med 30.11: «Full tilgang (12 måneder)», STS med.
+const PRICE_LAUNCH: PriceRef = { id: 'price_1TwqHTK4vmLGBhyMR5jkABrl', amount: 349 }
+// Fra 1.12: egne Stripe-produkter per nivå, så kassa og kvitteringen sier
+// hva kunden faktisk kjøper (opprettet 26.11.2026).
+const PRICES: Record<Plan, PriceRef> = {
+  a2: { id: 'price_1Ufy60K4vmLGBhyMA8vGOzKA', amount: 349 },
+  a2_sts: { id: 'price_1Ufy60K4vmLGBhyMMYZYzh8w', amount: 449 },
+  sts_upgrade: { id: 'price_1Ufy61K4vmLGBhyMYgbxrLSt', amount: 149 },
+}
+
+function stsTierActive(now = Date.now()) {
+  return now >= STS_TIER_AT
 }
 const META_PIXEL_ID = '1025209573360224' // Droneavisa Pixel / CAPI dataset
 
@@ -84,24 +104,63 @@ Deno.serve(async (req) => {
       })
     }
 
+    // Body leses én gang her (planvalget trengs før sperren under).
+    const rawBody: Record<string, unknown> | null = await req
+      .json()
+      .then((b) => (b && typeof b === 'object' ? (b as Record<string, unknown>) : null))
+      .catch(() => null)
+
+    // Planvalg. Før STS_TIER_AT finnes bare ett kjøp (349 kr med STS), uansett
+    // hva klienten sender. Etter: mangler plan, er A2 trygg standard.
+    const tierActive = stsTierActive()
+    let plan: Plan = tierActive ? 'a2' : 'a2_sts'
+    if (tierActive) {
+      const rp = rawBody?.plan
+      if (rp === 'a2' || rp === 'a2_sts' || rp === 'sts_upgrade') plan = rp
+    }
+
     // 15.10.2026: betalt kunde skal aldri få en ny Stripe-økt. 14/10 traff en
     // kunde muren igjen 72 min etter kjøpet (fanen hadde aldri fått
     // ?betalt=ok) og klikket kjøp på nytt; bare flaks hindret dobbelttrekk.
     // Klienten sjekker også, men dette er sperren som holder uansett hva
     // fanen tror. 409 + already_paid: klienten leser tilgangen på nytt.
+    //
+    // 26.11.2026: ett unntak fra 1.12, STS-påbygget. Betalt kunde uten STS
+    // slipper gjennom med plan = sts_upgrade, og bare da.
     {
       const { data: ent } = await admin
         .from('entitlements')
-        .select('tier, expires_at')
+        .select('tier, expires_at, sts')
         .eq('user_id', user.id)
         .maybeSingle()
       const paid =
         ent?.tier === 'paid' &&
         (!ent.expires_at || new Date(ent.expires_at) > new Date())
-      if (paid) {
-        return new Response(
-          JSON.stringify({ error: 'already_paid', message: 'Du har allerede full tilgang.' }),
-          { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+      const hasSts = paid && ent?.sts === true
+      const json409 = (error: string, message: string) =>
+        new Response(JSON.stringify({ error, message }), {
+          status: 409,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        })
+      if (plan === 'sts_upgrade') {
+        if (!paid) {
+          return json409('upgrade_requires_a2', 'STS-påbygget krever at du har aktiv A2-tilgang.')
+        }
+        if (hasSts) {
+          return json409('already_paid', 'Du har allerede full tilgang.')
+        }
+        // betalt + uten STS + sts_upgrade: videre til Stripe.
+      } else if (paid) {
+        if (tierActive && !hasSts && plan === 'a2_sts') {
+          // Skal ikke betale 449 for noe som koster 149 for dem.
+          return json409(
+            'use_sts_upgrade',
+            'Du har allerede A2. STS legger du til som påbygg for 149 kr.',
+          )
+        }
+        return json409(
+          'already_paid',
+          hasSts ? 'Du har allerede full tilgang.' : 'Du har allerede A2-tilgang.',
         )
       }
     }
@@ -126,7 +185,7 @@ Deno.serve(async (req) => {
     // at Meta bare brukes ved samtykke.
     let metaConsent = false
     try {
-      const body = await req.json().catch(() => null)
+      const body = rawBody
       if (body && typeof body === 'object') {
         const e = (body as Record<string, unknown>).email
         if (typeof e === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e.trim()) && e.length <= 254) {
@@ -193,6 +252,11 @@ Deno.serve(async (req) => {
     // Én linje i Supabase-loggen: hvor ofte trengs oppslaget?
     console.log(`click_id_source=${clickIdSource}`)
 
+    // Nivået i både session- og payment_intent-metadata: stripe-webhook leser
+    // det, og salget kan leses per nivå i Stripe. Settes HER, etter
+    // attribution-løkka, så et felt fra klienten aldri kan overstyre det.
+    meta.plan = plan
+
     // [2026-07-17 EMQ] Ekte klient-IP og User-Agent fanges HER (kallet kommer
     // fra kjøperens browser) og lagres i session-metadata, slik at
     // stripe-webhookens CAPI Purchase (som kommer fra Stripes servere) kan
@@ -213,7 +277,7 @@ Deno.serve(async (req) => {
     }
     if (remind && (user.email || bodyEmail)) sessionMeta.remind = '1'
 
-    const price = currentPrice()
+    const price = tierActive ? PRICES[plan] : PRICE_LAUNCH
 
     // Retur-URL fra Stripe. {CHECKOUT_SESSION_ID} utvides av Stripe.
     //
@@ -227,6 +291,9 @@ Deno.serve(async (req) => {
     if (googleClick) {
       successUrl += `&${googleClick.name}=${encodeURIComponent(googleClick.value)}`
     }
+    // Fra 1.12: nivået med tilbake, så kvitteringen kan vise riktig beløp.
+    // Kun til visning. Tilgangen avgjøres av webhooken, aldri av URL-en.
+    if (tierActive) successUrl += `&plan=${plan}`
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -254,7 +321,11 @@ Deno.serve(async (req) => {
       custom_text: {
         submit: {
           message:
-            'Har du allerede full tilgang? Da skal du ikke betale på nytt. Gå tilbake til dronelappen.app og logg inn med e-posten du kjøpte med.',
+            plan === 'sts_upgrade'
+              ? 'STS-påbygget legges til tilgangen du allerede har, og gjelder til samme dato som den.'
+              : tierActive
+                ? 'Har du allerede tilgang? Da skal du ikke betale på nytt. Gå tilbake til dronelappen.app og logg inn med e-posten du kjøpte med.'
+                : 'Har du allerede full tilgang? Da skal du ikke betale på nytt. Gå tilbake til dronelappen.app og logg inn med e-posten du kjøpte med.',
         },
       },
     })
