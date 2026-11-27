@@ -200,6 +200,7 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com">
 // ingen href-innlenker for crawlere som ikke kjoerer JS (Ahrefs 17.09.2026).
 const SITENAV = `<p class="sitenav"><a href="/droneeksamen-oving/">Øv til droneeksamen</a> ·
   <a href="/dronesertifikat-a2/">A2-sertifikat</a> · <a href="/sts-eksamen/">STS-eksamen</a> ·
+  <a href="/a1-a3-gratis/">A1/A3 gratis</a> ·
   <a href="/pris/">Pris</a> · <a href="/blogg/">Blogg</a></p>`
 
 const CONSENT = `<script>

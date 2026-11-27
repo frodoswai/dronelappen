@@ -37,6 +37,10 @@ export default function Footer() {
           STS-eksamen
         </a>
         <span className="text-[#B8C4CF]">·</span>
+        <a href="/a1-a3-gratis/" className="text-da-text-muted hover:text-da-navy transition-colors">
+          A1/A3 gratis
+        </a>
+        <span className="text-[#B8C4CF]">·</span>
         <a href="/droneeksamen-oving/" className="text-da-text-muted hover:text-da-navy transition-colors">
           Øv til eksamen
         </a>
